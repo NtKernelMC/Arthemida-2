@@ -3,3 +3,22 @@
 ################################################################################
 
 *.ipch
+*.db
+*.db-shm
+*.db-wal
+*.opendb
+*.suo
+*.lastbuildstate
+*.tlog
+*.exe
+*.recipe
+*.ipdb
+*.iobj
+*.pdb
+/ArtemisComponents/ArtemisTerminal/Release/ArtemisTerminal.log
+/ArtemisComponents/ArtemisTerminal/Release/ArtemisHost.Build.CppClean.log
+/ArtemisComponents/ArtemisTerminal/Release/ArtemisTerminal.vcxproj.FileListAbsolute.txt
+*.obj
+/ArtemisComponents/InvasionTerminal/Release/InvasionTerminal.Build.CppClean.log
+/ArtemisComponents/InvasionTerminal/Release/InvasionTerminal.log
+/ArtemisComponents/InvasionTerminal/Release/InvasionTerminal.vcxproj.FileListAbsolute.txt
