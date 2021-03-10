@@ -1,3 +1,2 @@
 # Arthemida-2
-The next generation of MTA:SA Anticheat for custom clients
-Creators: NtKernelMC & holmes0
+The next generation of MTA:SA Anticheat by NtKernelMC & holmes0
