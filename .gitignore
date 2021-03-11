@@ -25,4 +25,5 @@
 /ArtemisComponents/InvasionTerminal/Release/InvasionTerminal.Build.CppClean.log
 /ArtemisComponents/InvasionTerminal/Release/InvasionTerminal.log
 /ArtemisComponents/InvasionTerminal/Release/InvasionTerminal.vcxproj.FileListAbsolute.txt
+*.json
 /.vs/CMake Overview
