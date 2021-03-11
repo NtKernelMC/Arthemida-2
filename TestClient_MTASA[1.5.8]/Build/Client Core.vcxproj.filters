@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="core">
+      <UniqueIdentifier>{4E40957C-3A77-960D-E363-7C10CF79120F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\DXHook">
+      <UniqueIdentifier>{4ADD2D1B-B692-A610-3F87-A0E7AB3B9D14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\Graphics">
+      <UniqueIdentifier>{4E40A96E-BA00-25A5-833B-6E22EFBA6981}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\ServerBrowser">
+      <UniqueIdentifier>{58C8433A-44AC-0490-AD0C-FFE2990FEF11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="launch">
+      <UniqueIdentifier>{007BE90A-EC1C-14E1-D5D7-2735C1189B31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="launch\resource">
+      <UniqueIdentifier>{37590380-A3E4-7044-ACF5-F3381800CD44}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Client\core\CAdditionalVertexStreamManager.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CChat.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CClientVariables.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CCommandFuncs.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CCommands.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CCompressorJobQueue.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CConnectManager.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CConsole.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CConsoleLogger.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CCore.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CCrashDumpWriter.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CCredits.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CDebugView.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CDiscordManager.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CEntryHistory.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CExceptionInformation_Impl.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CFileFormat.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CFilePathTranslator.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CGUI.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CGraphStats.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CJoystickManager.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CKeyBinds.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CLanguage.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CLanguageSelector.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CLinkedList.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CLocalization.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CMainMenu.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CMemStats.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CMessageLoopHook.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CModManager.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CModelCacheManager.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CModuleLoader.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CMouseControl.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CNewsBrowser.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CNickGen.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CQueryReceiver.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CQuestionBox.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CScreenShot.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CSetCursorPosHook.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CSettings.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CTimingCheckpoints.hpp">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CTrayIcon.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CVersionUpdater.Util.hpp">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CVersionUpdater.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CVertexStreamBoundingBoxManager.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\Core.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\CrashHandler.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\DXHook\CDirect3DData.h">
+      <Filter>core\DXHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\DXHook\CDirect3DEvents9.h">
+      <Filter>core\DXHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\DXHook\CDirect3DHook9.h">
+      <Filter>core\DXHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\DXHook\CDirect3DHookManager.h">
+      <Filter>core\DXHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\DXHook\CDirectInputHook8.h">
+      <Filter>core\DXHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\DXHook\CDirectInputHookManager.h">
+      <Filter>core\DXHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\DXHook\CProxyDirect3D9.h">
+      <Filter>core\DXHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\DXHook\CProxyDirect3DDevice9.h">
+      <Filter>core\DXHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\DXHook\CProxyDirect3DEffect.h">
+      <Filter>core\DXHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\DXHook\CProxyDirect3DIndexBuffer.h">
+      <Filter>core\DXHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\DXHook\CProxyDirect3DTexture.h">
+      <Filter>core\DXHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\DXHook\CProxyDirect3DVertexBuffer.h">
+      <Filter>core\DXHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\DXHook\CProxyDirect3DVertexDeclaration.h">
+      <Filter>core\DXHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\DXHook\CProxyDirectInput8.h">
+      <Filter>core\DXHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\DXHook\CProxyDirectInputDevice8.h">
+      <Filter>core\DXHook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\Graphics\CAspectRatioConverter.h">
+      <Filter>core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\Graphics\CGraphics.h">
+      <Filter>core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\Graphics\CLine3DBatcher.h">
+      <Filter>core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\Graphics\CMaterialLine3DBatcher.h">
+      <Filter>core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\Graphics\CMaterialPrimitive3DBatcher.h">
+      <Filter>core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\Graphics\CPixelsManager.h">
+      <Filter>core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\Graphics\CPrimitive3DBatcher.h">
+      <Filter>core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\Graphics\CPrimitiveBatcher.h">
+      <Filter>core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\Graphics\CPrimitiveMaterialBatcher.h">
+      <Filter>core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\Graphics\CRenderItem.EffectCloner.h">
+      <Filter>core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\Graphics\CRenderItem.EffectParameters.h">
+      <Filter>core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\Graphics\CRenderItem.EffectTemplate.h">
+      <Filter>core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\Graphics\CRenderItemManager.h">
+      <Filter>core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\Graphics\CTileBatcher.h">
+      <Filter>core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\Graphics\CVideoModeManager.h">
+      <Filter>core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\ServerBrowser\CServerBrowser.MasterServerManager.h">
+      <Filter>core\ServerBrowser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\ServerBrowser\CServerBrowser.RemoteMasterServer.h">
+      <Filter>core\ServerBrowser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\ServerBrowser\CServerBrowser.h">
+      <Filter>core\ServerBrowser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\ServerBrowser\CServerCache.h">
+      <Filter>core\ServerBrowser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\ServerBrowser\CServerInfo.h">
+      <Filter>core\ServerBrowser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\ServerBrowser\CServerList.h">
+      <Filter>core\ServerBrowser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\StdInc.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\core\resource.h">
+      <Filter>core</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Client\core\CAdditionalVertexStreamManager.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CChat.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CClientVariables.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CCommandFuncs.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CCommands.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CCompressorJobQueue.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CConnectManager.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CConsole.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CConsoleLogger.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CCore.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CCrashDumpWriter.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CCredits.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CDebugView.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CDiscordManager.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CEntryHistory.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CExceptionInformation_Impl.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CFileFormatJpeg.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CFileFormatPng.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CFilePathTranslator.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CGUI.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CGraphStats.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CJoystickManager.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CKeyBinds.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CLanguage.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CLanguageSelector.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CLocalization.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CMainMenu.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CMemStats.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CMessageLoopHook.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CModManager.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CModelCacheManager.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CModuleLoader.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CMouseControl.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CNewsBrowser.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CNickGen.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CQueryReceiver.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CQuestionBox.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CScreenGrabber.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CScreenShot.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CSetCursorPosHook.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CSettings.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CTrayIcon.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CVersionUpdater.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CVertexStreamBoundingBoxManager.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Core.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\CrashHandler.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\DXHook\CDirect3DData.cpp">
+      <Filter>core\DXHook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\DXHook\CDirect3DEvents9.cpp">
+      <Filter>core\DXHook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\DXHook\CDirect3DHook9.cpp">
+      <Filter>core\DXHook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\DXHook\CDirect3DHookManager.cpp">
+      <Filter>core\DXHook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\DXHook\CDirectInputHook8.cpp">
+      <Filter>core\DXHook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\DXHook\CDirectInputHookManager.cpp">
+      <Filter>core\DXHook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\DXHook\CProxyDirect3D9.cpp">
+      <Filter>core\DXHook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\DXHook\CProxyDirect3DDevice9.cpp">
+      <Filter>core\DXHook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\DXHook\CProxyDirect3DEffect.cpp">
+      <Filter>core\DXHook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\DXHook\CProxyDirect3DIndexBuffer.cpp">
+      <Filter>core\DXHook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\DXHook\CProxyDirect3DTexture.cpp">
+      <Filter>core\DXHook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\DXHook\CProxyDirect3DVertexBuffer.cpp">
+      <Filter>core\DXHook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\DXHook\CProxyDirect3DVertexDeclaration.cpp">
+      <Filter>core\DXHook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\DXHook\CProxyDirectInput8.cpp">
+      <Filter>core\DXHook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\DXHook\CProxyDirectInputDevice8.cpp">
+      <Filter>core\DXHook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CGraphics.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CLine3DBatcher.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CMaterialLine3DBatcher.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CMaterialPrimitive3DBatcher.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CPixelsManager.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CPixelsManager_VolumeTexture.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CPrimitive3DBatcher.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CPrimitiveBatcher.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CPrimitiveMaterialBatcher.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CRenderItem.DxFont.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CRenderItem.EffectCloner.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CRenderItem.EffectParameters.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CRenderItem.EffectTemplate.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CRenderItem.EffectWrap.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CRenderItem.FileTexture.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CRenderItem.GuiFont.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CRenderItem.RenderTarget.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CRenderItem.ScreenSource.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CRenderItem.Shader.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CRenderItem.ShaderInstance.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CRenderItem.WebBrowser.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CRenderItem.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CRenderItemManager.TextureReplace.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CRenderItemManager.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CTileBatcher.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\Graphics\CVideoModeManager.cpp">
+      <Filter>core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\ServerBrowser\CServerBrowser.MasterServerManager.cpp">
+      <Filter>core\ServerBrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\ServerBrowser\CServerBrowser.RemoteMasterServer.cpp">
+      <Filter>core\ServerBrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\ServerBrowser\CServerBrowser.cpp">
+      <Filter>core\ServerBrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\ServerBrowser\CServerCache.cpp">
+      <Filter>core\ServerBrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\ServerBrowser\CServerInfo.cpp">
+      <Filter>core\ServerBrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\ServerBrowser\CServerList.cpp">
+      <Filter>core\ServerBrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\core\StdInc.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Client\core\premake5.lua">
+      <Filter>core</Filter>
+    </None>
+    <None Include="..\Client\launch\resource\mtaicon.ico">
+      <Filter>launch\resource</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\Client\core\core.rc">
+      <Filter>core</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

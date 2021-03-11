@@ -1,0 +1,453 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Nightly|Win32">
+      <Configuration>Nightly</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Nightly|x64">
+      <Configuration>Nightly</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{DB59957C-C790-960D-707D-7C105C93120F}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>curl</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Nightly|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Nightly|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Nightly|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Nightly|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>bin\x86\Debug\</OutDir>
+    <IntDir>obj\x86\Debug\curl\</IntDir>
+    <TargetName>curl_d</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>bin\x64\Debug\</OutDir>
+    <IntDir>obj\x64\Debug\curl\</IntDir>
+    <TargetName>curl_d</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>bin\x86\Release\</OutDir>
+    <IntDir>obj\x86\Release\curl\</IntDir>
+    <TargetName>curl</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>bin\x64\Release\</OutDir>
+    <IntDir>obj\x64\Release\curl\</IntDir>
+    <TargetName>curl</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Nightly|Win32'">
+    <OutDir>bin\x86\Nightly\</OutDir>
+    <IntDir>obj\x86\Nightly\curl\</IntDir>
+    <TargetName>curl</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Nightly|x64'">
+    <OutDir>bin\x64\Nightly\</OutDir>
+    <IntDir>obj\x64\Nightly\curl\</IntDir>
+    <TargetName>curl</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;MTA_DEBUG;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);DEBUG;BUILDING_LIBCURL;CURL_STATICLIB;HTTP_ONLY;USE_ZLIB;HAVE_LIBZ;HAVE_ZLIB_H;HAVE_CONFIG_H;USE_SCHANNEL;USE_WINDOWS_SSPI;USE_WIN32_IDN;WANT_IDN_PROTOTYPES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\curl\include;..\vendor\curl\lib;..\vendor\mbedtls\2.25.0\include;..\vendor\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>crypt32.lib;Normaliz.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;MTA_DEBUG;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);DEBUG;BUILDING_LIBCURL;CURL_STATICLIB;HTTP_ONLY;USE_ZLIB;HAVE_LIBZ;HAVE_ZLIB_H;HAVE_CONFIG_H;USE_SCHANNEL;USE_WINDOWS_SSPI;USE_WIN32_IDN;WANT_IDN_PROTOTYPES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\curl\include;..\vendor\curl\lib;..\vendor\mbedtls\2.25.0\include;..\vendor\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>crypt32.lib;Normaliz.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);BUILDING_LIBCURL;CURL_STATICLIB;HTTP_ONLY;USE_ZLIB;HAVE_LIBZ;HAVE_ZLIB_H;HAVE_CONFIG_H;USE_SCHANNEL;USE_WINDOWS_SSPI;USE_WIN32_IDN;WANT_IDN_PROTOTYPES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\curl\include;..\vendor\curl\lib;..\vendor\mbedtls\2.25.0\include;..\vendor\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>crypt32.lib;Normaliz.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);BUILDING_LIBCURL;CURL_STATICLIB;HTTP_ONLY;USE_ZLIB;HAVE_LIBZ;HAVE_ZLIB_H;HAVE_CONFIG_H;USE_SCHANNEL;USE_WINDOWS_SSPI;USE_WIN32_IDN;WANT_IDN_PROTOTYPES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\curl\include;..\vendor\curl\lib;..\vendor\mbedtls\2.25.0\include;..\vendor\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>crypt32.lib;Normaliz.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Nightly|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);BUILDING_LIBCURL;CURL_STATICLIB;HTTP_ONLY;USE_ZLIB;HAVE_LIBZ;HAVE_ZLIB_H;HAVE_CONFIG_H;USE_SCHANNEL;USE_WINDOWS_SSPI;USE_WIN32_IDN;WANT_IDN_PROTOTYPES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\curl\include;..\vendor\curl\lib;..\vendor\mbedtls\2.25.0\include;..\vendor\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>crypt32.lib;Normaliz.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Nightly|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);BUILDING_LIBCURL;CURL_STATICLIB;HTTP_ONLY;USE_ZLIB;HAVE_LIBZ;HAVE_ZLIB_H;HAVE_CONFIG_H;USE_SCHANNEL;USE_WINDOWS_SSPI;USE_WIN32_IDN;WANT_IDN_PROTOTYPES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\curl\include;..\vendor\curl\lib;..\vendor\mbedtls\2.25.0\include;..\vendor\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>crypt32.lib;Normaliz.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\vendor\curl\include\curl\curl.h" />
+    <ClInclude Include="..\vendor\curl\include\curl\curlver.h" />
+    <ClInclude Include="..\vendor\curl\include\curl\easy.h" />
+    <ClInclude Include="..\vendor\curl\include\curl\mprintf.h" />
+    <ClInclude Include="..\vendor\curl\include\curl\multi.h" />
+    <ClInclude Include="..\vendor\curl\include\curl\options.h" />
+    <ClInclude Include="..\vendor\curl\include\curl\stdcheaders.h" />
+    <ClInclude Include="..\vendor\curl\include\curl\system.h" />
+    <ClInclude Include="..\vendor\curl\include\curl\typecheck-gcc.h" />
+    <ClInclude Include="..\vendor\curl\include\curl\urlapi.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\vendor\curl\lib\altsvc.c" />
+    <ClCompile Include="..\vendor\curl\lib\amigaos.c" />
+    <ClCompile Include="..\vendor\curl\lib\asyn-ares.c" />
+    <ClCompile Include="..\vendor\curl\lib\asyn-thread.c" />
+    <ClCompile Include="..\vendor\curl\lib\base64.c" />
+    <ClCompile Include="..\vendor\curl\lib\c-hyper.c" />
+    <ClCompile Include="..\vendor\curl\lib\conncache.c" />
+    <ClCompile Include="..\vendor\curl\lib\connect.c" />
+    <ClCompile Include="..\vendor\curl\lib\content_encoding.c" />
+    <ClCompile Include="..\vendor\curl\lib\cookie.c" />
+    <ClCompile Include="..\vendor\curl\lib\curl_addrinfo.c" />
+    <ClCompile Include="..\vendor\curl\lib\curl_ctype.c" />
+    <ClCompile Include="..\vendor\curl\lib\curl_des.c" />
+    <ClCompile Include="..\vendor\curl\lib\curl_endian.c" />
+    <ClCompile Include="..\vendor\curl\lib\curl_fnmatch.c" />
+    <ClCompile Include="..\vendor\curl\lib\curl_get_line.c" />
+    <ClCompile Include="..\vendor\curl\lib\curl_gethostname.c" />
+    <ClCompile Include="..\vendor\curl\lib\curl_gssapi.c" />
+    <ClCompile Include="..\vendor\curl\lib\curl_memrchr.c" />
+    <ClCompile Include="..\vendor\curl\lib\curl_multibyte.c" />
+    <ClCompile Include="..\vendor\curl\lib\curl_ntlm_core.c" />
+    <ClCompile Include="..\vendor\curl\lib\curl_ntlm_wb.c" />
+    <ClCompile Include="..\vendor\curl\lib\curl_path.c" />
+    <ClCompile Include="..\vendor\curl\lib\curl_range.c" />
+    <ClCompile Include="..\vendor\curl\lib\curl_rtmp.c" />
+    <ClCompile Include="..\vendor\curl\lib\curl_sasl.c" />
+    <ClCompile Include="..\vendor\curl\lib\curl_sspi.c" />
+    <ClCompile Include="..\vendor\curl\lib\curl_threads.c" />
+    <ClCompile Include="..\vendor\curl\lib\dict.c" />
+    <ClCompile Include="..\vendor\curl\lib\doh.c" />
+    <ClCompile Include="..\vendor\curl\lib\dotdot.c" />
+    <ClCompile Include="..\vendor\curl\lib\dynbuf.c" />
+    <ClCompile Include="..\vendor\curl\lib\easy.c" />
+    <ClCompile Include="..\vendor\curl\lib\easygetopt.c" />
+    <ClCompile Include="..\vendor\curl\lib\easyoptions.c" />
+    <ClCompile Include="..\vendor\curl\lib\escape.c" />
+    <ClCompile Include="..\vendor\curl\lib\file.c" />
+    <ClCompile Include="..\vendor\curl\lib\fileinfo.c" />
+    <ClCompile Include="..\vendor\curl\lib\formdata.c" />
+    <ClCompile Include="..\vendor\curl\lib\ftp.c" />
+    <ClCompile Include="..\vendor\curl\lib\ftplistparser.c" />
+    <ClCompile Include="..\vendor\curl\lib\getenv.c" />
+    <ClCompile Include="..\vendor\curl\lib\getinfo.c" />
+    <ClCompile Include="..\vendor\curl\lib\gopher.c" />
+    <ClCompile Include="..\vendor\curl\lib\hash.c" />
+    <ClCompile Include="..\vendor\curl\lib\hmac.c" />
+    <ClCompile Include="..\vendor\curl\lib\hostasyn.c" />
+    <ClCompile Include="..\vendor\curl\lib\hostcheck.c" />
+    <ClCompile Include="..\vendor\curl\lib\hostip.c" />
+    <ClCompile Include="..\vendor\curl\lib\hostip4.c" />
+    <ClCompile Include="..\vendor\curl\lib\hostip6.c" />
+    <ClCompile Include="..\vendor\curl\lib\hostsyn.c" />
+    <ClCompile Include="..\vendor\curl\lib\hsts.c" />
+    <ClCompile Include="..\vendor\curl\lib\http.c" />
+    <ClCompile Include="..\vendor\curl\lib\http2.c" />
+    <ClCompile Include="..\vendor\curl\lib\http_aws_sigv4.c" />
+    <ClCompile Include="..\vendor\curl\lib\http_chunks.c" />
+    <ClCompile Include="..\vendor\curl\lib\http_digest.c" />
+    <ClCompile Include="..\vendor\curl\lib\http_negotiate.c" />
+    <ClCompile Include="..\vendor\curl\lib\http_ntlm.c" />
+    <ClCompile Include="..\vendor\curl\lib\http_proxy.c" />
+    <ClCompile Include="..\vendor\curl\lib\idn_win32.c" />
+    <ClCompile Include="..\vendor\curl\lib\if2ip.c" />
+    <ClCompile Include="..\vendor\curl\lib\imap.c" />
+    <ClCompile Include="..\vendor\curl\lib\inet_ntop.c" />
+    <ClCompile Include="..\vendor\curl\lib\inet_pton.c" />
+    <ClCompile Include="..\vendor\curl\lib\krb5.c" />
+    <ClCompile Include="..\vendor\curl\lib\ldap.c" />
+    <ClCompile Include="..\vendor\curl\lib\llist.c" />
+    <ClCompile Include="..\vendor\curl\lib\md4.c" />
+    <ClCompile Include="..\vendor\curl\lib\md5.c" />
+    <ClCompile Include="..\vendor\curl\lib\memdebug.c" />
+    <ClCompile Include="..\vendor\curl\lib\mime.c" />
+    <ClCompile Include="..\vendor\curl\lib\mprintf.c" />
+    <ClCompile Include="..\vendor\curl\lib\mqtt.c" />
+    <ClCompile Include="..\vendor\curl\lib\multi.c" />
+    <ClCompile Include="..\vendor\curl\lib\netrc.c" />
+    <ClCompile Include="..\vendor\curl\lib\non-ascii.c" />
+    <ClCompile Include="..\vendor\curl\lib\nonblock.c" />
+    <ClCompile Include="..\vendor\curl\lib\nwlib.c" />
+    <ClCompile Include="..\vendor\curl\lib\nwos.c" />
+    <ClCompile Include="..\vendor\curl\lib\openldap.c" />
+    <ClCompile Include="..\vendor\curl\lib\parsedate.c" />
+    <ClCompile Include="..\vendor\curl\lib\pingpong.c" />
+    <ClCompile Include="..\vendor\curl\lib\pop3.c" />
+    <ClCompile Include="..\vendor\curl\lib\progress.c" />
+    <ClCompile Include="..\vendor\curl\lib\psl.c" />
+    <ClCompile Include="..\vendor\curl\lib\rand.c" />
+    <ClCompile Include="..\vendor\curl\lib\rename.c" />
+    <ClCompile Include="..\vendor\curl\lib\rtsp.c" />
+    <ClCompile Include="..\vendor\curl\lib\select.c" />
+    <ClCompile Include="..\vendor\curl\lib\sendf.c" />
+    <ClCompile Include="..\vendor\curl\lib\setopt.c" />
+    <ClCompile Include="..\vendor\curl\lib\sha256.c" />
+    <ClCompile Include="..\vendor\curl\lib\share.c" />
+    <ClCompile Include="..\vendor\curl\lib\slist.c" />
+    <ClCompile Include="..\vendor\curl\lib\smb.c" />
+    <ClCompile Include="..\vendor\curl\lib\smtp.c" />
+    <ClCompile Include="..\vendor\curl\lib\socketpair.c" />
+    <ClCompile Include="..\vendor\curl\lib\socks.c" />
+    <ClCompile Include="..\vendor\curl\lib\socks_gssapi.c" />
+    <ClCompile Include="..\vendor\curl\lib\socks_sspi.c" />
+    <ClCompile Include="..\vendor\curl\lib\speedcheck.c" />
+    <ClCompile Include="..\vendor\curl\lib\splay.c" />
+    <ClCompile Include="..\vendor\curl\lib\strcase.c" />
+    <ClCompile Include="..\vendor\curl\lib\strdup.c" />
+    <ClCompile Include="..\vendor\curl\lib\strerror.c" />
+    <ClCompile Include="..\vendor\curl\lib\strtok.c" />
+    <ClCompile Include="..\vendor\curl\lib\strtoofft.c" />
+    <ClCompile Include="..\vendor\curl\lib\system_win32.c" />
+    <ClCompile Include="..\vendor\curl\lib\telnet.c" />
+    <ClCompile Include="..\vendor\curl\lib\tftp.c" />
+    <ClCompile Include="..\vendor\curl\lib\timeval.c" />
+    <ClCompile Include="..\vendor\curl\lib\transfer.c" />
+    <ClCompile Include="..\vendor\curl\lib\url.c" />
+    <ClCompile Include="..\vendor\curl\lib\urlapi.c" />
+    <ClCompile Include="..\vendor\curl\lib\vauth\cleartext.c" />
+    <ClCompile Include="..\vendor\curl\lib\vauth\cram.c" />
+    <ClCompile Include="..\vendor\curl\lib\vauth\digest.c" />
+    <ClCompile Include="..\vendor\curl\lib\vauth\digest_sspi.c" />
+    <ClCompile Include="..\vendor\curl\lib\vauth\krb5_gssapi.c" />
+    <ClCompile Include="..\vendor\curl\lib\vauth\krb5_sspi.c" />
+    <ClCompile Include="..\vendor\curl\lib\vauth\ntlm.c" />
+    <ClCompile Include="..\vendor\curl\lib\vauth\ntlm_sspi.c" />
+    <ClCompile Include="..\vendor\curl\lib\vauth\oauth2.c" />
+    <ClCompile Include="..\vendor\curl\lib\vauth\spnego_gssapi.c" />
+    <ClCompile Include="..\vendor\curl\lib\vauth\spnego_sspi.c" />
+    <ClCompile Include="..\vendor\curl\lib\vauth\vauth.c" />
+    <ClCompile Include="..\vendor\curl\lib\version.c" />
+    <ClCompile Include="..\vendor\curl\lib\version_win32.c" />
+    <ClCompile Include="..\vendor\curl\lib\vquic\ngtcp2.c" />
+    <ClCompile Include="..\vendor\curl\lib\vquic\quiche.c" />
+    <ClCompile Include="..\vendor\curl\lib\vquic\vquic.c" />
+    <ClCompile Include="..\vendor\curl\lib\vssh\libssh.c" />
+    <ClCompile Include="..\vendor\curl\lib\vssh\libssh2.c" />
+    <ClCompile Include="..\vendor\curl\lib\vssh\wolfssh.c" />
+    <ClCompile Include="..\vendor\curl\lib\vtls\bearssl.c" />
+    <ClCompile Include="..\vendor\curl\lib\vtls\gskit.c" />
+    <ClCompile Include="..\vendor\curl\lib\vtls\gtls.c" />
+    <ClCompile Include="..\vendor\curl\lib\vtls\keylog.c" />
+    <ClCompile Include="..\vendor\curl\lib\vtls\mbedtls.c" />
+    <ClCompile Include="..\vendor\curl\lib\vtls\mbedtls_threadlock.c" />
+    <ClCompile Include="..\vendor\curl\lib\vtls\mesalink.c" />
+    <ClCompile Include="..\vendor\curl\lib\vtls\nss.c" />
+    <ClCompile Include="..\vendor\curl\lib\vtls\openssl.c" />
+    <ClCompile Include="..\vendor\curl\lib\vtls\schannel.c" />
+    <ClCompile Include="..\vendor\curl\lib\vtls\schannel_verify.c" />
+    <ClCompile Include="..\vendor\curl\lib\vtls\sectransp.c" />
+    <ClCompile Include="..\vendor\curl\lib\vtls\vtls.c" />
+    <ClCompile Include="..\vendor\curl\lib\vtls\wolfssl.c" />
+    <ClCompile Include="..\vendor\curl\lib\warnless.c" />
+    <ClCompile Include="..\vendor\curl\lib\wildcard.c" />
+    <ClCompile Include="..\vendor\curl\lib\x509asn1.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\vendor\curl\premake5.lua" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
