@@ -14,6 +14,7 @@
 *.recipe
 *.ipdb
 *.iobj
+/.vs/slnx.sqlite
 *.sqlite
 /ArtemisComponents/ArtemisTerminal/Release/ArtemisTerminal.log
 /ArtemisComponents/ArtemisTerminal/Release/ArtemisHost.Build.CppClean.log
