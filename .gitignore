@@ -1,4 +1,4 @@
-﻿################################################################################
+################################################################################
 # Данный GITIGNORE-файл был автоматически создан Microsoft(R) Visual Studio.
 ################################################################################
 
@@ -17,6 +17,7 @@
 *.pdb
 /.vs/slnx.sqlite
 *.sqlite
+*.sqlite-journal
 /ArtemisComponents/ArtemisTerminal/Release/ArtemisTerminal.log
 /ArtemisComponents/ArtemisTerminal/Release/ArtemisHost.Build.CppClean.log
 /ArtemisComponents/ArtemisTerminal/Release/ArtemisTerminal.vcxproj.FileListAbsolute.txt
