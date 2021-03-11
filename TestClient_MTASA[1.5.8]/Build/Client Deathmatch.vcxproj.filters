@@ -1,0 +1,1577 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Client">
+      <UniqueIdentifier>{644D06AC-50EF-3082-39AA-44D625EBB7D2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client\mods">
+      <UniqueIdentifier>{6676D2A9-D22B-4B9F-5B20-4576C7D441A3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client\mods\deathmatch">
+      <UniqueIdentifier>{48C4ABB6-34BE-D408-1D2B-6B1909C43A75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client\mods\deathmatch\logic">
+      <UniqueIdentifier>{6548537D-5103-4329-FABA-BB73E6548DB9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client\mods\deathmatch\logic\lua">
+      <UniqueIdentifier>{9693F60C-82E4-E14E-AB48-D01097F874B8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client\mods\deathmatch\logic\luadefs">
+      <UniqueIdentifier>{B8FFDA06-A4E6-9CFE-4D37-031C39FD1565}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client\mods\deathmatch\logic\rpc">
+      <UniqueIdentifier>{79ACF60C-65FD-E14E-8E61-D0107A1175B8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared">
+      <UniqueIdentifier>{7C480CD1-68EA-36A7-51A5-4AFB3DE6BDF7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\animation">
+      <UniqueIdentifier>{8BEC5039-77E5-6F8B-A017-55108C6F4F97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\mods">
+      <UniqueIdentifier>{7E20C970-EAD5-4166-73CA-3B3DDF7E386A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\mods\deathmatch">
+      <UniqueIdentifier>{60EFB4AA-4CE9-DDFC-3556-740D21EF4369}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\mods\deathmatch\logic">
+      <UniqueIdentifier>{7D65C6D3-6920-B67F-12D8-2ECAFE710010}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\mods\deathmatch\logic\lua">
+      <UniqueIdentifier>{AE7C6273-9ACD-4DB5-C331-3C77AFE1E01E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\mods\deathmatch\logic\luadefs">
+      <UniqueIdentifier>{D0B4C524-BC9B-871C-65EC-ED3951B20083}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\mods\deathmatch\logic\luascripts">
+      <UniqueIdentifier>{F616A08C-62A6-6177-6BA2-428FD7B09C83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor">
+      <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\bochs">
+      <UniqueIdentifier>{F19552F0-DDF8-E194-867E-1A4B72C0AD17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\bochs\bochs_internal">
+      <UniqueIdentifier>{0BB643C9-77C3-71AF-00AA-6D9A6CB63D66}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Client\mods\deathmatch\CClient.h">
+      <Filter>Client\mods\deathmatch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\CVoiceRecorder.h">
+      <Filter>Client\mods\deathmatch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\ClientCommands.h">
+      <Filter>Client\mods\deathmatch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\HeapTrace.h">
+      <Filter>Client\mods\deathmatch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\StdInc.h">
+      <Filter>Client\mods\deathmatch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CAntiCheat.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CAntiCheatModule.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CBassAudio.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CBitStream.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CBlendedWeather.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CCallback.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClient3DMarker.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientCamera.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientCheckpoint.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientCivilian.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientCivilianManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientColCallback.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientColCircle.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientColCuboid.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientColManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientColModel.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientColModelManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientColPolygon.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientColRectangle.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientColShape.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientColSphere.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientColTube.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientCommon.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientCorona.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientDFF.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientDFFManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientDisplay.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientDisplayManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientDummy.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientDxFont.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientEffect.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientEffectManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientEntity.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientEntityRefManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientExplosionManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientGUIElement.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientGUIManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientGame.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientGroups.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientGuiFont.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientIFP.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientMarker.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientMarkerCommon.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientMarkerManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientMaterial.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientModel.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientModelCacheManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientModelManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientModelRequestManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientObject.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientObjectManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientPacketRecorder.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientPad.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientPathManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientPathNode.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientPed.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientPedManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientPerfStatManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientPerfStatModule.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientPickup.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientPickupManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientPlayer.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientPlayerClothes.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientPlayerManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientPlayerVoice.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientPointLights.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientPointLightsManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientProjectile.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientProjectileManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientRadarArea.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientRadarAreaManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientRadarMarker.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientRadarMarkerManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientRenderElement.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientRenderElementManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientSearchLight.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientShader.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientSound.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientSoundManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientSpatialDatabase.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientStreamElement.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientStreamSector.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientStreamSectorRow.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientStreamer.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientTXD.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientTask.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientTeam.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientTeamManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientTextDisplay.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientTexture.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientVehicle.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientVehicleManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientWater.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientWaterManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientWeapon.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientWeaponManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CClientWebBrowser.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CCustomData.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CDeathmatchObject.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CDeathmatchVehicle.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CDownloadableResource.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CDynamicLibrary.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CElementArray.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CElementDeleter.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CElementGroup.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CEvents.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CFileReader.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CFoo.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CIFPAnimations.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CIFPEngine.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CInterpolator.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CLocalServer.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CLogger.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CMapEvent.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CMapEventManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CModelNames.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CMovingObjectsManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CNametags.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CNetAPI.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CNetworkStats.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CObjectRespawner.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CObjectSync.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CPacketHandler.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CPedSync.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CRadarMap.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CRegisteredCommands.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CRemoteCalls.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CResource.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CResourceConfigItem.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CResourceFile.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CResourceFileDownloadManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CResourceManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CScriptDebugging.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CScriptFile.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CScriptKeyBinds.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CServer.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CServerIdManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CServerInfo.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CSimulatedPlayPosition.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CSingularFileDownload.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CSingularFileDownloadManager.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CStaticFunctionDefinitions.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CSyncDebug.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CTransferBox.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CUnoccupiedVehicleSync.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CVehicleNames.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CVehicleUpgrades.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\CWeaponNames.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\Config.h">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\lua\CLuaArgument.h">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\lua\CLuaArguments.h">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\lua\CLuaCFunctions.h">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\lua\CLuaFunctionDefs.h">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\lua\CLuaFunctionParseHelpers.h">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\lua\CLuaFunctionRef.h">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\lua\CLuaMain.h">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\lua\CLuaManager.h">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\lua\CLuaTimer.h">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\lua\CLuaTimerManager.h">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\lua\LuaCommon.h">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaAudioDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaBlipDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaBrowserDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaCameraDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaClassDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaClientDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaColShapeDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaCompatibilityDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaDrawingDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaEffectDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaElementDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaEngineDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaFireDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaGUIDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaMarkerDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaNetworkDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaObjectDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaPedDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaPickupDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaPlayerDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaPointLightDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaProjectileDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaRadarAreaDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaResourceDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaSearchLightDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaTaskDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaTeamDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaTimerDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaVehicleDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaWaterDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaWeaponDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaWorldDefs.h">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\rpc\CAudioRPCs.h">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\rpc\CBlipRPCs.h">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\rpc\CCameraRPCs.h">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\rpc\CColShapeRPCs.h">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\rpc\CElementRPCs.h">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\rpc\CHandlingRPCs.h">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\rpc\CInputRPCs.h">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\rpc\CMarkerRPCs.h">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\rpc\CObjectRPCs.h">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\rpc\COutputRPCs.h">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\rpc\CPedRPCs.h">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\rpc\CPickupRPCs.h">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\rpc\CPlayerRPCs.h">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\rpc\CRPCFunctions.h">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\rpc\CRadarRPCs.h">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\rpc\CTeamRPCs.h">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\rpc\CVehicleRPCs.h">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\rpc\CWaterRPCs.h">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\rpc\CWeaponRPCs.h">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\mods\deathmatch\logic\rpc\CWorldRPCs.h">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\CDebugHookManager.h">
+      <Filter>Shared\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\CIdArray.h">
+      <Filter>Shared\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\CLatentTransferManager.h">
+      <Filter>Shared\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\CTickRateSettings.h">
+      <Filter>Shared\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\CZoneNames.h">
+      <Filter>Shared\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\Enums.h">
+      <Filter>Shared\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\Utils.h">
+      <Filter>Shared\mods\deathmatch\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaFunctionParser.h">
+      <Filter>Shared\mods\deathmatch\logic\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaMatrix.h">
+      <Filter>Shared\mods\deathmatch\logic\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaMultiReturn.h">
+      <Filter>Shared\mods\deathmatch\logic\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaOverloadParser.h">
+      <Filter>Shared\mods\deathmatch\logic\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaShared.h">
+      <Filter>Shared\mods\deathmatch\logic\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaStackChecker.h">
+      <Filter>Shared\mods\deathmatch\logic\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaVector2.h">
+      <Filter>Shared\mods\deathmatch\logic\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaVector3.h">
+      <Filter>Shared\mods\deathmatch\logic\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaVector4.h">
+      <Filter>Shared\mods\deathmatch\logic\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\LuaBasic.h">
+      <Filter>Shared\mods\deathmatch\logic\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaBitDefs.h">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaCryptDefs.h">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaFileDefs.h">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaMatrixDefs.h">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaTrainTrackDefs.h">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaUTFDefs.h">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaUtilDefs.h">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaVector2Defs.h">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaVector3Defs.h">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaVector4Defs.h">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaXMLDefs.h">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\luascripts\coroutine_debug.lua.h">
+      <Filter>Shared\mods\deathmatch\logic\luascripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\luascripts\exports.lua.h">
+      <Filter>Shared\mods\deathmatch\logic\luascripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\mods\deathmatch\logic\luascripts\inspect.lua.h">
+      <Filter>Shared\mods\deathmatch\logic\luascripts</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Client\mods\deathmatch\CClient.cpp">
+      <Filter>Client\mods\deathmatch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\CVoiceRecorder.cpp">
+      <Filter>Client\mods\deathmatch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\Client.cpp">
+      <Filter>Client\mods\deathmatch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\ClientCommands.cpp">
+      <Filter>Client\mods\deathmatch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\HeapTrace.cpp">
+      <Filter>Client\mods\deathmatch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\StdInc.cpp">
+      <Filter>Client\mods\deathmatch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CAntiCheat.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CAntiCheatModule.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CBassAudio.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CBlendedWeather.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClient3DMarker.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientCamera.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientCheckpoint.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientCivilian.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientCivilianManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientColCircle.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientColCuboid.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientColManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientColModel.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientColModelManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientColPolygon.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientColRectangle.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientColShape.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientColSphere.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientColTube.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientCorona.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientDFF.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientDFFManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientDisplay.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientDisplayManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientDummy.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientDxFont.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientEffect.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientEffectManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientEntity.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientEntityRefManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientExplosionManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientGUIElement.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientGUIManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientGame.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientGroups.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientGuiFont.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientIFP.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientMarker.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientMarkerCommon.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientMarkerManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientMaterial.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientModel.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientModelCacheManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientModelManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientModelRequestManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientObject.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientObjectManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientPacketRecorder.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientPad.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientPathManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientPathNode.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientPed.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientPedManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientPerfStat.LibMemory.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientPerfStat.LuaMemory.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientPerfStat.LuaTiming.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientPerfStat.PacketUsage.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientPerfStatManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientPickup.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientPickupManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientPlayer.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientPlayerClothes.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientPlayerManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientPlayerVoice.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientPointLights.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientPointLightsManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientProjectile.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientProjectileManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientRadarArea.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientRadarAreaManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientRadarMarker.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientRadarMarkerManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientRenderElement.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientRenderElementManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientSearchLight.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientShader.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientSound.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientSoundManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientSpatialDatabase.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientStreamElement.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientStreamSector.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientStreamSectorRow.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientStreamer.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientTXD.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientTask.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientTeam.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientTeamManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientTextDisplay.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientTexture.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientVehicle.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientVehicleManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientWater.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientWaterManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientWeapon.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientWeaponManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CClientWebBrowser.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CCustomData.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CDeathmatchObject.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CDeathmatchVehicle.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CDownloadableResource.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CDynamicLibrary.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CElementArray.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CElementDeleter.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CElementGroup.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CEvents.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CFileReader.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CFoo.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CIFPAnimations.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CIFPEngine.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CLocalServer.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CLogger.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CMapEvent.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CMapEventManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CModelNames.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CMovingObjectsManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CNametags.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CNetAPI.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CNetworkStats.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CObjectRespawner.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CObjectSync.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CPacketHandler.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CPedSync.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CRadarMap.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CRegisteredCommands.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CRemoteCalls.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CResource.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CResourceConfigItem.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CResourceFileDownloadManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CResourceManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CScriptDebugging.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CScriptFile.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CScriptKeyBinds.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CServer.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CServerIdManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CServerInfo.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CSingularFileDownload.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CSingularFileDownloadManager.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CStaticFunctionDefinitions.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CSyncDebug.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CTransferBox.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CUnoccupiedVehicleSync.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CVehicleNames.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CVehicleUpgrades.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\CWeaponNames.cpp">
+      <Filter>Client\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\lua\CLuaArgument.cpp">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\lua\CLuaArguments.cpp">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\lua\CLuaCFunctions.cpp">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\lua\CLuaFunctionDefs.BodyClothes.cpp">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\lua\CLuaFunctionDefs.Commands.cpp">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\lua\CLuaFunctionDefs.Event.cpp">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\lua\CLuaFunctionDefs.Input.cpp">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\lua\CLuaFunctionDefs.Notification.cpp">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\lua\CLuaFunctionDefs.Output.cpp">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\lua\CLuaFunctionDefs.Util.cpp">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\lua\CLuaFunctionDefs.Voice.cpp">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\lua\CLuaFunctionDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\lua\CLuaFunctionParseHelpers.cpp">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\lua\CLuaFunctionRef.cpp">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\lua\CLuaMain.cpp">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\lua\CLuaManager.cpp">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\lua\CLuaTimer.cpp">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\lua\CLuaTimerManager.cpp">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\lua\LuaCommon.cpp">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaAudioDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaBlipDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaBrowserDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaCameraDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaClassDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaClientDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaColShapeDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaCompatibilityDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaDrawingDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaEffectDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaElementDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaEngineDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaFireDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaGUIDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaMarkerDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaNetworkDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaObjectDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaPedDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaPickupDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaPlayerDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaPointLightDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaProjectileDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaRadarAreaDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaResourceDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaSearchLightDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaTaskDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaTeamDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaTimerDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaVehicleDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaWaterDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaWeaponDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaWorldDefs.cpp">
+      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\rpc\CAudioRPCs.cpp">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\rpc\CBlipRPCs.cpp">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\rpc\CCameraRPCs.cpp">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\rpc\CColShapeRPCs.cpp">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\rpc\CElementRPCs.cpp">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\rpc\CHandlingRPCs.cpp">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\rpc\CInputRPCs.cpp">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\rpc\CMarkerRPCs.cpp">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\rpc\CObjectRPCs.cpp">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\rpc\COutputRPCs.cpp">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\rpc\CPedRPCs.cpp">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\rpc\CPickupRPCs.cpp">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\rpc\CPlayerRPCs.cpp">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\rpc\CRPCFunctions.cpp">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\rpc\CRadarRPCs.cpp">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\rpc\CTeamRPCs.cpp">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\rpc\CVehicleRPCs.cpp">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\rpc\CWaterRPCs.cpp">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\rpc\CWeaponRPCs.cpp">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\rpc\CWorldRPCs.cpp">
+      <Filter>Client\mods\deathmatch\logic\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\animation\CEasingCurve.cpp">
+      <Filter>Shared\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\animation\CPositionRotationAnimation.cpp">
+      <Filter>Shared\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\CDebugHookManager.cpp">
+      <Filter>Shared\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\CIdArray.cpp">
+      <Filter>Shared\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\CLatentReceiver.cpp">
+      <Filter>Shared\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\CLatentSendQueue.cpp">
+      <Filter>Shared\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\CLatentTransferManager.cpp">
+      <Filter>Shared\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\CScriptDebugging.cpp">
+      <Filter>Shared\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\CZoneNames.cpp">
+      <Filter>Shared\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\Enums.cpp">
+      <Filter>Shared\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\Utils.cpp">
+      <Filter>Shared\mods\deathmatch\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\lua\CLuaMatrix.cpp">
+      <Filter>Shared\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\lua\CLuaShared.cpp">
+      <Filter>Shared\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\lua\CLuaVector2.cpp">
+      <Filter>Shared\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\lua\CLuaVector3.cpp">
+      <Filter>Shared\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\lua\CLuaVector4.cpp">
+      <Filter>Shared\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\lua\LuaBasic.cpp">
+      <Filter>Shared\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaBitDefs.cpp">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaCryptDefs.cpp">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaElementDefsShared.cpp">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaFileDefs.cpp">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaMatrixDefs.cpp">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaTrainTrackDefs.cpp">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaUTFDefs.cpp">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaUtilDefs.cpp">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaVector2Defs.cpp">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaVector3Defs.cpp">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaVector4Defs.cpp">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaXMLDefs.cpp">
+      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\bochs\bochs_internal\bochs_crc32.cpp">
+      <Filter>vendor\bochs\bochs_internal</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Client\mods\deathmatch\premake5.lua">
+      <Filter>Client\mods\deathmatch</Filter>
+    </None>
+  </ItemGroup>
+</Project>
