@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="libspeex">
+      <UniqueIdentifier>{41B915A7-2D86-70B2-569F-5E5A42CBA540}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libspeexdsp">
+      <UniqueIdentifier>{48768C30-B42B-0526-3D20-FFFCA9D4FB29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="speex">
+      <UniqueIdentifier>{AA275F10-163C-87C1-DFBD-2A214B9183F2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\vendor\libspeex\libspeex\_kiss_fft_guts.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\arch.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\bfin.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\cb_search.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\cb_search_arm4.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\cb_search_bfin.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\cb_search_sse.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\config.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\fftwrap.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\filters.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\filters_arm4.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\filters_bfin.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\filters_sse.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\fixed_arm4.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\fixed_arm5e.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\fixed_bfin.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\fixed_debug.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\fixed_generic.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\kiss_fft.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\kiss_fftr.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\lpc.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\lpc_bfin.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\lsp.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\lsp_bfin.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\ltp.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\ltp_arm4.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\ltp_bfin.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\ltp_sse.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\math_approx.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\misc_bfin.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\modes.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\nb_celp.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\os_support.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\quant_lsp.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\quant_lsp_bfin.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\sb_celp.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\smallft.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\stack_alloc.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\vbr.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\vorbis_psy.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\vq.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\vq_arm4.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\vq_bfin.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeex\vq_sse.h">
+      <Filter>libspeex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeexdsp\_kiss_fft_guts.h">
+      <Filter>libspeexdsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeexdsp\arch.h">
+      <Filter>libspeexdsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeexdsp\bfin.h">
+      <Filter>libspeexdsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeexdsp\config.h">
+      <Filter>libspeexdsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeexdsp\fftwrap.h">
+      <Filter>libspeexdsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeexdsp\filterbank.h">
+      <Filter>libspeexdsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeexdsp\fixed_arm4.h">
+      <Filter>libspeexdsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeexdsp\fixed_arm5e.h">
+      <Filter>libspeexdsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeexdsp\fixed_bfin.h">
+      <Filter>libspeexdsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeexdsp\fixed_debug.h">
+      <Filter>libspeexdsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeexdsp\fixed_generic.h">
+      <Filter>libspeexdsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeexdsp\kiss_fft.h">
+      <Filter>libspeexdsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeexdsp\kiss_fftr.h">
+      <Filter>libspeexdsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeexdsp\math_approx.h">
+      <Filter>libspeexdsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeexdsp\misc_bfin.h">
+      <Filter>libspeexdsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeexdsp\os_support.h">
+      <Filter>libspeexdsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeexdsp\pseudofloat.h">
+      <Filter>libspeexdsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeexdsp\resample_neon.h">
+      <Filter>libspeexdsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeexdsp\resample_sse.h">
+      <Filter>libspeexdsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeexdsp\smallft.h">
+      <Filter>libspeexdsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeexdsp\stack_alloc.h">
+      <Filter>libspeexdsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\libspeexdsp\vorbis_psy.h">
+      <Filter>libspeexdsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\speex\speex.h">
+      <Filter>speex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\speex\speex_bits.h">
+      <Filter>speex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\speex\speex_buffer.h">
+      <Filter>speex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\speex\speex_callbacks.h">
+      <Filter>speex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\speex\speex_config_types.h">
+      <Filter>speex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\speex\speex_echo.h">
+      <Filter>speex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\speex\speex_header.h">
+      <Filter>speex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\speex\speex_jitter.h">
+      <Filter>speex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\speex\speex_preprocess.h">
+      <Filter>speex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\speex\speex_resampler.h">
+      <Filter>speex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\speex\speex_stereo.h">
+      <Filter>speex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\speex\speex_types.h">
+      <Filter>speex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\speex\speexdsp_config_types.h">
+      <Filter>speex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\libspeex\speex\speexdsp_types.h">
+      <Filter>speex</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\vendor\libspeex\libspeex\bits.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\cb_search.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\exc_10_16_table.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\exc_10_32_table.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\exc_20_32_table.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\exc_5_256_table.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\exc_5_64_table.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\exc_8_128_table.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\filters.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\gain_table.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\gain_table_lbr.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\hexc_10_32_table.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\hexc_table.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\high_lsp_tables.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\kiss_fft.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\kiss_fftr.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\lpc.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\lsp.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\lsp_tables_nb.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\ltp.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\modes.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\modes_wb.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\nb_celp.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\quant_lsp.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\sb_celp.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\smallft.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\speex.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\speex_callbacks.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\speex_header.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\stereo.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\vbr.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\vorbis_psy.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\vq.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeex\window.c">
+      <Filter>libspeex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeexdsp\buffer.c">
+      <Filter>libspeexdsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeexdsp\fftwrap.c">
+      <Filter>libspeexdsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeexdsp\filterbank.c">
+      <Filter>libspeexdsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeexdsp\jitter.c">
+      <Filter>libspeexdsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeexdsp\kiss_fft.c">
+      <Filter>libspeexdsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeexdsp\kiss_fftr.c">
+      <Filter>libspeexdsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeexdsp\mdf.c">
+      <Filter>libspeexdsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeexdsp\preprocess.c">
+      <Filter>libspeexdsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeexdsp\resample.c">
+      <Filter>libspeexdsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeexdsp\scal.c">
+      <Filter>libspeexdsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\libspeex\libspeexdsp\smallft.c">
+      <Filter>libspeexdsp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\vendor\libspeex\premake5.lua" />
+  </ItemGroup>
+</Project>
