@@ -1,0 +1,488 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Nightly|Win32">
+      <Configuration>Nightly</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Nightly|x64">
+      <Configuration>Nightly</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D08541B6-3C65-C051-457D-4B28B1DB26B3}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>mbedtls</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Nightly|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Nightly|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Nightly|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Nightly|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>bin\x86\Debug\</OutDir>
+    <IntDir>obj\x86\Debug\mbedtls\</IntDir>
+    <TargetName>mbedtls_d</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>bin\x64\Debug\</OutDir>
+    <IntDir>obj\x64\Debug\mbedtls\</IntDir>
+    <TargetName>mbedtls_d</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>bin\x86\Release\</OutDir>
+    <IntDir>obj\x86\Release\mbedtls\</IntDir>
+    <TargetName>mbedtls</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>bin\x64\Release\</OutDir>
+    <IntDir>obj\x64\Release\mbedtls\</IntDir>
+    <TargetName>mbedtls</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Nightly|Win32'">
+    <OutDir>bin\x86\Nightly\</OutDir>
+    <IntDir>obj\x86\Nightly\mbedtls\</IntDir>
+    <TargetName>mbedtls</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Nightly|x64'">
+    <OutDir>bin\x64\Nightly\</OutDir>
+    <IntDir>obj\x64\Nightly\mbedtls\</IntDir>
+    <TargetName>mbedtls</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;MTA_DEBUG;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);DEBUG;KRML_VERIFIED_UINT128;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\mbedtls\2.25.0\include;..\vendor\mbedtls\2.25.0\library;..\vendor\mbedtls\2.25.0\3rdparty\everest\include;..\vendor\mbedtls\2.25.0\3rdparty\everest\include\everest;..\vendor\mbedtls\2.25.0\3rdparty\everest\include\everest\kremlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;MTA_DEBUG;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);DEBUG;KRML_VERIFIED_UINT128;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\mbedtls\2.25.0\include;..\vendor\mbedtls\2.25.0\library;..\vendor\mbedtls\2.25.0\3rdparty\everest\include;..\vendor\mbedtls\2.25.0\3rdparty\everest\include\everest;..\vendor\mbedtls\2.25.0\3rdparty\everest\include\everest\kremlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);KRML_VERIFIED_UINT128;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\mbedtls\2.25.0\include;..\vendor\mbedtls\2.25.0\library;..\vendor\mbedtls\2.25.0\3rdparty\everest\include;..\vendor\mbedtls\2.25.0\3rdparty\everest\include\everest;..\vendor\mbedtls\2.25.0\3rdparty\everest\include\everest\kremlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);KRML_VERIFIED_UINT128;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\mbedtls\2.25.0\include;..\vendor\mbedtls\2.25.0\library;..\vendor\mbedtls\2.25.0\3rdparty\everest\include;..\vendor\mbedtls\2.25.0\3rdparty\everest\include\everest;..\vendor\mbedtls\2.25.0\3rdparty\everest\include\everest\kremlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Nightly|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);KRML_VERIFIED_UINT128;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\mbedtls\2.25.0\include;..\vendor\mbedtls\2.25.0\library;..\vendor\mbedtls\2.25.0\3rdparty\everest\include;..\vendor\mbedtls\2.25.0\3rdparty\everest\include\everest;..\vendor\mbedtls\2.25.0\3rdparty\everest\include\everest\kremlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Nightly|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);KRML_VERIFIED_UINT128;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\mbedtls\2.25.0\include;..\vendor\mbedtls\2.25.0\library;..\vendor\mbedtls\2.25.0\3rdparty\everest\include;..\vendor\mbedtls\2.25.0\3rdparty\everest\include\everest;..\vendor\mbedtls\2.25.0\3rdparty\everest\include\everest\kremlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\3rdparty\everest\include\everest\Hacl_Curve25519.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\3rdparty\everest\include\everest\everest.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\3rdparty\everest\include\everest\kremlib.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\3rdparty\everest\include\everest\x25519.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\aes.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\aesni.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\arc4.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\aria.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\asn1.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\asn1write.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\base64.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\bignum.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\blowfish.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\bn_mul.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\camellia.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\ccm.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\certs.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\chacha20.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\chachapoly.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\check_config.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\cipher.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\cipher_internal.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\cmac.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\compat-1.3.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\config.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\config_psa.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\ctr_drbg.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\debug.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\des.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\dhm.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\ecdh.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\ecdsa.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\ecjpake.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\ecp.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\ecp_internal.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\entropy.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\entropy_poll.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\error.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\gcm.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\havege.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\hkdf.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\hmac_drbg.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\md.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\md2.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\md4.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\md5.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\md_internal.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\memory_buffer_alloc.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\net.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\net_sockets.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\nist_kw.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\oid.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\padlock.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\pem.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\pk.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\pk_internal.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\pkcs11.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\pkcs12.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\pkcs5.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\platform.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\platform_time.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\platform_util.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\poly1305.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\psa_util.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\ripemd160.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\rsa.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\rsa_internal.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\sha1.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\sha256.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\sha512.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\ssl.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\ssl_cache.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\ssl_ciphersuites.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\ssl_cookie.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\ssl_internal.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\ssl_ticket.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\threading.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\timing.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\version.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\x509.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\x509_crl.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\x509_crt.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\x509_csr.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\mbedtls\xtea.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\psa\crypto.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\psa\crypto_accel_driver.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\psa\crypto_compat.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\psa\crypto_config.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\psa\crypto_driver_common.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\psa\crypto_entropy_driver.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\psa\crypto_extra.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\psa\crypto_platform.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\psa\crypto_se_driver.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\psa\crypto_sizes.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\psa\crypto_struct.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\psa\crypto_types.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\include\psa\crypto_values.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\library\check_crypto_config.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\library\common.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\library\psa_crypto_core.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\library\psa_crypto_driver_wrappers.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\library\psa_crypto_invasive.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\library\psa_crypto_its.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\library\psa_crypto_se.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\library\psa_crypto_service_integration.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\library\psa_crypto_slot_management.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\library\psa_crypto_storage.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\library\ssl_invasive.h" />
+    <ClInclude Include="..\vendor\mbedtls\2.25.0\library\ssl_tls13_keys.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\3rdparty\everest\library\Hacl_Curve25519_joined.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\3rdparty\everest\library\everest.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\3rdparty\everest\library\kremlib\FStar_UInt128_extracted.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\3rdparty\everest\library\kremlib\FStar_UInt64_FStar_UInt32_FStar_UInt16_FStar_UInt8.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\3rdparty\everest\library\legacy\Hacl_Curve25519.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\3rdparty\everest\library\x25519.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\aes.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\aesni.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\arc4.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\aria.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\asn1parse.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\asn1write.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\base64.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\bignum.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\blowfish.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\camellia.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\ccm.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\certs.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\chacha20.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\chachapoly.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\cipher.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\cipher_wrap.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\cmac.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\ctr_drbg.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\debug.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\des.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\dhm.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\ecdh.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\ecdsa.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\ecjpake.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\ecp.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\ecp_curves.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\entropy.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\entropy_poll.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\error.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\gcm.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\havege.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\hkdf.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\hmac_drbg.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\md.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\md2.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\md4.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\md5.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\memory_buffer_alloc.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\net_sockets.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\nist_kw.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\oid.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\padlock.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\pem.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\pk.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\pk_wrap.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\pkcs11.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\pkcs12.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\pkcs5.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\pkparse.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\pkwrite.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\platform.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\platform_util.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\poly1305.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\psa_crypto.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\psa_crypto_driver_wrappers.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\psa_crypto_se.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\psa_crypto_slot_management.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\psa_crypto_storage.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\psa_its_file.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\ripemd160.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\rsa.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\rsa_internal.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\sha1.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\sha256.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\sha512.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\ssl_cache.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\ssl_ciphersuites.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\ssl_cli.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\ssl_cookie.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\ssl_msg.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\ssl_srv.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\ssl_ticket.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\ssl_tls.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\ssl_tls13_keys.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\threading.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\timing.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\version.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\version_features.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\x509.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\x509_create.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\x509_crl.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\x509_crt.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\x509_csr.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\x509write_crt.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\x509write_csr.c" />
+    <ClCompile Include="..\vendor\mbedtls\2.25.0\library\xtea.c" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,1500 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client">
+      <UniqueIdentifier>{BB3A0A54-A7F2-4BA1-10FA-24FDFCD0E691}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\apple">
+      <UniqueIdentifier>{9C2ED514-8827-F466-B159-D9EB9DB1D372}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\apple\Framework">
+      <UniqueIdentifier>{199EE7CD-05AE-939E-6E67-F8BC5A968237}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\ios">
+      <UniqueIdentifier>{75B3EA6F-6181-DE75-4A15-4F9C3682BADA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\ios\handler">
+      <UniqueIdentifier>{62B7CF89-4EB1-F8DB-371E-8FEC23B75E48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\linux">
+      <UniqueIdentifier>{3A5E9815-2657-B767-4F89-9CEC3BE19673}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\linux\crash_generation">
+      <UniqueIdentifier>{855F3273-F1CD-87F2-3AB7-42F2A6647D8E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\linux\dump_writer_common">
+      <UniqueIdentifier>{230F313B-8FC8-9BE5-1828-B6BF84E05155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\linux\handler">
+      <UniqueIdentifier>{27574AD3-137C-9953-3CC7-7EE3284B9871}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\linux\log">
+      <UniqueIdentifier>{2B8BCCCA-171A-5694-C038-6A8FACA6663A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\linux\microdump_writer">
+      <UniqueIdentifier>{55C6503C-C134-A6BB-0A1E-61BB76CB9B57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\linux\minidump_writer">
+      <UniqueIdentifier>{E88EAD60-D4DF-98A2-FD43-8764E9F32B0C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\mac">
+      <UniqueIdentifier>{9BC2EA6F-8790-DE75-7024-4F9C5C91BADA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\mac\Framework">
+      <UniqueIdentifier>{D87CA9DA-C4A1-F85A-EDEC-DDEAD970F778}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\mac\crash_generation">
+      <UniqueIdentifier>{06327CD7-7215-8B17-7B18-B953E77A5168}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\mac\handler">
+      <UniqueIdentifier>{888CE71E-7486-1071-5DF3-A681498C76DD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\mac\handler\testcases">
+      <UniqueIdentifier>{C6018A1E-B252-7560-DBB6-6322C76608CA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\mac\sender">
+      <UniqueIdentifier>{6B816C49-D7ED-2744-A0E1-BFA10C0D4AAC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\mac\testapp">
+      <UniqueIdentifier>{4B1B5AC4-3715-8316-2082-19270C1BE982}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\mac\tests">
+      <UniqueIdentifier>{BDF505EB-A984-8FB4-52A3-A3AF3E11A05A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\solaris">
+      <UniqueIdentifier>{A73DD005-9321-915B-FC81-8BAEE8847BDD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\solaris\handler">
+      <UniqueIdentifier>{9453ED09-8063-99DA-E91C-FEF8D54B8873}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\windows">
+      <UniqueIdentifier>{1508E02B-01EC-A081-6A4C-9BD4564F8B03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\windows\common">
+      <UniqueIdentifier>{CD9FE390-3962-171B-8212-A6A7EE13F0F8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\windows\crash_generation">
+      <UniqueIdentifier>{C05AD009-2C14-3BB4-B573-558E212CF123}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\windows\handler">
+      <UniqueIdentifier>{02AC9F0D-EEBB-4BDE-5775-B0FC43A43A77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\windows\sender">
+      <UniqueIdentifier>{A59981B5-115C-B53F-5A0C-44CCC60D8E1D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\windows\tests">
+      <UniqueIdentifier>{B7EE5B2C-A313-ABAC-CC5E-903CB8E2A9CA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\windows\tests\crash_generation_app">
+      <UniqueIdentifier>{225EA413-8ECE-A68C-57ED-2015C31CDF8D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\client\windows\unittests">
+      <UniqueIdentifier>{F772E482-E32D-D42E-8CE5-4C79787F1EBF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common">
+      <UniqueIdentifier>{E5D74254-D18F-84A1-3A97-5DFD266E1F92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common\android">
+      <UniqueIdentifier>{35784BBF-215C-0C15-8ABC-066876BFF696}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common\android\include">
+      <UniqueIdentifier>{A8049447-9414-4018-FDCD-A436E9FC2EB1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common\android\include\sys">
+      <UniqueIdentifier>{B6D7F145-A2FD-BBAC-8B43-41787708E178}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common\android\testing">
+      <UniqueIdentifier>{A2EC7B82-8EFC-2753-F7B5-8C71E3E416EC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common\android\testing\include">
+      <UniqueIdentifier>{1596F436-01D2-F7A0-6AE4-0F98563FA0BB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common\dwarf">
+      <UniqueIdentifier>{68649777-545D-B6C9-7D8F-9B4E69E795D5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common\linux">
+      <UniqueIdentifier>{E4B22078-D0AB-3FCA-F9DD-244FE5351FD6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common\linux\tests">
+      <UniqueIdentifier>{C6384B13-B232-7465-9B9F-0A768738DAD1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common\mac">
+      <UniqueIdentifier>{C5E421E8-B1B2-15EE-9A46-861486B3F152}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common\mac\testing">
+      <UniqueIdentifier>{32E9FD26-1EE3-2679-0750-BD89F3E88CE5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common\solaris">
+      <UniqueIdentifier>{D164C02B-BD48-8181-26A9-7BD412AC6B03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common\testdata">
+      <UniqueIdentifier>{6E93EC9F-DAF4-C9AD-6362-1060CFC2006D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common\tests">
+      <UniqueIdentifier>{875AAF78-7353-CECA-9C85-B34F88DDADD6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common\windows">
+      <UniqueIdentifier>{3F2FD051-2B13-91A7-9473-8BFA80767B29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\google_breakpad">
+      <UniqueIdentifier>{124B0CF3-7EAC-E900-071A-30B3737A20C0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\google_breakpad\common">
+      <UniqueIdentifier>{2A048184-1614-2D55-7FCD-91736BFC1BEE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\google_breakpad\processor">
+      <UniqueIdentifier>{A16B31F4-0D84-181E-D630-A8B74208ADB7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\processor">
+      <UniqueIdentifier>{7CE96CAC-E8A9-E8E2-B1E4-31601D642DBF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\third_party">
+      <UniqueIdentifier>{A6E46709-1270-D5CD-1B81-58C2878B31CE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\third_party\curl">
+      <UniqueIdentifier>{6B86B960-5715-432A-0034-5725ECA153D0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\third_party\libdisasm">
+      <UniqueIdentifier>{0DF7DE73-79B9-12FE-C269-A18A2E6BEBDB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\third_party\linux">
+      <UniqueIdentifier>{658C8678-D1F8-4173-9AEC-D9D0061864DB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\third_party\linux\include">
+      <UniqueIdentifier>{D848F89B-4461-DFC5-0D0E-6F5F79E5735F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\third_party\linux\include\gflags">
+      <UniqueIdentifier>{BB0C0A6A-A7F3-CB61-5044-327F3C0A45C8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\third_party\lss">
+      <UniqueIdentifier>{2768918E-93C9-6E9C-1C37-B54E8897A55B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\third_party\mac_headers">
+      <UniqueIdentifier>{01A109B6-6DAE-379C-F694-338762A10353}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\third_party\mac_headers\architecture">
+      <UniqueIdentifier>{1350FB3B-FFCC-EE7E-284A-EF9214268B12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\third_party\mac_headers\i386">
+      <UniqueIdentifier>{7A5D1878-66AE-03BA-8F12-F27B7BC29623}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\third_party\mac_headers\mach">
+      <UniqueIdentifier>{69581B78-55A9-06BA-7E0D-F57B6ABD9923}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\third_party\mac_headers\mach\i386">
+      <UniqueIdentifier>{E2F56CFF-4EBA-6BEF-1720-9CB983A30725}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\third_party\mac_headers\mach\machine">
+      <UniqueIdentifier>{6D581E01-59D5-1144-8252-12586E2EAED7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\third_party\mac_headers\mach-o">
+      <UniqueIdentifier>{E51C53EC-D158-5656-3A6B-6E4D26C6FE70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\third_party\musl">
+      <UniqueIdentifier>{5602BF60-4291-482A-EBAF-5C25D71D59D0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\third_party\musl\include">
+      <UniqueIdentifier>{C91FFCC4-B5DA-EB70-5E92-64BB4A2C3601}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tools">
+      <UniqueIdentifier>{8DED2DB6-F957-E22C-4296-93D2AE3FC081}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tools\linux">
+      <UniqueIdentifier>{8C667F69-F8F1-EC2D-0103-70226D0D492E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tools\linux\md2core">
+      <UniqueIdentifier>{E7FE39D5-5336-826C-5C40-E68FC8F6A865}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tools\mac">
+      <UniqueIdentifier>{6D8E6FCF-D94E-EB05-A289-34830E0930E2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tools\mac\crash_report">
+      <UniqueIdentifier>{0846C962-F455-7533-5D0F-DA51493E64CC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tools\mac\upload_system_symbols">
+      <UniqueIdentifier>{6D9F1B45-D958-86EF-62B8-A0C9CE703C5F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tools\windows">
+      <UniqueIdentifier>{E76CAA15-5383-A8AB-9CFA-33CD08507933}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tools\windows\converter">
+      <UniqueIdentifier>{CE9D0F8E-3AAB-3D74-C391-395F2F9E092B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\vendor\google-breakpad\src\breakpad_googletest_includes.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\apple\Framework\BreakpadDefines.h">
+      <Filter>src\client\apple\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\ios\Breakpad.h">
+      <Filter>src\client\ios</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\ios\BreakpadController.h">
+      <Filter>src\client\ios</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\ios\exception_handler_no_mach.h">
+      <Filter>src\client\ios</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\ios\handler\ios_exception_minidump_generator.h">
+      <Filter>src\client\ios\handler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\linux\crash_generation\client_info.h">
+      <Filter>src\client\linux\crash_generation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\linux\crash_generation\crash_generation_client.h">
+      <Filter>src\client\linux\crash_generation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\linux\crash_generation\crash_generation_server.h">
+      <Filter>src\client\linux\crash_generation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\linux\dump_writer_common\mapping_info.h">
+      <Filter>src\client\linux\dump_writer_common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\linux\dump_writer_common\raw_context_cpu.h">
+      <Filter>src\client\linux\dump_writer_common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\linux\dump_writer_common\thread_info.h">
+      <Filter>src\client\linux\dump_writer_common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\linux\dump_writer_common\ucontext_reader.h">
+      <Filter>src\client\linux\dump_writer_common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\linux\handler\exception_handler.h">
+      <Filter>src\client\linux\handler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\linux\handler\microdump_extra_info.h">
+      <Filter>src\client\linux\handler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\linux\handler\minidump_descriptor.h">
+      <Filter>src\client\linux\handler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\linux\log\log.h">
+      <Filter>src\client\linux\log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\linux\microdump_writer\microdump_writer.h">
+      <Filter>src\client\linux\microdump_writer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\linux\minidump_writer\cpu_set.h">
+      <Filter>src\client\linux\minidump_writer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\linux\minidump_writer\directory_reader.h">
+      <Filter>src\client\linux\minidump_writer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\linux\minidump_writer\line_reader.h">
+      <Filter>src\client\linux\minidump_writer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\linux\minidump_writer\linux_core_dumper.h">
+      <Filter>src\client\linux\minidump_writer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\linux\minidump_writer\linux_dumper.h">
+      <Filter>src\client\linux\minidump_writer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\linux\minidump_writer\linux_ptrace_dumper.h">
+      <Filter>src\client\linux\minidump_writer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\linux\minidump_writer\minidump_writer.h">
+      <Filter>src\client\linux\minidump_writer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\linux\minidump_writer\minidump_writer_unittest_utils.h">
+      <Filter>src\client\linux\minidump_writer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\linux\minidump_writer\proc_cpuinfo_reader.h">
+      <Filter>src\client\linux\minidump_writer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\Framework\Breakpad.h">
+      <Filter>src\client\mac\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\Framework\OnDemandServer.h">
+      <Filter>src\client\mac\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\crash_generation\ConfigFile.h">
+      <Filter>src\client\mac\crash_generation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\crash_generation\Inspector.h">
+      <Filter>src\client\mac\crash_generation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\crash_generation\client_info.h">
+      <Filter>src\client\mac\crash_generation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\crash_generation\crash_generation_client.h">
+      <Filter>src\client\mac\crash_generation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\crash_generation\crash_generation_server.h">
+      <Filter>src\client\mac\crash_generation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\handler\breakpad_nlist_64.h">
+      <Filter>src\client\mac\handler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\handler\dynamic_images.h">
+      <Filter>src\client\mac\handler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\handler\exception_handler.h">
+      <Filter>src\client\mac\handler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\handler\mach_vm_compat.h">
+      <Filter>src\client\mac\handler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\handler\minidump_generator.h">
+      <Filter>src\client\mac\handler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\handler\protected_memory_allocator.h">
+      <Filter>src\client\mac\handler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\handler\testcases\DynamicImagesTests.h">
+      <Filter>src\client\mac\handler\testcases</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\handler\testcases\breakpad_nlist_test.h">
+      <Filter>src\client\mac\handler\testcases</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\handler\testcases\dwarftests.h">
+      <Filter>src\client\mac\handler\testcases</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\handler\ucontext_compat.h">
+      <Filter>src\client\mac\handler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\sender\crash_report_sender.h">
+      <Filter>src\client\mac\sender</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\sender\uploader.h">
+      <Filter>src\client\mac\sender</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\testapp\Controller.h">
+      <Filter>src\client\mac\testapp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\testapp\TestClass.h">
+      <Filter>src\client\mac\testapp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\tests\spawn_child_process.h">
+      <Filter>src\client\mac\tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\mac\tests\testlogging.h">
+      <Filter>src\client\mac\tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\minidump_file_writer-inl.h">
+      <Filter>src\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\minidump_file_writer.h">
+      <Filter>src\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\solaris\handler\exception_handler.h">
+      <Filter>src\client\solaris\handler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\solaris\handler\minidump_generator.h">
+      <Filter>src\client\solaris\handler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\solaris\handler\solaris_lwp.h">
+      <Filter>src\client\solaris\handler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\windows\common\auto_critical_section.h">
+      <Filter>src\client\windows\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\windows\common\ipc_protocol.h">
+      <Filter>src\client\windows\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\windows\crash_generation\client_info.h">
+      <Filter>src\client\windows\crash_generation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\windows\crash_generation\crash_generation_client.h">
+      <Filter>src\client\windows\crash_generation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\windows\crash_generation\crash_generation_server.h">
+      <Filter>src\client\windows\crash_generation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\windows\crash_generation\minidump_generator.h">
+      <Filter>src\client\windows\crash_generation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\windows\handler\exception_handler.h">
+      <Filter>src\client\windows\handler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\windows\sender\crash_report_sender.h">
+      <Filter>src\client\windows\sender</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\windows\tests\crash_generation_app\abstract_class.h">
+      <Filter>src\client\windows\tests\crash_generation_app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\windows\tests\crash_generation_app\crash_generation_app.h">
+      <Filter>src\client\windows\tests\crash_generation_app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\windows\tests\crash_generation_app\resource.h">
+      <Filter>src\client\windows\tests\crash_generation_app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\windows\unittests\dump_analysis.h">
+      <Filter>src\client\windows\unittests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\client\windows\unittests\exception_handler_test.h">
+      <Filter>src\client\windows\unittests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\android\include\elf.h">
+      <Filter>src\common\android\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\android\include\link.h">
+      <Filter>src\common\android\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\android\include\sgidefs.h">
+      <Filter>src\common\android\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\android\include\stab.h">
+      <Filter>src\common\android\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\android\include\sys\procfs.h">
+      <Filter>src\common\android\include\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\android\include\sys\signal.h">
+      <Filter>src\common\android\include\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\android\include\sys\user.h">
+      <Filter>src\common\android\include\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\android\include\ucontext.h">
+      <Filter>src\common\android\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\android\testing\include\wchar.h">
+      <Filter>src\common\android\testing\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\android\testing\mkdtemp.h">
+      <Filter>src\common\android\testing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\android\testing\pthread_fixes.h">
+      <Filter>src\common\android\testing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\android\ucontext_constants.h">
+      <Filter>src\common\android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\basictypes.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\byte_cursor.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\convert_UTF.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\dwarf\bytereader-inl.h">
+      <Filter>src\common\dwarf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\dwarf\bytereader.h">
+      <Filter>src\common\dwarf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\dwarf\cfi_assembler.h">
+      <Filter>src\common\dwarf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\dwarf\dwarf2diehandler.h">
+      <Filter>src\common\dwarf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\dwarf\dwarf2enums.h">
+      <Filter>src\common\dwarf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\dwarf\dwarf2reader.h">
+      <Filter>src\common\dwarf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\dwarf\dwarf2reader_test_common.h">
+      <Filter>src\common\dwarf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\dwarf\elf_reader.h">
+      <Filter>src\common\dwarf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\dwarf\functioninfo.h">
+      <Filter>src\common\dwarf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\dwarf\line_state_machine.h">
+      <Filter>src\common\dwarf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\dwarf\types.h">
+      <Filter>src\common\dwarf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\dwarf_cfi_to_module.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\dwarf_cu_to_module.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\dwarf_line_to_module.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\language.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\linux\crc32.h">
+      <Filter>src\common\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\linux\dump_symbols.h">
+      <Filter>src\common\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\linux\eintr_wrapper.h">
+      <Filter>src\common\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\linux\elf_core_dump.h">
+      <Filter>src\common\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\linux\elf_gnu_compat.h">
+      <Filter>src\common\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\linux\elf_symbols_to_module.h">
+      <Filter>src\common\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\linux\elfutils-inl.h">
+      <Filter>src\common\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\linux\elfutils.h">
+      <Filter>src\common\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\linux\file_id.h">
+      <Filter>src\common\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\linux\google_crashdump_uploader.h">
+      <Filter>src\common\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\linux\guid_creator.h">
+      <Filter>src\common\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\linux\http_upload.h">
+      <Filter>src\common\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\linux\ignore_ret.h">
+      <Filter>src\common\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\linux\libcurl_wrapper.h">
+      <Filter>src\common\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\linux\linux_libc_support.h">
+      <Filter>src\common\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\linux\memory_mapped_file.h">
+      <Filter>src\common\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\linux\safe_readlink.h">
+      <Filter>src\common\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\linux\symbol_upload.h">
+      <Filter>src\common\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\linux\synth_elf.h">
+      <Filter>src\common\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\linux\tests\auto_testfile.h">
+      <Filter>src\common\linux\tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\linux\tests\crash_generator.h">
+      <Filter>src\common\linux\tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\long_string_dictionary.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\mac\GTMDefines.h">
+      <Filter>src\common\mac</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\mac\GTMLogger.h">
+      <Filter>src\common\mac</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\mac\HTTPMultipartUpload.h">
+      <Filter>src\common\mac</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\mac\MachIPC.h">
+      <Filter>src\common\mac</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\mac\arch_utilities.h">
+      <Filter>src\common\mac</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\mac\bootstrap_compat.h">
+      <Filter>src\common\mac</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\mac\byteswap.h">
+      <Filter>src\common\mac</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\mac\dump_syms.h">
+      <Filter>src\common\mac</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\mac\file_id.h">
+      <Filter>src\common\mac</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\mac\launch_reporter.h">
+      <Filter>src\common\mac</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\mac\macho_id.h">
+      <Filter>src\common\mac</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\mac\macho_reader.h">
+      <Filter>src\common\mac</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\mac\macho_utilities.h">
+      <Filter>src\common\mac</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\mac\macho_walker.h">
+      <Filter>src\common\mac</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\mac\scoped_task_suspend-inl.h">
+      <Filter>src\common\mac</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\mac\string_utilities.h">
+      <Filter>src\common\mac</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\mac\super_fat_arch.h">
+      <Filter>src\common\mac</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\mac\testing\GTMSenTestCase.h">
+      <Filter>src\common\mac\testing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\md5.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\memory_allocator.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\memory_range.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\minidump_type_helper.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\module.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\path_helper.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\scoped_ptr.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\simple_string_dictionary.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\solaris\dump_symbols.h">
+      <Filter>src\common\solaris</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\solaris\file_id.h">
+      <Filter>src\common\solaris</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\solaris\guid_creator.h">
+      <Filter>src\common\solaris</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\solaris\message_output.h">
+      <Filter>src\common\solaris</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\stabs_reader.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\stabs_to_module.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\stdio_wrapper.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\string_conversion.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\symbol_data.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\test_assembler.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\testdata\func-line-pairing.h">
+      <Filter>src\common\testdata</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\tests\auto_tempdir.h">
+      <Filter>src\common\tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\tests\file_utils.h">
+      <Filter>src\common\tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\unordered.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\using_std_string.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\windows\dia_util.h">
+      <Filter>src\common\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\windows\guid_string.h">
+      <Filter>src\common\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\windows\http_upload.h">
+      <Filter>src\common\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\windows\omap.h">
+      <Filter>src\common\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\windows\omap_internal.h">
+      <Filter>src\common\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\windows\pdb_source_line_writer.h">
+      <Filter>src\common\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\common\windows\string_utils-inl.h">
+      <Filter>src\common\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\common\breakpad_types.h">
+      <Filter>src\google_breakpad\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\common\minidump_cpu_amd64.h">
+      <Filter>src\google_breakpad\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\common\minidump_cpu_arm.h">
+      <Filter>src\google_breakpad\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\common\minidump_cpu_arm64.h">
+      <Filter>src\google_breakpad\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\common\minidump_cpu_mips.h">
+      <Filter>src\google_breakpad\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\common\minidump_cpu_ppc.h">
+      <Filter>src\google_breakpad\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\common\minidump_cpu_ppc64.h">
+      <Filter>src\google_breakpad\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\common\minidump_cpu_sparc.h">
+      <Filter>src\google_breakpad\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\common\minidump_cpu_x86.h">
+      <Filter>src\google_breakpad\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\common\minidump_exception_linux.h">
+      <Filter>src\google_breakpad\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\common\minidump_exception_mac.h">
+      <Filter>src\google_breakpad\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\common\minidump_exception_ps3.h">
+      <Filter>src\google_breakpad\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\common\minidump_exception_solaris.h">
+      <Filter>src\google_breakpad\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\common\minidump_exception_win32.h">
+      <Filter>src\google_breakpad\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\common\minidump_format.h">
+      <Filter>src\google_breakpad\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\common\minidump_size.h">
+      <Filter>src\google_breakpad\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\basic_source_line_resolver.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\call_stack.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\code_module.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\code_modules.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\dump_context.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\dump_object.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\exploitability.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\fast_source_line_resolver.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\memory_region.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\microdump.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\microdump_processor.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\minidump.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\minidump_processor.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\proc_maps_linux.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\process_result.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\process_state.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\source_line_resolver_base.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\source_line_resolver_interface.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\stack_frame.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\stack_frame_cpu.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\stack_frame_symbolizer.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\stackwalker.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\symbol_supplier.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\google_breakpad\processor\system_info.h">
+      <Filter>src\google_breakpad\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\address_map-inl.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\address_map.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\basic_code_module.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\basic_code_modules.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\basic_source_line_resolver_types.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\cfi_frame_info-inl.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\cfi_frame_info.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\contained_range_map-inl.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\contained_range_map.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\disassembler_x86.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\exploitability_linux.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\exploitability_win.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\fast_source_line_resolver_types.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\linked_ptr.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\logging.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\map_serializers-inl.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\map_serializers.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\module_comparer.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\module_factory.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\module_serializer.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\pathname_stripper.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\postfix_evaluator-inl.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\postfix_evaluator.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\range_map-inl.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\range_map.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\simple_serializer-inl.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\simple_serializer.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\simple_symbol_supplier.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\source_line_resolver_base_types.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\stackwalk_common.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\stackwalker_address_list.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\stackwalker_amd64.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\stackwalker_arm.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\stackwalker_arm64.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\stackwalker_mips.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\stackwalker_ppc.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\stackwalker_ppc64.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\stackwalker_sparc.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\stackwalker_unittest_utils.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\stackwalker_x86.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\static_address_map-inl.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\static_address_map.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\static_contained_range_map-inl.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\static_contained_range_map.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\static_map-inl.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\static_map.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\static_map_iterator-inl.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\static_map_iterator.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\static_range_map-inl.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\static_range_map.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\symbolic_constants_win.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\synth_minidump.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\synth_minidump_unittest_data.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\tokenize.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\processor\windows_frame_info.h">
+      <Filter>src\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\curl\curl.h">
+      <Filter>src\third_party\curl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\curl\curlbuild.h">
+      <Filter>src\third_party\curl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\curl\curlrules.h">
+      <Filter>src\third_party\curl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\curl\curlver.h">
+      <Filter>src\third_party\curl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\curl\easy.h">
+      <Filter>src\third_party\curl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\curl\mprintf.h">
+      <Filter>src\third_party\curl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\curl\multi.h">
+      <Filter>src\third_party\curl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\curl\stdcheaders.h">
+      <Filter>src\third_party\curl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\curl\typecheck-gcc.h">
+      <Filter>src\third_party\curl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\curl\types.h">
+      <Filter>src\third_party\curl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\libdisasm\ia32_implicit.h">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\libdisasm\ia32_insn.h">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\libdisasm\ia32_invariant.h">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\libdisasm\ia32_modrm.h">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\libdisasm\ia32_opcode_tables.h">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\libdisasm\ia32_operand.h">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\libdisasm\ia32_reg.h">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\libdisasm\ia32_settings.h">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\libdisasm\libdis.h">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\libdisasm\qword.h">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\libdisasm\x86_imm.h">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\libdisasm\x86_operand_list.h">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\linux\include\gflags\gflags_completions.h">
+      <Filter>src\third_party\linux\include\gflags</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\lss\linux_syscall_support.h">
+      <Filter>src\third_party\lss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\mac_headers\architecture\byte_order.h">
+      <Filter>src\third_party\mac_headers\architecture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\mac_headers\i386\_types.h">
+      <Filter>src\third_party\mac_headers\i386</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\mac_headers\mach-o\arch.h">
+      <Filter>src\third_party\mac_headers\mach-o</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\mac_headers\mach-o\fat.h">
+      <Filter>src\third_party\mac_headers\mach-o</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\mac_headers\mach-o\loader.h">
+      <Filter>src\third_party\mac_headers\mach-o</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\mac_headers\mach-o\nlist.h">
+      <Filter>src\third_party\mac_headers\mach-o</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\mac_headers\mach\boolean.h">
+      <Filter>src\third_party\mac_headers\mach</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\mac_headers\mach\i386\boolean.h">
+      <Filter>src\third_party\mac_headers\mach\i386</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\mac_headers\mach\i386\vm_param.h">
+      <Filter>src\third_party\mac_headers\mach\i386</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\mac_headers\mach\i386\vm_types.h">
+      <Filter>src\third_party\mac_headers\mach\i386</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\mac_headers\mach\machine.h">
+      <Filter>src\third_party\mac_headers\mach</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\mac_headers\mach\machine\boolean.h">
+      <Filter>src\third_party\mac_headers\mach\machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\mac_headers\mach\machine\thread_state.h">
+      <Filter>src\third_party\mac_headers\mach\machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\mac_headers\mach\machine\thread_status.h">
+      <Filter>src\third_party\mac_headers\mach\machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\mac_headers\mach\machine\vm_types.h">
+      <Filter>src\third_party\mac_headers\mach\machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\mac_headers\mach\thread_status.h">
+      <Filter>src\third_party\mac_headers\mach</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\mac_headers\mach\vm_prot.h">
+      <Filter>src\third_party\mac_headers\mach</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\third_party\musl\include\elf.h">
+      <Filter>src\third_party\musl\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\tools\linux\md2core\minidump_memory_range.h">
+      <Filter>src\tools\linux\md2core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\tools\mac\crash_report\on_demand_symbol_supplier.h">
+      <Filter>src\tools\mac\crash_report</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\tools\mac\upload_system_symbols\arch_constants.h">
+      <Filter>src\tools\mac\upload_system_symbols</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\google-breakpad\src\tools\windows\converter\ms_symbol_server_converter.h">
+      <Filter>src\tools\windows\converter</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\vendor\google-breakpad\src\client\minidump_file_writer.cc">
+      <Filter>src\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\client\minidump_file_writer_unittest.cc">
+      <Filter>src\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\byte_cursor_unittest.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\convert_UTF.c">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\dwarf_cfi_to_module.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\dwarf_cfi_to_module_unittest.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\dwarf_cu_to_module.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\dwarf_cu_to_module_unittest.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\dwarf_line_to_module.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\dwarf_line_to_module_unittest.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\language.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\long_string_dictionary.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\long_string_dictionary_unittest.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\md5.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\memory_allocator_unittest.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\memory_range_unittest.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\module.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\module_unittest.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\path_helper.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\simple_string_dictionary.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\simple_string_dictionary_unittest.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\stabs_reader.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\stabs_reader_unittest.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\stabs_to_module.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\stabs_to_module_unittest.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\string_conversion.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\test_assembler.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\common\test_assembler_unittest.cc">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\address_map_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\basic_code_modules.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\basic_source_line_resolver.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\basic_source_line_resolver_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\call_stack.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\cfi_frame_info.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\cfi_frame_info_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\contained_range_map_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\disassembler_x86.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\disassembler_x86_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\dump_context.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\dump_object.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\exploitability.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\exploitability_linux.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\exploitability_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\exploitability_win.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\fast_source_line_resolver.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\fast_source_line_resolver_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\logging.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\map_serializers_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\microdump.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\microdump_processor.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\microdump_processor_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\microdump_stackwalk.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\minidump.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\minidump_dump.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\minidump_processor.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\minidump_processor_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\minidump_stackwalk.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\minidump_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\module_comparer.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\module_serializer.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\pathname_stripper.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\pathname_stripper_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\postfix_evaluator_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\proc_maps_linux.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\proc_maps_linux_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\process_state.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\range_map_shrink_down_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\range_map_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\simple_symbol_supplier.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\source_line_resolver_base.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\stack_frame_cpu.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\stack_frame_symbolizer.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\stackwalk_common.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\stackwalker.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\stackwalker_address_list.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\stackwalker_address_list_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\stackwalker_amd64.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\stackwalker_amd64_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\stackwalker_arm.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\stackwalker_arm64.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\stackwalker_arm64_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\stackwalker_arm_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\stackwalker_mips.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\stackwalker_mips64_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\stackwalker_mips_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\stackwalker_ppc.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\stackwalker_ppc64.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\stackwalker_selftest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\stackwalker_sparc.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\stackwalker_x86.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\stackwalker_x86_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\static_address_map_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\static_contained_range_map_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\static_map_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\static_range_map_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\symbolic_constants_win.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\synth_minidump.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\synth_minidump_unittest.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\processor\tokenize.cc">
+      <Filter>src\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\third_party\libdisasm\ia32_implicit.c">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\third_party\libdisasm\ia32_insn.c">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\third_party\libdisasm\ia32_invariant.c">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\third_party\libdisasm\ia32_modrm.c">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\third_party\libdisasm\ia32_opcode_tables.c">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\third_party\libdisasm\ia32_operand.c">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\third_party\libdisasm\ia32_reg.c">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\third_party\libdisasm\ia32_settings.c">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\third_party\libdisasm\x86_disasm.c">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\third_party\libdisasm\x86_format.c">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\third_party\libdisasm\x86_imm.c">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\third_party\libdisasm\x86_insn.c">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\third_party\libdisasm\x86_misc.c">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\google-breakpad\src\third_party\libdisasm\x86_operand_list.c">
+      <Filter>src\third_party\libdisasm</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\vendor\google-breakpad\premake5.lua" />
+  </ItemGroup>
+</Project>

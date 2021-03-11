@@ -1,0 +1,585 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Nightly|Win32">
+      <Configuration>Nightly</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Nightly|x64">
+      <Configuration>Nightly</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{33405747-9F1F-D6E2-A837-61B914963C44}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Game SA</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Nightly|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Nightly|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Nightly|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Nightly|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\Bin\mta\</OutDir>
+    <IntDir>obj\x86\Debug\Game SA\</IntDir>
+    <TargetName>game_sa_d</TargetName>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\Bin\mta\</OutDir>
+    <IntDir>obj\x64\Debug\Game SA\</IntDir>
+    <TargetName>game_sa_d</TargetName>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\Bin\mta\</OutDir>
+    <IntDir>obj\x86\Release\Game SA\</IntDir>
+    <TargetName>game_sa</TargetName>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\Bin\mta\</OutDir>
+    <IntDir>obj\x64\Release\Game SA\</IntDir>
+    <TargetName>game_sa</TargetName>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Nightly|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\Bin\mta\</OutDir>
+    <IntDir>obj\x86\Nightly\Game SA\</IntDir>
+    <TargetName>game_sa</TargetName>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Nightly|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\Bin\mta\</OutDir>
+    <IntDir>obj\x64\Nightly\Game SA\</IntDir>
+    <TargetName>game_sa</TargetName>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;MTA_DEBUG;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\sdk;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>..\Bin\mta\game_sa_d.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;MTA_DEBUG;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\sdk;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>..\Bin\mta\game_sa_d.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\sdk;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>..\Bin\mta\game_sa.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\sdk;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>..\Bin\mta\game_sa.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Nightly|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\sdk;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>..\Bin\mta\game_sa.lib</ImportLibrary>
+      <AdditionalOptions>/PDB:"Symbols\$(ProjectName).pdb" %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Nightly|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\sdk;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>..\Bin\mta\game_sa.lib</ImportLibrary>
+      <AdditionalOptions>/PDB:"Symbols\$(ProjectName).pdb" %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Client\game_sa\BoneNode_cSA.h" />
+    <ClInclude Include="..\Client\game_sa\C3DMarkerSA.h" />
+    <ClInclude Include="..\Client\game_sa\C3DMarkersSA.h" />
+    <ClInclude Include="..\Client\game_sa\CAEAudioHardwareSA.h" />
+    <ClInclude Include="..\Client\game_sa\CAERadioTrackManagerSA.h" />
+    <ClInclude Include="..\Client\game_sa\CAESoundManagerSA.h" />
+    <ClInclude Include="..\Client\game_sa\CAEVehicleAudioEntitySA.h" />
+    <ClInclude Include="..\Client\game_sa\CAnimBlendAssocGroupSA.h" />
+    <ClInclude Include="..\Client\game_sa\CAnimBlendAssociationSA.h" />
+    <ClInclude Include="..\Client\game_sa\CAnimBlendHierarchySA.h" />
+    <ClInclude Include="..\Client\game_sa\CAnimBlendNodeSA.h" />
+    <ClInclude Include="..\Client\game_sa\CAnimBlendSequenceSA.h" />
+    <ClInclude Include="..\Client\game_sa\CAnimBlendStaticAssociationSA.h" />
+    <ClInclude Include="..\Client\game_sa\CAnimBlockSA.h" />
+    <ClInclude Include="..\Client\game_sa\CAnimManagerSA.h" />
+    <ClInclude Include="..\Client\game_sa\CAudioContainerLookupTableSA.h" />
+    <ClInclude Include="..\Client\game_sa\CAudioContainerSA.h" />
+    <ClInclude Include="..\Client\game_sa\CAudioEngine.h" />
+    <ClInclude Include="..\Client\game_sa\CAudioEngineSA.h" />
+    <ClInclude Include="..\Client\game_sa\CAutomobileSA.h" />
+    <ClInclude Include="..\Client\game_sa\CBikeHandlingEntrySA.h" />
+    <ClInclude Include="..\Client\game_sa\CBikeSA.h" />
+    <ClInclude Include="..\Client\game_sa\CBmxSA.h" />
+    <ClInclude Include="..\Client\game_sa\CBoatHandlingEntrySA.h" />
+    <ClInclude Include="..\Client\game_sa\CBoatSA.h" />
+    <ClInclude Include="..\Client\game_sa\CBuildingSA.h" />
+    <ClInclude Include="..\Client\game_sa\CBuoyancySA.h" />
+    <ClInclude Include="..\Client\game_sa\CCamSA.h" />
+    <ClInclude Include="..\Client\game_sa\CCameraSA.h" />
+    <ClInclude Include="..\Client\game_sa\CCarEnterExitSA.h" />
+    <ClInclude Include="..\Client\game_sa\CCarGeneratorSA.h" />
+    <ClInclude Include="..\Client\game_sa\CCheckpointSA.h" />
+    <ClInclude Include="..\Client\game_sa\CCheckpointsSA.h" />
+    <ClInclude Include="..\Client\game_sa\CCivilianPedSA.h" />
+    <ClInclude Include="..\Client\game_sa\CClockSA.h" />
+    <ClInclude Include="..\Client\game_sa\CColLineSA.h" />
+    <ClInclude Include="..\Client\game_sa\CColModelSA.h" />
+    <ClInclude Include="..\Client\game_sa\CColPointSA.h" />
+    <ClInclude Include="..\Client\game_sa\CCompressedVectorSA.h" />
+    <ClInclude Include="..\Client\game_sa\CControllerConfigManagerSA.h" />
+    <ClInclude Include="..\Client\game_sa\CCoronasSA.h" />
+    <ClInclude Include="..\Client\game_sa\CDamageManagerSA.h" />
+    <ClInclude Include="..\Client\game_sa\CDoorSA.h" />
+    <ClInclude Include="..\Client\game_sa\CEntitySA.h" />
+    <ClInclude Include="..\Client\game_sa\CEventDamageSA.h" />
+    <ClInclude Include="..\Client\game_sa\CEventGroupSA.h" />
+    <ClInclude Include="..\Client\game_sa\CEventGunShotSA.h" />
+    <ClInclude Include="..\Client\game_sa\CEventListSA.h" />
+    <ClInclude Include="..\Client\game_sa\CEventSA.h" />
+    <ClInclude Include="..\Client\game_sa\CExplosionManagerSA.h" />
+    <ClInclude Include="..\Client\game_sa\CExplosionSA.h" />
+    <ClInclude Include="..\Client\game_sa\CFileLoaderSA.h" />
+    <ClInclude Include="..\Client\game_sa\CFireManagerSA.h" />
+    <ClInclude Include="..\Client\game_sa\CFireSA.h" />
+    <ClInclude Include="..\Client\game_sa\CFlyingHandlingEntrySA.h" />
+    <ClInclude Include="..\Client\game_sa\CFontSA.h" />
+    <ClInclude Include="..\Client\game_sa\CFxManagerSA.h" />
+    <ClInclude Include="..\Client\game_sa\CFxSA.h" />
+    <ClInclude Include="..\Client\game_sa\CFxSystemBPSA.h" />
+    <ClInclude Include="..\Client\game_sa\CFxSystemSA.h" />
+    <ClInclude Include="..\Client\game_sa\CGameSA.h" />
+    <ClInclude Include="..\Client\game_sa\CGarageSA.h" />
+    <ClInclude Include="..\Client\game_sa\CGaragesSA.h" />
+    <ClInclude Include="..\Client\game_sa\CHandlingEntrySA.h" />
+    <ClInclude Include="..\Client\game_sa\CHandlingManagerSA.h" />
+    <ClInclude Include="..\Client\game_sa\CHudSA.h" />
+    <ClInclude Include="..\Client\game_sa\CKeyGenSA.h" />
+    <ClInclude Include="..\Client\game_sa\CMarkerSA.h" />
+    <ClInclude Include="..\Client\game_sa\CMatrixSA.h" />
+    <ClInclude Include="..\Client\game_sa\CMenuManagerSA.h" />
+    <ClInclude Include="..\Client\game_sa\CModelInfoSA.h" />
+    <ClInclude Include="..\Client\game_sa\CMonsterTruckSA.h" />
+    <ClInclude Include="..\Client\game_sa\CObjectGroupPhysicalPropertiesSA.h" />
+    <ClInclude Include="..\Client\game_sa\CObjectSA.h" />
+    <ClInclude Include="..\Client\game_sa\COffsets.h" />
+    <ClInclude Include="..\Client\game_sa\CPadSA.h" />
+    <ClInclude Include="..\Client\game_sa\CParticleObjectSA.h" />
+    <ClInclude Include="..\Client\game_sa\CParticleSA.h" />
+    <ClInclude Include="..\Client\game_sa\CParticleSystemManagerSA.h" />
+    <ClInclude Include="..\Client\game_sa\CPathFindSA.h" />
+    <ClInclude Include="..\Client\game_sa\CPedDamageResponseCalculatorSA.h" />
+    <ClInclude Include="..\Client\game_sa\CPedDamageResponseSA.h" />
+    <ClInclude Include="..\Client\game_sa\CPedIKSA.h" />
+    <ClInclude Include="..\Client\game_sa\CPedIntelligenceSA.h" />
+    <ClInclude Include="..\Client\game_sa\CPedModelInfoSA.h" />
+    <ClInclude Include="..\Client\game_sa\CPedSA.h" />
+    <ClInclude Include="..\Client\game_sa\CPedSoundSA.h" />
+    <ClInclude Include="..\Client\game_sa\CPhysicalSA.h" />
+    <ClInclude Include="..\Client\game_sa\CPickupSA.h" />
+    <ClInclude Include="..\Client\game_sa\CPickupsSA.h" />
+    <ClInclude Include="..\Client\game_sa\CPlaneSA.h" />
+    <ClInclude Include="..\Client\game_sa\CPlayerInfoSA.h" />
+    <ClInclude Include="..\Client\game_sa\CPlayerPedSA.h" />
+    <ClInclude Include="..\Client\game_sa\CPointLightsSA.h" />
+    <ClInclude Include="..\Client\game_sa\CPoolsSA.h" />
+    <ClInclude Include="..\Client\game_sa\CPopulationSA.h" />
+    <ClInclude Include="..\Client\game_sa\CProjectileInfoSA.h" />
+    <ClInclude Include="..\Client\game_sa\CProjectileSA.h" />
+    <ClInclude Include="..\Client\game_sa\CQuadBikeSA.h" />
+    <ClInclude Include="..\Client\game_sa\CRadarSA.h" />
+    <ClInclude Include="..\Client\game_sa\CRegisteredCoronaSA.h" />
+    <ClInclude Include="..\Client\game_sa\CRemoteSA.h" />
+    <ClInclude Include="..\Client\game_sa\CRenderWareSA.ShaderMatching.h" />
+    <ClInclude Include="..\Client\game_sa\CRenderWareSA.ShaderSupport.h" />
+    <ClInclude Include="..\Client\game_sa\CRenderWareSA.h" />
+    <ClInclude Include="..\Client\game_sa\CRestartSA.h" />
+    <ClInclude Include="..\Client\game_sa\CRopesSA.h" />
+    <ClInclude Include="..\Client\game_sa\CSettingsSA.h" />
+    <ClInclude Include="..\Client\game_sa\CShadowDataSA.h" />
+    <ClInclude Include="..\Client\game_sa\CStatsSA.h" />
+    <ClInclude Include="..\Client\game_sa\CStreamingSA.h" />
+    <ClInclude Include="..\Client\game_sa\CTaskManagementSystemSA.h" />
+    <ClInclude Include="..\Client\game_sa\CTaskManagerSA.h" />
+    <ClInclude Include="..\Client\game_sa\CTasksSA.h" />
+    <ClInclude Include="..\Client\game_sa\CTheCarGeneratorsSA.h" />
+    <ClInclude Include="..\Client\game_sa\CTrailerSA.h" />
+    <ClInclude Include="..\Client\game_sa\CTrainSA.h" />
+    <ClInclude Include="..\Client\game_sa\CVehicleSA.h" />
+    <ClInclude Include="..\Client\game_sa\CVehicleScannerSA.h" />
+    <ClInclude Include="..\Client\game_sa\CVisibilityPluginsSA.h" />
+    <ClInclude Include="..\Client\game_sa\CWantedSA.h" />
+    <ClInclude Include="..\Client\game_sa\CWaterManagerSA.h" />
+    <ClInclude Include="..\Client\game_sa\CWaterSA.h" />
+    <ClInclude Include="..\Client\game_sa\CWeaponInfoSA.h" />
+    <ClInclude Include="..\Client\game_sa\CWeaponSA.h" />
+    <ClInclude Include="..\Client\game_sa\CWeaponStatManagerSA.h" />
+    <ClInclude Include="..\Client\game_sa\CWeaponStatSA.h" />
+    <ClInclude Include="..\Client\game_sa\CWeatherSA.h" />
+    <ClInclude Include="..\Client\game_sa\CWorldSA.h" />
+    <ClInclude Include="..\Client\game_sa\Common.h" />
+    <ClInclude Include="..\Client\game_sa\D3DResourceSystemSA.h" />
+    <ClInclude Include="..\Client\game_sa\HeapTrace.h" />
+    <ClInclude Include="..\Client\game_sa\HookSystem.h" />
+    <ClInclude Include="..\Client\game_sa\StdInc.h" />
+    <ClInclude Include="..\Client\game_sa\TaskAttackSA.h" />
+    <ClInclude Include="..\Client\game_sa\TaskBasicSA.h" />
+    <ClInclude Include="..\Client\game_sa\TaskCarAccessoriesSA.h" />
+    <ClInclude Include="..\Client\game_sa\TaskCarSA.h" />
+    <ClInclude Include="..\Client\game_sa\TaskGoToSA.h" />
+    <ClInclude Include="..\Client\game_sa\TaskIKSA.h" />
+    <ClInclude Include="..\Client\game_sa\TaskJumpFallSA.h" />
+    <ClInclude Include="..\Client\game_sa\TaskNamesSA.h" />
+    <ClInclude Include="..\Client\game_sa\TaskPhysicalResponseSA.h" />
+    <ClInclude Include="..\Client\game_sa\TaskSA.h" />
+    <ClInclude Include="..\Client\game_sa\TaskSecondarySA.h" />
+    <ClInclude Include="..\Client\game_sa\gamesa_init.h" />
+    <ClInclude Include="..\Client\game_sa\gamesa_renderware.h" />
+    <ClInclude Include="..\Client\game_sa\gamesa_renderware.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Client\game_sa\BoneNode_cSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\C3DMarkerSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\C3DMarkersSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CAEAudioHardwareSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CAERadioTrackManagerSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CAESoundManagerSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CAEVehicleAudioEntitySA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CAnimBlendAssocGroupSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CAnimBlendAssociationSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CAnimBlendHierarchySA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CAnimBlendSequenceSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CAnimBlendStaticAssociationSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CAnimBlockSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CAnimManagerSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CAudioContainerLookupTableSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CAudioContainerSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CAudioEngineSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CAutomobileSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CBikeHandlingEntrySA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CBikeSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CBmxSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CBoatHandlingEntrySA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CBoatSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CBuildingSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CBuoyancySA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CCamSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CCameraSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CCarEnterExitSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CCarGeneratorSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CCheckpointSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CCheckpointsSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CCivilianPedSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CClockSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CColModelSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CColPointSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CControllerConfigManagerSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CCoronasSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CDamageManagerSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CDoorSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CEntitySA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CEventDamageSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CEventGroupSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CEventGunShotSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CEventListSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CEventSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CExplosionManagerSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CExplosionSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CFileLoaderSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CFireManagerSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CFireSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CFlyingHandlingEntrySA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CFontSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CFxManagerSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CFxSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CFxSystemSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CGameSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CGarageSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CGaragesSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CHandlingEntrySA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CHandlingManagerSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CHudSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CKeyGenSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CMarkerSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CMatrixSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CMenuManagerSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CModelInfoSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CMonsterTruckSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CObjectGroupPhysicalPropertiesSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CObjectSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\COffsets.cpp" />
+    <ClCompile Include="..\Client\game_sa\CPadSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CParticleObjectSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CParticleSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CParticleSystemManagerSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CPathFindSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CPedDamageResponseCalculatorSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CPedDamageResponseSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CPedIKSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CPedIntelligenceSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CPedModelInfoSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CPedSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CPedSoundSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CPhysicalSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CPickupSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CPickupsSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CPlaneSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CPlayerInfoSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CPlayerPedSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CPointLightsSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CPoolsSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CPopulationSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CProjectileInfoSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CProjectileSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CQuadBikeSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CRadarSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CRegisteredCoronaSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CRemoteSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CRenderWareSA.ClothesReplacing.cpp" />
+    <ClCompile Include="..\Client\game_sa\CRenderWareSA.ShaderMatching.cpp" />
+    <ClCompile Include="..\Client\game_sa\CRenderWareSA.ShaderSupport.cpp" />
+    <ClCompile Include="..\Client\game_sa\CRenderWareSA.TextureReplacing.cpp" />
+    <ClCompile Include="..\Client\game_sa\CRenderWareSA.TxdRightSizing.cpp" />
+    <ClCompile Include="..\Client\game_sa\CRenderWareSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CRestartSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CRopesSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CSettingsSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CShadowDataSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CStatsSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CStreamingSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CTaskManagementSystemSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CTaskManagerSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CTasksSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CTheCarGeneratorsSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CTrailerSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CTrainSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CVehicleSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CVehicleScannerSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CVisibilityPluginsSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CWantedSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CWaterManagerSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CWaterSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CWeaponInfoSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CWeaponSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CWeaponStatManagerSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CWeaponStatSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CWeatherSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CWorldSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\D3DResourceSystemSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\HeapTrace.cpp" />
+    <ClCompile Include="..\Client\game_sa\HookSystem.cpp" />
+    <ClCompile Include="..\Client\game_sa\StdInc.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Client\game_sa\TaskAttackSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\TaskBasicSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\TaskCarAccessoriesSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\TaskCarSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\TaskGoToSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\TaskIKSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\TaskJumpFallSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\TaskNamesSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\TaskPhysicalResponseSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\TaskSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\TaskSecondarySA.cpp" />
+    <ClCompile Include="..\Client\game_sa\gamesa_init.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Client\game_sa\premake5.lua" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
