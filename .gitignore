@@ -15,6 +15,8 @@
 *.ipdb
 *.iobj
 *.pdb
+/.vs/slnx.sqlite
+*.sqlite
 /ArtemisComponents/ArtemisTerminal/Release/ArtemisTerminal.log
 /ArtemisComponents/ArtemisTerminal/Release/ArtemisHost.Build.CppClean.log
 /ArtemisComponents/ArtemisTerminal/Release/ArtemisTerminal.vcxproj.FileListAbsolute.txt
