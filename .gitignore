@@ -27,3 +27,5 @@
 /ArtemisComponents/InvasionTerminal/Release/InvasionTerminal.vcxproj.FileListAbsolute.txt
 *.json
 /.vs/CMake Overview
+/ArtemisComponents/ConsoleTests/ArtemisTerminal/Release
+/ArtemisComponents/ConsoleTests/InvasionTerminal/Release
