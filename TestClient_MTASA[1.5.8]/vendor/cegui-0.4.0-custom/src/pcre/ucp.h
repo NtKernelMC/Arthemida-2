@@ -4,7 +4,8 @@
 
 /* These are the character categories that are returned by ucp_findchar */
 
-enum {
+typedef enum
+{
   ucp_C,     /* Other */
   ucp_L,     /* Letter */
   ucp_M,     /* Mark */
@@ -12,11 +13,12 @@ enum {
   ucp_P,     /* Punctuation */
   ucp_S,     /* Symbol */
   ucp_Z      /* Separator */
-};
+} ucp1;
 
 /* These are the detailed character types that are returned by ucp_findchar */
 
-enum {
+typedef enum
+{
   ucp_Cc,    /* Control */
   ucp_Cf,    /* Format */
   ucp_Cn,    /* Unassigned */
@@ -47,12 +49,22 @@ enum {
   ucp_Zl,    /* Line separator */
   ucp_Zp,    /* Paragraph separator */
   ucp_Zs     /* Space separator */
-};
+} ucp2;
+typedef struct
+{
+    const char* name;
+    int         value;
+} ucp_type_table;
 
+static ucp_type_table utt[] = {{"C", 128 + ucp_C}, {"Cc", ucp_Cc}, {"Cf", ucp_Cf},     {"Cn", ucp_Cn}, {"Co", ucp_Co}, {"Cs", ucp_Cs},     {"L", 128 + ucp_L},
+                               {"Ll", ucp_Ll},     {"Lm", ucp_Lm}, {"Lo", ucp_Lo},     {"Lt", ucp_Lt}, {"Lu", ucp_Lu}, {"M", 128 + ucp_M}, {"Mc", ucp_Mc},
+                               {"Me", ucp_Me},     {"Mn", ucp_Mn}, {"N", 128 + ucp_N}, {"Nd", ucp_Nd}, {"Nl", ucp_Nl}, {"No", ucp_No},     {"P", 128 + ucp_P},
+                               {"Pc", ucp_Pc},     {"Pd", ucp_Pd}, {"Pe", ucp_Pe},     {"Pf", ucp_Pf}, {"Pi", ucp_Pi}, {"Po", ucp_Po},     {"Ps", ucp_Ps},
+                               {"S", 128 + ucp_S}, {"Sc", ucp_Sc}, {"Sk", ucp_Sk},     {"Sm", ucp_Sm}, {"So", ucp_So}, {"Z", 128 + ucp_Z}, {"Zl", ucp_Zl},
+                               {"Zp", ucp_Zp},     {"Zs", ucp_Zs}};
 /* For use in PCRE we make this function static so that there is no conflict if
 PCRE is linked with an application that makes use of an external version -
 assuming an external version is ever released... */
 
-static int ucp_findchar(const int, int *, int *);
-
+static int ucp_findchar(const int, int*, int*);
 /* End of ucp.h */

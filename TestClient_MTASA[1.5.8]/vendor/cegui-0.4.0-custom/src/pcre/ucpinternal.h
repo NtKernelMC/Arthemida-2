@@ -4,7 +4,8 @@
 
 /* Internal header file defining the layout of compact nodes in the tree. */
 
-typedef struct cnode {
+typedef struct cnode
+{
   unsigned short int f0;
   unsigned short int f1;
   unsigned short int f2;

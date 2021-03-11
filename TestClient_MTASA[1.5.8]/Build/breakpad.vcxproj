@@ -288,7 +288,6 @@
     <ClInclude Include="..\vendor\google-breakpad\src\client\linux\handler\exception_handler.h" />
     <ClInclude Include="..\vendor\google-breakpad\src\client\linux\handler\microdump_extra_info.h" />
     <ClInclude Include="..\vendor\google-breakpad\src\client\linux\handler\minidump_descriptor.h" />
-    <ClInclude Include="..\vendor\google-breakpad\src\client\linux\log\log.h" />
     <ClInclude Include="..\vendor\google-breakpad\src\client\linux\microdump_writer\microdump_writer.h" />
     <ClInclude Include="..\vendor\google-breakpad\src\client\linux\minidump_writer\cpu_set.h" />
     <ClInclude Include="..\vendor\google-breakpad\src\client\linux\minidump_writer\directory_reader.h" />
