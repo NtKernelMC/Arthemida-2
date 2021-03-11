@@ -1,6 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\ArtemisComponents",
+    "\\ArtemisComponents\\ArtemisTerminal",
+    "\\ArtemisComponents\\InvasionTerminal",
+    "\\TestClient_MTASA[1.5.8]"
   ],
+  "SelectedNode": "\\ArtemisComponents\\ArtemisTerminal\\ArtemisTerminal.sln",
   "PreviewInSolutionExplorer": false
 }
