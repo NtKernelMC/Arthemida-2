@@ -1,5 +1,5 @@
 ################################################################################
-# Р”Р°РЅРЅС‹Р№ GITIGNORE-С„Р°Р№Р» Р±С‹Р» Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё СЃРѕР·РґР°РЅ Microsoft(R) Visual Studio.
+# Данный GITIGNORE-файл был автоматически создан Microsoft(R) Visual Studio.
 ################################################################################
 
 *.ipch
@@ -18,6 +18,8 @@
 /.vs/slnx.sqlite
 *.sqlite
 *.sqlite-journal
+/.vs/VSWorkspaceState.json
+/.vs/ProjectSettings.json
 /ArtemisComponents/ArtemisTerminal/Release/ArtemisTerminal.log
 /ArtemisComponents/ArtemisTerminal/Release/ArtemisHost.Build.CppClean.log
 /ArtemisComponents/ArtemisTerminal/Release/ArtemisTerminal.vcxproj.FileListAbsolute.txt
