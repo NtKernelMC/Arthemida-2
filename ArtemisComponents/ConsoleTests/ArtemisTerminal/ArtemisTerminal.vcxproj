@@ -146,13 +146,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Arthemida-2\API\ArtemisComponents.cpp" />
     <ClCompile Include="ConsoleHost.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ArtemisInterface.h" />
-    <ClInclude Include="Utils\CRC32.h" />
-    <ClInclude Include="Utils\sigscan.h" />
-    <ClInclude Include="Utils\Utils.h" />
+    <ClInclude Include="..\..\Arthemida-2\API\ArtemisComponents.h" />
+    <ClInclude Include="..\..\Arthemida-2\API\ArtemisInterface.h" />
+    <ClInclude Include="..\..\Arthemida-2\API\ArtemisTypes.h" />
+    <ClInclude Include="..\..\Arthemida-2\ArtModules\AntiFakeLaunch.h" />
+    <ClInclude Include="..\..\Arthemida-2\ArtModules\MemoryGuard.h" />
+    <ClInclude Include="..\..\Arthemida-2\ArtModules\MemoryScanner.h" />
+    <ClInclude Include="..\..\Arthemida-2\ArtModules\ModuleScanner.h" />
+    <ClInclude Include="..\..\Arthemida-2\ArtModules\SigScanner.h" />
+    <ClInclude Include="..\..\Arthemida-2\ArtModules\ThreadScanner.h" />
+    <ClInclude Include="..\..\Arthemida-2\ArtUtils\CRC32.h" />
+    <ClInclude Include="..\..\Arthemida-2\ArtUtils\sigscan.h" />
+    <ClInclude Include="..\..\Arthemida-2\ArtUtils\Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

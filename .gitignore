@@ -18,6 +18,8 @@
 /.vs/slnx.sqlite
 *.sqlite
 *.sqlite-journal
+/.vs/VSWorkspaceState.json
+/.vs/ProjectSettings.json
 /ArtemisComponents/ArtemisTerminal/Release/ArtemisTerminal.log
 /ArtemisComponents/ArtemisTerminal/Release/ArtemisHost.Build.CppClean.log
 /ArtemisComponents/ArtemisTerminal/Release/ArtemisTerminal.vcxproj.FileListAbsolute.txt
@@ -25,5 +27,7 @@
 /ArtemisComponents/InvasionTerminal/Release/InvasionTerminal.Build.CppClean.log
 /ArtemisComponents/InvasionTerminal/Release/InvasionTerminal.log
 /ArtemisComponents/InvasionTerminal/Release/InvasionTerminal.vcxproj.FileListAbsolute.txt
-*.json
 /.vs/CMake Overview
+*.json
+/ArtemisComponents/ConsoleTests/ArtemisTerminal/Release
+/ArtemisComponents/ConsoleTests/InvasionTerminal/Release
