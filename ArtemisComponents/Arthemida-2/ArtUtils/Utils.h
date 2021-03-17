@@ -31,8 +31,8 @@
 #include <algorithm>
 #include <intrin.h>
 #pragma intrinsic(_ReturnAddress)
-#include "Utils/CRC32.h"
-#include "Utils/sigscan.h"
+#include "../../Arthemida-2/ArtUtils/CRC32.h"
+#include "../../Arthemida-2/ArtUtils/sigscan.h"
 class Utils
 {
 public:
@@ -43,6 +43,9 @@ public:
 		{
 			va_list arglist; va_start(arglist, log);
 			vfprintf(hFile, log, arglist);
+#ifdef _CONSOLE
+			vprintf(log, arglist);
+#endif
 			fclose(hFile); va_end(arglist);
 		}
 	}
@@ -235,5 +238,31 @@ public:
 			return true;
 		}
 		return false;
+	}
+	// Функция для дампа экспортов указанного модуля (hModule) в ExportsList
+	static void DumpExportTable(HMODULE hModule, std::multimap<PVOID, std::string>& ExportsList)
+	{
+#if defined( _WIN32 )  
+		unsigned char* lpBase = reinterpret_cast<unsigned char*>(hModule);
+		IMAGE_DOS_HEADER* idhDosHeader = reinterpret_cast<IMAGE_DOS_HEADER*>(lpBase);
+		if (idhDosHeader->e_magic == 0x5A4D)
+		{
+#if defined( _M_IX86 )  
+			IMAGE_NT_HEADERS32* inhNtHeader = reinterpret_cast<IMAGE_NT_HEADERS32*>(lpBase + idhDosHeader->e_lfanew);
+#elif defined( _M_AMD64 )  
+			IMAGE_NT_HEADERS64* inhNtHeader = reinterpret_cast<IMAGE_NT_HEADERS64*>(lpBase + idhDosHeader->e_lfanew);
+#endif  
+			if (inhNtHeader->Signature == 0x4550)
+			{
+				IMAGE_EXPORT_DIRECTORY* iedExportDirectory = reinterpret_cast<IMAGE_EXPORT_DIRECTORY*>(lpBase + inhNtHeader->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress);
+				for (unsigned int uiIter = 0; uiIter < iedExportDirectory->NumberOfFunctions; ++uiIter)
+				{
+					unsigned short usOrdinal = reinterpret_cast<unsigned short*>(lpBase + iedExportDirectory->AddressOfNameOrdinals)[uiIter];
+					char ordNum[25]; memset(ordNum, 0, sizeof(ordNum)); sprintf(ordNum, "Ordinal: %d | 0x%X", usOrdinal, usOrdinal);
+					ExportsList.insert(ExportsList.begin(), std::pair<PVOID, std::string>((PVOID)usOrdinal, ordNum));
+				}
+			}
+		}
+#endif  
 	}
 };

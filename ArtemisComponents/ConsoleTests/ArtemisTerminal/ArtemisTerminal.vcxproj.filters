@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Исходные файлы">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Файлы заголовков">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Файлы ресурсов">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Arthemida-2">
+      <UniqueIdentifier>{091f80cf-0518-42ef-b346-e4e36080500f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arthemida-2\API">
+      <UniqueIdentifier>{c72dfd1d-2378-479e-9b54-74467a5cfc88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arthemida-2\ArtModules">
+      <UniqueIdentifier>{566671f6-e34c-45e6-a2ea-0f0e9ba91dff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arthemida-2\ArtUtils">
+      <UniqueIdentifier>{c25e7dfa-826f-4004-b4d4-258b21109970}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ConsoleHost.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Arthemida-2\API\ArtemisComponents.cpp">
+      <Filter>Arthemida-2\API</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Arthemida-2\API\ArtemisComponents.h">
+      <Filter>Arthemida-2\API</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Arthemida-2\API\ArtemisInterface.h">
+      <Filter>Arthemida-2\API</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Arthemida-2\ArtModules\AntiFakeLaunch.h">
+      <Filter>Arthemida-2\ArtModules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Arthemida-2\ArtModules\MemoryGuard.h">
+      <Filter>Arthemida-2\ArtModules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Arthemida-2\ArtModules\MemoryScanner.h">
+      <Filter>Arthemida-2\ArtModules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Arthemida-2\ArtModules\ModuleScanner.h">
+      <Filter>Arthemida-2\ArtModules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Arthemida-2\ArtModules\SigScanner.h">
+      <Filter>Arthemida-2\ArtModules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Arthemida-2\ArtModules\ThreadScanner.h">
+      <Filter>Arthemida-2\ArtModules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Arthemida-2\ArtUtils\CRC32.h">
+      <Filter>Arthemida-2\ArtUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Arthemida-2\ArtUtils\sigscan.h">
+      <Filter>Arthemida-2\ArtUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Arthemida-2\ArtUtils\Utils.h">
+      <Filter>Arthemida-2\ArtUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Arthemida-2\API\ArtemisTypes.h">
+      <Filter>Arthemida-2\API</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
