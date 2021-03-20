@@ -56,19 +56,25 @@ int main()
 {
 	system("color 4F"); SetConsoleTitleA("Arthemida-2 AntiCheat Lightweight Testing");
 	ArtemisConfig cfg; cfg.DetectThreads = true; cfg.ThreadScanDelay = 1000;
+	cfg.DetectModules = true; cfg.ModuleScanDelay = 1000;
+	cfg.DetectManualMap = true; cfg.MemoryScanDelay = 1000; 
+	//cfg.DetectMemoryPatch = true; cfg.HooksList.insert(std::pair<PVOID, PVOID>(dest, hook)); // -> FOR MTA CLIENT
+	//cfg.DetectBySignature = true; cfg.PatternScanDelay = 1000; 
+	//cfg.HooksList.insert(std::pair<std::string, std::tuple<const char*, const char*>>
+	//(hack_name, std::make_tuple(pattern, mask)));
 	cfg.DetectFakeLaunch = true; cfg.callback = (ArtemisCallback)ArthemidaCallback; 
 	IArtemisInterface* art = IArtemisInterface::SwitchArtemisMonitor(&cfg, true);
 	if (art)
 	{
 		printf("[ARTEMIS-2] Succussfully obtained pointer to AntiCheat!\n");
-		printf("[DELAY] Gonna sleep few seconds before we unload...\n");
-		Sleep(5000); if (art) art->ReleaseInstance();
+		printf("[DELAY] Waiting your key-press before we gonna do unload...\n");
+		_getch(); if (art) art->ReleaseInstance();
 		else
 		{
 			printf("[?!] For some reason, the pointer to Arthemida is invalid. Last Error Code: 0x%x\n", GetLastError());
 			system("pause"); ExitProcess(0);
 		}
-		if (!art) printf("[ARTEMIS-2] AntiCheat was successfully unloaded! Memory is released.\n");
+		printf("[ARTEMIS-2] AntiCheat was successfully unloaded! Memory is released.\n");
 	}
 	else printf("[ARTEMIS-2] Failure on start :( Last error code: %d\n", GetLastError());
 	while (true) { Sleep(1000); }

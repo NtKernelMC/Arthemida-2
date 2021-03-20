@@ -12,6 +12,5 @@ namespace ArtComponent
 	public:
 		void ReleaseInstance() override;
 		friend IArtemisInterface* IArtemisInterface::CreateInstance(ArtemisConfig* cfg);
-		friend IArtemisInterface* IArtemisInterface::GetInstance();
 	};
 }

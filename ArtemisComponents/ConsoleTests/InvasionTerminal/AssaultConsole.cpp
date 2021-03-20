@@ -6,10 +6,11 @@
 #endif
 #include <Windows.h>
 #include <stdio.h>
+#include <iostream>
 using namespace std;
 int main()
 {
-	// code
+    system("color 06"); 
 	while (true) { Sleep(1000); }
 	return 1;
 }

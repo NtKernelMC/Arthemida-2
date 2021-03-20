@@ -15,10 +15,11 @@ namespace ARTEMIS_INTERFACE
 	{
 	public:
 		static IArtemisInterface* __stdcall SwitchArtemisMonitor(ArtemisConfig* cfg, bool selector = true);
+		static IArtemisInterface* __stdcall GetInstance();
+		static ArtemisConfig* __stdcall GetConfig();
 	protected:
 		virtual ~IArtemisInterface() = default;
 		static IArtemisInterface* CreateInstance(ArtemisConfig* cfg);
-		static IArtemisInterface* GetInstance();
 	private:
 		static bool WasReloaded;
 		static IArtemisInterface* i_art;

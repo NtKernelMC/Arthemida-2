@@ -1,6 +1,6 @@
 ﻿/*
     Artemis-2 for MTA Province
-	Target Platform: x32-x86 (Wow64)
+	Target Platform: x32-x86
 	Project by NtKernelMC & holmes0
 
 	<TASK> TODO:
@@ -11,15 +11,6 @@
 	- Пополнение списка гейм-хуков для защиты от новых разновидностей читов, включая функции которые могут поспособствовать инжекту клиентского Lua-кода или же скрипта. (ручные проверки в коде client.dll)
 	- Защита против остановки потоков сканнеров античита или прерывания еще каких либо его потоков по любой причине, с автоматическим перезапуском.
 	- Парсер активных сервисов любого вида без цифровых подписей с последующей остановкой службы 2-ого кольца или же драйвера-ядра/мини-фильтра на время игрового сеанса.
-
-	-- Внеплановая работа
-	> Переписать детект запуска с фейк лаунчера либо починить имеющийся (не работает из-за старого бага!)
-	> Допереносить в API на новую архитектуру остальные модули и сходу обрезать все лишнее со старой версии
-	> Допилить режим безопасного отключения античита с остановкой всех потоков сканнеров
-	> Защитить контролирующие API функции античита от выключения защиты через вызов в памяти
-	> Улучшить сканнер аномальных потоков через хук в нтдлл на BaseThreadInitThunk (Не профукает запуск любого потока)
-	> Заменить сканнер сигнатур либо модернизировать текущий для безопасного траверса памяти, как модулей так и VAD`ов
-	> Провести более глубокую инкапсуляцию работы API и упростить эксплуатацию с помощью выборочной автоматизации настроек
 */
 #include ".../../../../Arthemida-2/API/ArtemisComponents.h"
 using namespace ArtComponent;
@@ -57,10 +48,24 @@ IArtemisInterface* IArtemisInterface::CreateInstance(ArtemisConfig* cfg)
 	}
 	return i_art;
 }
-IArtemisInterface* IArtemisInterface::GetInstance() { return i_art; }
+IArtemisInterface* __stdcall IArtemisInterface::GetInstance()
+{
+	if (i_art == nullptr) return nullptr;
+	return i_art;
+}
+ArtemisConfig* __stdcall IArtemisInterface::GetConfig() 
+{ 
+	if (i_art == nullptr) return nullptr;
+	if (i_art->g_cfg == nullptr) return nullptr;
+	return i_art->g_cfg; 
+}
 /////////////////////////// Protection Modules //////////////////////////////////////////////////////////////
 #include "../../Arthemida-2/ArtModules/ThreadScanner.h"
 #include "../../Arthemida-2/ArtModules/AntiFakeLaunch.h"
+#include "../../Arthemida-2/ArtModules/ModuleScanner.h"
+#include "../../Arthemida-2/ArtModules/MemoryScanner.h"
+#include "../../Arthemida-2/ArtModules/MemoryGuard.h"
+#include "../../Arthemida-2/ArtModules/SigScanner.h"
 IArtemisInterface* __stdcall IArtemisInterface::SwitchArtemisMonitor(ArtemisConfig* cfg, bool selector)
 {
 #ifdef ARTEMIS_DEBUG
@@ -107,20 +112,29 @@ IArtemisInterface* __stdcall IArtemisInterface::SwitchArtemisMonitor(ArtemisConf
 		if (!cfg->ExcludedModules.empty()) cfg->ExcludedModules.clear(); // [Не настраивается юзером] Очистка на случай повторной инициализации с тем же cfg
 		HMODULE hPsapi = LoadLibraryA("psapi.dll"); // Загрузка нужной системной библиотеки для последующего получения из нее функции
 		cfg->lpGetMappedFileNameA = (LPFN_GetMappedFileNameA)GetProcAddress(hPsapi, "GetMappedFileNameA"); // Получение функции GetMappedFileNameA из загруженной библиотеки (Таков необходим для совместимости на Win Vista & XP т.к там эта функция не хранится в экспортах другого модуля)
-		//std::thread AsyncScanner(&ModuleScanner, cfg);
-		//AsyncScanner.detach(); // Создание и запуск асинхронного потока сканера модулей процесса
+		std::thread AsyncScanner(ModuleScanner, cfg);
+		AsyncScanner.detach(); // Создание и запуск асинхронного потока сканера модулей процесса
 	}
 	if (cfg->DetectManualMap) // Детект мануал маппинга
 	{
 		if (!cfg->MemoryScanDelay) cfg->MemoryScanDelay = 1000;
-		//std::thread MmapThread(&MemoryScanner, cfg);
-		//MmapThread.detach(); // Запуск асинхронного cканнера для поиска смапленных образов DLL-библиотек
+		if (!cfg->ExcludedImages.empty()) cfg->ExcludedImages.clear();
+		std::thread MmapThread(MemoryScanner, cfg);
+		MmapThread.detach(); // Запуск асинхронного cканнера для поиска смапленных образов DLL-библиотек
 	}
-	if (cfg->DetectPatterns)
+	if (cfg->DetectMemoryPatch) // запускаем наш сканнер детектов по адресу возврата с защитой памяти от модификаций
 	{
+		if (!cfg->HooksList.empty()) cfg->HooksList.clear();
+		if (!cfg->MemoryGuardScanDelay) cfg->MemoryGuardScanDelay = 1000;
+		std::thread MemThread(MemoryGuardScanner, cfg);
+		MemThread.detach();
+	}
+	if (cfg->DetectBySignature) // скан на сигнатуры читов
+	{
+		if (!cfg->ExcludedSigAddresses.empty()) cfg->ExcludedSigAddresses.clear();
 		if (!cfg->PatternScanDelay) cfg->PatternScanDelay = 1000;
-		//std::thread SignatureThread(&SigScanner, cfg);
-		//SignatureThread.detach();
+		std::thread SignatureThread(SigScanner, cfg);
+		SignatureThread.detach();
 	}
 	return ac_info;
 }
