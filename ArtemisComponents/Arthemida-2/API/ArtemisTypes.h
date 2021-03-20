@@ -27,31 +27,39 @@ namespace ArtemisData
 	typedef DWORD(__stdcall* LPFN_GetMappedFileNameA)(HANDLE hProcess, LPVOID lpv, LPCSTR lpFilename, DWORD nSize);
 	struct ArtemisConfig
 	{
+		// basic stuff
 		HANDLE hSelfModule = nullptr;
 		std::multimap<DWORD, std::string> ModuleSnapshot;
 		LPFN_GetMappedFileNameA lpGetMappedFileNameA = nullptr;
 		ArtemisCallback callback = nullptr;
-		std::vector<PVOID> ExcludedThreads;
-		std::vector<PVOID> ExcludedMethods;
+		// anticheat controller options
 		bool DetectThreads = false;
+		bool DetectModules = false;
+		bool DetectFakeLaunch = false;
+		bool DetectManualMap = false;
+		bool DetectMemoryPatch = false;
+		bool DetectBySignature = false;
+		// anti-repeatable start for scanners
 		volatile bool ThreadScanner = false;
 		volatile bool ModuleScanner = false;
+		volatile bool MemoryScanner = false;
+		volatile bool SignatureScanner = false;
+		volatile bool MemGuardScanner = false;
+		// iteration delays for scanners
 		DWORD ThreadScanDelay = 0x0;
-		std::vector<PVOID> ExcludedModules;
-		std::vector<PVOID> ExcludedImages;
-		bool DetectModules = false;
 		DWORD ModuleScanDelay = 0x0;
 		DWORD MemoryScanDelay = 0x0;
 		DWORD PatternScanDelay = 0x0;
-		bool DetectFakeLaunch = false;
-		bool DetectReturnAddresses = false;
-		bool DetectManualMap = false;
-		bool DetectMemoryPatch = false;
-		bool DetectPatterns = false;
-		DWORD MemoryGuardDelay;
+		DWORD MemoryGuardScanDelay = 0x0;
+		// additional settings & stuff
+		std::vector<PVOID> ExcludedThreads;
+		std::vector<PVOID> ExcludedModules;
+		std::vector<PVOID> ExcludedImages;
+		std::vector<PVOID> ExcludedMethods;
 		std::vector<PVOID> ExcludedPatches;
+		std::vector<PVOID> ExcludedSigAddresses;
 		std::vector<std::string> ModulesWhitelist;
-		std::map<std::string, std::tuple<const char*, const char*>> IllegalPatterns;
-		std::vector<PVOID> DetectedSigAddresses;
+		std::map<PVOID, PVOID> HooksList; // DestinyAddress, HookAddress
+		std::map<std::string, std::tuple<const char*, const char*>> IllegalPatterns; // hack name, pattern, mask
 	};
 }

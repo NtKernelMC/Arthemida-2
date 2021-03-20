@@ -1,10 +1,17 @@
 #include "ArtemisInterface.h"
-
-// Сканнер памяти
-void __stdcall ART_LIB::ArtemisLibrary::MemoryScanner(ArtemisConfig* cfg)
+// —каннер VAD`ов с юзермода дл€ поиска аномалий пам€ти
+void __stdcall MemoryScanner(ArtemisConfig* cfg)
 {
-	if (cfg == nullptr) return;
-	if (cfg->callback == nullptr) return;
+	if (cfg == nullptr)
+	{
+#ifdef ARTEMIS_DEBUG
+		Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Passed null pointer to MemoryScanner\n");
+#endif
+		return;
+	}
+#ifdef ARTEMIS_DEBUG
+	Utils::LogInFile(ARTEMIS_LOG, "[INFO] Created async thread for MemoryScanner!\n");
+#endif
 	while (true)
 	{
 		auto WatchMemoryAllocations = [&, cfg]

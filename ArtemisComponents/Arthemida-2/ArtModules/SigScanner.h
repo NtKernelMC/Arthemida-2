@@ -1,12 +1,26 @@
 #include "ArtemisInterface.h"
-
 // Сканнер модулей из PEB (обычно загруженные, не смапленные модули) на наличие известных нелегальных паттернов
-void __stdcall ART_LIB::ArtemisLibrary::SigScanner(ArtemisConfig* cfg)
+void __stdcall SigScanner(ArtemisConfig* cfg)
 {
-	if (cfg == nullptr) return;
-	if (cfg->callback == nullptr) return;
-	if (cfg->IllegalPatterns.empty()) return;
-
+	if (cfg == nullptr)
+	{
+#ifdef ARTEMIS_DEBUG
+		Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Passed null pointer to SigScanner\n");
+#endif
+		return;
+	}
+#ifdef ARTEMIS_DEBUG
+	Utils::LogInFile(ARTEMIS_LOG, "[INFO] Created async thread for SigScanner!\n");
+#endif
+	if (cfg->IllegalPatterns.empty())
+	{
+#ifdef ARTEMIS_DEBUG
+		Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Empty hack patterns list for SigScanner!\n");
+#endif
+		return;
+	}
+	if (cfg->SignatureScanner) return;
+	cfg->SignatureScanner = true;
 	// Цикл сканнера
 	while (true) 
 	{
@@ -21,7 +35,7 @@ void __stdcall ART_LIB::ArtemisLibrary::SigScanner(ArtemisConfig* cfg)
 				if (it.first == GetModuleHandleA("kernel32.dll")) continue;
 				DWORD scanAddr = SigScan::FindPatternExplicit((DWORD)it.first, it.second,
 				std::get<0>(KeyValuePair.second), std::get<1>(KeyValuePair.second));
-				if (scanAddr != NULL && !Utils::IsVecContain(cfg->DetectedSigAddresses, it.first))
+				if (scanAddr != NULL && !Utils::IsVecContain(cfg->ExcludedSigAddresses, it.first))
 				{
 					CHAR szFilePath[MAX_PATH + 1]; 
 					GetModuleFileNameA((HMODULE)it.first, szFilePath, MAX_PATH + 1);
@@ -35,7 +49,7 @@ void __stdcall ART_LIB::ArtemisLibrary::SigScanner(ArtemisConfig* cfg)
 					data.dllPath = szFilePath; // Запись пути к дллке
 					data.HackName = KeyValuePair.first; // Имя спаленного чита
 					data.type = DetectionType::ART_SIGNATURE_DETECT; // Выставление типа детекта 
-					cfg->callback(&data); cfg->DetectedSigAddresses.push_back(it.first);
+					cfg->callback(&data); cfg->ExcludedSigAddresses.push_back(it.first);
 				}
 			}
 		}

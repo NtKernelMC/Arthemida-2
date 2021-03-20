@@ -1,10 +1,17 @@
 #include "ArtemisInterface.h"
-
 // Сканнер модулей
-void __stdcall ART_LIB::ArtemisLibrary::ModuleScanner(ArtemisConfig* cfg)
+void __stdcall ModuleScanner(ArtemisConfig* cfg)
 {
-	if (cfg == nullptr) return;
-	if (cfg->callback == nullptr) return;
+	if (cfg == nullptr)
+	{
+#ifdef ARTEMIS_DEBUG
+		Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Passed null pointer to ModuleScanner\n");
+#endif
+		return;
+	}
+#ifdef ARTEMIS_DEBUG
+	Utils::LogInFile(ARTEMIS_LOG, "[INFO] Created async thread for ModuleScanner!\n");
+#endif
 	if (cfg->ModuleScanner) return;
 	cfg->ModuleScanner = true;
 	auto LegalModule = [&, cfg](HMODULE mdl) -> bool
@@ -20,12 +27,12 @@ void __stdcall ART_LIB::ArtemisLibrary::ModuleScanner(ArtemisConfig* cfg)
 		for (const auto& it : NewModuleMap)
 		{
 			if ((it.first != GetModuleHandleA(NULL) && it.first != cfg->hSelfModule) && // Условия: 1. Модуль не является текущим процессом; 2. Модуль не является текущим модулем (в котором используется античит)
-				!Utils::IsVecContain(cfg->ExcludedModules, it.first)) // 3. Модуль еще не проверен
+			!Utils::IsVecContain(cfg->ExcludedModules, it.first)) // 3. Модуль еще не проверен
 			{
 				CHAR szFileName[MAX_PATH + 1]; std::multimap<PVOID, std::string> ExportsList;
 				GetModuleFileNameA((HMODULE)it.first, szFileName, MAX_PATH + 1);
 				std::string NameOfDLL = Utils::GetDllName(szFileName);
-				DumpExportTable(GetModuleHandleA(NameOfDLL.c_str()), ExportsList); // Получение списка экспортов модуля
+				Utils::DumpExportTable(GetModuleHandleA(NameOfDLL.c_str()), ExportsList); // Получение списка экспортов модуля
 				if (!LegalModule((HMODULE)it.first) || (std::find(cfg->ModulesWhitelist.begin(), cfg->ModulesWhitelist.end(), NameOfDLL) == cfg->ModulesWhitelist.end() && ExportsList.size() < 2)) // Если модуль нелегальный (детект пока только на дубликаты длл (прокси)) или же у него меньше двух экспортов и он не в белом списке, вход в if
 				{
 					MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data;

@@ -4,7 +4,7 @@ void __stdcall ConfirmLegitLaunch(ArtemisConfig* cfg)
 	if (cfg == nullptr)
 	{
 #ifdef ARTEMIS_DEBUG
-		Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Passed null pointer to CheckLauncher.\n");
+		Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Passed null pointer to CheckLauncher\n");
 #endif
 		return;
 	}
@@ -34,7 +34,7 @@ void __stdcall ConfirmLegitLaunch(ArtemisConfig* cfg)
 							context.Dr2 = 0x0; context.Dr7 = 0x0;
 							SetThreadContext(pThread, &context);
 							ResumeThread(pThread); CloseHandle(pThread);
-							cfg->callback(&data); if (hSnapshot != NULL) 
+							cfg->callback(&data); if (hSnapshot != NULL)
 							CloseHandle(hSnapshot); return;
 						}
 					}
