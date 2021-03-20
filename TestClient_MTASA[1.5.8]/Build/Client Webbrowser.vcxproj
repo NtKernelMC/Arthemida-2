@@ -139,7 +139,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;MTA_DEBUG;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);DEBUG;PSAPI_VERSION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\cefweb;..\Client\sdk;..\vendor\cef3;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\cefweb;..\Client\sdk;..\vendor\cef3;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -150,7 +150,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>libcef.lib;Psapi.lib;version.lib;Winmm.lib;Ws2_32.lib;DbgHelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;..\vendor\cef3\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;..\vendor\cef3\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\Bin\mta\cefweb_d.lib</ImportLibrary>
       <AdditionalOptions>/SAFESEH:NO %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -161,7 +161,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;MTA_DEBUG;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);DEBUG;PSAPI_VERSION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\cefweb;..\Client\sdk;..\vendor\cef3;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\cefweb;..\Client\sdk;..\vendor\cef3;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -172,7 +172,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>libcef.lib;Psapi.lib;version.lib;Winmm.lib;Ws2_32.lib;DbgHelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;..\vendor\cef3\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;..\vendor\cef3\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\Bin\mta\cefweb_d.lib</ImportLibrary>
       <AdditionalOptions>/SAFESEH:NO %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -183,7 +183,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);PSAPI_VERSION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\cefweb;..\Client\sdk;..\vendor\cef3;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\cefweb;..\Client\sdk;..\vendor\cef3;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -200,7 +200,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>libcef.lib;Psapi.lib;version.lib;Winmm.lib;Ws2_32.lib;DbgHelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;..\vendor\cef3\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;..\vendor\cef3\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\Bin\mta\cefweb.lib</ImportLibrary>
       <AdditionalOptions>/SAFESEH:NO %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -211,7 +211,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);PSAPI_VERSION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\cefweb;..\Client\sdk;..\vendor\cef3;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\cefweb;..\Client\sdk;..\vendor\cef3;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -228,7 +228,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>libcef.lib;Psapi.lib;version.lib;Winmm.lib;Ws2_32.lib;DbgHelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;..\vendor\cef3\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;..\vendor\cef3\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\Bin\mta\cefweb.lib</ImportLibrary>
       <AdditionalOptions>/SAFESEH:NO %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -239,7 +239,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);PSAPI_VERSION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\cefweb;..\Client\sdk;..\vendor\cef3;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\cefweb;..\Client\sdk;..\vendor\cef3;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -256,7 +256,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>libcef.lib;Psapi.lib;version.lib;Winmm.lib;Ws2_32.lib;DbgHelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;..\vendor\cef3\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;..\vendor\cef3\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\Bin\mta\cefweb.lib</ImportLibrary>
       <AdditionalOptions>/PDB:"Symbols\$(ProjectName).pdb" /SAFESEH:NO %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -267,7 +267,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);PSAPI_VERSION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\cefweb;..\Client\sdk;..\vendor\cef3;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\cefweb;..\Client\sdk;..\vendor\cef3;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -284,7 +284,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>libcef.lib;Psapi.lib;version.lib;Winmm.lib;Ws2_32.lib;DbgHelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;..\vendor\cef3\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;..\vendor\cef3\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\Bin\mta\cefweb.lib</ImportLibrary>
       <AdditionalOptions>/PDB:"Symbols\$(ProjectName).pdb" /SAFESEH:NO %(AdditionalOptions)</AdditionalOptions>
     </Link>

@@ -1,11 +1,7 @@
+#include <cegui-0.4.0-custom/src/pcre/ucpinternal.h>
 /* This source module is automatically generated from the Unicode
 property table. See internal.h for a description of the layout. */
-typedef struct cnode
-{
-    unsigned short int f0;
-    unsigned short int f1;
-    unsigned short int f2;
-} cnode;
+
 static cnode ucp_table[] = {
   { 0x9a00, 0x2f1f, 0xe000 },
   { 0x8700, 0x1558, 0xd000 },

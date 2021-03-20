@@ -139,7 +139,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;MTA_DEBUG;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\mysql\include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Server\sdk;..\vendor\google-breakpad\src;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\mysql\include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Server\sdk;..\vendor\google-breakpad\src;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -150,7 +150,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>..\vendor\mysql\lib\x86\libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\Bin\server\mods\deathmatch\dbconmy_d.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -160,7 +160,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;MTA_DEBUG;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\mysql\include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Server\sdk;..\vendor\google-breakpad\src;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\mysql\include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Server\sdk;..\vendor\google-breakpad\src;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -171,7 +171,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>..\vendor\mysql\lib\x64\libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\Bin\server\x64\dbconmy_d.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -181,7 +181,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\mysql\include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Server\sdk;..\vendor\google-breakpad\src;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\mysql\include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Server\sdk;..\vendor\google-breakpad\src;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -198,7 +198,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>..\vendor\mysql\lib\x86\libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\Bin\server\mods\deathmatch\dbconmy.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -208,7 +208,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\mysql\include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Server\sdk;..\vendor\google-breakpad\src;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\mysql\include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Server\sdk;..\vendor\google-breakpad\src;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -225,7 +225,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>..\vendor\mysql\lib\x64\libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\Bin\server\x64\dbconmy.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -235,7 +235,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\mysql\include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Server\sdk;..\vendor\google-breakpad\src;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\mysql\include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Server\sdk;..\vendor\google-breakpad\src;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -252,7 +252,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>..\vendor\mysql\lib\x86\libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\Bin\server\mods\deathmatch\dbconmy.lib</ImportLibrary>
       <AdditionalOptions>/PDB:"Symbols\$(ProjectName).pdb" %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -263,7 +263,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files\Microsoft DirectX SDK (August 2009)\Include;..\vendor\mysql\include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Server\sdk;..\vendor\google-breakpad\src;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\mysql\include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Server\sdk;..\vendor\google-breakpad\src;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -280,7 +280,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>..\vendor\mysql\lib\x64\libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\Bin\server\x64\dbconmy.lib</ImportLibrary>
       <AdditionalOptions>/PDB:"Symbols\$(ProjectName).pdb" %(AdditionalOptions)</AdditionalOptions>
     </Link>
