@@ -1,6 +1,6 @@
 ﻿/*
     Artemis-2 for MTA Province
-	Target Platform: x32-x86 (Wow64)
+	Target Platform: x32-x86
 	Project by NtKernelMC & holmes0
 
 	<TASK> TODO:
