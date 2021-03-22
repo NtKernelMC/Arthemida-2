@@ -39,6 +39,7 @@ namespace ArtemisData
 		bool DetectManualMap = false;
 		bool DetectMemoryPatch = false;
 		bool DetectBySignature = false;
+		bool ServiceMon = false;
 		// anti-repeatable start for scanners
 		volatile bool ThreadScanner = false;
 		volatile bool ModuleScanner = false;
@@ -51,6 +52,7 @@ namespace ArtemisData
 		DWORD MemoryScanDelay = 0x0;
 		DWORD PatternScanDelay = 0x0;
 		DWORD MemoryGuardScanDelay = 0x0;
+		DWORD ServiceMonDelay = 0x0;
 		// additional settings & stuff
 		std::vector<PVOID> ExcludedThreads;
 		std::vector<PVOID> ExcludedModules;

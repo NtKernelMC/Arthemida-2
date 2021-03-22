@@ -55,14 +55,24 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 int main()
 {
 	system("color 4F"); SetConsoleTitleA("Arthemida-2 AntiCheat Lightweight Testing");
-	ArtemisConfig cfg; cfg.DetectThreads = true; cfg.ThreadScanDelay = 1000;
-	cfg.DetectModules = true; cfg.ModuleScanDelay = 1000;
-	cfg.DetectManualMap = true; cfg.MemoryScanDelay = 1000; 
+	ArtemisConfig cfg; 
+	cfg.DetectThreads = true; 
+	cfg.ThreadScanDelay = 1000;
+	
+	cfg.DetectModules = true; 
+	cfg.ModuleScanDelay = 1000;
+	
+	cfg.DetectManualMap = true; 
+	cfg.MemoryScanDelay = 1000; 
+	
+	cfg.ServiceMon = true;
+	cfg.ServiceMonDelay = 1000;
 	//cfg.DetectMemoryPatch = true; cfg.HooksList.insert(std::pair<PVOID, PVOID>(dest, hook)); // -> FOR MTA CLIENT
 	//cfg.DetectBySignature = true; cfg.PatternScanDelay = 1000; 
 	//cfg.HooksList.insert(std::pair<std::string, std::tuple<const char*, const char*>>
 	//(hack_name, std::make_tuple(pattern, mask)));
-	cfg.DetectFakeLaunch = true; cfg.callback = (ArtemisCallback)ArthemidaCallback; 
+	cfg.DetectFakeLaunch = true;
+	cfg.callback = (ArtemisCallback)ArthemidaCallback; 
 	IArtemisInterface* art = IArtemisInterface::SwitchArtemisMonitor(&cfg, true);
 	if (art)
 	{

@@ -66,6 +66,7 @@ ArtemisConfig* __stdcall IArtemisInterface::GetConfig()
 #include "../../Arthemida-2/ArtModules/MemoryScanner.h"
 #include "../../Arthemida-2/ArtModules/MemoryGuard.h"
 #include "../../Arthemida-2/ArtModules/SigScanner.h"
+#include "../../Arthemida-2/ArtModules/CServiceMon.h"
 IArtemisInterface* __stdcall IArtemisInterface::SwitchArtemisMonitor(ArtemisConfig* cfg, bool selector)
 {
 #ifdef ARTEMIS_DEBUG
@@ -135,6 +136,12 @@ IArtemisInterface* __stdcall IArtemisInterface::SwitchArtemisMonitor(ArtemisConf
 		if (!cfg->PatternScanDelay) cfg->PatternScanDelay = 1000;
 		std::thread SignatureThread(SigScanner, cfg);
 		SignatureThread.detach();
+	}
+	if (cfg->ServiceMon)
+	{
+		if (!cfg->ServiceMonDelay) cfg->ServiceMonDelay = 1000;
+		CServiceMon servmon;
+		servmon.Initialize().detach();
 	}
 	return ac_info;
 }
