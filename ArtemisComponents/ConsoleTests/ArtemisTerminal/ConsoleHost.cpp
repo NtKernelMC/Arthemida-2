@@ -46,6 +46,10 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 		Utils::LogInFile(ARTEMIS_LOG, "Detected Illegal module! Base: 0x%X | Rights: 0x%X | Size: %d\n",
 		artemis->baseAddr, artemis->MemoryRights, artemis->regionSize);
 		break;
+	case DetectionType::ART_ILLEGAL_SERVICE:
+		Utils::LogInFile(ARTEMIS_LOG, "Detected Illegal service!\n");
+		//"Path: %s | Name: %s  | Description: %s | Type: %d | BootSet: %s | Group: %s | Signed by: %s\n");
+		break;
 	default:
 		Utils::LogInFile(ARTEMIS_LOG, "Unknown detection code! Base: 0x%X | DllName: %s | Path: %s | Size: %d\n",
 		artemis->baseAddr, artemis->dllName.c_str(), artemis->dllPath.c_str(), artemis->regionSize);
@@ -67,25 +71,17 @@ int main()
 	
 	cfg.ServiceMon = true;
 	cfg.ServiceMonDelay = 1000;
+
 	//cfg.DetectMemoryPatch = true; cfg.HooksList.insert(std::pair<PVOID, PVOID>(dest, hook)); // -> FOR MTA CLIENT
+	
 	//cfg.DetectBySignature = true; cfg.PatternScanDelay = 1000; 
-	//cfg.HooksList.insert(std::pair<std::string, std::tuple<const char*, const char*>>
+	//cfg.IllegalPatterns.insert(std::pair<std::string, std::tuple<const char*, const char*>>
 	//(hack_name, std::make_tuple(pattern, mask)));
+
 	cfg.DetectFakeLaunch = true;
 	cfg.callback = (ArtemisCallback)ArthemidaCallback; 
-	IArtemisInterface* art = IArtemisInterface::SwitchArtemisMonitor(&cfg, true);
-	if (art)
-	{
-		printf("[ARTEMIS-2] Succussfully obtained pointer to AntiCheat!\n");
-		printf("[DELAY] Waiting your key-press before we gonna do unload...\n");
-		_getch(); if (art) art->ReleaseInstance();
-		else
-		{
-			printf("[?!] For some reason, the pointer to Arthemida is invalid. Last Error Code: 0x%x\n", GetLastError());
-			system("pause"); ExitProcess(0);
-		}
-		printf("[ARTEMIS-2] AntiCheat was successfully unloaded! Memory is released.\n");
-	}
+	IArtemisInterface* art = IArtemisInterface::InstallArtemisMonitor(&cfg);
+	if (art) printf("[ARTEMIS-2] Succussfully obtained pointer to AntiCheat!\n");
 	else printf("[ARTEMIS-2] Failure on start :( Last error code: %d\n", GetLastError());
 	while (true) { Sleep(1000); }
 	return 1;

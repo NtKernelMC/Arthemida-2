@@ -10,7 +10,7 @@ namespace ArtComponent
 	protected:
 		~ArtemisFiller();
 	public:
-		void ReleaseInstance() override;
+		//void ReleaseInstance() override;
 		friend IArtemisInterface* IArtemisInterface::CreateInstance(ArtemisConfig* cfg);
 	};
 }
