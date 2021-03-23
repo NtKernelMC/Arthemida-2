@@ -12,7 +12,7 @@ using namespace ArtemisData;
 using namespace ARTEMIS_INTERFACE;
 void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 {
-	MessageBeep(MB_ICONASTERISK);
+	system("color 04"); Utils::LogInFile(ARTEMIS_LOG, "\n\n");
 	if (artemis == nullptr)
 	{
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK ERROR] Passed null pointer!\n");
@@ -21,48 +21,45 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 	switch (artemis->type)
 	{
 	case DetectionType::ART_ILLEGAL_THREAD:
-		Utils::LogInFile(ARTEMIS_LOG, "Detected Anonymous thread! Base: 0x%X | Size: 0x%X\n",
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Anonymous thread! Base: 0x%X | Size: 0x%X\n",
 		artemis->baseAddr, artemis->regionSize);
 		break;
 	case DetectionType::ART_ILLEGAL_MODULE:
-		Utils::LogInFile(ARTEMIS_LOG, "Detected Illegal module! Base: 0x%X | DllName: %s | Path: %s | Size: %d\n",
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module! Base: 0x%X | DllName: %s | Path: %s | Size: %d\n",
 		artemis->baseAddr, artemis->dllName.c_str(), artemis->dllPath.c_str(), artemis->regionSize);
 		break;
 	case DetectionType::ART_FAKE_LAUNCHER:
-		Utils::LogInFile(ARTEMIS_LOG, "Detected fake launcher!\n");
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected fake launcher!\n");
 		break;
 	case DetectionType::ART_RETURN_ADDRESS:
-		Utils::LogInFile(ARTEMIS_LOG, "Detected Return to Hack Function! Address: 0x%X\n", artemis->baseAddr);
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Return to Hack Function! Address: 0x%X\n", artemis->baseAddr);
 		break;
 	case DetectionType::ART_MANUAL_MAP:
-		Utils::LogInFile(ARTEMIS_LOG, "Detected MMAP! Base: 0x%X | Size: 0x%X | Rights: 0x%X\n",
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected MMAP! Base: 0x%X | Size: 0x%X | Rights: 0x%X\n",
 		artemis->baseAddr, artemis->regionSize, artemis->MemoryRights);
 		break;
 	case DetectionType::ART_MEMORY_CHANGED:
-		Utils::LogInFile(ARTEMIS_LOG, "Detected Illegal module! Base: 0x%X | Rights: 0x%X | Size: %d\n",
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module! Base: 0x%X | Rights: 0x%X | Size: %d\n",
 		artemis->baseAddr, artemis->MemoryRights, artemis->regionSize);
 		break;
 	case DetectionType::ART_SIGNATURE_DETECT:
-		Utils::LogInFile(ARTEMIS_LOG, "Detected Illegal module! Base: 0x%X | Rights: 0x%X | Size: %d\n",
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module! Base: 0x%X | Rights: 0x%X | Size: %d\n",
 		artemis->baseAddr, artemis->MemoryRights, artemis->regionSize);
 		break;
 	case DetectionType::ART_ILLEGAL_SERVICE:
-		Utils::LogInFile(ARTEMIS_LOG, "Detected Illegal service!\n");
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal service!\n");
 		//"Path: %s | Name: %s  | Description: %s | Type: %d | BootSet: %s | Group: %s | Signed by: %s\n");
 		break;
 	default:
-		Utils::LogInFile(ARTEMIS_LOG, "Unknown detection code! Base: 0x%X | DllName: %s | Path: %s | Size: %d\n",
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Unknown detection code! Base: 0x%X | DllName: %s | Path: %s | Size: %d\n",
 		artemis->baseAddr, artemis->dllName.c_str(), artemis->dllPath.c_str(), artemis->regionSize);
 		break;
 	}
+	Utils::LogInFile(ARTEMIS_LOG, "\n\n");
 }
 int main()
 {
 	system("color 02"); SetConsoleTitleA("Arthemida-2 AntiCheat Lightweight Testing");
-	std::thread heart([] { for (;;) {
-		Sleep(3000); static bool first = false; if (!first) { first = true; printf("\n"); }
-		printf("\n[HEART-BEAT] Console is working normally! Press any key to stop.\n\n");
-	} });
 
 	ArtemisConfig cfg;
 	cfg.DetectThreads = true; 
@@ -85,6 +82,13 @@ int main()
 
 	cfg.DetectFakeLaunch = true;
 	cfg.callback = (ArtemisCallback)ArthemidaCallback; 
+
+	printf("[ARTEMIS-2] Configured and ready, press any key to load...\n"); _getch();
+	std::thread heart([] { for (;;) {
+		Sleep(3000); static bool first = false; if (!first) { first = true; printf("\n"); }
+		printf("\n[HEART-BEAT] Console is working normally! Press any key to stop.\n\n");
+	} });
+
 	IArtemisInterface* art = IArtemisInterface::InstallArtemisMonitor(&cfg);
 	if (art) printf("[ARTEMIS-2] Succussfully obtained pointer to AntiCheat!\n");
 	else printf("[ARTEMIS-2] Failure on start :( Last error code: %d\n", GetLastError());

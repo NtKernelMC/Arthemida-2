@@ -30,6 +30,9 @@ private:
 
 void CServiceMon::MonitorCycle()
 {
+#ifdef ARTEMIS_DEBUG
+    Utils::LogInFile(ARTEMIS_LOG, "[INFO] Created async thread for CServiceMon::MonitorCycle!\n");
+#endif
     static bool RUN = false; // ! DEBUG - ONE TIME RUN
     std::multimap<std::wstring, SServiceInfo> mmServices;
     while (true)
