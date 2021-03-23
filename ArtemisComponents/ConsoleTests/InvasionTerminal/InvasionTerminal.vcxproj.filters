@@ -13,10 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Файлы заголовков\LauncherInclude">
+      <UniqueIdentifier>{09cd4e72-eb7b-4a42-9d30-7001288161ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssaultConsole.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Arthemida-2\LauncherInclude\ArtSafeLaunch.h">
+      <Filter>Файлы заголовков\LauncherInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Arthemida-2\LauncherInclude\MiniJumper.h">
+      <Filter>Файлы заголовков\LauncherInclude</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
