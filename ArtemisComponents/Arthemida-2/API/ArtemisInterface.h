@@ -8,13 +8,13 @@ namespace ARTEMIS_INTERFACE
 	protected:
 		virtual ~IBaseArtemis() = default;
 	public:
-		virtual void ReleaseInstance() = 0;
+		//virtual void ReleaseInstance() = 0;
 		IBaseArtemis& operator=(const IBaseArtemis&) = delete;
 	};
 	class IArtemisInterface : public IBaseArtemis
 	{
 	public:
-		static IArtemisInterface* __stdcall SwitchArtemisMonitor(ArtemisConfig* cfg, bool selector = true);
+		static IArtemisInterface* __stdcall InstallArtemisMonitor(ArtemisConfig* cfg);
 		static IArtemisInterface* __stdcall GetInstance();
 		static ArtemisConfig* __stdcall GetConfig();
 	protected:

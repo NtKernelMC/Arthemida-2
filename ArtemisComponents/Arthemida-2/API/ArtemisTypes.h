@@ -11,7 +11,8 @@ namespace ArtemisData
 		ART_RETURN_ADDRESS = 4,
 		ART_MANUAL_MAP = 5,
 		ART_MEMORY_CHANGED = 6,
-		ART_SIGNATURE_DETECT = 7
+		ART_SIGNATURE_DETECT = 7,
+		ART_ILLEGAL_SERVICE = 8
 	};
 	struct ARTEMIS_DATA
 	{
@@ -39,6 +40,7 @@ namespace ArtemisData
 		bool DetectManualMap = false;
 		bool DetectMemoryPatch = false;
 		bool DetectBySignature = false;
+		bool ServiceMon = false;
 		// anti-repeatable start for scanners
 		volatile bool ThreadScanner = false;
 		volatile bool ModuleScanner = false;
@@ -51,6 +53,7 @@ namespace ArtemisData
 		DWORD MemoryScanDelay = 0x0;
 		DWORD PatternScanDelay = 0x0;
 		DWORD MemoryGuardScanDelay = 0x0;
+		DWORD ServiceMonDelay = 0x0;
 		// additional settings & stuff
 		std::vector<PVOID> ExcludedThreads;
 		std::vector<PVOID> ExcludedModules;

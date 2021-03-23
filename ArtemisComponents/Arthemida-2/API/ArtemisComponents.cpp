@@ -26,13 +26,13 @@ ArtemisFiller::~ArtemisFiller()
 	Utils::LogInFile(ARTEMIS_LOG, "[ArtemisFiller] Called the third generation destructor!\n");
 #endif
 }
-void ArtemisFiller::ReleaseInstance() 
+/*void ArtemisFiller::ReleaseInstance() 
 { 
 #ifdef ARTEMIS_DEBUG
 	Utils::LogInFile(ARTEMIS_LOG, "[ReleaseInstance] Processing unloading routine...\n");
 #endif
 	delete this; 
-}
+}*/
 IArtemisInterface* IArtemisInterface::i_art = nullptr;
 ArtemisConfig* IArtemisInterface::g_cfg = nullptr;
 bool IArtemisInterface::WasReloaded = false;
@@ -66,12 +66,12 @@ ArtemisConfig* __stdcall IArtemisInterface::GetConfig()
 #include "../../Arthemida-2/ArtModules/MemoryScanner.h"
 #include "../../Arthemida-2/ArtModules/MemoryGuard.h"
 #include "../../Arthemida-2/ArtModules/SigScanner.h"
-IArtemisInterface* __stdcall IArtemisInterface::SwitchArtemisMonitor(ArtemisConfig* cfg, bool selector)
+#include "../../Arthemida-2/ArtModules/CServiceMon.h"
+IArtemisInterface* __stdcall IArtemisInterface::InstallArtemisMonitor(ArtemisConfig* cfg)
 {
 #ifdef ARTEMIS_DEBUG
 	if (!WasReloaded) DeleteFileA(ARTEMIS_LOG);
 	else WasReloaded = false;
-	Utils::LogInFile(ARTEMIS_LOG, "[Artemis-2] AntiCheat -> Switch command on: %d\n", (BYTE)selector);
 #endif
 	if (cfg == nullptr)
 	{
@@ -136,34 +136,11 @@ IArtemisInterface* __stdcall IArtemisInterface::SwitchArtemisMonitor(ArtemisConf
 		std::thread SignatureThread(SigScanner, cfg);
 		SignatureThread.detach();
 	}
+	if (cfg->ServiceMon)
+	{
+		if (!cfg->ServiceMonDelay) cfg->ServiceMonDelay = 1000;
+		CServiceMon servmon;
+		servmon.Initialize().detach();
+	}
 	return ac_info;
 }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
-// Метод отключения античита (жизненно необходим для его перезапуска)
-bool DisableArthemidaAC(ART_LIB::ArtemisLibrary::ArtemisConfig* cfg)
-{
-	if (GameHooks::DeleteGameHooks()) // Снимает и игровые хуки и APC диспетчер!
-	{
-#ifdef ARTEMIS_DEBUG
-		if (!WasReloaded) Utils::LogInFile(ARTEMIS_LOG, "Artemis-2 AntiCheat unloaded.\n");
-		else Utils::LogInFile(ARTEMIS_LOG, "Reloading Artemis-2 AntiCheat...\n");
-#endif
-		return true;
-	}
-	return false;
-}
-
-// Метод для удобного перезапуска античита
-ART_LIB::ArtemisLibrary* __cdecl ReloadArtemis2(ART_LIB::ArtemisLibrary::ArtemisConfig* cfg)
-{
-	if (cfg == nullptr) return nullptr; 
-	WasReloaded = true;
-	if (DisableArtemis())
-	{
-		ART_LIB::ArtemisLibrary* art_lib = alInitializeArtemis(cfg);
-		return art_lib; // Возращаем указатель на оригинал содержащий настройки античита
-	}
-	return nullptr; // Возращаем нулевой указатель если не удалось безопасно перезапустить античит
-}
-*/
