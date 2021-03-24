@@ -8,7 +8,6 @@ namespace ARTEMIS_INTERFACE
 	protected:
 		virtual ~IBaseArtemis() = default;
 	public:
-		//virtual void ReleaseInstance() = 0;
 		IBaseArtemis& operator=(const IBaseArtemis&) = delete;
 	};
 	class IArtemisInterface : public IBaseArtemis
