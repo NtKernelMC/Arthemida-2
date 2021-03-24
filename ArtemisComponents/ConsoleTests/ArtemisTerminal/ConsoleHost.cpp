@@ -65,8 +65,7 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 int main()
 {
 	system("color 02"); SetConsoleTitleA("Arthemida-2 AntiCheat Lightweight Testing");
-
-	ArtemisConfig cfg;
+	ArtemisConfig cfg; LoadLibraryA("version.dll");
 	cfg.DetectThreads = true; 
 	cfg.ThreadScanDelay = 1000;
 	
@@ -76,8 +75,8 @@ int main()
 	cfg.DetectManualMap = true; 
 	cfg.MemoryScanDelay = 1000; 
 	
-	cfg.ServiceMon = true;
-	cfg.ServiceMonDelay = 1000;
+	//cfg.ServiceMon = true;
+	//cfg.ServiceMonDelay = 1000;
 
 	//cfg.DetectMemoryPatch = true; cfg.HooksList.insert(std::pair<PVOID, PVOID>(dest, hook)); // -> FOR MTA CLIENT
 	
@@ -85,7 +84,7 @@ int main()
 	//cfg.IllegalPatterns.insert(std::pair<std::string, std::tuple<const char*, const char*>>
 	//(hack_name, std::make_tuple(pattern, mask)));
 
-	cfg.DetectFakeLaunch = true;
+	//cfg.DetectFakeLaunch = true;
 	cfg.callback = (ArtemisCallback)ArthemidaCallback; 
 
 	printf("[ARTEMIS-2] Configured and ready, press any key to load...\n"); _getch();

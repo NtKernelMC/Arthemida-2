@@ -168,6 +168,8 @@
     <ClInclude Include="..\..\Arthemida-2\ArtModules\ThreadScanner.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtUtils\CRC32.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtUtils\sigscan.h" />
+    <ClInclude Include="..\..\Arthemida-2\ArtUtils\SString.h" />
+    <ClInclude Include="..\..\Arthemida-2\ArtUtils\SString.hpp" />
     <ClInclude Include="..\..\Arthemida-2\ArtUtils\Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

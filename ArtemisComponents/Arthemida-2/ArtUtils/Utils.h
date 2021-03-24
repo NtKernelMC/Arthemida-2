@@ -11,6 +11,7 @@
 #define WIN32_LEAN_AND_MEAN
 #endif
 #pragma warning(disable : 4244)
+#pragma warning(disable : 4018)
 #define ARTEMIS_DEBUG
 #ifdef ARTEMIS_DEBUG
 #define ARTEMIS_LOG "!0_ArtemisDebug.log"
@@ -35,6 +36,7 @@
 #include <conio.h>
 #include <algorithm>
 #include <intrin.h>
+#pragma comment(lib, "Version.lib")
 #pragma intrinsic(_ReturnAddress)
 #include "../../Arthemida-2/ArtUtils/CRC32.h"
 #include "../../Arthemida-2/ArtUtils/sigscan.h"
