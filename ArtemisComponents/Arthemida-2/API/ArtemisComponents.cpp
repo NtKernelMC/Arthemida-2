@@ -6,6 +6,7 @@
 	<TASK> TODO:
 	Первый этап >>>
 	+ Вырезан APC обработчик с гэйм-хуками, архитектура проекта переписана под API в ООП стиле на абстрактных классах.
+	+ Переписан алгоритм определения запуска с fake-лаунчера на более надежный и стабильный
 	- Модульный сканнер ныне определяет любые виды нелегальных типов динамических библиотек, загруженные посредством LoadLibrary/Ех/LdrLoadDLL. или же Ргоху-DLL`ки.
 	- Обновление сигнатур в сканнере для поиска популярных GUI библиотек особо часто возлюбленными читоделами. (Активный поиск, циклическим режимом)
 	- Пополнение списка гейм-хуков для защиты от новых разновидностей читов, включая функции которые могут поспособствовать инжекту клиентского Lua-кода или же скрипта. (ручные проверки в коде client.dll)
@@ -26,13 +27,6 @@ ArtemisFiller::~ArtemisFiller()
 	Utils::LogInFile(ARTEMIS_LOG, "[ArtemisFiller] Called the third generation destructor!\n");
 #endif
 }
-/*void ArtemisFiller::ReleaseInstance() 
-{ 
-#ifdef ARTEMIS_DEBUG
-	Utils::LogInFile(ARTEMIS_LOG, "[ReleaseInstance] Processing unloading routine...\n");
-#endif
-	delete this; 
-}*/
 IArtemisInterface* IArtemisInterface::i_art = nullptr;
 ArtemisConfig* IArtemisInterface::g_cfg = nullptr;
 bool IArtemisInterface::WasReloaded = false;
