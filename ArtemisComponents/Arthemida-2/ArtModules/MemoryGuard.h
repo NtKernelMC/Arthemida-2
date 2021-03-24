@@ -1,3 +1,8 @@
+/*
+	Artemis-2 for MTA Province
+	Target Platform: x32-x86
+	Project by NtKernelMC & holmes0
+*/
 #include "ArtemisInterface.h"
 void ConfirmLegitReturn(const char* function_name, PVOID return_address)
 {
