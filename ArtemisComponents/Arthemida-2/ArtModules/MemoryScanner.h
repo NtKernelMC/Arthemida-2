@@ -1,3 +1,8 @@
+/*
+	Artemis-2 for MTA Province
+	Target Platform: x32-x86
+	Project by NtKernelMC & holmes0
+*/
 #include "ArtemisInterface.h"
 // Сканнер VAD`ов с юзермода для поиска аномалий памяти
 void __stdcall MemoryScanner(ArtemisConfig* cfg)
