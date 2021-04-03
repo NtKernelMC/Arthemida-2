@@ -83,19 +83,19 @@ public:
 		}
 		return false;
 	}
+	static long getFileSize(FILE* file)
+	{
+		long lCurPos, lEndPos;
+		lCurPos = ftell(file);
+		fseek(file, 0, 2);
+		lEndPos = ftell(file);
+		fseek(file, lCurPos, 0);
+		return lEndPos;
+	}
 	// Генерация CRC32 хеша файла
 	static DWORD GenerateCRC32(const std::string filePath)
 	{
 		if (filePath.empty()) return 0x0;
-		auto getFileSize = [](FILE* file) -> long
-		{
-			long lCurPos, lEndPos;
-			lCurPos = ftell(file);
-			fseek(file, 0, 2);
-			lEndPos = ftell(file);
-			fseek(file, lCurPos, 0);
-			return lEndPos;
-		};
 		FILE* hFile = fopen(filePath.c_str(), "rb");
 		if (hFile == nullptr) return 0x0;
 		BYTE* fileBuf; long fileSize;
@@ -224,7 +224,7 @@ public:
 		}
 		return std::string("UNKNOWN");
 	}
-	static bool CheckCRC32(HMODULE mdl, std::multimap<DWORD, std::string>& ModuleSnapshot)
+	static bool IsModuleDuplicated(HMODULE mdl, std::multimap<DWORD, std::string>& ModuleSnapshot)
 	{
 		if (mdl == nullptr) return false;
 		CHAR szFileName[MAX_PATH + 1]; GetModuleFileNameA(mdl, szFileName, MAX_PATH + 1);
@@ -237,12 +237,12 @@ public:
 			{
 				tmpModuleSnapshot.insert(tmpModuleSnapshot.begin(), std::pair<std::string, DWORD>(it.second, it.first));
 			}
-			if (tmpModuleSnapshot.count(DllName) == 0x1) return true;
+			if (tmpModuleSnapshot.count(DllName) > 0x0) return true;
 		}
 		else
 		{
 			ModuleSnapshot.insert(ModuleSnapshot.begin(), std::pair<DWORD, std::string>(CRC32, DllName));
-			return true;
+			return false;
 		}
 		return false;
 	}

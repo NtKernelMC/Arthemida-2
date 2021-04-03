@@ -20,6 +20,7 @@ public:
     {
         std::wstring            wsFilePath;
         std::wstring            wsDisplayName;
+        bool                    EmptyVersionInfo;
         SERVICE_STATUS_PROCESS  sspStatus;
     } SServiceInfo;
 

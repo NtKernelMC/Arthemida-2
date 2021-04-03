@@ -8,20 +8,16 @@ void ConfirmLegitReturn(const char* function_name, PVOID return_address)
 {
 	if (function_name == nullptr || return_address == nullptr) return;
 	ArtemisConfig* cfg = IArtemisInterface::GetConfig();
-	if (cfg == nullptr) return;
-	std::vector<std::string> allowedModules = { "client.dll", "multiplayer_sa.dll", "game_sa.dll",
+	if (cfg == nullptr) return; std::vector<std::string> allowedModules = { "client.dll", "multiplayer_sa.dll", "game_sa.dll",
 	"core.dll", "gta_sa.exe", "proxy_sa.exe", "lua5.1c.dll", "pcre3.dll" };
 	std::string moduleName = Utils::GetNameOfModuledAddressSpace(return_address, Utils::GenerateModuleNamesList());
 	if (!Utils::IsVecContain2(allowedModules, moduleName) && !Utils::IsVecContain(cfg->ExcludedMethods, return_address))
 	{
-		typedef DWORD(__stdcall* LPFN_GetMappedFileNameA)(HANDLE hProcess, LPVOID lpv, LPCSTR lpFilename, DWORD nSize);
-		LPFN_GetMappedFileNameA g_GetMappedFileNameA = nullptr; HMODULE hPsapi = LoadLibraryA("psapi.dll");
-		g_GetMappedFileNameA = (LPFN_GetMappedFileNameA)GetProcAddress(hPsapi, "GetMappedFileNameA");
 		char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
-		g_GetMappedFileNameA(GetCurrentProcess(), (PVOID)return_address, MappedName, sizeof(MappedName));
+		cfg->lpGetMappedFileNameA(GetCurrentProcess(), (PVOID)return_address, MappedName, sizeof(MappedName));
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data; // объявление объектов временных структур
-		VirtualQueryEx(GetCurrentProcess(), return_address, &mme, 5); // Получение подробной информации по региону памяти
+		MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data; data.EmptyVersionInfo = true;
+		VirtualQuery(return_address, &mme, sizeof(MEMORY_BASIC_INFORMATION)); // Получение подробной информации по региону памяти
 		data.baseAddr = (LPVOID)return_address; // Запись базового адреса региона памяти
 		data.MemoryRights = mme.AllocationProtect; // Запись прав доступа к региону памяти
 		data.regionSize = mme.RegionSize; // Запись размера региона памяти
@@ -71,7 +67,7 @@ void __stdcall MemoryGuardScanner(ArtemisConfig* cfg) // сканнер целостности пам
 			{
 				if (!Utils::IsVecContain(cfg->ExcludedPatches, it.second))
 				{
-					ARTEMIS_DATA data; data.baseAddr = it.second;
+					ARTEMIS_DATA data; data.baseAddr = it.second; data.EmptyVersionInfo = true;
 					data.MemoryRights = PAGE_EXECUTE_READWRITE; data.regionSize = 0x5;
 					data.dllName = "client.dll"; data.dllPath = "MTA\\mods\\deadmatch\\client.dll";
 					data.type = DetectionType::ART_MEMORY_CHANGED;

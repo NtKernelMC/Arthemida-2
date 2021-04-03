@@ -164,7 +164,7 @@
     <ClInclude Include="..\..\Arthemida-2\ArtModules\MemoryGuard.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtModules\MemoryScanner.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtModules\ModuleScanner.h" />
-    <ClInclude Include="..\..\Arthemida-2\ArtModules\SigScanner.h" />
+    <ClInclude Include="..\..\Arthemida-2\ArtModules\HeuristicScanner.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtModules\ThreadScanner.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtUtils\CRC32.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtUtils\sigscan.h" />

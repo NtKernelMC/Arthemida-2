@@ -21,7 +21,7 @@ void __stdcall ConfirmLegitLaunch(ArtemisConfig* cfg)
 	std::string VideoCard = DevInfo.DeviceString;
 	if (!OpenMutexA(MUTEX_ALL_ACCESS, FALSE, VideoCard.c_str()))
 	{
-		ARTEMIS_DATA data; 
+		ARTEMIS_DATA data;
 		data.type = DetectionType::ART_FAKE_LAUNCHER;
 		cfg->callback(&data);
 	}

@@ -28,6 +28,7 @@ namespace ArtemisData
 		std::string dllName;
 		std::string dllPath;
 		std::string HackName;
+		bool EmptyVersionInfo;
 	};
 	typedef void(__stdcall* ArtemisCallback)(ARTEMIS_DATA* artemis);
 	typedef DWORD(__stdcall* LPFN_GetMappedFileNameA)(HANDLE hProcess, LPVOID lpv, LPCSTR lpFilename, DWORD nSize);

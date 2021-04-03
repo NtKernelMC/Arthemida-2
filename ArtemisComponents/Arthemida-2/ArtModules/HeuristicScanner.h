@@ -42,11 +42,10 @@ void __stdcall SigScanner(ArtemisConfig* cfg)
 				std::get<0>(KeyValuePair.second), std::get<1>(KeyValuePair.second));
 				if (scanAddr != NULL && !Utils::IsVecContain(cfg->ExcludedSigAddresses, it.first))
 				{
-					CHAR szFilePath[MAX_PATH + 1]; 
-					GetModuleFileNameA((HMODULE)it.first, szFilePath, MAX_PATH + 1);
+					CHAR szFilePath[MAX_PATH + 1]; GetModuleFileNameA((HMODULE)it.first, szFilePath, MAX_PATH + 1);
 					std::string NameOfDLL = Utils::GetDllName(szFilePath);
-					MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data;
-					VirtualQueryEx(GetCurrentProcess(), it.first, &mme, it.second); // Получение подробной информации о регионе памяти модуля
+					MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data; data.EmptyVersionInfo = true;
+					VirtualQuery(it.first, &mme, sizeof(MEMORY_BASIC_INFORMATION)); // Получение подробной информации о регионе памяти модуля
 					data.baseAddr = it.first; // Запись базового адреса модуля в data
 					data.MemoryRights = mme.AllocationProtect; // Запись прав доступа региона в data
 					data.regionSize = mme.RegionSize; // Запись размера региона в data

@@ -49,7 +49,7 @@ ArtemisConfig* __stdcall IArtemisInterface::GetConfig()
 #include "../../Arthemida-2/ArtModules/ModuleScanner.h"
 #include "../../Arthemida-2/ArtModules/MemoryScanner.h"
 #include "../../Arthemida-2/ArtModules/MemoryGuard.h"
-#include "../../Arthemida-2/ArtModules/SigScanner.h"
+#include "../../Arthemida-2/ArtModules/HeuristicScanner.h"
 #include "../../Arthemida-2/ArtModules/CServiceMon.h"
 IArtemisInterface* __stdcall IArtemisInterface::InstallArtemisMonitor(ArtemisConfig* cfg)
 {
@@ -68,6 +68,15 @@ IArtemisInterface* __stdcall IArtemisInterface::InstallArtemisMonitor(ArtemisCon
 	{
 #ifdef ARTEMIS_DEBUG
 		Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Unknown address in callback argument! callback is nullptr.\n");
+#endif
+		return nullptr;
+	}
+	typedef DWORD(__stdcall* LPFN_GetMappedFileNameA)(HANDLE hProcess, LPVOID lpv, LPCSTR lpFilename, DWORD nSize);
+	cfg->lpGetMappedFileNameA = (LPFN_GetMappedFileNameA)GetProcAddress(LoadLibraryA("psapi.dll"), "GetMappedFileNameA");
+	if (cfg->lpGetMappedFileNameA == nullptr)
+	{
+#ifdef ARTEMIS_DEBUG
+		Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Can`t obtain export from psapi.dll for GetMappedFileNameA.\n");
 #endif
 		return nullptr;
 	}

@@ -52,17 +52,14 @@ void __stdcall MemoryScanner(ArtemisConfig* cfg)
 							{
 								if (!Utils::IsMemoryInModuledRange((PVOID)z))
 								{
-									typedef DWORD(__stdcall* LPFN_GetMappedFileNameA)(HANDLE hProcess, LPVOID lpv, LPCSTR lpFilename, DWORD nSize);
-									LPFN_GetMappedFileNameA g_GetMappedFileNameA = nullptr; HMODULE hPsapi = LoadLibraryA("psapi.dll");
-									g_GetMappedFileNameA = (LPFN_GetMappedFileNameA)GetProcAddress(hPsapi, "GetMappedFileNameA");
 									char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
-									g_GetMappedFileNameA(GetCurrentProcess(), (PVOID)z, MappedName, sizeof(MappedName));
+									cfg->lpGetMappedFileNameA(GetCurrentProcess(), (PVOID)z, MappedName, sizeof(MappedName));
 									if (strlen(MappedName) < 4 && !Utils::IsVecContain(cfg->ExcludedImages, i->BaseAddress))
 									{
 										ARTEMIS_DATA data; data.baseAddr = (PVOID)foundIAT;
 										data.MemoryRights = i->Protect; data.regionSize = i->RegionSize;
 										data.dllName = "unknown"; data.dllPath = "unknown";
-										data.type = DetectionType::ART_MANUAL_MAP;
+										data.type = DetectionType::ART_MANUAL_MAP; data.EmptyVersionInfo = true;
 										cfg->callback(&data); cfg->ExcludedImages.push_back(i->BaseAddress);
 									}
 								}

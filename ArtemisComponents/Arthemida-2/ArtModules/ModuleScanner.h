@@ -80,13 +80,6 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 #endif
 	if (cfg->ModuleScanner) return;
 	cfg->ModuleScanner = true;
-	auto IsNotDuplicated = [&, cfg](HMODULE mdl) -> bool
-	{
-		char moduleName[256]; memset(moduleName, 0, sizeof(moduleName));
-		cfg->lpGetMappedFileNameA(GetCurrentProcess(), mdl, moduleName, sizeof(moduleName)); // Check in mem scan too!
-		if (Utils::CheckCRC32(mdl, cfg->ModuleSnapshot)) return true; // Внутри фкакой то баг, если заюзать функи с version.dll
-		return false;
-	};
 	auto IsNotNativeWinModule = [](const std::string& m_path) -> bool
 	{
 		if (Utils::findStringIC(m_path, "C:\\Windows\\System32"))
@@ -96,44 +89,45 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 				if (dll_ver.strCompanyName.length() >= 3 && dll_ver.strProductName.length() >= 3)
 				{
 #ifdef ARTEMIS_DEBUG
-					Utils::LogInFile(ARTEMIS_LOG, "[VERSION_INFO] Company: %s | Product: %s\n",
-					dll_ver.strCompanyName.c_str(), dll_ver.strProductName.c_str());
+					//Utils::LogInFile(ARTEMIS_LOG, "[VERSION_INFO] Company: %s | Product: %s\n",
+					//dll_ver.strCompanyName.c_str(), dll_ver.strProductName.c_str());
 #endif
 					return false;
 				}
-				else printf("FAIL #2222\n");
 			}
-			else printf("FAIL #1111\n");
 		}
-		else printf("FAIL #0000\n");
 		return true;
 	};
 	while (true)
 	{
-		// Runtime Duplicate-Module Scanner
+		// Runtime Duplicates-Module Scanner && ProxyDLL Detector
 		std::map<LPVOID, DWORD> NewModuleMap = Utils::BuildModuledMemoryMap(); 
 		for (const auto& it : NewModuleMap)
 		{
 			if ((it.first != GetModuleHandleA(NULL) && it.first != cfg->hSelfModule) && 
 			!Utils::IsVecContain(cfg->ExcludedModules, it.first)) 
 			{
-				//printf("222222222\n");
 				CHAR szFileName[MAX_PATH + 1]; GetModuleFileNameA((HMODULE)it.first, szFileName, MAX_PATH + 1);
-				if (!IsNotDuplicated((HMODULE)it.first)) // Если наш модуль дублирует чье то имя но его хэш отличается
+				if (Utils::IsModuleDuplicated((HMODULE)it.first, cfg->ModuleSnapshot)) 
+				// Если наш модуль дублирует чье то имя но его хэш отличается
 				{
-					//printf("111111111\n");
-					//if (IsNotNativeWinModule(szFileName)) // Если наш модуль не является родной библиотекой винды
-					//{
+					if (IsNotNativeWinModule(szFileName)) // Если наш модуль не является родной библиотекой винды
+					{
 						std::string NameOfDLL = Utils::GetDllName(szFileName);
 						MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data;
-						VirtualQueryEx(GetCurrentProcess(), it.first, &mme, it.second);
-						data.baseAddr = it.first;
-						data.MemoryRights = mme.AllocationProtect;
-						data.regionSize = mme.RegionSize;
-						data.dllName = NameOfDLL; data.dllPath = szFileName;
-						data.type = DetectionType::ART_ILLEGAL_MODULE;
+						VirtualQuery(it.first, &mme, sizeof(MEMORY_BASIC_INFORMATION));
+						data.baseAddr = it.first; data.EmptyVersionInfo = true;
+						data.MemoryRights = mme.AllocationProtect; DWORD fSize = 0x0; 
+						FILE* nFile = fopen(szFileName, "rb");
+						if (nFile != nullptr)
+						{
+							fSize = Utils::getFileSize(nFile);
+							fclose(nFile);
+						}
+						data.regionSize = fSize; data.dllName = NameOfDLL; 
+						data.dllPath = szFileName; data.type = DetectionType::ART_ILLEGAL_MODULE;
 						cfg->callback(&data); cfg->ExcludedModules.push_back(it.first);
-					//}
+					}
 				}
 			}
 		}
