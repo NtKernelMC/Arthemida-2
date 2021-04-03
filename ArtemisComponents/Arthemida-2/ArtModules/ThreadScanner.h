@@ -36,8 +36,9 @@ void __stdcall ScanForDllThreads(ArtemisConfig* cfg)
 						ResumeThread(targetThread); CloseHandle(targetThread); // Разморозка потока и закрытие хендла к нему
 						if (!Utils::IsMemoryInModuledRange((LPVOID)tempBase) && !Utils::IsVecContain(cfg->ExcludedThreads, (LPVOID)tempBase)) // Проверка на легальность потока (в if заходит в случае нелегального)
 						{
-							MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data;
-							VirtualQueryEx(GetCurrentProcess(), (LPCVOID)tempBase, &mme, sizeof(th32.dwSize)); // Получение подробной информации по региону памяти потока
+							MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data; data.EmptyVersionInfo = true;
+							VirtualQuery((LPCVOID)tempBase, &mme, sizeof(MEMORY_BASIC_INFORMATION)); 
+							// Получение подробной информации по региону памяти потока
 							data.baseAddr = (LPVOID)tempBase; // Запись базового адреса в data
 							data.MemoryRights = mme.AllocationProtect; // Запись прав доступа к региону в data
 							data.regionSize = mme.RegionSize; // Запись размера региона в data

@@ -30,8 +30,8 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 		artemis->baseAddr, artemis->regionSize);
 		break;
 	case DetectionType::ART_ILLEGAL_MODULE:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module! Base: 0x%X | DllName: %s | Path: %s | Size: %d\n",
-		artemis->baseAddr, artemis->dllName.c_str(), artemis->dllPath.c_str(), artemis->regionSize);
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module! Base: 0x%X | DllName: %s\nPath: %s\nSize: %d | Empty Version Info: %d\n",
+		artemis->baseAddr, artemis->dllName.c_str(), artemis->dllPath.c_str(), artemis->regionSize, (int)artemis->EmptyVersionInfo);
 		break;
 	case DetectionType::ART_FAKE_LAUNCHER:
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected fake launcher!\n");
@@ -40,30 +40,31 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Return to Hack Function! Address: 0x%X\n", artemis->baseAddr);
 		break;
 	case DetectionType::ART_MANUAL_MAP:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected MMAP! Base: 0x%X | Size: 0x%X | Rights: 0x%X\n",
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected MMAP!\nBase: 0x%X | Size: 0x%X | Rights: 0x%X\n",
 		artemis->baseAddr, artemis->regionSize, artemis->MemoryRights);
 		break;
 	case DetectionType::ART_MEMORY_CHANGED:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module! Base: 0x%X | Rights: 0x%X | Size: %d\n",
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module!\nBase: 0x%X | Rights: 0x%X | Size: %d\n",
 		artemis->baseAddr, artemis->MemoryRights, artemis->regionSize);
 		break;
 	case DetectionType::ART_SIGNATURE_DETECT:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module! Base: 0x%X | Rights: 0x%X | Size: %d\n",
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module!\nBase: 0x%X | Rights: 0x%X | Size: %d\n",
 		artemis->baseAddr, artemis->MemoryRights, artemis->regionSize);
 		break;
 	case DetectionType::ART_ILLEGAL_SERVICE:
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal service!\n");
-		//"Path: %s | Name: %s  | Description: %s | Type: %d | BootSet: %s | Group: %s | Signed by: %s\n");
+		//"Path: %s | \nName: %s  | Description: %s | \nType: %d | BootSet: %s | Group: %s\n | Signed by: %s | Has Version Info: %d\n");
 		break;
 	default:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Unknown detection code! Base: 0x%X | DllName: %s | Path: %s | Size: %d\n",
-		artemis->baseAddr, artemis->dllName.c_str(), artemis->dllPath.c_str(), artemis->regionSize);
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Unknown detection code! Base: 0x%X | DllName: %s\nPath: %s\nSize: %d | Empty Version Info: %d\n",
+		artemis->baseAddr, artemis->dllName.c_str(), artemis->dllPath.c_str(), artemis->regionSize, (int)artemis->EmptyVersionInfo);
 		break;
 	}
 	Utils::LogInFile(ARTEMIS_LOG, "\n\n");
 }
 int main()
 {
+	SetConsoleCP(1251); SetConsoleOutputCP(1251);
 	system("color 02"); SetConsoleTitleA("Arthemida-2 AntiCheat Lightweight Testing");
 	ArtemisConfig cfg; LoadLibraryA("version.dll");
 	cfg.DetectThreads = true; 

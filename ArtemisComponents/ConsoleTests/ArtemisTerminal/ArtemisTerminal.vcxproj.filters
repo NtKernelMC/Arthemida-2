@@ -53,7 +53,7 @@
     <ClInclude Include="..\..\Arthemida-2\ArtModules\ModuleScanner.h">
       <Filter>Arthemida-2\ArtModules</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Arthemida-2\ArtModules\SigScanner.h">
+    <ClInclude Include="..\..\Arthemida-2\ArtModules\HeuristicScanner.h">
       <Filter>Arthemida-2\ArtModules</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Arthemida-2\ArtModules\ThreadScanner.h">
