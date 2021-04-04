@@ -64,22 +64,24 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 #endif
 	if (cfg->ModuleScanner) return;
 	cfg->ModuleScanner = true;
-	auto IsNotNativeWinModule = [](const std::string& m_path) -> bool
+	auto IsNotWinOrAVModule = [](const std::string& m_path) -> bool
 	{
-		if (Utils::findStringIC(m_path, "C:\\Windows\\System32"))
+		SLibVersionInfo dll_ver; if (GetLibVersionInfo(m_path.c_str(), &dll_ver))
 		{
-			SLibVersionInfo dll_ver; if (GetLibVersionInfo(m_path.c_str(), &dll_ver))
-			{
-				if (dll_ver.strCompanyName.length() >= 3 && dll_ver.strProductName.length() >= 3)
-				{
 #ifdef ARTEMIS_DEBUG
-					//Utils::LogInFile(ARTEMIS_LOG, "[VERSION_INFO] Company: %s | Product: %s\n",
-					//dll_ver.strCompanyName.c_str(), dll_ver.strProductName.c_str());
+			//Utils::LogInFile(ARTEMIS_LOG, "[VERSION_INFO] Company: %s len: %d | Product: %s len: %d\n",
+			//dll_ver.strCompanyName.c_str(), dll_ver.strCompanyName.length(), 
+			//dll_ver.strProductName.c_str(), dll_ver.strProductName.length());
 #endif
-					return false;
-				}
+			if (Utils::findStringIC(m_path, R"(Windows\System32)") || 
+			Utils::findStringIC(m_path, R"(Program Files\ESET\ESET Security\x86)"))
+			{
+				if (dll_ver.strCompanyName.length() >= 4 && dll_ver.strProductName.length() >= 4) return false;
 			}
 		}
+#ifdef ARTEMIS_DEBUG
+		//else Utils::LogInFile(ARTEMIS_LOG, "[VERSION_INFO] %d Error! %s\n", GetLastError(), m_path.c_str());
+#endif
 		return true;
 	};
 	while (true)
@@ -95,7 +97,7 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 				if (Utils::IsModuleDuplicated((HMODULE)it.first, cfg->ModuleSnapshot)) 
 				// Если наш модуль дублирует чье то имя но его хэш отличается
 				{
-					if (IsNotNativeWinModule(szFileName)) // Если наш модуль не является родной библиотекой винды
+					if (IsNotWinOrAVModule(szFileName)) // Если наш модуль не является родной библиотекой винды или же антивирусом
 					{
 						std::string NameOfDLL = Utils::GetDllName(szFileName);
 						MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data;
