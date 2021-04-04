@@ -10,10 +10,9 @@ namespace ArtComponent
 	using namespace ARTEMIS_INTERFACE;
 	class ArtemisIncapsulator sealed final : protected IArtemisInterface
 	{
-	public:
+	private:
 		ArtemisIncapsulator();
 		~ArtemisIncapsulator();
-	private:
 		friend IArtemisInterface* IArtemisInterface::CreateInstance(ArtemisConfig* cfg);
 	};
 }
