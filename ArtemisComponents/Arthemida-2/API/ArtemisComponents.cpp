@@ -5,16 +5,16 @@
 */
 #include ".../../../../Arthemida-2/API/ArtemisComponents.h"
 using namespace ArtComponent;
-ArtemisFiller::ArtemisFiller() 
+ArtemisIncapsulator::ArtemisIncapsulator()
 {
 #ifdef ARTEMIS_DEBUG
-	Utils::LogInFile(ARTEMIS_LOG, "[ArtemisFiller] Called the third generation constructor!\n");
+	Utils::LogInFile(ARTEMIS_LOG, "[ArtemisIncapsulator] Called the second generation constructor!\n");
 #endif
 }
-ArtemisFiller::~ArtemisFiller() 
+ArtemisIncapsulator::~ArtemisIncapsulator()
 {
 #ifdef ARTEMIS_DEBUG
-	Utils::LogInFile(ARTEMIS_LOG, "[ArtemisFiller] Called the third generation destructor!\n");
+	Utils::LogInFile(ARTEMIS_LOG, "[ArtemisIncapsulator] Called the second generation destructor!\n");
 #endif
 }
 IArtemisInterface* IArtemisInterface::i_art = nullptr;
@@ -23,7 +23,7 @@ bool IArtemisInterface::WasReloaded = false;
 IArtemisInterface* IArtemisInterface::CreateInstance(ArtemisConfig* cfg)
 {
 	if (cfg == nullptr) return nullptr;
-	i_art = static_cast<IArtemisInterface*>(new ArtemisFiller());
+	i_art = dynamic_cast<IArtemisInterface*>(new ArtemisIncapsulator());
 	if (i_art != nullptr)
 	{
 		i_art->g_cfg = new ArtemisConfig(); // Выделяем память под конфиг античита
@@ -103,8 +103,6 @@ IArtemisInterface* __stdcall IArtemisInterface::InstallArtemisMonitor(ArtemisCon
 	{
 		if (!cfg->ModuleScanDelay) cfg->ModuleScanDelay = 1000;
 		if (!cfg->ExcludedModules.empty()) cfg->ExcludedModules.clear(); // [Не настраивается юзером] Очистка на случай повторной инициализации с тем же cfg
-		HMODULE hPsapi = LoadLibraryA("psapi.dll"); // Загрузка нужной системной библиотеки для последующего получения из нее функции
-		cfg->lpGetMappedFileNameA = (LPFN_GetMappedFileNameA)GetProcAddress(hPsapi, "GetMappedFileNameA"); // Получение функции GetMappedFileNameA из загруженной библиотеки (Таков необходим для совместимости на Win Vista & XP т.к там эта функция не хранится в экспортах другого модуля)
 		std::thread AsyncScanner(ModuleScanner, cfg);
 		AsyncScanner.detach(); // Создание и запуск асинхронного потока сканера модулей процесса
 	}

@@ -23,7 +23,7 @@ namespace ARTEMIS_INTERFACE
 		static ArtemisConfig* __stdcall GetConfig();
 	protected:
 		virtual ~IArtemisInterface() = default;
-		static IArtemisInterface* CreateInstance(ArtemisConfig* cfg);
+		static IArtemisInterface* CreateInstance(ArtemisConfig* cfg); 
 	private:
 		static bool WasReloaded;
 		static IArtemisInterface* i_art;

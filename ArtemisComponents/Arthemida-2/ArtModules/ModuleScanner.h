@@ -3,22 +3,6 @@
 	Target Platform: x32-x86
 	Project by NtKernelMC & holmes0
 */
-// TODO:
-// Install Hooks on ntdll.dll LdrLoadDLL & LdrUnloadDll (Do First Scan with BuildModuledMemoryMap & next -> hooks)
-// Hook GetModuleHandle(client.dll) and check on GetImagePathName (Possible PEB-hide detection)
-// GetLibVersion Util and Analyze information of duplicates
-/*
-	// TryHard ProxyDLL Export Code Sample #1
-	74771050 | 55 | push ebp | 01_TryHard.cpp:14
-	74771051 | 8BEC | mov ebp,esp |
-	74771053 | A1 C0337774 | mov eax,dword ptr ds:[VerFindFileW]
-	74771058 | 5D | pop ebp | 01_TryHard.cpp:16
-	74771059 | FFE0 | jmp eax | 01_TryHard.cpp:15
-
-	//Early Proxy Load Detect
-	kernel32.dll LoadLibraryA + LoadLibraryW -> CheckReturnAddress ->
-	if the same module name = Proxy, if unlinked = PEB HIDE
-*/
 #include "ArtemisInterface.h"
 #include "../../Arthemida-2/ArtUtils/SString.hpp"
 // Сканнер модулей

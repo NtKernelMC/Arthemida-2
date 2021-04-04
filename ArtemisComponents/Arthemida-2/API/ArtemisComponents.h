@@ -8,13 +8,11 @@
 namespace ArtComponent
 {
 	using namespace ARTEMIS_INTERFACE;
-	class ArtemisFiller final : private IArtemisInterface 
+	class ArtemisIncapsulator sealed final : protected IArtemisInterface
 	{
 	private:
-		ArtemisFiller();
-	protected:
-		~ArtemisFiller();
-	public:
+		ArtemisIncapsulator();
+		~ArtemisIncapsulator();
 		friend IArtemisInterface* IArtemisInterface::CreateInstance(ArtemisConfig* cfg);
 	};
 }

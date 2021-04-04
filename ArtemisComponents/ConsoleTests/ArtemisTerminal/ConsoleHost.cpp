@@ -83,9 +83,9 @@ int main()
 	
 	//cfg.DetectBySignature = true; cfg.PatternScanDelay = 1000; 
 	//cfg.IllegalPatterns.insert(std::pair<std::string, std::tuple<const char*, const char*>>
-	//(hack_name, std::make_tuple(pattern, mask)));
+	//(hack_name, std::make_tuple(pattern, mask))); // must be incapsulated
 
-	//cfg.DetectFakeLaunch = true;
+	cfg.DetectFakeLaunch = true;
 	cfg.callback = (ArtemisCallback)ArthemidaCallback; 
 
 	printf("[ARTEMIS-2] Configured and ready, press any key to load...\n"); _getch();
