@@ -7,14 +7,14 @@
 #include "../../Arthemida-2/API/ArtemisInterface.h"
 namespace ArtComponent
 {
+	static void __stdcall TestThreadFunc() {};
 	using namespace ARTEMIS_INTERFACE;
-	class ArtemisFiller final : private IArtemisInterface 
+	class ArtemisIncapsulator sealed final : protected IArtemisInterface
 	{
-	private:
-		ArtemisFiller();
-	protected:
-		~ArtemisFiller();
 	public:
+		ArtemisIncapsulator();
+		~ArtemisIncapsulator();
+	private:
 		friend IArtemisInterface* IArtemisInterface::CreateInstance(ArtemisConfig* cfg);
 	};
 }
