@@ -51,16 +51,20 @@ namespace SafeLaunch
 			*(BYTE*)((DWORD_PTR)syscall + 9) = 0x05; *(BYTE*)((DWORD_PTR)syscall + 10) = 0xC3;
 #else
 			if (*(BYTE*)ZwAddr != 0xB8) memcpy((void*)0xFFFFFF, (void*)0xFFFFFF, 222222);
-			SYSTEM_INFO systemInfo = { 0 }; GetNativeSystemInfo(&systemInfo);
+			SYSTEM_INFO systemInfo = { 0 }; GetNativeSystemInfo(&systemInfo); 
+			std::tuple<DWORD, DWORD> OsVerInfo = getOSver();
 			DWORD codeSize = 15; if (systemInfo.wProcessorArchitecture != PROCESSOR_ARCHITECTURE_INTEL)
 			{
-				if (std::get<0>(getOSver()) == 6 && std::get<1>(getOSver()) == 0) codeSize = 21;
-				if (std::get<0>(getOSver()) == 6 && std::get<1>(getOSver()) == 1) codeSize = 24;
+				if (std::get<0>(OsVerInfo) == 6 && std::get<1>(OsVerInfo) == 0) codeSize = 21;
+				if (std::get<0>(OsVerInfo) == 6 && std::get<1>(OsVerInfo) == 1) codeSize = 24;
 			}
-			else
+			else // added win10 x32 syscall`s
 			{
-				if (std::get<0>(getOSver()) == 6 && (std::get<1>(getOSver()) == 3 || std::get<1>(getOSver()) == 2)) codeSize = 18;
+				if ((std::get<0>(OsVerInfo) == 6 && (std::get<1>(OsVerInfo) == 3 || std::get<1>(OsVerInfo) == 2))
+				|| (std::get<1>(OsVerInfo) == 10 || std::get<1>(OsVerInfo) == 0)) codeSize = 18;
 			}
+			//printf("Major: %d | Minor: %d | CodeSize: %d\n", std::get<0>(OsVerInfo), std::get<1>(OsVerInfo), codeSize);
+			//return;
 			syscall = VirtualAlloc(0, codeSize, MEM_RESERVE | MEM_COMMIT, PAGE_EXECUTE_READWRITE);
 			memcpy(syscall, (void*)ZwAddr, codeSize); 
 			syscall_addr = (DWORD)syscall;
