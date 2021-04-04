@@ -19,7 +19,6 @@ ArtemisIncapsulator::~ArtemisIncapsulator()
 }
 IArtemisInterface* IArtemisInterface::i_art = nullptr;
 ArtemisConfig* IArtemisInterface::g_cfg = nullptr;
-bool IArtemisInterface::WasReloaded = false;
 IArtemisInterface* IArtemisInterface::CreateInstance(ArtemisConfig* cfg)
 {
 	if (cfg == nullptr) return nullptr;
@@ -53,10 +52,6 @@ ArtemisConfig* __stdcall IArtemisInterface::GetConfig()
 #include "../../Arthemida-2/ArtModules/CServiceMon.h"
 IArtemisInterface* __stdcall IArtemisInterface::InstallArtemisMonitor(ArtemisConfig* cfg)
 {
-#ifdef ARTEMIS_DEBUG
-	if (!WasReloaded) DeleteFileA(ARTEMIS_LOG);
-	else WasReloaded = false;
-#endif
 	if (cfg == nullptr)
 	{
 #ifdef ARTEMIS_DEBUG

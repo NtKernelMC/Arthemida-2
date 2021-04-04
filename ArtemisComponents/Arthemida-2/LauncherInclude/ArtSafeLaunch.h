@@ -57,6 +57,7 @@ namespace SafeLaunch
 			{
 				if (std::get<0>(OsVerInfo) == 6 && std::get<1>(OsVerInfo) == 0) codeSize = 21;
 				if (std::get<0>(OsVerInfo) == 6 && std::get<1>(OsVerInfo) == 1) codeSize = 24;
+				// add win10 x86 syscall`s support for Intel/AMD processors and test x64 syscall`s on newer win10 builds
 			}
 			else // added win10 x32 syscall`s
 			{
