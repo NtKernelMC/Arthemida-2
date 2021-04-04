@@ -7,7 +7,6 @@
 #include "../../Arthemida-2/API/ArtemisInterface.h"
 namespace ArtComponent
 {
-	static void __stdcall TestThreadFunc() {};
 	using namespace ARTEMIS_INTERFACE;
 	class ArtemisIncapsulator sealed final : protected IArtemisInterface
 	{
