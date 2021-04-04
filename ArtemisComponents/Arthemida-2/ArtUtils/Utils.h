@@ -45,6 +45,12 @@ class Utils
 public:
 	static void LogInFile(const char* log_name, const char* log, ...)
 	{
+		static bool per_once = false;
+		if (!per_once)
+		{
+			DeleteFileA(ARTEMIS_LOG);
+			per_once = true;
+		}
 		FILE* hFile = fopen(log_name, "a+");
 		if (hFile)
 		{
