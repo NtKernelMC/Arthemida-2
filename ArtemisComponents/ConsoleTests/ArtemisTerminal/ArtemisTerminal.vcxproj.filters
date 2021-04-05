@@ -80,5 +80,8 @@
     <ClInclude Include="..\..\Arthemida-2\ArtUtils\SString.hpp">
       <Filter>Arthemida-2\ArtUtils</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Arthemida-2\ArtUtils\MiniJumper.h">
+      <Filter>Arthemida-2\ArtUtils</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

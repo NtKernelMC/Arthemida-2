@@ -62,6 +62,26 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 	}
 	Utils::LogInFile(ARTEMIS_LOG, "\n\n");
 }
+class RetTest
+{
+public:
+	static bool __stdcall TestStaticMethod(ULONG whatever)
+	{
+		PVOID retAddr = _ReturnAddress(); printf("RetAddr: 0x%X\n", retAddr);
+		IArtemisInterface* art_interface = IArtemisInterface::GetInstance();
+		if (art_interface != nullptr) art_interface->ConfirmLegitReturn(__FUNCTION__, retAddr);
+		else printf("\nERROR: Artemis pointer in hook is null!\n");
+		if (!whatever) return false;
+		printf("\n[ORIGINAL] Called %s! With ulong argument: %u\n\n", __FUNCTION__, whatever);
+		return true;
+	}
+	void __thiscall TestMemberMethod(void)
+	{
+		IArtemisInterface* art_interface = IArtemisInterface::GetInstance();
+		if (art_interface != nullptr) art_interface->ConfirmLegitReturn(__FUNCTION__, _ReturnAddress());
+		printf("\n[ORIGINAL] Called %s!\n\n", __FUNCTION__);
+	}
+}; RetTest testObj;
 int main()
 {
 	SetConsoleCP(1251); SetConsoleOutputCP(1251);
@@ -75,12 +95,15 @@ int main()
 	
 	cfg.DetectManualMap = true; 
 	cfg.MemoryScanDelay = 1000; 
+
+	//cfg.DetectMemoryPatch = true; 
+	//cfg.MemoryGuardScanDelay = 1000;
+	//cfg.HooksList.insert(std::pair<PVOID, PVOID>((PVOID)RetTest::TestStaticMethod, (PVOID)HookTestStaticMethod));
+	// __thiscall methods must be casted in a different way
 	
 	//cfg.ServiceMon = true;
 	//cfg.ServiceMonDelay = 1000;
 
-	//cfg.DetectMemoryPatch = true; cfg.HooksList.insert(std::pair<PVOID, PVOID>(dest, hook)); // -> FOR MTA CLIENT
-	
 	//cfg.DetectBySignature = true; cfg.PatternScanDelay = 1000; 
 	//cfg.IllegalPatterns.insert(std::pair<std::string, std::tuple<const char*, const char*>>
 	//(hack_name, std::make_tuple(pattern, mask))); // must be incapsulated
@@ -95,12 +118,19 @@ int main()
 	} });
 
 	IArtemisInterface* art = IArtemisInterface::InstallArtemisMonitor(&cfg);
-	if (art) printf("[ARTEMIS-2] Succussfully obtained pointer to AntiCheat!\n");
+	if (art)
+	{
+		printf("[ARTEMIS-2] Succussfully obtained pointer to AntiCheat!\n");
+		// test detection of illegal calls (return addresses checking)
+		RetTest::TestStaticMethod(228);
+		//testObj.TestMemberMethod(); 
+	}
 	else printf("[ARTEMIS-2] Failure on start :( Last error code: %d\n", GetLastError());
 	while (true) 
 	{
 		Sleep(1000); 
-		if (_getch()) { TerminateThread((HANDLE)heart.native_handle(), 0x0); printf("[HEART-BEAT] Stopped.\n"); }
+		if (_getch()) { TerminateThread((HANDLE)heart.native_handle(), 0x0); printf("[HEART-BEAT] Stopped.\n"); break; }
 	}
+	while (true) { Sleep(1000); }
 	return 1;
 }

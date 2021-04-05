@@ -4,10 +4,10 @@
 	Project by NtKernelMC & holmes0
 */
 #include "ArtemisInterface.h"
-void ConfirmLegitReturn(const char* function_name, PVOID return_address)
+#include ".../../../../Arthemida-2/ArtUtils/MiniJumper.h"
+void __thiscall IArtemisInterface::ConfirmLegitReturn(const char* function_name, PVOID return_address)
 {
-	if (function_name == nullptr || return_address == nullptr) return;
-	ArtemisConfig* cfg = IArtemisInterface::GetConfig();
+	if (function_name == nullptr || return_address == nullptr) return; ArtemisConfig* cfg = GetConfig();
 	if (cfg == nullptr) return; std::vector<std::string> allowedModules = { "client.dll", "multiplayer_sa.dll", "game_sa.dll",
 	"core.dll", "gta_sa.exe", "proxy_sa.exe", "lua5.1c.dll", "pcre3.dll" };
 	std::string moduleName = Utils::GetNameOfModuledAddressSpace(return_address, Utils::GenerateModuleNamesList());
@@ -25,18 +25,14 @@ void ConfirmLegitReturn(const char* function_name, PVOID return_address)
 		data.dllName = moduleName; data.dllPath = MappedName; // Наименование модуля и путь к нему
 		if (cfg != nullptr)
 		{
-			cfg->callback(&data); cfg->ExcludedMethods.push_back(return_address); // вызываем коллбэк артемиды и добавляем срабатывание в анти-флуд
+			cfg->callback(&data); cfg->ExcludedMethods.push_back(return_address); 
 #ifdef ARTEMIS_DEBUG
-			Utils::LogInFile(ARTEMIS_LOG, "Returned from %s function to 0x%X in to module %s\n", function_name, return_address, moduleName.c_str());
+			Utils::LogInFile(ARTEMIS_LOG, "\nReturned from %s function to 0x%X in to module %s\n", 
+			function_name, return_address, moduleName.c_str());
 #endif
 		}
 	}
 }
-/*bool __cdecl GameHooks::TriggerServerEvent(const char* szName, CClientEntity* CallWithEntity, void* Arguments)
-{
-	GameHooks::CheckIfReturnIsLegit(__FUNCTION__, _ReturnAddress());
-	return callTriggerServerEvent(szName, CallWithEntity, Arguments);
-}*/
 void __stdcall MemoryGuardScanner(ArtemisConfig* cfg) // сканнер целостности памяти для наших игровых хуков
 {
 	if (cfg == nullptr)
@@ -56,11 +52,15 @@ void __stdcall MemoryGuardScanner(ArtemisConfig* cfg) // сканнер целостности пам
 	};
 	while (true)
 	{
+#ifndef _CONSOLE
 		if (!GetModuleHandleA("client.dll")) break;
+#endif
 		if (!cfg->DetectMemoryPatch) break;
 		for (const auto& it : cfg->HooksList)
 		{
+#ifndef _CONSOLE
 			if (!GetModuleHandleA("client.dll")) break;
+#endif
 			DWORD Delta = NULL; memcpy(&Delta, (PVOID)((DWORD)it.second + 0x1), 4);
 			DWORD_PTR DestinationAddr = ReverseDelta((DWORD_PTR)it.second, Delta, 5);
 			if (*(BYTE*)it.second != 0xE9 || (*(BYTE*)it.second == 0xE9 && DestinationAddr != (DWORD)it.first))

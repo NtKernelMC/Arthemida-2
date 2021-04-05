@@ -67,7 +67,8 @@ namespace ArtemisData
 		std::vector<PVOID> ExcludedMethods;
 		std::vector<PVOID> ExcludedPatches;
 		std::vector<PVOID> ExcludedSigAddresses;
-		std::map<PVOID, PVOID> HooksList; // DestinyAddress, HookAddress
+		std::map<PVOID, PVOID> HooksList; // DestinyAddress, InterceptorAddress
+		//std::map<PVOID, bool> ProtectedFunctions; // DestinyAddress, Detection flag
 		std::map<std::string, std::tuple<const char*, const char*>> IllegalPatterns; // hack name, pattern, mask
 	};
 }
