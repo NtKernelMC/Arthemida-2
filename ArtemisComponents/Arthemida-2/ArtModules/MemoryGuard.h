@@ -10,25 +10,24 @@ void __thiscall IArtemisInterface::ConfirmLegitReturn(const char* function_name,
 	if (function_name == nullptr || return_address == nullptr) return; ArtemisConfig* cfg = GetConfig();
 	if (cfg == nullptr) return; static std::vector<std::string> allowedModules = { "client.dll", "multiplayer_sa.dll", "game_sa.dll",
 	"core.dll", "gta_sa.exe", "proxy_sa.exe", "lua5.1c.dll", "pcre3.dll" };
-	std::string moduleName = Utils::GetNameOfModuledAddressSpace(return_address, allowedModules);
-	if (!Utils::IsVecContain2(allowedModules, moduleName) && !Utils::IsVecContain(cfg->ExcludedMethods, return_address))
+	if (!Utils::IsInModuledAddressSpace(return_address, allowedModules) && !Utils::IsVecContain(cfg->ExcludedMethods, return_address))
 	{
 		char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
 		cfg->lpGetMappedFileNameA(GetCurrentProcess(), (PVOID)return_address, MappedName, sizeof(MappedName));
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data; data.EmptyVersionInfo = true;
+		MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data; 
+		data.EmptyVersionInfo = true; std::string DllName = Utils::GetDllName(MappedName);
 		VirtualQuery(return_address, &mme, sizeof(MEMORY_BASIC_INFORMATION)); // Получение подробной информации по региону памяти
 		data.baseAddr = (LPVOID)return_address; // Запись базового адреса региона памяти
 		data.MemoryRights = mme.AllocationProtect; // Запись прав доступа к региону памяти
 		data.regionSize = mme.RegionSize; // Запись размера региона памяти
 		data.type = DetectionType::ART_RETURN_ADDRESS; // Выставление типа детекта
-		data.dllName = moduleName; data.dllPath = MappedName; // Наименование модуля и путь к нему
+		data.dllName = DllName; data.dllPath = MappedName; // Наименование модуля и путь к нему
 		if (cfg != nullptr)
 		{
 			cfg->callback(&data); cfg->ExcludedMethods.push_back(return_address); 
 #ifdef ARTEMIS_DEBUG
-			Utils::LogInFile(ARTEMIS_LOG, "\nReturned from %s function to 0x%X in to module %s\n", 
-			function_name, return_address, moduleName.c_str());
+			Utils::LogInFile(ARTEMIS_LOG, "\nReturned from %s function to 0x%X\n", function_name, return_address);
 #endif
 		}
 	}
