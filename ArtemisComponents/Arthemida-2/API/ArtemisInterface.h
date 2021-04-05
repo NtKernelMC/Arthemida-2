@@ -21,6 +21,7 @@ namespace ARTEMIS_INTERFACE
 		static IArtemisInterface* __stdcall InstallArtemisMonitor(ArtemisConfig* cfg);
 		static IArtemisInterface* __stdcall GetInstance();
 		static ArtemisConfig* __stdcall GetConfig();
+		void __thiscall ConfirmLegitReturn(const char* function_name, PVOID return_address);
 	protected:
 		virtual ~IArtemisInterface() = default;
 		static IArtemisInterface* CreateInstance(ArtemisConfig* cfg); 
