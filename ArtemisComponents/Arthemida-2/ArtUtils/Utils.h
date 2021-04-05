@@ -161,16 +161,9 @@ public:
 		strcpy(s + offset, s + offset + count);
 		return s;
 	}
-	static std::string GetDllName(char* szDllNameTmp)
+	static __forceinline std::string GetDllName(const std::string& szDllNameTmp)
 	{
-		char szDllName[300]; memset(szDllName, 0, sizeof(szDllName));
-		strcpy(szDllName, szDllNameTmp);
-		char fname[256]; char* ipt = strrchr(szDllName, '\\');
-		memset(fname, 0, sizeof(fname));
-		strdel(szDllName, 0, (ipt - szDllName + 1));
-		strncpy(fname, szDllName, strlen(szDllName));
-		std::string ProcName(fname);
-		return ProcName;
+		return szDllNameTmp.substr(szDllNameTmp.find_last_of("/\\") + 1);
 	}
 	static bool IsVecContain(const std::vector<PVOID>& source, PVOID element)
 	{
@@ -214,9 +207,9 @@ public:
 		}
 		return MdlList;
 	}
-	static std::string GetNameOfModuledAddressSpace(PVOID addr, std::vector<std::string> mdls)
+	static bool IsInModuledAddressSpace(PVOID addr, std::vector<std::string> &mdls)
 	{
-		if (addr == nullptr || mdls.empty()) return std::string("EMPTY");
+		if (addr == nullptr || mdls.empty()) return false;
 		typedef BOOL(__stdcall* GetMdlInfoP)(HANDLE hProcess, HMODULE hModule, LPMODULEINFO lpmodinfo, DWORD cb);
 		GetMdlInfoP GetMdlInfo = (GetMdlInfoP)GetProcAddress(LoadLibraryA("psapi.dll"), "GetModuleInformation");
 		for (const auto& it : mdls)
@@ -225,10 +218,10 @@ public:
 			if ((DWORD_PTR)addr >= (DWORD_PTR)modinfo.lpBaseOfDll
 			&& (DWORD_PTR)addr <= ((DWORD_PTR)modinfo.lpBaseOfDll + modinfo.SizeOfImage))
 			{
-				return GetMdlNameFromHmodule((HMODULE)modinfo.lpBaseOfDll);
+				return true;
 			}
 		}
-		return std::string("UNKNOWN");
+		return false;
 	}
 	static bool IsModuleDuplicated(HMODULE mdl, std::multimap<DWORD, std::string>& ModuleSnapshot)
 	{
