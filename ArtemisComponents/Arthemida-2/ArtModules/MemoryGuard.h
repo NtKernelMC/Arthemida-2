@@ -8,9 +8,9 @@
 void __thiscall IArtemisInterface::ConfirmLegitReturn(const char* function_name, PVOID return_address)
 {
 	if (function_name == nullptr || return_address == nullptr) return; ArtemisConfig* cfg = GetConfig();
-	if (cfg == nullptr) return; std::vector<std::string> allowedModules = { "client.dll", "multiplayer_sa.dll", "game_sa.dll",
+	if (cfg == nullptr) return; static std::vector<std::string> allowedModules = { "client.dll", "multiplayer_sa.dll", "game_sa.dll",
 	"core.dll", "gta_sa.exe", "proxy_sa.exe", "lua5.1c.dll", "pcre3.dll" };
-	std::string moduleName = Utils::GetNameOfModuledAddressSpace(return_address, Utils::GenerateModuleNamesList());
+	std::string moduleName = Utils::GetNameOfModuledAddressSpace(return_address, allowedModules);
 	if (!Utils::IsVecContain2(allowedModules, moduleName) && !Utils::IsVecContain(cfg->ExcludedMethods, return_address))
 	{
 		char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
