@@ -185,14 +185,8 @@ public:
 	}
 	static std::string GetMdlNameFromHmodule(HMODULE MDL)
 	{
-		CHAR szFileName[MAX_PATH + 1];
-		GetModuleFileNameA(MDL, szFileName, MAX_PATH + 1);
-		char fname[256]; char* ipt = strrchr(szFileName, '\\');
-		memset(fname, 0, sizeof(fname));
-		strdel(szFileName, 0, (ipt - szFileName + 1));
-		strncpy(fname, szFileName, strlen(szFileName));
-		for (DWORD x = 0; x < strlen(fname); x++) fname[x] = tolower(fname[x]);
-		return std::string(fname);
+		CHAR szFileName[MAX_PATH + 1]; GetModuleFileNameA(MDL, szFileName, MAX_PATH + 1);
+		std::string tmpStr(szFileName); return tmpStr.substr(tmpStr.find_last_of("/\\") + 1);
 	};
 	static std::vector<std::string> GenerateModuleNamesList()
 	{
