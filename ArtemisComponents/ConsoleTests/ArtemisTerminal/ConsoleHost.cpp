@@ -69,14 +69,14 @@ public:
 	{
 		IArtemisInterface* art_interface = IArtemisInterface::GetInstance();
 		if (art_interface != nullptr) art_interface->ConfirmLegitReturn(__FUNCTION__, _ReturnAddress());
-		printf("\n[ORIGINAL] Called %s!\n\n", __FUNCTION__);
+		Utils::LogInFile(ARTEMIS_LOG, "\n[ORIGINAL] Called %s!\n\n", __FUNCTION__);
 		return true;
 	}
 	void __thiscall TestMemberMethod(void)
 	{
 		IArtemisInterface* art_interface = IArtemisInterface::GetInstance();
 		if (art_interface != nullptr) art_interface->ConfirmLegitReturn(__FUNCTION__, _ReturnAddress());
-		printf("\n[ORIGINAL] Called %s!\n\n", __FUNCTION__);
+		Utils::LogInFile(ARTEMIS_LOG, "\n[ORIGINAL] Called %s!\n\n", __FUNCTION__);
 	}
 }; RetTest testObj;
 int main()
@@ -108,7 +108,7 @@ int main()
 	cfg.DetectFakeLaunch = true;
 	cfg.callback = (ArtemisCallback)ArthemidaCallback; 
 
-	printf("[ARTEMIS-2] Configured and ready, press any key to load...\n"); _getch();
+	Utils::LogInFile(ARTEMIS_LOG, "[ARTEMIS-2] Configured and ready, press any key to load...\n"); _getch();
 	std::thread heart([] { for (;;) {
 		Sleep(3000); static bool first = false; if (!first) { first = true; printf("\n"); }
 		printf("\n[HEART-BEAT] Console is working normally! Press any key to stop.\n\n");
@@ -117,12 +117,12 @@ int main()
 	IArtemisInterface* art = IArtemisInterface::InstallArtemisMonitor(&cfg);
 	if (art)
 	{
-		printf("[ARTEMIS-2] Succussfully obtained pointer to AntiCheat!\n");
+		Utils::LogInFile(ARTEMIS_LOG, "[ARTEMIS-2] Succussfully obtained pointer to AntiCheat!\n");
 		// test detection of illegal calls (return addresses checking)
 		RetTest::TestStaticMethod();
 		testObj.TestMemberMethod(); 
 	}
-	else printf("[ARTEMIS-2] Failure on start :( Last error code: %d\n", GetLastError());
+	else Utils::LogInFile(ARTEMIS_LOG, "[ARTEMIS-2] Failure on start :( Last error code: %d\n", GetLastError());
 	while (true) 
 	{
 		Sleep(1000); 
