@@ -65,14 +65,11 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 class RetTest
 {
 public:
-	static bool __stdcall TestStaticMethod(ULONG whatever)
+	static bool __stdcall TestStaticMethod(void)
 	{
-		PVOID retAddr = _ReturnAddress(); printf("RetAddr: 0x%X\n", retAddr);
 		IArtemisInterface* art_interface = IArtemisInterface::GetInstance();
-		if (art_interface != nullptr) art_interface->ConfirmLegitReturn(__FUNCTION__, retAddr);
-		else printf("\nERROR: Artemis pointer in hook is null!\n");
-		if (!whatever) return false;
-		printf("\n[ORIGINAL] Called %s! With ulong argument: %u\n\n", __FUNCTION__, whatever);
+		if (art_interface != nullptr) art_interface->ConfirmLegitReturn(__FUNCTION__, _ReturnAddress());
+		printf("\n[ORIGINAL] Called %s!\n\n", __FUNCTION__);
 		return true;
 	}
 	void __thiscall TestMemberMethod(void)
@@ -122,8 +119,8 @@ int main()
 	{
 		printf("[ARTEMIS-2] Succussfully obtained pointer to AntiCheat!\n");
 		// test detection of illegal calls (return addresses checking)
-		RetTest::TestStaticMethod(228);
-		//testObj.TestMemberMethod(); 
+		RetTest::TestStaticMethod();
+		testObj.TestMemberMethod(); 
 	}
 	else printf("[ARTEMIS-2] Failure on start :( Last error code: %d\n", GetLastError());
 	while (true) 
