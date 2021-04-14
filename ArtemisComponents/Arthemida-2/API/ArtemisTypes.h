@@ -10,6 +10,7 @@ namespace ArtemisData
 {
 	enum class DetectionType
 	{
+		ART_UNKNOWN_DETECT = 0,
 		ART_ILLEGAL_THREAD = 1,
 		ART_ILLEGAL_MODULE = 2,
 		ART_FAKE_LAUNCHER = 3,
@@ -21,14 +22,14 @@ namespace ArtemisData
 	};
 	struct ARTEMIS_DATA
 	{
-		PVOID baseAddr;
-		SIZE_T regionSize;
-		DWORD MemoryRights;
-		DetectionType type;
-		std::string dllName;
-		std::string dllPath;
-		std::string HackName;
-		bool EmptyVersionInfo;
+		PVOID baseAddr = nullptr;
+		SIZE_T regionSize = 0x0;
+		DWORD MemoryRights = 0x0;
+		DetectionType type = DetectionType::ART_UNKNOWN_DETECT;
+		std::string dllName = "";
+		std::string dllPath = "";
+		std::string HackName = "";
+		bool EmptyVersionInfo = false;
 	};
 	typedef void(__stdcall* ArtemisCallback)(ARTEMIS_DATA* artemis);
 	typedef DWORD(__stdcall* LPFN_GetMappedFileNameA)(HANDLE hProcess, LPVOID lpv, LPCSTR lpFilename, DWORD nSize);

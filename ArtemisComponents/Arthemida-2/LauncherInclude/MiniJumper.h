@@ -1,7 +1,7 @@
 #pragma once
 /*
     MiniJumper - Custom Hooking Minimalistic Engine
-    by NtKernelMC a.k.a ßedßuM
+    by NtKernelMC a.k.a ï¿½edï¿½uM
     Platform x32-x86
 */
 #include <Windows.h>

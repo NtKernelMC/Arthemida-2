@@ -60,7 +60,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Nightly|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Nightly|x64'" Label="Configuration">
@@ -239,6 +239,8 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -292,7 +294,9 @@
   <ItemGroup>
     <ClCompile Include="..\vendor\tinygettext\dictionary.cpp" />
     <ClCompile Include="..\vendor\tinygettext\dictionary_manager.cpp" />
-    <ClCompile Include="..\vendor\tinygettext\language.cpp" />
+    <ClCompile Include="..\vendor\tinygettext\language.cpp">
+      <ErrorReporting Condition="'$(Configuration)|$(Platform)'=='Nightly|Win32'">None</ErrorReporting>
+    </ClCompile>
     <ClCompile Include="..\vendor\tinygettext\log.cpp" />
     <ClCompile Include="..\vendor\tinygettext\plural_forms.cpp" />
     <ClCompile Include="..\vendor\tinygettext\po_parser.cpp" />

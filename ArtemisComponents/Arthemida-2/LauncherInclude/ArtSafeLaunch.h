@@ -4,7 +4,7 @@
 #include <map>
 #include <winternl.h>
 #include "..\..\Arthemida-2\LauncherInclude\MiniJumper.h"
-#define SAFE_LAUNCH_DEBUG // не забываем закоментить в релизе чтобы не спалить отладочные строки!
+#define SAFE_LAUNCH_DEBUG
 namespace SafeLaunch
 {
 	using namespace MiniJumper; 

@@ -1,0 +1,9 @@
+D:/ActiveJob/TestClient_MTASA[1.5.8]/vendor/mbedtls/2.25.0/library/out/build/x64-Debug/CMakeFiles/list_install_components.dir
+D:/ActiveJob/TestClient_MTASA[1.5.8]/vendor/mbedtls/2.25.0/library/out/build/x64-Debug/CMakeFiles/mbedcrypto.dir
+D:/ActiveJob/TestClient_MTASA[1.5.8]/vendor/mbedtls/2.25.0/library/out/build/x64-Debug/CMakeFiles/mbedx509.dir
+D:/ActiveJob/TestClient_MTASA[1.5.8]/vendor/mbedtls/2.25.0/library/out/build/x64-Debug/CMakeFiles/lib.dir
+D:/ActiveJob/TestClient_MTASA[1.5.8]/vendor/mbedtls/2.25.0/library/out/build/x64-Debug/CMakeFiles/mbedtls.dir
+D:/ActiveJob/TestClient_MTASA[1.5.8]/vendor/mbedtls/2.25.0/library/out/build/x64-Debug/CMakeFiles/install/local.dir
+D:/ActiveJob/TestClient_MTASA[1.5.8]/vendor/mbedtls/2.25.0/library/out/build/x64-Debug/CMakeFiles/install.dir
+D:/ActiveJob/TestClient_MTASA[1.5.8]/vendor/mbedtls/2.25.0/library/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+D:/ActiveJob/TestClient_MTASA[1.5.8]/vendor/mbedtls/2.25.0/library/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
