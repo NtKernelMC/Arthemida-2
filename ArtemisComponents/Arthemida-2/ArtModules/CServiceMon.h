@@ -6,7 +6,7 @@
 #pragma once
 #ifndef CSERVICEMON_H
 #define CSERVICEMON_H
-
+// CAUTION! Still remaining on development.
 #include <Windows.h>
 #include <thread>
 #include <string>
@@ -71,7 +71,6 @@ std::thread CServiceMon::Initialize()
     return std::thread(&CServiceMon::MonitorCycle, this);
 }
 
-// Кинет исключение в случае ошибки! Вызывать только в try-catch.
 std::multimap<std::wstring, CServiceMon::SServiceInfo> CServiceMon::GetAllServices()
 {
     DWORD dwBytesNeeded;
@@ -114,45 +113,42 @@ std::multimap<std::wstring, CServiceMon::SServiceInfo> CServiceMon::GetAllServic
             LPENUM_SERVICE_STATUS_PROCESSW eSSP = reinterpret_cast<LPENUM_SERVICE_STATUS_PROCESSW>(buffer.data());
             for (DWORD i = 0; i < dwServiceCount; i++)
             {
-                SServiceInfo SSP;
+                SServiceInfo SSP; if (eSSP == nullptr) continue;
                 SSP.wsDisplayName = eSSP[i].lpDisplayName;
                 SSP.sspStatus = eSSP[i].ServiceStatusProcess;
 
                 // get path
-                DWORD dwConfigBytesNeeded;
-                DWORD cbBufSize;
-                LPQUERY_SERVICE_CONFIGW lpSC;
+                DWORD dwConfigBytesNeeded = 0x0, cbBufSize = 0x0;
+                LPQUERY_SERVICE_CONFIGW lpSC = nullptr;
                 SC_HANDLE hService = OpenServiceW(m_hSCManager, eSSP[i].lpServiceName, SERVICE_QUERY_CONFIG);
                 if (!hService)
                 {
-                    printf("[SKIP] OpenService FAILED! Iteration: %d | Service: %d\n", i, eSSP[i].lpDisplayName);
+                    printf("[SKIP] OpenService FAILED! Iteration: %d | Service: %wS\n", i, eSSP[i].lpDisplayName);
                     continue;
                 }
-
-                QueryServiceConfigW(hService, NULL, 0, &dwConfigBytesNeeded);
-
+                if (!QueryServiceConfigW(hService, NULL, 0, &dwConfigBytesNeeded)) continue;
                 if (GetLastError() == ERROR_INSUFFICIENT_BUFFER)
                 {
                     cbBufSize = dwConfigBytesNeeded;
                     lpSC = (LPQUERY_SERVICE_CONFIGW)LocalAlloc(LMEM_FIXED, cbBufSize);
+                    if (lpSC == nullptr) continue;
                 }
                 else
                 {
-                    printf("[SKIP] QueryServiceConfig FAILED 1! Iteration: %d | Service: %d\n", i, eSSP[i].lpDisplayName);
+                    printf("[SKIP] QueryServiceConfig FAILED 1! Iteration: %d | Service: %wS\n", i, eSSP[i].lpDisplayName);
                     continue;
                 }
-
                 if (!QueryServiceConfigW(hService, lpSC, cbBufSize, &dwConfigBytesNeeded))
                 {
-                    printf("[SKIP] QueryServiceConfig FAILED 2! Iteration: %d | Service: %d\n", i, eSSP[i].lpDisplayName);
+                    printf("[SKIP] QueryServiceConfig FAILED 2! Iteration: %d | Service: %wS\n", i, eSSP[i].lpDisplayName);
                     continue;
                 }
-
-                SSP.wsFilePath = lpSC->lpBinaryPathName;
-
-                LocalFree(lpSC);
-
-                mmServicesResult.insert({ eSSP[i].lpServiceName, SSP });
+                if (lpSC != nullptr)
+                {
+                    SSP.wsFilePath = lpSC->lpBinaryPathName;
+                    LocalFree(lpSC);
+                    mmServicesResult.insert({ eSSP[i].lpServiceName, SSP });
+                }
             }
         }
         else throw std::exception("EnumServicesStatusExW failed 2.");

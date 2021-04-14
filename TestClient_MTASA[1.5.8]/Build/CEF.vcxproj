@@ -729,6 +729,7 @@ IF EXIST "$(SolutionDir)\..\Vendor\cef3\Resources\locales\*"\ (xcopy /Q /E /Y /I
     <ClInclude Include="..\vendor\cef3\libcef_dll\transfer_util.h" />
     <ClInclude Include="..\vendor\cef3\libcef_dll\wrapper\cef_browser_info_map.h" />
     <ClInclude Include="..\vendor\cef3\libcef_dll\wrapper_types.h" />
+    <ClInclude Include="..\vendor\cef3\out\build\x64-Debug\CMakeFiles\ShowIncludes\foo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\vendor\cef3\libcef_dll\base\cef_atomicops_x86_gcc.cc" />

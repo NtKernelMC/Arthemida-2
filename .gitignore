@@ -30,3 +30,5 @@
 /ArtemisComponents/ConsoleTests/ArtemisTerminal/Release
 /ArtemisComponents/ConsoleTests/InvasionTerminal/Release
 *.log
+*.testlog
+*.manifest

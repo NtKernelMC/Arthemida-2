@@ -5,7 +5,6 @@
 */
 #include "ArtemisInterface.h"
 #include "../../Arthemida-2/ArtUtils/SString.hpp"
-// Сканнер модулей
 struct SLibVersionInfo : VS_FIXEDFILEINFO
 {
 	MtaUtils::SString strCompanyName;
@@ -18,7 +17,7 @@ static bool GetLibVersionInfo(const MtaUtils::SString& strLibName, SLibVersionIn
 	if (!dwLen) return FALSE;
 	LPTSTR lpData = (LPTSTR)malloc(dwLen);
 	if (!lpData) return FALSE;
-	SetLastError(0);
+	SetLastError(0); 
 	if (!GetFileVersionInfoA(strLibName, dwHandle, dwLen, lpData))
 	{
 		free(lpData);
@@ -90,14 +89,14 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 		std::map<LPVOID, DWORD> NewModuleMap = Utils::BuildModuledMemoryMap(); 
 		for (const auto& it : NewModuleMap)
 		{
+			if (it.first == nullptr) continue; // fix for dll unloading from another threads
 			if ((it.first != GetModuleHandleA(NULL) && it.first != cfg->hSelfModule) && 
 			!Utils::IsVecContain(cfg->ExcludedModules, it.first)) 
 			{
 				CHAR szFileName[MAX_PATH + 1]; GetModuleFileNameA((HMODULE)it.first, szFileName, MAX_PATH + 1);
 				if (Utils::IsModuleDuplicated((HMODULE)it.first, cfg->ModuleSnapshot)) 
-				// Если наш модуль дублирует чье то имя но его хэш отличается
 				{
-					if (IsNotWinOrAVModule(szFileName)) // Если наш модуль не является родной библиотекой винды или же антивирусом
+					if (IsNotWinOrAVModule(szFileName))
 					{
 						std::string NameOfDLL = Utils::GetDllName(szFileName);
 						MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data;

@@ -62,7 +62,6 @@ public:
 			fclose(hFile); va_end(arglist);
 		}
 	}
-	// Выстраивает и возвращает список базовых адресов загруженных в процесс модулей и их размера
 	static std::map<LPVOID, DWORD> __stdcall BuildModuledMemoryMap()
 	{
 		std::map<LPVOID, DWORD> memoryMap; HMODULE hMods[1024]; DWORD cbNeeded;
@@ -98,7 +97,6 @@ public:
 		fseek(file, lCurPos, 0);
 		return lEndPos;
 	}
-	// Генерация CRC32 хеша файла
 	static DWORD GenerateCRC32(const std::string filePath)
 	{
 		if (filePath.empty()) return 0x0;
@@ -134,7 +132,6 @@ public:
 		}
 		return "EMPTY";
 	}
-	// Поиск субстринга без case-sensevity
 	static bool findStringIC(const std::string& strHaystack, const std::string& strNeedle)
 	{
 		auto it = std::search(strHaystack.begin(), strHaystack.end(),
@@ -185,6 +182,7 @@ public:
 	}
 	static std::string GetMdlNameFromHmodule(HMODULE MDL)
 	{
+		if (MDL == nullptr) return std::string("UNKNOWN");
 		CHAR szFileName[MAX_PATH + 1]; GetModuleFileNameA(MDL, szFileName, MAX_PATH + 1);
 		std::string tmpStr(szFileName); return tmpStr.substr(tmpStr.find_last_of("/\\") + 1);
 	};
@@ -194,10 +192,13 @@ public:
 		typedef BOOL(__stdcall* PtrEnumProcessModules)(HANDLE hProcess, HMODULE* lphModule, DWORD cb, LPDWORD lpcbNeeded);
 		PtrEnumProcessModules EnumProcModules =
 		(PtrEnumProcessModules)GetProcAddress(LoadLibraryA("psapi.dll"), "EnumProcessModules");
-		EnumProcModules(GetCurrentProcess(), hMods, sizeof(hMods), &cbNeeded);
-		for (unsigned int i = 0; i < (cbNeeded / sizeof(HMODULE)); i++)
+		if (EnumProcModules(GetCurrentProcess(), hMods, sizeof(hMods), &cbNeeded))
 		{
-			MdlList.push_back(GetMdlNameFromHmodule(hMods[i]));
+			for (unsigned int i = 0; i < (cbNeeded / sizeof(HMODULE)); i++)
+			{
+				std::string mdl_nm = GetMdlNameFromHmodule(hMods[i]);
+				if (mdl_nm.find("UNKNOWN") == std::string::npos) MdlList.push_back(mdl_nm);
+			}
 		}
 		return MdlList;
 	}
@@ -206,13 +207,17 @@ public:
 		if (addr == nullptr || mdls.empty()) return false;
 		typedef BOOL(__stdcall* GetMdlInfoP)(HANDLE hProcess, HMODULE hModule, LPMODULEINFO lpmodinfo, DWORD cb);
 		GetMdlInfoP GetMdlInfo = (GetMdlInfoP)GetProcAddress(LoadLibraryA("psapi.dll"), "GetModuleInformation");
+		if (GetMdlInfo == nullptr) return false;
 		for (const auto& it : mdls)
 		{
-			MODULEINFO modinfo; GetMdlInfo(GetCurrentProcess(), GetModuleHandleA(it.c_str()), &modinfo, sizeof(modinfo));
-			if ((DWORD_PTR)addr >= (DWORD_PTR)modinfo.lpBaseOfDll
-			&& (DWORD_PTR)addr <= ((DWORD_PTR)modinfo.lpBaseOfDll + modinfo.SizeOfImage))
+			MODULEINFO modinfo = { 0 }; // make sure that no crashing with fcking magic way
+			if (GetMdlInfo(GetCurrentProcess(), GetModuleHandleA(it.c_str()), &modinfo, sizeof(modinfo)))
 			{
-				return true;
+				if ((DWORD_PTR)addr >= (DWORD_PTR)modinfo.lpBaseOfDll
+				&& (DWORD_PTR)addr <= ((DWORD_PTR)modinfo.lpBaseOfDll + modinfo.SizeOfImage))
+				{
+					return true;
+				}
 			}
 		}
 		return false;
@@ -220,7 +225,7 @@ public:
 	static bool IsModuleDuplicated(HMODULE mdl, std::multimap<DWORD, std::string>& ModuleSnapshot)
 	{
 		if (mdl == nullptr) return false;
-		CHAR szFileName[MAX_PATH + 1]; GetModuleFileNameA(mdl, szFileName, MAX_PATH + 1);
+		CHAR szFileName[MAX_PATH + 1]; if (!GetModuleFileNameA(mdl, szFileName, MAX_PATH + 1)) return false;
 		DWORD CRC32 = GenerateCRC32(szFileName); std::string DllName = GetDllName(szFileName);
 		if (SearchForSingleMultiMapMatch2(ModuleSnapshot, 0x0, DllName, true) &&
 		SearchForSingleMultiMapMatch2(ModuleSnapshot, CRC32, "", false))
@@ -239,7 +244,6 @@ public:
 		}
 		return false;
 	}
-	// Функция для дампа экспортов указанного модуля (hModule) в ExportsList
 	static void DumpExportTable(HMODULE hModule, std::multimap<PVOID, std::string>& ExportsList)
 	{
 #if defined( _WIN32 )  
@@ -254,11 +258,14 @@ public:
 #endif  
 			if (inhNtHeader->Signature == 0x4550)
 			{
-				IMAGE_EXPORT_DIRECTORY* iedExportDirectory = reinterpret_cast<IMAGE_EXPORT_DIRECTORY*>(lpBase + inhNtHeader->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress);
+				IMAGE_EXPORT_DIRECTORY* iedExportDirectory = reinterpret_cast<IMAGE_EXPORT_DIRECTORY*>
+				(lpBase + inhNtHeader->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress);
 				for (unsigned int uiIter = 0; uiIter < iedExportDirectory->NumberOfFunctions; ++uiIter)
 				{
-					unsigned short usOrdinal = reinterpret_cast<unsigned short*>(lpBase + iedExportDirectory->AddressOfNameOrdinals)[uiIter];
-					char ordNum[25]; memset(ordNum, 0, sizeof(ordNum)); sprintf(ordNum, "Ordinal: %d | 0x%X", usOrdinal, usOrdinal);
+					unsigned short usOrdinal = reinterpret_cast<unsigned short*>
+					(lpBase + iedExportDirectory->AddressOfNameOrdinals)[uiIter];
+					char ordNum[25]; memset(ordNum, 0, sizeof(ordNum)); 
+					sprintf(ordNum, "Ordinal: %d | 0x%X", usOrdinal, usOrdinal);
 					ExportsList.insert(ExportsList.begin(), std::pair<PVOID, std::string>((PVOID)usOrdinal, ordNum));
 				}
 			}

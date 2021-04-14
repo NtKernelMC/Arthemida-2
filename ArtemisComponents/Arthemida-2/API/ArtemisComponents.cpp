@@ -67,7 +67,15 @@ IArtemisInterface* __stdcall IArtemisInterface::InstallArtemisMonitor(ArtemisCon
 		return nullptr;
 	}
 	typedef DWORD(__stdcall* LPFN_GetMappedFileNameA)(HANDLE hProcess, LPVOID lpv, LPCSTR lpFilename, DWORD nSize);
-	cfg->lpGetMappedFileNameA = (LPFN_GetMappedFileNameA)GetProcAddress(LoadLibraryA("psapi.dll"), "GetMappedFileNameA");
+	HMODULE mdl = LoadLibraryA("psapi.dll");
+	if(mdl == nullptr)
+	{
+#ifdef ARTEMIS_DEBUG
+		Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Can`t obtain psapi.dll for EAT.\n");
+#endif
+		return nullptr;
+	}
+	cfg->lpGetMappedFileNameA = (LPFN_GetMappedFileNameA)GetProcAddress(mdl, "GetMappedFileNameA");
 	if (cfg->lpGetMappedFileNameA == nullptr)
 	{
 #ifdef ARTEMIS_DEBUG
@@ -90,14 +98,14 @@ IArtemisInterface* __stdcall IArtemisInterface::InstallArtemisMonitor(ArtemisCon
 	if (cfg->DetectThreads) // Детект сторонних потоков
 	{
 		if (!cfg->ThreadScanDelay) cfg->ThreadScanDelay = 1000;
-		if (!cfg->ExcludedThreads.empty()) cfg->ExcludedThreads.clear(); // [Не настраивается юзером] Очистка на случай повторной инициализации с тем же cfg
+		if (!cfg->ExcludedThreads.empty()) cfg->ExcludedThreads.clear(); 
 		std::thread AsyncScanner(ScanForDllThreads, cfg);
-		AsyncScanner.detach(); // Запуск асинхронного cканера безымянных потоков которые используются читерами для обхода детекта мануал мап сканнера
+		AsyncScanner.detach(); 
 	}
 	if (cfg->DetectModules) // Детект сторонних модулей
 	{
 		if (!cfg->ModuleScanDelay) cfg->ModuleScanDelay = 1000;
-		if (!cfg->ExcludedModules.empty()) cfg->ExcludedModules.clear(); // [Не настраивается юзером] Очистка на случай повторной инициализации с тем же cfg
+		if (!cfg->ExcludedModules.empty()) cfg->ExcludedModules.clear(); 
 		std::thread AsyncScanner(ModuleScanner, cfg);
 		AsyncScanner.detach(); // Создание и запуск асинхронного потока сканера модулей процесса
 	}

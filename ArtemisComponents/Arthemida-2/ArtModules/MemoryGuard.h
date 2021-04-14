@@ -8,21 +8,22 @@
 void __thiscall IArtemisInterface::ConfirmLegitReturn(const char* function_name, PVOID return_address)
 {
 	if (function_name == nullptr || return_address == nullptr) return; ArtemisConfig* cfg = GetConfig();
-	if (cfg == nullptr) return; static std::vector<std::string> allowedModules = { "client.dll", "multiplayer_sa.dll", "game_sa.dll",
-	"core.dll", "gta_sa.exe", "proxy_sa.exe" };
-	if (!Utils::IsInModuledAddressSpace(return_address, allowedModules) && !Utils::IsVecContain(cfg->ExcludedMethods, return_address))
+	if (cfg == nullptr) return; static std::vector<std::string> allowedModules = 
+	{ "client.dll", "multiplayer_sa.dll", "game_sa.dll", "core.dll", "gta_sa.exe", "proxy_sa.exe" };
+	if (!Utils::IsInModuledAddressSpace(return_address, allowedModules) && 
+	!Utils::IsVecContain(cfg->ExcludedMethods, return_address))
 	{
 		char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
 		cfg->lpGetMappedFileNameA(GetCurrentProcess(), (PVOID)return_address, MappedName, sizeof(MappedName));
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data; 
 		data.EmptyVersionInfo = true; std::string DllName = Utils::GetDllName(MappedName);
-		VirtualQuery(return_address, &mme, sizeof(MEMORY_BASIC_INFORMATION)); // Получение подробной информации по региону памяти
-		data.baseAddr = (LPVOID)return_address; // Запись базового адреса региона памяти
-		data.MemoryRights = mme.AllocationProtect; // Запись прав доступа к региону памяти
-		data.regionSize = mme.RegionSize; // Запись размера региона памяти
-		data.type = DetectionType::ART_RETURN_ADDRESS; // Выставление типа детекта
-		data.dllName = DllName; data.dllPath = MappedName; // Наименование модуля и путь к нему
+		VirtualQuery(return_address, &mme, sizeof(MEMORY_BASIC_INFORMATION));
+		data.baseAddr = (LPVOID)return_address; 
+		data.MemoryRights = mme.AllocationProtect; 
+		data.regionSize = mme.RegionSize;
+		data.type = DetectionType::ART_RETURN_ADDRESS;
+		data.dllName = DllName; data.dllPath = MappedName; 
 		if (cfg != nullptr)
 		{
 			cfg->callback(&data); cfg->ExcludedMethods.push_back(return_address); 
@@ -32,7 +33,7 @@ void __thiscall IArtemisInterface::ConfirmLegitReturn(const char* function_name,
 		}
 	}
 }
-void __stdcall MemoryGuardScanner(ArtemisConfig* cfg) // сканнер целостности памяти для наших игровых хуков
+void __stdcall MemoryGuardScanner(ArtemisConfig* cfg) // On tehnical work
 {
 	if (cfg == nullptr)
 	{
