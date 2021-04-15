@@ -27,7 +27,8 @@ void __stdcall MemoryScanner(ArtemisConfig* cfg)
 			while (ptr < end && VirtualQuery(ptr, &info[0], sizeof(*info)) == sizeof(*info))
 			{
 				MEMORY_BASIC_INFORMATION* i = &info[0];
-				if ((i->State != MEM_FREE && i->State != MEM_RELEASE) && i->Type & (MEM_IMAGE | MEM_PRIVATE) && i->Protect & mask)
+				if ((i->State != MEM_FREE && i->State != MEM_RELEASE) && 
+				i->Type & (MEM_IMAGE | MEM_PRIVATE) && i->Protect & mask)
 				{
 					bool complete_sequence = false; DWORD_PTR foundIAT = 0x0;
 					if (i->RegionSize > 0x1000 && i->RegionSize != 0x7D000 && i->RegionSize != 0xF000)
@@ -36,7 +37,8 @@ void __stdcall MemoryScanner(ArtemisConfig* cfg)
 						{
 							for (DWORD x = 0; x < (10 * 6); x += 0x6)
 							{
-								if ((x + z) < ((DWORD_PTR)ptr + i->RegionSize) && (x + z + 0x1) < ((DWORD_PTR)ptr + i->RegionSize))
+								if ((x + z) < ((DWORD_PTR)ptr + i->RegionSize) && 
+								(x + z + 0x1) < ((DWORD_PTR)ptr + i->RegionSize))
 								{
 									if (*(BYTE*)(z + x) == 0xFF && *(BYTE*)(x + z + 0x1) == 0x25)
 									{
@@ -52,7 +54,7 @@ void __stdcall MemoryScanner(ArtemisConfig* cfg)
 								if (!Utils::IsMemoryInModuledRange((PVOID)z))
 								{
 									char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
-									cfg->lpGetMappedFileNameA(GetCurrentProcess(), (PVOID)z, MappedName, sizeof(MappedName));
+									lpGetMappedFileNameA(GetCurrentProcess(), (PVOID)z, MappedName, sizeof(MappedName));
 									if (strlen(MappedName) < 4 && !Utils::IsVecContain(cfg->ExcludedImages, i->BaseAddress))
 									{
 										ARTEMIS_DATA data; data.baseAddr = (PVOID)foundIAT;

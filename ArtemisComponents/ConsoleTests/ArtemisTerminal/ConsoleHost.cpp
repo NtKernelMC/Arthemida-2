@@ -108,8 +108,10 @@ int main()
 	cfg.DetectFakeLaunch = true;
 	cfg.callback = (ArtemisCallback)ArthemidaCallback; 
 
-	Utils::LogInFile(ARTEMIS_LOG, "[ARTEMIS-2] Configured and ready, press any key to load...\n"); _getch();
-	std::thread heart([] { for (;;) {
+	Utils::LogInFile(ARTEMIS_LOG, "[ARTEMIS-2] Configured and ready, press any key to load...\n"); 
+	int whv = _getch(); std::thread heart([] { 
+	for (;;) 
+	{
 		Sleep(3000); static bool first = false; if (!first) { first = true; printf("\n"); }
 		printf("\n[HEART-BEAT] Console is working normally! Press any key to stop.\n\n");
 	} });
@@ -126,7 +128,7 @@ int main()
 	while (true) 
 	{
 		Sleep(1000); 
-		if (_getch()) { TerminateThread((HANDLE)heart.native_handle(), 0x0); printf("[HEART-BEAT] Stopped.\n"); break; }
+		if (_getch()) { heart.~thread(); printf("[HEART-BEAT] Stopped.\n"); break; }
 	}
 	while (true) { Sleep(1000); }
 	return 1;

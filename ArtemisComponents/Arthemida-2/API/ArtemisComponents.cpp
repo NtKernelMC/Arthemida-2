@@ -5,24 +5,53 @@
 */
 #include ".../../../../Arthemida-2/API/ArtemisComponents.h"
 using namespace ArtComponent;
-ArtemisIncapsulator::ArtemisIncapsulator()
+ArtemisIncapsulator::ArtemisIncapsulator(ArtemisConfig* cfg)
 {
+	if (cfg != nullptr)
+	{
 #ifdef ARTEMIS_DEBUG
-	Utils::LogInFile(ARTEMIS_LOG, "[ArtemisIncapsulator] Called the second generation constructor!\n");
+		Utils::LogInFile(ARTEMIS_LOG, "[SINGLETON] Called the second generation constructor!\n");
 #endif
-}
-ArtemisIncapsulator::~ArtemisIncapsulator()
-{
+		lpGetMappedFileNameA = (LPFN_GetMappedFileNameA)Utils::RuntimeIatResolver("psapi.dll", "GetMappedFileNameA");
+		if (lpGetMappedFileNameA == nullptr)
+		{
 #ifdef ARTEMIS_DEBUG
-	Utils::LogInFile(ARTEMIS_LOG, "[ArtemisIncapsulator] Called the second generation destructor!\n");
+			Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Can`t obtain export from psapi.dll for GetMappedFileNameA.\n");
 #endif
+			return;
+		}
+		GetMdlInfo = (GetMdlInfoP)Utils::RuntimeIatResolver("psapi.dll", "GetModuleInformation");
+		if (GetMdlInfo == nullptr)
+		{
+#ifdef ARTEMIS_DEBUG
+			Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Can`t obtain export from psapi.dll for GetModuleInformation.\n");
+#endif
+			return;
+		}
+		EnumProcModules = (PtrEnumProcessModules)Utils::RuntimeIatResolver("psapi.dll", "EnumProcessModules");
+		if (EnumProcModules == nullptr)
+		{
+#ifdef ARTEMIS_DEBUG
+			Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Can`t obtain export from psapi.dll for EnumProcModules.\n");
+#endif
+			return;
+		}
+		cfg->SingletonCalled = true; // First-stage step initialization
+	}
+	else
+	{
+#ifdef ARTEMIS_DEBUG
+		Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Invalid pointer in config argument! cfg: 0x%X\n", cfg);
+#endif
+	}
 }
+ArtemisIncapsulator::~ArtemisIncapsulator() { }
 IArtemisInterface* IArtemisInterface::i_art = nullptr;
 ArtemisConfig* IArtemisInterface::g_cfg = nullptr;
 IArtemisInterface* IArtemisInterface::CreateInstance(ArtemisConfig* cfg)
 {
 	if (cfg == nullptr) return nullptr;
-	i_art = dynamic_cast<IArtemisInterface*>(new ArtemisIncapsulator());
+	i_art = dynamic_cast<IArtemisInterface*>(new ArtemisIncapsulator(cfg));
 	if (i_art != nullptr)
 	{
 		i_art->g_cfg = new ArtemisConfig(); // Выделяем память под конфиг античита
@@ -63,23 +92,6 @@ IArtemisInterface* __stdcall IArtemisInterface::InstallArtemisMonitor(ArtemisCon
 	{
 #ifdef ARTEMIS_DEBUG
 		Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Unknown address in callback argument! callback is nullptr.\n");
-#endif
-		return nullptr;
-	}
-	typedef DWORD(__stdcall* LPFN_GetMappedFileNameA)(HANDLE hProcess, LPVOID lpv, LPCSTR lpFilename, DWORD nSize);
-	HMODULE mdl = LoadLibraryA("psapi.dll");
-	if(mdl == nullptr)
-	{
-#ifdef ARTEMIS_DEBUG
-		Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Can`t obtain psapi.dll for EAT.\n");
-#endif
-		return nullptr;
-	}
-	cfg->lpGetMappedFileNameA = (LPFN_GetMappedFileNameA)GetProcAddress(mdl, "GetMappedFileNameA");
-	if (cfg->lpGetMappedFileNameA == nullptr)
-	{
-#ifdef ARTEMIS_DEBUG
-		Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Can`t obtain export from psapi.dll for GetMappedFileNameA.\n");
 #endif
 		return nullptr;
 	}
@@ -133,7 +145,7 @@ IArtemisInterface* __stdcall IArtemisInterface::InstallArtemisMonitor(ArtemisCon
 	if (cfg->ServiceMon)
 	{
 		if (!cfg->ServiceMonDelay) cfg->ServiceMonDelay = 1000;
-		CServiceMon servmon;
+		CServiceMon servmon { };
 		servmon.Initialize().detach();
 	}
 	return ac_info;

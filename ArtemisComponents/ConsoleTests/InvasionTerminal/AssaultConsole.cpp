@@ -20,7 +20,7 @@ int main()
 	(L"ArtemisHost.exe", L"", NULL, NULL, TRUE, 0, NULL, NULL, &info, &processInfo))
 	{
 		printf("Process created. Press any key to exit.\n");
-		getchar(); ExitProcess(0x0);
+		int anykey = getchar(); ExitProcess(0x0);
 	}
 	else printf("Error: %d\nPress any key to exit.", GetLastError());
 	while (true) { Sleep(1000); }
