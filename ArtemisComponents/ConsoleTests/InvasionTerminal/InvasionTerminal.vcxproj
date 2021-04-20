@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\Arthemida-2\LauncherInclude\ArtSafeLaunch.h" />
     <ClInclude Include="..\..\Arthemida-2\LauncherInclude\MiniJumper.h" />
+    <ClInclude Include="MMAP.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
