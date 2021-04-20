@@ -51,7 +51,7 @@ namespace SafeLaunch
 			*(BYTE*)((DWORD_PTR)syscall + 9) = 0x05; *(BYTE*)((DWORD_PTR)syscall + 10) = 0xC3;
 #else
 			if (*(BYTE*)ZwAddr != 0xB8) memcpy((void*)0xFFFFFF, (void*)0xFFFFFF, 222222);
-			SYSTEM_INFO systemInfo = { 0 }; GetNativeSystemInfo(&systemInfo); 
+			SYSTEM_INFO systemInfo = { 0 }; GetNativeSystemInfo(&systemInfo);
 			std::tuple<DWORD, DWORD> OsVerInfo = getOSver();
 			DWORD codeSize = 15; if (systemInfo.wProcessorArchitecture != PROCESSOR_ARCHITECTURE_INTEL)
 			{
@@ -68,7 +68,14 @@ namespace SafeLaunch
 			//return;
 #endif
 			syscall = VirtualAlloc(0, codeSize, MEM_RESERVE | MEM_COMMIT, PAGE_EXECUTE_READWRITE);
-			memcpy(syscall, (void*)ZwAddr, codeSize); 
+			if (syscall == nullptr)
+			{
+#ifdef SAFE_LAUNCH_DEBUG
+				printf("[ALLOCATOR] Can`t allocate virtual memory. Last error: %d\n", GetLastError());
+#endif
+				return;
+			}
+			memcpy((void*)syscall, (void*)ZwAddr, codeSize);
 			syscall_addr = (DWORD)syscall;
 #endif      
 			fTrampoline = CustomHooks::MakeJump(ZwAddr, (DWORD)&ZwCreateUserProcess, prologue, 5);

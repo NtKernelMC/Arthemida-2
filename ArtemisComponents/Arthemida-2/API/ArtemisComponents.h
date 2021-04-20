@@ -11,7 +11,7 @@ namespace ArtComponent
 	class ArtemisIncapsulator sealed final : protected IArtemisInterface
 	{
 	private:
-		ArtemisIncapsulator();
+		ArtemisIncapsulator(ArtemisConfig* cfg);
 		~ArtemisIncapsulator();
 		friend IArtemisInterface* IArtemisInterface::CreateInstance(ArtemisConfig* cfg);
 	};

@@ -27,10 +27,9 @@ void __stdcall SigScanner(ArtemisConfig* cfg) // CAUTION! Not tested yet.
 	cfg->SignatureScanner = true;
 	while (true) 
 	{
-		std::map<LPVOID, DWORD> ModuleMap = Utils::BuildModuledMemoryMap();
 		for (const auto& KeyValuePair : cfg->IllegalPatterns)
 		{
-			for (const auto& it : ModuleMap)
+			for (const auto& it : orderedMapping)
 			{
 				if (it.first == GetModuleHandleA("kernel32.dll")) continue;
 				DWORD scanAddr = SigScan::FindPatternExplicit((DWORD)it.first, it.second,

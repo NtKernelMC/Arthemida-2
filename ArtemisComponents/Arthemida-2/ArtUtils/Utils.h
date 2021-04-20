@@ -1,6 +1,7 @@
 /*
 	Artemis-2 for MTA Province
-	Target Platform: x32-x86
+	Target Platform: x32-x86 (VC19 IDE)
+	Minimal required standart C++20
 	Project by NtKernelMC & holmes0
 */
 #pragma once
@@ -26,10 +27,12 @@
 #include <Windows.h>
 #include <stdio.h>
 #include <thread>
+#include <semaphore>
 #include <vector>
 #include <string>
 #include <map>
 #include <tuple>
+#include <algorithm>
 #include <winternl.h>
 #include <TlHelp32.h>
 #include <Psapi.h>
@@ -40,6 +43,25 @@
 #pragma intrinsic(_ReturnAddress)
 #include "../../Arthemida-2/ArtUtils/CRC32.h"
 #include "../../Arthemida-2/ArtUtils/sigscan.h"
+// Multi-threaded control for module parser
+static bool dllsListFilled = false;
+static std::multimap<PVOID, DWORD> orderedMapping; // global module runtime list (PE Image Info)
+static std::multimap<DWORD, std::string> orderedIdentify; // global module runtime list (Identify Info)
+static std::binary_semaphore fireSignal(0); // C++20 CODE! (Semaphores like Mutexes but fully independent of thread binding.)
+// Hooks Data
+static BYTE ldrLoad[5], ldrUnload[5];
+static DWORD fTr1 = 0x0, fTr2 = 0x0;
+// Windows Legacy Mode Support for Win7
+typedef BOOL(__stdcall* PtrEnumProcessModules)(HANDLE hProcess, HMODULE* lphModule, DWORD cb, LPDWORD lpcbNeeded);
+typedef BOOL(__stdcall* GetMdlInfoP)(HANDLE hProcess, HMODULE hModule, LPMODULEINFO lpmodinfo, DWORD cb);
+typedef DWORD(__stdcall* LPFN_GetMappedFileNameA)(HANDLE hProcess, LPVOID lpv, LPCSTR lpFilename, DWORD nSize);
+typedef NTSTATUS(__stdcall* tNtQueryInformationThread)(HANDLE ThreadHandle, THREADINFOCLASS ThreadInformationClass, 
+PVOID ThreadInformation, ULONG ThreadInformationLength, PULONG ReturnLength);
+static PtrEnumProcessModules EnumProcModules = nullptr;
+static GetMdlInfoP GetMdlInfo = nullptr;
+static LPFN_GetMappedFileNameA lpGetMappedFileNameA = nullptr;
+static tNtQueryInformationThread pNtQueryInformationThread = nullptr;
+/////////////////////////////////////////////
 class Utils
 {
 public:
@@ -62,34 +84,106 @@ public:
 			fclose(hFile); va_end(arglist);
 		}
 	}
-	static std::map<LPVOID, DWORD> __stdcall BuildModuledMemoryMap()
+	static decltype(auto) RuntimeIatResolver(const std::string& libra, const std::string& func_name)
 	{
-		std::map<LPVOID, DWORD> memoryMap; HMODULE hMods[1024]; DWORD cbNeeded;
-		typedef BOOL(__stdcall* PtrEnumProcessModules)(HANDLE hProcess, HMODULE* lphModule, DWORD cb, LPDWORD lpcbNeeded);
-		PtrEnumProcessModules EnumProcModules = (PtrEnumProcessModules)
-		GetProcAddress(LoadLibraryA("psapi.dll"), "EnumProcessModules");
-		EnumProcModules(GetCurrentProcess(), hMods, sizeof(hMods), &cbNeeded);
-		typedef BOOL(__stdcall* GetMdlInfoP)(HANDLE hProcess, HMODULE hModule, LPMODULEINFO lpmodinfo, DWORD cb);
-		GetMdlInfoP GetMdlInfo = (GetMdlInfoP)GetProcAddress(LoadLibraryA("psapi.dll"), "GetModuleInformation");
-		for (unsigned int i = 0; i < (cbNeeded / sizeof(HMODULE)); i++)
+		decltype(auto) UnresolvedError = [&libra, &func_name](bool empty_args = false) -> PVOID
 		{
-			MODULEINFO modinfo; GetMdlInfo(GetCurrentProcess(), hMods[i], &modinfo, sizeof(modinfo));
-			memoryMap.insert(memoryMap.begin(), std::pair<LPVOID, DWORD>(modinfo.lpBaseOfDll, modinfo.SizeOfImage));
-		}
-		return memoryMap;
+#ifdef ARTEMIS_DEBUG
+			if (empty_args) Utils::LogInFile(ARTEMIS_LOG, "[RESOLVER] IAT filler failure! EMPTY ARGS.\n");
+			else Utils::LogInFile(ARTEMIS_LOG, "[RESOLVER] IAT filler failure %s || %s\n", libra.c_str(), func_name.c_str());
+#endif
+			return nullptr;
+		}; 
+		if (libra.empty() || func_name.empty()) UnresolvedError(true);
+		PVOID handla = (PVOID)LoadLibraryA(libra.c_str());
+		if (handla == nullptr) return UnresolvedError();
+		PVOID apiSha = (PVOID)GetProcAddress((HMODULE)handla, func_name.c_str());
+		if (apiSha == nullptr) return UnresolvedError();
+		return apiSha;
 	}
-	// 
-	static bool __stdcall IsMemoryInModuledRange(LPVOID base)
+	static LPMODULEINFO GetModuleMemoryInfo(HMODULE Addr)
 	{
-		std::map<LPVOID, DWORD> memory = BuildModuledMemoryMap();
-		for (const auto& it : memory)
+		if (Addr == nullptr) return NULL;
+		static MODULEINFO modinfo = { 0 }; DWORD cbs = NULL;
+		if (GetMdlInfo(GetCurrentProcess(), Addr, &modinfo, cbs)) return &modinfo;
+		return NULL;
+	}
+	static bool IsInModuledAddressSpace(PVOID addr, std::vector<std::string>& mdls)
+	{
+		if (addr == nullptr || mdls.empty()) return false;
+		for (const auto& it : mdls)
 		{
-			if (base >= it.first && base <= (LPVOID)((DWORD_PTR)it.first + it.second)) return true;
+			LPMODULEINFO modinfo = GetModuleMemoryInfo((HMODULE)addr);
+			if (modinfo != nullptr)
+			{
+				if ((DWORD_PTR)addr >= (DWORD_PTR)modinfo->lpBaseOfDll
+				&& (DWORD_PTR)addr <= ((DWORD_PTR)modinfo->lpBaseOfDll + modinfo->SizeOfImage))
+				{
+					return true;
+				}
+			}
 		}
 		return false;
 	}
+	static bool IsModuleDuplicated(HMODULE mdl, std::multimap<DWORD, std::string>& ModuleSnapshot)
+	{
+		if (mdl == nullptr || ModuleSnapshot.empty()) return false;
+		CHAR szFileName[MAX_PATH + 1]; if (!GetModuleFileNameA(mdl, szFileName, MAX_PATH + 1)) return false;
+		DWORD CRC32 = GenerateCRC32(szFileName); std::string DllName = GetDllName(szFileName);
+		for (const auto& it_snap : ModuleSnapshot) // parsing the list (Primary key: CRC32, Value: Library name)
+		{
+			if (it_snap.first != CRC32 && !findStringIC(it_snap.second, DllName)) continue;
+			else // if anyone of those data will match - then we got a suspected :)
+			{
+				std::multimap<std::string, DWORD> tmpModuleSnapshot; // reverse roles of key & value
+				for (const auto& it : ModuleSnapshot)
+				{
+					tmpModuleSnapshot.insert(std::pair<std::string, DWORD>(it.second, it.first));
+				}
+				if (tmpModuleSnapshot.count(DllName) > 0x0) return true;
+			}
+		}
+		ModuleSnapshot.insert(ModuleSnapshot.begin(), std::pair<DWORD, std::string>(CRC32, DllName)); 
+		// legit module or yet not analyzed so good )
+		return false;
+	}
+	static void __stdcall BuildModuledMemoryMap(void)
+	{
+		if (!dllsListFilled) 
+		{ // let`s parse it only one times, cuz we need to know wich exactly modules was loaded before us
+			fireSignal.acquire(); HMODULE hMods[1024]; DWORD cbNeeded = NULL;
+			if (EnumProcModules(GetCurrentProcess(), hMods, sizeof(hMods), &cbNeeded))
+			{
+				for (unsigned int i = 0; i < (cbNeeded / sizeof(HMODULE)); i++)
+				{
+					if (hMods[i] == nullptr) continue;
+					LPMODULEINFO modinfo = GetModuleMemoryInfo(hMods[i]);
+					if (modinfo != nullptr) orderedMapping.insert(std::pair<PVOID, DWORD>
+					(modinfo->lpBaseOfDll, modinfo->SizeOfImage));
+				}
+			} // now - we can obtain a fresh lists at the run-time, big advantage for speed perfomance
+			dllsListFilled = true; fireSignal.release();
+		}
+	}
+	static bool __stdcall IsMemoryInModuledRange(PVOID base)
+	{
+		if (base == nullptr) return false; 
+		fireSignal.acquire(); for (const auto& it : orderedMapping)
+		{
+			if (base >= it.first && base <= (PVOID)((DWORD)it.first + it.second)) return true;
+		}  
+		fireSignal.release();
+		return false;
+	}
+	static decltype(auto) GetLibNameFromHandle(HMODULE MDL)
+	{
+		if (MDL == nullptr) return std::string("");
+		CHAR szFileName[MAX_PATH + 1]; GetModuleFileNameA(MDL, szFileName, MAX_PATH + 1);
+		std::string tmpStr(szFileName); return tmpStr.substr(tmpStr.find_last_of("/\\") + 1);
+	};
 	static long getFileSize(FILE* file)
 	{
+		if (file == nullptr) return 0x0;
 		long lCurPos, lEndPos;
 		lCurPos = ftell(file);
 		fseek(file, 0, 2);
@@ -97,7 +191,7 @@ public:
 		fseek(file, lCurPos, 0);
 		return lEndPos;
 	}
-	static DWORD GenerateCRC32(const std::string filePath)
+	static DWORD GenerateCRC32(const std::string& filePath)
 	{
 		if (filePath.empty()) return 0x0;
 		FILE* hFile = fopen(filePath.c_str(), "rb");
@@ -110,9 +204,10 @@ public:
 		delete[] fileBuf; return crc;
 	}
 	template<typename First, typename Second>
-	static bool SearchForSingleMapMatch(const std::map<First, Second>& map, const First key)
+	static bool SearchForSingleMapMatch(const std::map<First, Second>& map, const First& key)
 	{
-		for (auto it : map)
+		if (map.empty()) return false;
+		for (const auto &it : map)
 		{
 			if (it.first == key) return true;
 		}
@@ -121,17 +216,20 @@ public:
 	template <typename T>
 	static const bool Contains(std::vector<T>& Vec, const T& Element)
 	{
+		if (Vec.empty()) return false;
 		if (std::find(Vec.begin(), Vec.end(), Element) != Vec.end()) return true;
 		return false;
 	}
 	static std::string SearchForSingleMapMatchAndRet(const std::map<PVOID, const char*>& map, const PVOID key)
 	{
-		for (auto it : map)
+		if (map.empty() || key == nullptr) return std::string("");
+		for (const auto &it : map)
 		{
 			if (it.first == key) return it.second;
 		}
-		return "EMPTY";
+		return std::string("");
 	}
+	// overloading, unfortunally templates doesn`t works with std::basic_string container
 	static bool findStringIC(const std::string& strHaystack, const std::string& strNeedle)
 	{
 		auto it = std::search(strHaystack.begin(), strHaystack.end(),
@@ -139,112 +237,28 @@ public:
 		[](char ch1, char ch2) { return std::toupper(ch1) == std::toupper(ch2); });
 		return (it != strHaystack.end());
 	}
-	// 
-	static bool SearchForSingleMultiMapMatch2(const std::multimap<DWORD, std::string>& map, DWORD first, std::string second, bool firstOrSecond)
+	static bool w_findStringIC(const std::wstring& strHaystack, const std::wstring& strNeedle)
 	{
-		for (auto it : map)
-		{
-			if (findStringIC(it.second, second) && firstOrSecond) return true;
-			if (it.first == first && !firstOrSecond) return true;
-		}
-		return false;
+		auto it = std::search(strHaystack.begin(), strHaystack.end(),
+		strNeedle.begin(), strNeedle.end(),
+		[](wchar_t ch1, wchar_t ch2) { return std::toupper(ch1) == std::toupper(ch2); });
+		return (it != strHaystack.end());
 	}
-	//
-	static char* strdel(char* s, size_t offset, size_t count)
+	static std::string GetDllName(const std::string& szDllNameTmp)
 	{
-		size_t len = strlen(s);
-		if (offset > len) return s;
-		if ((offset + count) > len) count = len - offset;
-		strcpy(s + offset, s + offset + count);
-		return s;
-	}
-	static __forceinline std::string GetDllName(const std::string& szDllNameTmp)
-	{
+		if (szDllNameTmp.empty()) return szDllNameTmp;
 		return szDllNameTmp.substr(szDllNameTmp.find_last_of("/\\") + 1);
 	}
 	static bool IsVecContain(const std::vector<PVOID>& source, PVOID element)
 	{
 		if (element == nullptr || source.empty()) return false;
-		for (const auto it : source)
+		for (const auto &it : source)
 		{
 			if (it == element) return true;
 		}
 		return false;
 	}
-	static bool IsVecContain2(const std::vector<std::string>& source, std::string element)
-	{
-		if (source.empty() || element.length() < 1) return false;
-		for (const auto it : source)
-		{
-			if (it == element) return true;
-		}
-		return false;
-	}
-	static std::string GetMdlNameFromHmodule(HMODULE MDL)
-	{
-		if (MDL == nullptr) return std::string("UNKNOWN");
-		CHAR szFileName[MAX_PATH + 1]; GetModuleFileNameA(MDL, szFileName, MAX_PATH + 1);
-		std::string tmpStr(szFileName); return tmpStr.substr(tmpStr.find_last_of("/\\") + 1);
-	};
-	static std::vector<std::string> GenerateModuleNamesList()
-	{
-		HMODULE hMods[1024]; DWORD cbNeeded; std::vector<std::string> MdlList;
-		typedef BOOL(__stdcall* PtrEnumProcessModules)(HANDLE hProcess, HMODULE* lphModule, DWORD cb, LPDWORD lpcbNeeded);
-		PtrEnumProcessModules EnumProcModules =
-		(PtrEnumProcessModules)GetProcAddress(LoadLibraryA("psapi.dll"), "EnumProcessModules");
-		if (EnumProcModules(GetCurrentProcess(), hMods, sizeof(hMods), &cbNeeded))
-		{
-			for (unsigned int i = 0; i < (cbNeeded / sizeof(HMODULE)); i++)
-			{
-				std::string mdl_nm = GetMdlNameFromHmodule(hMods[i]);
-				if (mdl_nm.find("UNKNOWN") == std::string::npos) MdlList.push_back(mdl_nm);
-			}
-		}
-		return MdlList;
-	}
-	static bool IsInModuledAddressSpace(PVOID addr, std::vector<std::string> &mdls)
-	{
-		if (addr == nullptr || mdls.empty()) return false;
-		typedef BOOL(__stdcall* GetMdlInfoP)(HANDLE hProcess, HMODULE hModule, LPMODULEINFO lpmodinfo, DWORD cb);
-		GetMdlInfoP GetMdlInfo = (GetMdlInfoP)GetProcAddress(LoadLibraryA("psapi.dll"), "GetModuleInformation");
-		if (GetMdlInfo == nullptr) return false;
-		for (const auto& it : mdls)
-		{
-			MODULEINFO modinfo = { 0 }; // make sure that no crashing with fcking magic way
-			if (GetMdlInfo(GetCurrentProcess(), GetModuleHandleA(it.c_str()), &modinfo, sizeof(modinfo)))
-			{
-				if ((DWORD_PTR)addr >= (DWORD_PTR)modinfo.lpBaseOfDll
-				&& (DWORD_PTR)addr <= ((DWORD_PTR)modinfo.lpBaseOfDll + modinfo.SizeOfImage))
-				{
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-	static bool IsModuleDuplicated(HMODULE mdl, std::multimap<DWORD, std::string>& ModuleSnapshot)
-	{
-		if (mdl == nullptr) return false;
-		CHAR szFileName[MAX_PATH + 1]; if (!GetModuleFileNameA(mdl, szFileName, MAX_PATH + 1)) return false;
-		DWORD CRC32 = GenerateCRC32(szFileName); std::string DllName = GetDllName(szFileName);
-		if (SearchForSingleMultiMapMatch2(ModuleSnapshot, 0x0, DllName, true) &&
-		SearchForSingleMultiMapMatch2(ModuleSnapshot, CRC32, "", false))
-		{
-			std::multimap<std::string, DWORD> tmpModuleSnapshot;
-			for (const auto& it : ModuleSnapshot)
-			{
-				tmpModuleSnapshot.insert(tmpModuleSnapshot.begin(), std::pair<std::string, DWORD>(it.second, it.first));
-			}
-			if (tmpModuleSnapshot.count(DllName) > 0x0) return true;
-		}
-		else
-		{
-			ModuleSnapshot.insert(ModuleSnapshot.begin(), std::pair<DWORD, std::string>(CRC32, DllName));
-			return false;
-		}
-		return false;
-	}
-	static void DumpExportTable(HMODULE hModule, std::multimap<PVOID, std::string>& ExportsList)
+	static void TraverseEAT(HMODULE hModule, std::multimap<PVOID, std::string>& ExportsList)
 	{
 #if defined( _WIN32 )  
 		unsigned char* lpBase = reinterpret_cast<unsigned char*>(hModule);

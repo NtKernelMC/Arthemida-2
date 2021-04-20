@@ -14,8 +14,7 @@ namespace MiniJumper
     public:
         static DWORD MakeJump(DWORD jmp_address, DWORD hookAddr, BYTE* prologue, size_t prologue_size)
         {
-            DWORD old_prot = 0x0;
-            if (prologue == nullptr) return 0x0;
+            DWORD old_prot = 0x0; if (prologue == nullptr) return 0x0;
             VirtualProtect((void*)jmp_address, prologue_size, PAGE_EXECUTE_READWRITE, &old_prot);
             memcpy(prologue, (void*)jmp_address, prologue_size);
             BYTE addrToBYTEs[5] = { 0xE9, 0x90, 0x90, 0x90, 0x90 };
@@ -37,9 +36,9 @@ namespace MiniJumper
             {
                 DWORD Delta = (jmp_address + prologue_size) - ((DWORD)Trampoline + 5);
                 memcpy(&TrampolineBYTEs[1], &Delta, 4);
-                memcpy(Trampoline, TrampolineBYTEs, 5);
+                memcpy((void*)Trampoline, TrampolineBYTEs, 5);
             }
-            VirtualProtect((void*)jmp_address, prologue_size, old_prot, 0);
+            VirtualProtect((void*)jmp_address, prologue_size, old_prot, &old_prot);
             return (DWORD)Trampoline;
         }
         static bool RestorePrologue(DWORD addr, BYTE* prologue, size_t prologue_size)

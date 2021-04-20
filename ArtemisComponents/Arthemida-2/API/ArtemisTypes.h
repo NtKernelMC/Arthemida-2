@@ -32,13 +32,11 @@ namespace ArtemisData
 		bool EmptyVersionInfo = false;
 	};
 	typedef void(__stdcall* ArtemisCallback)(ARTEMIS_DATA* artemis);
-	typedef DWORD(__stdcall* LPFN_GetMappedFileNameA)(HANDLE hProcess, LPVOID lpv, LPCSTR lpFilename, DWORD nSize);
 	struct ArtemisConfig
 	{
 		// basic stuff
+		bool SingletonCalled = false;
 		HANDLE hSelfModule = nullptr;
-		std::multimap<DWORD, std::string> ModuleSnapshot;
-		LPFN_GetMappedFileNameA lpGetMappedFileNameA = nullptr;
 		ArtemisCallback callback = nullptr;
 		// anticheat controller options
 		bool DetectThreads = false;
@@ -49,11 +47,11 @@ namespace ArtemisData
 		bool DetectBySignature = false;
 		bool ServiceMon = false;
 		// anti-repeatable start for scanners
-		volatile bool ThreadScanner = false;
-		volatile bool ModuleScanner = false;
-		volatile bool MemoryScanner = false;
-		volatile bool SignatureScanner = false;
-		volatile bool MemGuardScanner = false;
+		bool ThreadScanner = false;
+		bool ModuleScanner = false;
+		bool MemoryScanner = false;
+		bool SignatureScanner = false;
+		bool MemGuardScanner = false;
 		// iteration delays for scanners
 		DWORD ThreadScanDelay = 0x0;
 		DWORD ModuleScanDelay = 0x0;

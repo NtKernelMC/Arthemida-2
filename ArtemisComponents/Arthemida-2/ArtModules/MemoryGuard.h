@@ -14,7 +14,7 @@ void __thiscall IArtemisInterface::ConfirmLegitReturn(const char* function_name,
 	!Utils::IsVecContain(cfg->ExcludedMethods, return_address))
 	{
 		char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
-		cfg->lpGetMappedFileNameA(GetCurrentProcess(), (PVOID)return_address, MappedName, sizeof(MappedName));
+		lpGetMappedFileNameA(GetCurrentProcess(), (PVOID)return_address, MappedName, sizeof(MappedName));
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data; 
 		data.EmptyVersionInfo = true; std::string DllName = Utils::GetDllName(MappedName);
