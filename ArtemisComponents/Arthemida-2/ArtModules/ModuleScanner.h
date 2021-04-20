@@ -10,7 +10,7 @@ struct SLibVersionInfo : VS_FIXEDFILEINFO
 {
 	MtaUtils::SString strCompanyName;
 	MtaUtils::SString strProductName;
-};
+}; 
 static bool GetLibVersionInfo(const MtaUtils::SString& strLibName, SLibVersionInfo* pOutLibVersionInfo)
 {
 	DWORD dwHandle = 0x0, dwLen = 0x0;
@@ -165,7 +165,8 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 		if (fTr2 != NULL) DiagnosticMSG("[INSTALLER-2] LdrUnloadDll hook was successfully installed!\n");
 		else return DiagnosticMSG("[Hooking Error #2] By some reasons, hook is not exist in to the list!\n");
 		return 0xDEADBEEF;
-	}; PushNativeHooks(); Utils::BuildModuledMemoryMap();
+	}; 
+	PushNativeHooks(); Utils::BuildModuledMemoryMap();
 	while (true)
 	{
 		// Runtime Duplicates-Module Scanner && ProxyDLL Detector

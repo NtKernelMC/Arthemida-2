@@ -128,7 +128,7 @@ int main()
 	while (true) 
 	{
 		Sleep(1000); 
-		if (_getch()) { heart.~thread(); printf("[HEART-BEAT] Stopped.\n"); break; }
+		if (_getch()) { TerminateThread((HANDLE)heart.native_handle(), 0x0); printf("[HEART-BEAT] Stopped.\n"); break; }
 	}
 	while (true) { Sleep(1000); }
 	return 1;

@@ -31,8 +31,8 @@ void __stdcall MemoryScanner(ArtemisConfig* cfg)
 				i->Type & (MEM_IMAGE | MEM_PRIVATE) && i->Protect & mask)
 				{
 					bool complete_sequence = false; DWORD_PTR foundIAT = 0x0;
-					if (i->RegionSize > 0x1000 && i->RegionSize != 0x7D000 && i->RegionSize != 0xF000)
-					{
+					//if (i->RegionSize > 0x1000 && i->RegionSize != 0x7D000 && i->RegionSize != 0xF000)
+					//{
 						for (DWORD_PTR z = (DWORD_PTR)ptr; z < ((DWORD_PTR)ptr + i->RegionSize); z++)
 						{
 							for (DWORD x = 0; x < (10 * 6); x += 0x6)
@@ -63,9 +63,8 @@ void __stdcall MemoryScanner(ArtemisConfig* cfg)
 										data.type = DetectionType::ART_MANUAL_MAP; data.EmptyVersionInfo = true;
 										cfg->callback(&data); cfg->ExcludedImages.push_back(i->BaseAddress);
 									}
-								}
-							}
-						}
+								}	}
+						// //s}
 					}
 				}
 				ptr = (const void*)((const char*)(i->BaseAddress) + i->RegionSize);

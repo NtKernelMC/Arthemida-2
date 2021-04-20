@@ -55,9 +55,12 @@ static DWORD fTr1 = 0x0, fTr2 = 0x0;
 typedef BOOL(__stdcall* PtrEnumProcessModules)(HANDLE hProcess, HMODULE* lphModule, DWORD cb, LPDWORD lpcbNeeded);
 typedef BOOL(__stdcall* GetMdlInfoP)(HANDLE hProcess, HMODULE hModule, LPMODULEINFO lpmodinfo, DWORD cb);
 typedef DWORD(__stdcall* LPFN_GetMappedFileNameA)(HANDLE hProcess, LPVOID lpv, LPCSTR lpFilename, DWORD nSize);
+typedef NTSTATUS(__stdcall* tNtQueryInformationThread)(HANDLE ThreadHandle, THREADINFOCLASS ThreadInformationClass, 
+PVOID ThreadInformation, ULONG ThreadInformationLength, PULONG ReturnLength);
 static PtrEnumProcessModules EnumProcModules = nullptr;
 static GetMdlInfoP GetMdlInfo = nullptr;
 static LPFN_GetMappedFileNameA lpGetMappedFileNameA = nullptr;
+static tNtQueryInformationThread pNtQueryInformationThread = nullptr;
 /////////////////////////////////////////////
 class Utils
 {

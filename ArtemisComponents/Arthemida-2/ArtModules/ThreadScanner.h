@@ -12,14 +12,9 @@ void __stdcall ScanForDllThreads(ArtemisConfig* cfg)
 #ifdef ARTEMIS_DEBUG
 	Utils::LogInFile(ARTEMIS_LOG, "[INFO] Created async thread for ScanForDllThreads!\n");
 #endif
-	typedef NTSTATUS(__stdcall* tNtQueryInformationThread)(HANDLE ThreadHandle, 
-	THREADINFOCLASS ThreadInformationClass, PVOID ThreadInformation, ULONG ThreadInformationLength, PULONG ReturnLength);
-	HANDLE targetThread = nullptr; tNtQueryInformationThread NtQueryInformationThread = nullptr;
-	PVOID mAddrr = GetProcAddress(GetModuleHandleA("ntdll.dll"), "NtQueryInformationThread");
-	if (mAddrr != nullptr) NtQueryInformationThread = (tNtQueryInformationThread)mAddrr;
 	while (true) 
 	{
-		THREADENTRY32 th32; HANDLE hSnapshot = NULL; th32.dwSize = sizeof(THREADENTRY32);
+		THREADENTRY32 th32 { 0 }; HANDLE hSnapshot = NULL; th32.dwSize = sizeof(THREADENTRY32);
 		hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0);
 		if (Thread32First(hSnapshot, &th32))
 		{
@@ -27,11 +22,11 @@ void __stdcall ScanForDllThreads(ArtemisConfig* cfg)
 			{
 				if (th32.th32OwnerProcessID == GetCurrentProcessId() && th32.th32ThreadID != GetCurrentThreadId())
 				{
-					targetThread = OpenThread(THREAD_ALL_ACCESS, FALSE, th32.th32ThreadID); 
+					HANDLE targetThread = OpenThread(THREAD_ALL_ACCESS, FALSE, th32.th32ThreadID);
 					if (targetThread != nullptr)
 					{
 						SuspendThread(targetThread); DWORD_PTR tempBase = 0x0;
-						NtQueryInformationThread(targetThread, (THREADINFOCLASS)9, &tempBase, sizeof(DWORD_PTR), NULL);  
+						pNtQueryInformationThread(targetThread, (THREADINFOCLASS)9, &tempBase, sizeof(DWORD_PTR), NULL);  
 						ResumeThread(targetThread); CloseHandle(targetThread); 
 						if (!Utils::IsMemoryInModuledRange((LPVOID)tempBase) && 
 						!Utils::IsVecContain(cfg->ExcludedThreads, (LPVOID)tempBase))

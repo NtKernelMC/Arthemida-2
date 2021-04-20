@@ -36,6 +36,14 @@ ArtemisIncapsulator::ArtemisIncapsulator(ArtemisConfig* cfg)
 #endif
 			return;
 		}
+		pNtQueryInformationThread = (tNtQueryInformationThread)Utils::RuntimeIatResolver("ntdll.dll","NtQueryInformationThread");
+		if (pNtQueryInformationThread == nullptr)
+		{
+#ifdef ARTEMIS_DEBUG
+			Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Can`t obtain export from ntdll.dll for NtQueryInformationThread.\n");
+#endif
+			return;
+		}
 		cfg->SingletonCalled = true; // First-stage step initialization
 	}
 	else
