@@ -68,10 +68,10 @@ NTSTATUS __stdcall LdrUnloadDll(HMODULE ModuleHandle)
 #endif
 	if (fireSignal.try_acquire()) // red
 	{
-		//orderedMapping.erase(std::find(orderedMapping.begin(), orderedMapping.end(), (HMODULE)tmpMDL));
-		//CHAR szFileName[MAX_PATH + 1]; GetModuleFileNameA((HMODULE)tmpMDL, szFileName, MAX_PATH + 1);
-		//DWORD CRC32 = Utils::GenerateCRC32(szFileName); 
-		//orderedIdentify.erase(std::find(orderedIdentify.begin(), orderedIdentify.end(), CRC32));
+		orderedMapping.erase(orderedMapping.find(tmpMDL));
+		CHAR szFileName[MAX_PATH + 1]; GetModuleFileNameA((HMODULE)tmpMDL, szFileName, MAX_PATH + 1);
+		DWORD CRC32 = Utils::GenerateCRC32(szFileName); 
+		orderedIdentify.erase(orderedIdentify.find(CRC32));
 	}
 	fireSignal.release(); // blue
 	return rslt;
@@ -99,11 +99,11 @@ NTSTATUS __stdcall LdrLoadDll(PWCHAR PathToFile, ULONG FlagsL, PUNICODE_STRING M
 			LPMODULEINFO mem = Utils::GetModuleMemoryInfo(*ModuleHandle);
 			if (mem != nullptr)
 			{
-				//orderedMapping.insert(orderedMapping.begin(), std::pair<PVOID, DWORD>(*ModuleHandle, mem->SizeOfImage));
-				//CHAR szFileName[MAX_PATH + 1]; GetModuleFileNameA(*ModuleHandle, szFileName, MAX_PATH + 1);
-				//DWORD CRC32 = Utils::GenerateCRC32(szFileName); 
-				//std::string DllName = Utils::GetLibNameFromHandle(*ModuleHandle);
-				//orderedIdentify.insert(orderedIdentify.begin(), std::pair<DWORD, std::string>(CRC32, DllName));
+			    orderedMapping.insert(orderedMapping.begin(), std::pair<DWORD, DWORD>((DWORD)*ModuleHandle, mem->SizeOfImage));
+				CHAR szFileName[MAX_PATH + 1]; GetModuleFileNameA(*ModuleHandle, szFileName, MAX_PATH + 1);
+				DWORD CRC32 = Utils::GenerateCRC32(szFileName); 
+				std::string DllName = Utils::GetLibNameFromHandle(*ModuleHandle);
+				orderedIdentify.insert(orderedIdentify.begin(), std::pair<DWORD, std::string>(CRC32, DllName));
 			}
 		}
 		fireSignal.release(); // blue
@@ -172,9 +172,9 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 		// Runtime Duplicates-Module Scanner && ProxyDLL Detector
 		for (const auto& it : orderedMapping)
 		{
-			if (it.first == nullptr) continue; // fix for dll unloading from another threads
-			if ((it.first != GetModuleHandleA(NULL) && it.first != cfg->hSelfModule) && 
-			!Utils::IsVecContain(cfg->ExcludedModules, it.first)) 
+			if (it.first == NULL) continue; // fix for dll unloading from another threads
+			if ((it.first != (DWORD)GetModuleHandleA(NULL) && it.first != (DWORD)cfg->hSelfModule) && 
+			!Utils::IsVecContain(cfg->ExcludedModules, (PVOID)it.first)) 
 			{
 				CHAR szFileName[MAX_PATH + 1]; GetModuleFileNameA((HMODULE)it.first, szFileName, MAX_PATH + 1);
 				if (Utils::IsModuleDuplicated((HMODULE)it.first, orderedIdentify))
@@ -183,8 +183,8 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 					{
 						std::string NameOfDLL = Utils::GetDllName(szFileName);
 						MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data;
-						VirtualQuery(it.first, &mme, sizeof(MEMORY_BASIC_INFORMATION));
-						data.baseAddr = it.first; data.EmptyVersionInfo = true;
+						VirtualQuery((PVOID)it.first, &mme, sizeof(MEMORY_BASIC_INFORMATION));
+						data.baseAddr = (PVOID)it.first; data.EmptyVersionInfo = true;
 						data.MemoryRights = mme.AllocationProtect; DWORD fSize = 0x0; 
 						FILE* nFile = fopen(szFileName, "rb");
 						if (nFile != nullptr)
@@ -194,7 +194,7 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 						}
 						data.regionSize = fSize; data.dllName = NameOfDLL; 
 						data.dllPath = szFileName; data.type = DetectionType::ART_ILLEGAL_MODULE;
-						cfg->callback(&data); cfg->ExcludedModules.push_back(it.first);
+						cfg->callback(&data); cfg->ExcludedModules.push_back((PVOID)it.first);
 					}
 				}
 			}

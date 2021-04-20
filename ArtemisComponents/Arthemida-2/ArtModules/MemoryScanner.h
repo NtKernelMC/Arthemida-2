@@ -34,8 +34,7 @@ void __stdcall MemoryScanner(ArtemisConfig* cfg)
 					{
 						for (DWORD x = 0; x < (10 * 6); x += 0x6)
 						{
-							if ((x + z) < ((DWORD_PTR)ptr + i->RegionSize) && 
-							(x + z + 0x1) < ((DWORD_PTR)ptr + i->RegionSize))
+							if ((x + z) < ((DWORD_PTR)ptr + i->RegionSize) && (x + z + 0x1) < ((DWORD_PTR)ptr + i->RegionSize))
 							{
 								if (*(BYTE*)(z + x) == 0xFF && *(BYTE*)(x + z + 0x1) == 0x25)
 								{
@@ -48,7 +47,7 @@ void __stdcall MemoryScanner(ArtemisConfig* cfg)
 						}
 						if (complete_sequence)
 						{
-							if (!Utils::IsMemoryInModuledRange((PVOID)z))
+							if (!Utils::IsMemoryInModuledRange(z))
 							{
 								char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
 								lpGetMappedFileNameA(GetCurrentProcess(), (PVOID)z, MappedName, sizeof(MappedName));

@@ -28,7 +28,7 @@ void __stdcall ScanForDllThreads(ArtemisConfig* cfg)
 						SuspendThread(targetThread); DWORD_PTR tempBase = 0x0;
 						pNtQueryInformationThread(targetThread, (THREADINFOCLASS)9, &tempBase, sizeof(DWORD_PTR), NULL);  
 						ResumeThread(targetThread); CloseHandle(targetThread); 
-						if (!Utils::IsMemoryInModuledRange((LPVOID)tempBase) && 
+						if (!Utils::IsMemoryInModuledRange(tempBase) && 
 						!Utils::IsVecContain(cfg->ExcludedThreads, (LPVOID)tempBase))
 						{
 							MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data; data.EmptyVersionInfo = true;

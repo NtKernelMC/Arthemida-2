@@ -45,7 +45,7 @@
 #include "../../Arthemida-2/ArtUtils/sigscan.h"
 // Multi-threaded control for module parser
 static bool dllsListFilled = false;
-static std::multimap<PVOID, DWORD> orderedMapping; // global module runtime list (PE Image Info)
+static std::multimap<DWORD, DWORD> orderedMapping; // global module runtime list (PE Image Info)
 static std::multimap<DWORD, std::string> orderedIdentify; // global module runtime list (Identify Info)
 static std::binary_semaphore fireSignal(0); // C++20 CODE! (Semaphores like Mutexes but fully independent of thread binding.)
 // Hooks Data
@@ -158,19 +158,19 @@ public:
 				{
 					if (hMods[i] == nullptr) continue;
 					LPMODULEINFO modinfo = GetModuleMemoryInfo(hMods[i]);
-					if (modinfo != nullptr) orderedMapping.insert(std::pair<PVOID, DWORD>
-					(modinfo->lpBaseOfDll, modinfo->SizeOfImage));
+					if (modinfo != nullptr) orderedMapping.insert(std::pair<DWORD, DWORD>
+					((DWORD)modinfo->lpBaseOfDll, modinfo->SizeOfImage));
 				}
 			} // now - we can obtain a fresh lists at the run-time, big advantage for speed perfomance
 			dllsListFilled = true; fireSignal.release();
 		}
 	}
-	static bool __stdcall IsMemoryInModuledRange(PVOID base)
+	static bool __stdcall IsMemoryInModuledRange(DWORD base)
 	{
-		if (base == nullptr) return false; 
+		if (base == NULL) return false; 
 		fireSignal.acquire(); for (const auto& it : orderedMapping)
 		{
-			if (base >= it.first && base <= (PVOID)((DWORD)it.first + it.second)) return true;
+			if (base >= it.first && base <= (it.first + it.second)) return true;
 		}  
 		fireSignal.release();
 		return false;
