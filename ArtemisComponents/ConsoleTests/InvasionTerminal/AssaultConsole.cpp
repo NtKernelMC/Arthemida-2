@@ -4,9 +4,13 @@
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
+#pragma warning(disable : 4477)
 #include <Windows.h>
 #include <stdio.h>
+#include <string>
+#include <direct.h>
 #include <iostream>
+#include "MMAP.h"
 #include "..\..\Arthemida-2\LauncherInclude\ArtSafeLaunch.h"
 using namespace std;
 using namespace SafeLaunch;
@@ -19,6 +23,9 @@ int main()
 	if (procGate.SafeProcess<const wchar_t*, LPSTARTUPINFOW>
 	(L"ArtemisHost.exe", L"", NULL, NULL, TRUE, 0, NULL, NULL, &info, &processInfo))
 	{
+		char tst_dll[256]; memset(tst_dll, 0, sizeof(tst_dll));
+		_getcwd(tst_dll, sizeof(tst_dll)); strcat(tst_dll, "\\test.dll");
+		MmapDLL(processInfo.hProcess, tst_dll);
 		printf("Process created. Press any key to exit.\n");
 		int anykey = getchar(); ExitProcess(0x0);
 	}

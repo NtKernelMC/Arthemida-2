@@ -29,5 +29,8 @@
     <ClInclude Include="..\..\Arthemida-2\LauncherInclude\MiniJumper.h">
       <Filter>Файлы заголовков\LauncherInclude</Filter>
     </ClInclude>
+    <ClInclude Include="MMAP.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
