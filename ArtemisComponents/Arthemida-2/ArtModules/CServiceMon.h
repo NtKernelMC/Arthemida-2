@@ -16,21 +16,17 @@
 class CServiceMon
 {
 public:
-    typedef struct
+    struct SServiceInfo
     {
-        std::wstring            wsFilePath;
-        std::wstring            wsDisplayName;
-        bool                    EmptyVersionInfo;
-        SERVICE_STATUS_PROCESS  sspStatus;
-    } SServiceInfo;
-
+        std::wstring            wsFilePath = L"";;
+        std::wstring            wsDisplayName = L"";
+        bool                    EmptyVersionInfo = true;
+        SERVICE_STATUS_PROCESS  sspStatus { 0 };
+    };
     std::thread Initialize();
     std::multimap<std::wstring, SServiceInfo> GetAllServices();
-
 private:
     void MonitorCycle();
-
-
     SC_HANDLE m_hSCManager;
 };
 
@@ -65,49 +61,21 @@ void CServiceMon::MonitorCycle()
 std::thread CServiceMon::Initialize()
 {
     m_hSCManager = OpenSCManagerW(NULL, SERVICES_ACTIVE_DATABASEW, SC_MANAGER_ENUMERATE_SERVICE);
-    if (!m_hSCManager)
-        throw std::exception("OpenSCManagerW failed.");
-
+    if (!m_hSCManager) throw std::exception("OpenSCManagerW failed.");
     return std::thread(&CServiceMon::MonitorCycle, this);
 }
 
 std::multimap<std::wstring, CServiceMon::SServiceInfo> CServiceMon::GetAllServices()
 {
-    DWORD dwBytesNeeded;
-    DWORD dwServiceCount;
-    DWORD dwResumeHandle = 0;
-
+    DWORD dwBytesNeeded = 0, dwServiceCount = 0, dwResumeHandle = 0;
     std::multimap<std::wstring, SServiceInfo> mmServicesResult;
-
-    EnumServicesStatusExW(
-        m_hSCManager,
-        SC_ENUM_PROCESS_INFO,
-        SERVICE_KERNEL_DRIVER,
-        SERVICE_STATE_ALL,
-        NULL,
-        0,
-        &dwBytesNeeded,
-        &dwServiceCount,
-        &dwResumeHandle,
-        NULL
-    );
-
-    if (GetLastError() == ERROR_MORE_DATA)
+    BOOL enm = EnumServicesStatusExW(m_hSCManager, SC_ENUM_PROCESS_INFO, SERVICE_KERNEL_DRIVER,
+    SERVICE_STATE_ALL, NULL, 0, &dwBytesNeeded, &dwServiceCount, &dwResumeHandle, NULL);
+    if (!enm || GetLastError() == ERROR_MORE_DATA)
     {
         std::vector<unsigned char> buffer(dwBytesNeeded, 0);
-
-        if (EnumServicesStatusExW(
-            m_hSCManager,
-            SC_ENUM_PROCESS_INFO,
-            SERVICE_KERNEL_DRIVER,
-            SERVICE_STATE_ALL,
-            reinterpret_cast<LPBYTE>(buffer.data()),
-            dwBytesNeeded,
-            &dwBytesNeeded,
-            &dwServiceCount,
-            NULL,
-            NULL
-        ))
+        if (EnumServicesStatusExW(m_hSCManager, SC_ENUM_PROCESS_INFO, SERVICE_KERNEL_DRIVER, SERVICE_STATE_ALL,
+        reinterpret_cast<LPBYTE>(buffer.data()), dwBytesNeeded, &dwBytesNeeded, &dwServiceCount, 0, 0))
         {
             printf("Service count: %d\n", dwServiceCount);
             LPENUM_SERVICE_STATUS_PROCESSW eSSP = reinterpret_cast<LPENUM_SERVICE_STATUS_PROCESSW>(buffer.data());
@@ -116,7 +84,6 @@ std::multimap<std::wstring, CServiceMon::SServiceInfo> CServiceMon::GetAllServic
                 SServiceInfo SSP; if (eSSP == nullptr) continue;
                 SSP.wsDisplayName = eSSP[i].lpDisplayName;
                 SSP.sspStatus = eSSP[i].ServiceStatusProcess;
-
                 // get path
                 DWORD dwConfigBytesNeeded = 0x0, cbBufSize = 0x0;
                 LPQUERY_SERVICE_CONFIGW lpSC = nullptr;
@@ -154,8 +121,6 @@ std::multimap<std::wstring, CServiceMon::SServiceInfo> CServiceMon::GetAllServic
         else throw std::exception("EnumServicesStatusExW failed 2.");
     }
     else throw std::exception("EnumServicesStatusExW failed 1.");
-
     return mmServicesResult;
 }
-
 #endif

@@ -78,13 +78,15 @@ namespace MtaUtils
         else
         {
             // Copy from buffer
-            szDest[iSize] = '\0';
-            std::string::assign(szDest);
+            if (szDest != nullptr)
+            {
+                szDest[iSize] = '\0';
+                std::string::assign(szDest);
+            }
+            else return *this;
         }
-
         // Delete buffer
         free(szDest);
-
         // Done
         return *this;
 
@@ -202,9 +204,8 @@ namespace MtaUtils
     bool SString::Split(const SString& strDelim, SString* pstrLeft, SString* pstrRight, int iIndex) const
     {
         // Check for self-overwrite
-        if (this == pstrLeft || this == pstrRight)
-            return SString(*this).Split(strDelim, pstrLeft, pstrRight, iIndex);
-
+        if (this == pstrLeft || this == pstrRight) return SString(*this).Split(strDelim, pstrLeft, pstrRight, iIndex);
+        #pragma warning(suppress: 6282)
         assert(iIndex);
         bool   bFromEnd = iIndex < 0;
         size_t ulPos;
@@ -377,6 +378,7 @@ namespace MtaUtils
     //
     SString SString::ConformLineEndings() const
     {
+        #pragma warning(suppress: 6282)
         assert('\n' == '\x0A');
         if (std::count(begin(), end(), '\n'))
             return Replace("\x0D", "");

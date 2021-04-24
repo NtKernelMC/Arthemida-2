@@ -17,18 +17,17 @@ static bool GetLibVersionInfo(const MtaUtils::SString& strLibName, SLibVersionIn
 	dwLen = GetFileVersionInfoSizeA(strLibName, &dwHandle);
 	if (!dwLen) return FALSE;
 	LPTSTR lpData = (LPTSTR)malloc(dwLen);
-	if (!lpData) return FALSE;
-	SetLastError(0); 
-	if (!GetFileVersionInfoA(strLibName, dwHandle, dwLen, lpData))
+	if (!lpData) return FALSE; SetLastError(0);
+	if (!GetFileVersionInfoA(strLibName, NULL, dwLen, lpData))
 	{
 		free(lpData);
-		return FALSE;
+		return false;
 	}
 	DWORD dwError = GetLastError();
 	if (dwError)
 	{
 		free(lpData);
-		return FALSE;
+		return false;
 	}
 	UINT BufLen = 0x0; VS_FIXEDFILEINFO* pFileInfo = nullptr;
 	if (VerQueryValueA(lpData, "\\", (LPVOID*)&pFileInfo, (PUINT)&BufLen))
@@ -48,7 +47,7 @@ static bool GetLibVersionInfo(const MtaUtils::SString& strLibName, SLibVersionIn
 		return true;
 	}
 	free(lpData);
-	return FALSE;
+	return false;
 }
 typedef NTSTATUS(__stdcall* ptrLdrUnloadDll)(HMODULE ModuleHandle);
 ptrLdrUnloadDll callLdrUnloadDll = nullptr;
@@ -66,7 +65,7 @@ NTSTATUS __stdcall LdrUnloadDll(HMODULE ModuleHandle)
 #ifdef ARTEMIS_DEBUG
 	Utils::LogInFile(ARTEMIS_LOG, "[LdrUnloadDll] %s unloaded | TID: %d\n", ModulePath.c_str(), GetCurrentThreadId());
 #endif
-	if (fireSignal.try_acquire()) // red
+	fireSignal.acquire(); // red
 	{
 		orderedMapping.erase(orderedMapping.find(tmpMDL));
 		CHAR szFileName[MAX_PATH + 1]; GetModuleFileNameA((HMODULE)tmpMDL, szFileName, MAX_PATH + 1);
@@ -94,7 +93,7 @@ NTSTATUS __stdcall LdrLoadDll(PWCHAR PathToFile, ULONG FlagsL, PUNICODE_STRING M
 		Utils::LogInFile(ARTEMIS_LOG, "[LdrLoadDll] %ls loaded!\n(Base: 0x%X | TID: %d)\n",
 		ModulePath.c_str(), *ModuleHandle, GetCurrentThreadId());
 #endif
-		if (fireSignal.try_acquire()) // red
+		fireSignal.acquire(); // red
 		{
 			LPMODULEINFO mem = Utils::GetModuleMemoryInfo(*ModuleHandle);
 			if (mem != nullptr)
@@ -193,7 +192,7 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 							fclose(nFile);
 						}
 						data.regionSize = fSize; data.dllName = NameOfDLL; 
-						data.dllPath = szFileName; data.type = DetectionType::ART_ILLEGAL_MODULE;
+						data.dllPath = szFileName; data.type = DetectionType::ART_PROXY_LIBRARY;
 						cfg->callback(&data); cfg->ExcludedModules.push_back((PVOID)it.first);
 					}
 				}
