@@ -37,9 +37,11 @@ namespace MiniJumper
             {
                 DWORD Delta = (jmp_address + prologue_size) - ((DWORD)Trampoline + 5);
                 memcpy(&TrampolineBYTEs[1], &Delta, 4);
+                #pragma warning(suppress: 6386)
+                #pragma warning(suppress: 6387)
                 memcpy(Trampoline, TrampolineBYTEs, 5);
             }
-            VirtualProtect((void*)jmp_address, prologue_size, old_prot, 0);
+            VirtualProtect((void*)jmp_address, prologue_size, old_prot, &old_prot);
             return (DWORD)Trampoline;
         }
         static bool RestorePrologue(DWORD addr, PVOID myTrampoline, BYTE* prologue, size_t prologue_size)

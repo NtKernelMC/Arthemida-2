@@ -29,9 +29,11 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Anonymous thread! Base: 0x%X | Size: 0x%X\n",
 		artemis->baseAddr, artemis->regionSize);
 		break;
-	case DetectionType::ART_ILLEGAL_MODULE:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module! Base: 0x%X | DllName: %s\nPath: %s\nSize: %d | Empty Version Info: %d\n",
-		artemis->baseAddr, artemis->dllName.c_str(), artemis->dllPath.c_str(), artemis->regionSize, (int)artemis->EmptyVersionInfo);
+	case DetectionType::ART_PROXY_LIBRARY:
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Proxy DLL! Base: 0x%X | DllName: %s\n\
+		Path: %s\nSize: %d | Empty Version Info: %d\n",
+		artemis->baseAddr, artemis->dllName.c_str(), artemis->dllPath.c_str(), 
+		artemis->regionSize, (int)artemis->EmptyVersionInfo);
 		break;
 	case DetectionType::ART_FAKE_LAUNCHER:
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected fake launcher!\n");
@@ -84,14 +86,14 @@ int main()
 	SetConsoleCP(1251); SetConsoleOutputCP(1251);
 	system("color 02"); SetConsoleTitleA("Arthemida-2 AntiCheat Lightweight Testing");
 	ArtemisConfig cfg; LoadLibraryA("version.dll");
-	cfg.DetectThreads = true; 
-	cfg.ThreadScanDelay = 1000;
+	//cfg.DetectThreads = true; 
+	//cfg.ThreadScanDelay = 1000;
 	
 	cfg.DetectModules = true; 
 	cfg.ModuleScanDelay = 1000;
 	
-	cfg.DetectManualMap = true; 
-	cfg.MemoryScanDelay = 1000; 
+	//cfg.DetectManualMap = true; 
+	//cfg.MemoryScanDelay = 1000; 
 
 	//cfg.DetectMemoryPatch = true; 
 	//cfg.MemoryGuardScanDelay = 1000;
@@ -105,7 +107,7 @@ int main()
 	//cfg.IllegalPatterns.insert(std::pair<std::string, std::tuple<const char*, const char*>>
 	//(hack_name, std::make_tuple(pattern, mask))); // must be incapsulated
 
-	cfg.DetectFakeLaunch = true;
+	//cfg.DetectFakeLaunch = true;
 	cfg.callback = (ArtemisCallback)ArthemidaCallback; 
 
 	Utils::LogInFile(ARTEMIS_LOG, "[ARTEMIS-2] Configured and ready, press any key to load...\n"); 
@@ -121,14 +123,19 @@ int main()
 	{
 		Utils::LogInFile(ARTEMIS_LOG, "[ARTEMIS-2] Succussfully obtained pointer to AntiCheat!\n");
 		// test detection of illegal calls (return addresses checking)
-		RetTest::TestStaticMethod();
-		testObj.TestMemberMethod(); 
+		//RetTest::TestStaticMethod();
+		//testObj.TestMemberMethod(); 
 	}
 	else Utils::LogInFile(ARTEMIS_LOG, "[ARTEMIS-2] Failure on start :( Last error code: %d\n", GetLastError());
 	while (true) 
 	{
 		Sleep(1000); 
-		if (_getch()) { TerminateThread((HANDLE)heart.native_handle(), 0x0); printf("[HEART-BEAT] Stopped.\n"); break; }
+		if (_getch()) 
+		{ 
+			#pragma warning(suppress: 6258)
+			TerminateThread((HANDLE)heart.native_handle(), 0x0); printf("[HEART-BEAT] Stopped.\n"); 
+			break; 
+		}
 	}
 	while (true) { Sleep(1000); }
 	return 1;

@@ -25,6 +25,7 @@ void __stdcall ScanForDllThreads(ArtemisConfig* cfg)
 					HANDLE targetThread = OpenThread(THREAD_ALL_ACCESS, FALSE, th32.th32ThreadID);
 					if (targetThread != nullptr)
 					{
+						#pragma warning(suppress: 6001)
 						SuspendThread(targetThread); DWORD_PTR tempBase = 0x0;
 						pNtQueryInformationThread(targetThread, (THREADINFOCLASS)9, &tempBase, sizeof(DWORD_PTR), NULL);  
 						ResumeThread(targetThread); CloseHandle(targetThread); 
