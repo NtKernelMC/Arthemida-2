@@ -14,7 +14,7 @@ void __stdcall MemoryScanner(ArtemisConfig* cfg)
 		return;
 	}
 #ifdef ARTEMIS_DEBUG
-	Utils::LogInFile(ARTEMIS_LOG, "[INFO] Created async thread for MemoryScanner!\n");
+	Utils::LogInFile(ARTEMIS_LOG, "[INFO] Created async thread for MemoryScanner! Thread id: %d\n", GetCurrentThreadId());
 #endif
 	while (true)
 	{

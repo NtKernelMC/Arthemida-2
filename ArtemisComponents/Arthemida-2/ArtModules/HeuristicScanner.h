@@ -4,7 +4,7 @@
 	Project by NtKernelMC & holmes0
 */
 #include "ArtemisInterface.h"
-void __stdcall SigScanner(ArtemisConfig* cfg) // CAUTION! Not tested yet.
+void __stdcall SigScanner(ArtemisConfig* cfg) // CAUTION! Still remaining on development.
 {
 	if (cfg == nullptr)
 	{
@@ -14,7 +14,7 @@ void __stdcall SigScanner(ArtemisConfig* cfg) // CAUTION! Not tested yet.
 		return;
 	}
 #ifdef ARTEMIS_DEBUG
-	Utils::LogInFile(ARTEMIS_LOG, "[INFO] Created async thread for SigScanner!\n");
+	Utils::LogInFile(ARTEMIS_LOG, "[INFO] Created async thread for SigScanner! Thread id: %d\n", GetCurrentThreadId());
 #endif
 	if (cfg->IllegalPatterns.empty())
 	{
@@ -29,7 +29,7 @@ void __stdcall SigScanner(ArtemisConfig* cfg) // CAUTION! Not tested yet.
 	{
 		for (const auto& KeyValuePair : cfg->IllegalPatterns)
 		{
-			for (const auto& it : orderedMapping)
+			/*for (const auto& it : orderedMapping)
 			{
 				if (it.first == (DWORD)GetModuleHandleA("kernel32.dll")) continue;
 				DWORD scanAddr = SigScan::FindPatternExplicit((DWORD)it.first, it.second,
@@ -45,7 +45,7 @@ void __stdcall SigScanner(ArtemisConfig* cfg) // CAUTION! Not tested yet.
 					data.HackName = KeyValuePair.first; data.type = DetectionType::ART_SIGNATURE_DETECT;
 					cfg->callback(&data); cfg->ExcludedSigAddresses.push_back((PVOID)it.first);
 				}
-			}
+			}*/
 		}
 		Sleep(cfg->PatternScanDelay);
 	}

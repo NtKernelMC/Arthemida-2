@@ -13,7 +13,7 @@ void __stdcall ConfirmLegitLaunch(ArtemisConfig* cfg)
 		return;
 	}
 #ifdef ARTEMIS_DEBUG
-	Utils::LogInFile(ARTEMIS_LOG, "[INFO] Created async thread for CheckLauncher!\n");
+	Utils::LogInFile(ARTEMIS_LOG, "[INFO] Created async thread for CheckLauncher! Thread id: %d\n", GetCurrentThreadId());
 #endif
 	decltype(auto) AttemptAboveIt = [&]() -> void
 	{

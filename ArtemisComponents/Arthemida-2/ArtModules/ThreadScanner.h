@@ -10,7 +10,7 @@ void __stdcall ScanForDllThreads(ArtemisConfig* cfg)
 	if (cfg->ThreadScanner) return;
 	cfg->ThreadScanner = true;
 #ifdef ARTEMIS_DEBUG
-	Utils::LogInFile(ARTEMIS_LOG, "[INFO] Created async thread for ScanForDllThreads!\n");
+	Utils::LogInFile(ARTEMIS_LOG, "[INFO] Created async thread for ScanForDllThreads! Thread id: %d\n", GetCurrentThreadId());
 #endif
 	while (true) 
 	{

@@ -43,7 +43,7 @@ void __stdcall MemoryGuardScanner(ArtemisConfig* cfg) // On tehnical work
 		return;
 	}
 #ifdef ARTEMIS_DEBUG
-	Utils::LogInFile(ARTEMIS_LOG, "[INFO] Created async thread for MemoryGuardScanner!\n");
+	Utils::LogInFile(ARTEMIS_LOG, "[INFO] Created async thread for MemoryGuardScanner! Thread id: %d\n", GetCurrentThreadId());
 #endif
 	auto ReverseDelta = [](DWORD_PTR CurrentAddress, DWORD Delta, size_t InstructionLength, bool bigger = false) -> DWORD_PTR
 	{
