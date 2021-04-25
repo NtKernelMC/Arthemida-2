@@ -31,7 +31,7 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 		break;
 	case DetectionType::ART_PROXY_LIBRARY:
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Proxy DLL! Base: 0x%X | DllName: %s\n\
-		Path: %s\nSize: %d | Empty Version Info: %d\n",
+		\r\r\rPath: %s\nSize: %d | Empty Version Info: %d\n",
 		artemis->baseAddr, artemis->dllName.c_str(), artemis->dllPath.c_str(), 
 		artemis->regionSize, (int)artemis->EmptyVersionInfo);
 		break;
@@ -85,10 +85,11 @@ int main()
 {
 	SetConsoleCP(1251); SetConsoleOutputCP(1251);
 	system("color 02"); SetConsoleTitleA("Arthemida-2 AntiCheat Lightweight Testing");
+	printf("ConsoleHost main thread started! Thread ID: %d\n", GetCurrentThreadId());
 	ArtemisConfig cfg; LoadLibraryA("version.dll");
 	//cfg.DetectThreads = true; 
 	//cfg.ThreadScanDelay = 1000;
-	
+	// For now - Module Scanner on improvments stage, found a better ways to figure out all problems per one-shot :)
 	cfg.DetectModules = true; 
 	cfg.ModuleScanDelay = 1000;
 	
@@ -115,7 +116,7 @@ int main()
 	for (;;) 
 	{
 		Sleep(3000); static bool first = false; if (!first) { first = true; printf("\n"); }
-		printf("\n[HEART-BEAT] Console is working normally! Press any key to stop.\n\n");
+		printf("\n[HEART-BEAT] Console is working normally! Thread ID: %d | Press any key to stop.\n\n", GetCurrentThreadId());
 	} });
 
 	IArtemisInterface* art = IArtemisInterface::InstallArtemisMonitor(&cfg);
@@ -125,6 +126,7 @@ int main()
 		// test detection of illegal calls (return addresses checking)
 		//RetTest::TestStaticMethod();
 		//testObj.TestMemberMethod(); 
+		//LoadLibraryA("test.dll");
 	}
 	else Utils::LogInFile(ARTEMIS_LOG, "[ARTEMIS-2] Failure on start :( Last error code: %d\n", GetLastError());
 	while (true) 
@@ -133,7 +135,8 @@ int main()
 		if (_getch()) 
 		{ 
 			#pragma warning(suppress: 6258)
-			TerminateThread((HANDLE)heart.native_handle(), 0x0); printf("[HEART-BEAT] Stopped.\n"); 
+			TerminateThread((HANDLE)heart.native_handle(), 0x0); 
+			printf("[HEART-BEAT] Stopped. Thread id: %d | Heart-beat thread id: %d\n", GetCurrentThreadId(), heart.get_id()); 
 			break; 
 		}
 	}
