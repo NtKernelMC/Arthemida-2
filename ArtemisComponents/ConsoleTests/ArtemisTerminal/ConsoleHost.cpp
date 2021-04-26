@@ -30,13 +30,12 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 		artemis->baseAddr, artemis->regionSize);
 		break;
 	case DetectionType::ART_PROXY_LIBRARY:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Proxy DLL! Base: 0x%X | DllName: %s\n\
-		\r\r\rPath: %s\nSize: %d | Empty Version Info: %d\n",
-		artemis->baseAddr, artemis->dllName.c_str(), artemis->dllPath.c_str(), 
-		artemis->regionSize, (int)artemis->EmptyVersionInfo);
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Proxy DLL! Base: 0x%X | Size: %d KB | DllName: %s\n\
+		\r\r\rPath: %s\n\n", artemis->baseAddr, (artemis->regionSize / 1024), 
+		artemis->dllName.c_str(), artemis->dllPath.c_str());
 		break;
 	case DetectionType::ART_FAKE_LAUNCHER:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected fake launcher!\n");
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Startup from Fake Launcher!\n");
 		break;
 	case DetectionType::ART_RETURN_ADDRESS:
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Return to Hack Function! Address: 0x%X\n", artemis->baseAddr);
@@ -46,20 +45,20 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 		artemis->baseAddr, artemis->regionSize, artemis->MemoryRights);
 		break;
 	case DetectionType::ART_MEMORY_CHANGED:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module!\nBase: 0x%X | Rights: 0x%X | Size: %d\n",
-		artemis->baseAddr, artemis->MemoryRights, artemis->regionSize);
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module!\nBase: 0x%X | Rights: 0x%X | Size: %d KB\n",
+		artemis->baseAddr, artemis->MemoryRights, (artemis->regionSize / 1024));
 		break;
 	case DetectionType::ART_SIGNATURE_DETECT:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module!\nBase: 0x%X | Rights: 0x%X | Size: %d\n",
-		artemis->baseAddr, artemis->MemoryRights, artemis->regionSize);
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module!\nBase: 0x%X | Rights: 0x%X | Size: %d KB\n",
+		artemis->baseAddr, artemis->MemoryRights, (artemis->regionSize / 1024));
 		break;
 	case DetectionType::ART_ILLEGAL_SERVICE:
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal service!\n");
-		//"Path: %s | \nName: %s  | Description: %s | \nType: %d | BootSet: %s | Group: %s\n | Signed by: %s | Has Version Info: %d\n");
+		//"Path: %s | \nName: %s  | Description: %s | \nType: %d | BootSet: %s | Group: %s\n | Signed by: %s\n");
 		break;
 	default:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Unknown detection code! Base: 0x%X | DllName: %s\nPath: %s\nSize: %d | Empty Version Info: %d\n",
-		artemis->baseAddr, artemis->dllName.c_str(), artemis->dllPath.c_str(), artemis->regionSize, (int)artemis->EmptyVersionInfo);
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Unknown detection code! Base: 0x%X | Size: %d bytes | DllName: %s\n"
+		"\r\r\rPath: %s\n", artemis->baseAddr, artemis->regionSize, artemis->dllName.c_str(), artemis->dllPath.c_str());
 		break;
 	}
 	Utils::LogInFile(ARTEMIS_LOG, "\n\n");
@@ -89,7 +88,7 @@ int main()
 	ArtemisConfig cfg; LoadLibraryA("version.dll");
 	//cfg.DetectThreads = true; 
 	//cfg.ThreadScanDelay = 1000;
-	// For now - Module Scanner on improvments stage, found a better ways to figure out all problems per one-shot :)
+
 	cfg.DetectModules = true; 
 	cfg.ModuleScanDelay = 1000;
 	
@@ -108,7 +107,7 @@ int main()
 	//cfg.IllegalPatterns.insert(std::pair<std::string, std::tuple<const char*, const char*>>
 	//(hack_name, std::make_tuple(pattern, mask))); // must be incapsulated
 
-	//cfg.DetectFakeLaunch = true;
+	cfg.DetectFakeLaunch = true;
 	cfg.callback = (ArtemisCallback)ArthemidaCallback; 
 
 	Utils::LogInFile(ARTEMIS_LOG, "[ARTEMIS-2] Configured and ready, press any key to load...\n"); 
@@ -126,7 +125,7 @@ int main()
 		// test detection of illegal calls (return addresses checking)
 		//RetTest::TestStaticMethod();
 		//testObj.TestMemberMethod(); 
-		//LoadLibraryA("test.dll");
+		LoadLibraryA("test.dll"); // For heuristic-scans on future & excluding false-positives in ProxyDLL detection.
 	}
 	else Utils::LogInFile(ARTEMIS_LOG, "[ARTEMIS-2] Failure on start :( Last error code: %d\n", GetLastError());
 	while (true) 
@@ -135,7 +134,8 @@ int main()
 		if (_getch()) 
 		{ 
 			#pragma warning(suppress: 6258)
-			TerminateThread((HANDLE)heart.native_handle(), 0x0); 
+			TerminateThread((HANDLE)heart.native_handle(), 0x0);
+			#pragma warning(suppress: 6273)
 			printf("[HEART-BEAT] Stopped. Thread id: %d | Heart-beat thread id: %d\n", GetCurrentThreadId(), heart.get_id()); 
 			break; 
 		}

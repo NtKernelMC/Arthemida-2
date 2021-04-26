@@ -38,7 +38,7 @@ void __stdcall SigScanner(ArtemisConfig* cfg) // CAUTION! Still remaining on dev
 				{
 					CHAR szFilePath[MAX_PATH + 1]; GetModuleFileNameA((HMODULE)it.first, szFilePath, MAX_PATH + 1);
 					std::string NameOfDLL = Utils::GetDllName(szFilePath);
-					MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data; data.EmptyVersionInfo = true;
+					MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data; 
 					VirtualQuery((PVOID)it.first, &mme, sizeof(MEMORY_BASIC_INFORMATION));
 					data.baseAddr = (PVOID)it.first; data.MemoryRights = mme.AllocationProtect;
 					data.regionSize = mme.RegionSize; data.dllName = NameOfDLL; data.dllPath = szFilePath;

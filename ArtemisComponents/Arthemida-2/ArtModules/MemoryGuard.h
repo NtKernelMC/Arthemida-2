@@ -17,7 +17,7 @@ void __thiscall IArtemisInterface::ConfirmLegitReturn(const char* function_name,
 		lpGetMappedFileNameA(GetCurrentProcess(), (PVOID)return_address, MappedName, sizeof(MappedName));
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data; 
-		data.EmptyVersionInfo = true; std::string DllName = Utils::GetDllName(MappedName);
+		 std::string DllName = Utils::GetDllName(MappedName);
 		VirtualQuery(return_address, &mme, sizeof(MEMORY_BASIC_INFORMATION));
 		data.baseAddr = (LPVOID)return_address; 
 		data.MemoryRights = mme.AllocationProtect; 
@@ -67,7 +67,7 @@ void __stdcall MemoryGuardScanner(ArtemisConfig* cfg) // On tehnical work
 			{
 				if (!Utils::IsVecContain(cfg->ExcludedPatches, it.second))
 				{
-					ARTEMIS_DATA data; data.baseAddr = it.second; data.EmptyVersionInfo = true;
+					ARTEMIS_DATA data; data.baseAddr = it.second; 
 					data.MemoryRights = PAGE_EXECUTE_READWRITE; data.regionSize = 0x5;
 					data.dllName = "client.dll"; data.dllPath = "MTA\\mods\\deadmatch\\client.dll";
 					data.type = DetectionType::ART_MEMORY_CHANGED;
