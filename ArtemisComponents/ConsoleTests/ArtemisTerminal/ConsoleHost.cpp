@@ -30,9 +30,8 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 		artemis->baseAddr, artemis->regionSize);
 		break;
 	case DetectionType::ART_PROXY_LIBRARY:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Proxy DLL! Base: 0x%X | Size: %d KB | DllName: %s\n\
-		\r\r\rPath: %s\n\n", artemis->baseAddr, (artemis->regionSize / 1024), 
-		artemis->dllName.c_str(), artemis->dllPath.c_str());
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Proxy DLL! Base: 0x%X | Image Size: 0x%X | DllName: %s\n\
+		\rPath: %s\n\n", artemis->baseAddr, artemis->regionSize, artemis->dllName.c_str(), artemis->dllPath.c_str());
 		break;
 	case DetectionType::ART_FAKE_LAUNCHER:
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Startup from Fake Launcher!\n");
@@ -45,12 +44,12 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 		artemis->baseAddr, artemis->regionSize, artemis->MemoryRights);
 		break;
 	case DetectionType::ART_MEMORY_CHANGED:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module!\nBase: 0x%X | Rights: 0x%X | Size: %d KB\n",
-		artemis->baseAddr, artemis->MemoryRights, (artemis->regionSize / 1024));
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module!\nBase: 0x%X | Rights: 0x%X | Image Size: 0x%X\n",
+		artemis->baseAddr, artemis->MemoryRights, artemis->regionSize);
 		break;
 	case DetectionType::ART_SIGNATURE_DETECT:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module!\nBase: 0x%X | Rights: 0x%X | Size: %d KB\n",
-		artemis->baseAddr, artemis->MemoryRights, (artemis->regionSize / 1024));
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module!\nBase: 0x%X | Rights: 0x%X | Image Size: 0x%X\n",
+		artemis->baseAddr, artemis->MemoryRights, artemis->regionSize);
 		break;
 	case DetectionType::ART_ILLEGAL_SERVICE:
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal service!\n");
@@ -58,7 +57,7 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 		break;
 	default:
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Unknown detection code! Base: 0x%X | Size: %d bytes | DllName: %s\n"
-		"\r\r\rPath: %s\n", artemis->baseAddr, artemis->regionSize, artemis->dllName.c_str(), artemis->dllPath.c_str());
+		"\rPath: %s\n", artemis->baseAddr, artemis->regionSize, artemis->dllName.c_str(), artemis->dllPath.c_str());
 		break;
 	}
 	Utils::LogInFile(ARTEMIS_LOG, "\n\n");
@@ -107,7 +106,7 @@ int main()
 	//cfg.IllegalPatterns.insert(std::pair<std::string, std::tuple<const char*, const char*>>
 	//(hack_name, std::make_tuple(pattern, mask))); // must be incapsulated
 
-	cfg.DetectFakeLaunch = true;
+	//cfg.DetectFakeLaunch = true;
 	cfg.callback = (ArtemisCallback)ArthemidaCallback; 
 
 	Utils::LogInFile(ARTEMIS_LOG, "[ARTEMIS-2] Configured and ready, press any key to load...\n"); 
@@ -137,7 +136,7 @@ int main()
 			TerminateThread((HANDLE)heart.native_handle(), 0x0);
 			#pragma warning(suppress: 6273)
 			printf("[HEART-BEAT] Stopped. Thread id: %d | Heart-beat thread id: %d\n", GetCurrentThreadId(), heart.get_id()); 
-			break; 
+			FreeLibrary(GetModuleHandleA("test.dll")); break; // Try to simulate memory surprises for async threads!
 		}
 	}
 	while (true) { Sleep(1000); }

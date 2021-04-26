@@ -28,6 +28,7 @@ namespace SafeLaunch
 			auto getOSver = []()
 			{
 				NTSTATUS(__stdcall *RtlGetVersion)(LPOSVERSIONINFOEXW) = nullptr; OSVERSIONINFOEXW osInfo { 0 };
+				#pragma warning(suppress: 6387)
 				*(FARPROC*)&RtlGetVersion = GetProcAddress(GetModuleHandleA("ntdll"), "RtlGetVersion");
 				if (NULL != RtlGetVersion)
 				{
@@ -36,7 +37,8 @@ namespace SafeLaunch
 				}
 				return std::make_tuple((DWORD)0x0, (DWORD)0x0);
 			};
-			ZwAddr = (DWORD_PTR)GetProcAddress(GetModuleHandleA("ntdll.dll"), "ZwCreateUserProcess");
+			#pragma warning(suppress: 6387)
+			ZwAddr = (DWORD)GetProcAddress(GetModuleHandleA("ntdll.dll"), "ZwCreateUserProcess");
 			if (!ZwAddr)
 			{
 #ifdef SAFE_LAUNCH_DEBUG

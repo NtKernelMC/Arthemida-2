@@ -185,6 +185,7 @@ int __stdcall MmapDLL(HANDLE hProcess, std::string dll_path)
         VirtualFree(buffer, 0, MEM_RELEASE);
         return -1;
     }
+    #pragma warning(suppress: 6273)
     printf("\nLoader code allocated at 0x%X\n", mem);
     memset(&ManualInject, 0, sizeof(MANUAL_INJECT));
     ManualInject.ImageBase = image;
@@ -222,9 +223,11 @@ int __stdcall MmapDLL(HANDLE hProcess, std::string dll_path)
     CloseHandle(hThread);
     VirtualFreeEx(hProcess, mem, 0, MEM_RELEASE);
     CloseHandle(hProcess);
+    #pragma warning(suppress: 6273)
     printf("\nDLL injected at 0x%X\n", image);
     if (pINH->OptionalHeader.AddressOfEntryPoint)
     {
+        #pragma warning(suppress: 6273)
         printf("\nDLL entry point: 0x%X\n", (PVOID)((LPBYTE)image + pINH->OptionalHeader.AddressOfEntryPoint));
     }
     VirtualFree(buffer, 0, MEM_RELEASE);

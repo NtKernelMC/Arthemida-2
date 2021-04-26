@@ -30,12 +30,8 @@
 #include <Windows.h>
 #include <stdio.h>
 #include <thread>
-//#include <mutex>
 #include <vector>
-//#include <memory>
-//#include <shared_mutex>
-//#include <chrono>
-//#include <future>
+#include <chrono>
 #include <string>
 #include <map>
 #include <tuple>
@@ -50,15 +46,8 @@
 #include "../../Arthemida-2/ArtUtils/CRC32.h"
 #include "../../Arthemida-2/ArtUtils/sigscan.h"
 // Multi-threaded control for module parser
-// Никогда и нигде стараемся вообще не возращать или передавать где либо ссылку либо указатель на списки ниже! Риск дедлока!!
 static std::map<DWORD, DWORD> orderedMapping; // global module runtime list (PE Image Info)
 static std::map<DWORD, std::string> orderedIdentify; // global module runtime list (Identify Info)
-//static std::condition_variable condition; // A signal that can be used to communicate between functions
-//static std::mutex orderedMapping_mutex, orderedIdentify_mutex;
-//static std::shared_mutex orderedMapping_mutex2, orderedIdentify_mutex2;
-// Hooks Data
-static BYTE ldrLoad[5], ldrUnload[5];
-static DWORD fTr1 = 0x0, fTr2 = 0x0;
 // Windows Legacy Mode Support for Win7
 typedef BOOL(__stdcall* PtrIfFileProtected)(HANDLE sfRPC, LPCWSTR fPath);
 typedef BOOL(__stdcall* PtrEnumProcessModules)(HANDLE hProcess, HMODULE* lphModule, DWORD cb, LPDWORD lpcbNeeded);
@@ -75,6 +64,13 @@ static tNtQueryInformationThread pNtQueryInformationThread = nullptr;
 class Utils
 {
 public:
+	/*
+		auto start = std::chrono::high_resolution_clock::now();
+		Utils::BuildModuledMemoryMap(); // Refactored parser -> now faster on 70% than previous!
+		auto stop = std::chrono::high_resolution_clock::now();
+		auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
+		printf("BuildModuledMemoryMap done with %lld ms!\n", duration.count());
+	*/
 	static decltype(auto) CvWideToAnsi(const std::wstring& var)
 	{
 		if (var.empty()) return std::string(""); static std::locale loc("");
@@ -198,26 +194,31 @@ public:
 		}
 		return dll_path.substr(dll_path.find_last_of("/\\") + 1);
 	};
-	static DWORD __stdcall BuildModuledMemoryMap(void) 
+	static void __stdcall BuildModuledMemoryMap(void) // TODO: Memory-access check to module's regions + emplace/update lists
 	{
-		HMODULE hMods[1024] { nullptr }; DWORD cbNeeded = NULL, fSizeRet = NULL;
+		HMODULE hMods[1024] { nullptr }; DWORD cbNeeded = NULL;
 		if (EnumProcModules(GetCurrentProcess(), hMods, sizeof(hMods), &cbNeeded))
 		{
-			for (unsigned int i = 0; i < (cbNeeded / sizeof(HMODULE)); i++)
+			DWORD MdlCount = (cbNeeded / sizeof(HMODULE));
+			for (unsigned int i = 0; i < MdlCount; i++)
 			{
 				if (hMods[i] == nullptr) continue;
 				LPMODULEINFO modinfo = GetModuleMemoryInfo(hMods[i]);
 				if (modinfo != nullptr)
 				{
-					orderedMapping.insert(std::pair<DWORD, DWORD>((DWORD)modinfo->lpBaseOfDll, modinfo->SizeOfImage));
-					CHAR szFileName[MAX_PATH + 1]; GetModuleFileNameA((HMODULE)modinfo->lpBaseOfDll, szFileName, MAX_PATH + 1);
-					DWORD CRC32 = GenerateCRC32(szFileName, &fSizeRet); std::string DllName = GetLibNameFromHandle
-					((HMODULE)modinfo->lpBaseOfDll, szFileName); orderedIdentify.insert(orderedIdentify.begin(),
-					std::pair<DWORD, std::string>(CRC32, DllName));
+					// Increasing speed perfomance by ignoring repeatable operations, if module record exist!
+					if (orderedMapping.count((DWORD)modinfo->lpBaseOfDll) != 0x1)
+					{
+						orderedMapping.insert(std::pair<DWORD, DWORD>((DWORD)modinfo->lpBaseOfDll, modinfo->SizeOfImage));
+						CHAR szFileName[MAX_PATH + 1]; if (!GetModuleFileNameA((HMODULE)
+						modinfo->lpBaseOfDll, szFileName, MAX_PATH + 1)) return;
+						DWORD CRC32 = GenerateCRC32(szFileName, nullptr); std::string DllName = GetDllName(szFileName);
+						if (orderedIdentify.count(CRC32) != 0x1) orderedIdentify.insert(orderedIdentify.begin(),
+						std::pair<DWORD, std::string>(CRC32, DllName));
+					}
 				}
 			}
 		}
-		return fSizeRet;
 	}
 	static long getFileSize(FILE* file)
 	{
