@@ -32,7 +32,7 @@ void __stdcall ScanForDllThreads(ArtemisConfig* cfg)
 						if (!Utils::IsMemoryInModuledRange(tempBase) && 
 						!Utils::IsVecContain(cfg->ExcludedThreads, (LPVOID)tempBase))
 						{
-							MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data; data.EmptyVersionInfo = true;
+							MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data;
 							VirtualQuery((LPCVOID)tempBase, &mme, sizeof(MEMORY_BASIC_INFORMATION)); 
 							data.baseAddr = (LPVOID)tempBase; 
 							data.MemoryRights = mme.AllocationProtect; 

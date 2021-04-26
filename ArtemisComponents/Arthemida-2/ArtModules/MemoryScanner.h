@@ -56,7 +56,7 @@ void __stdcall MemoryScanner(ArtemisConfig* cfg)
 									ARTEMIS_DATA data; data.baseAddr = (PVOID)foundIAT;
 									data.MemoryRights = i->Protect; data.regionSize = i->RegionSize;
 									data.dllName = "unknown"; data.dllPath = "unknown";
-									data.type = DetectionType::ART_MANUAL_MAP; data.EmptyVersionInfo = true;
+									data.type = DetectionType::ART_MANUAL_MAP; 
 									cfg->callback(&data); cfg->ExcludedImages.push_back(i->BaseAddress);
 								}
 							}

@@ -12,6 +12,14 @@ ArtemisIncapsulator::ArtemisIncapsulator(ArtemisConfig* cfg)
 #ifdef ARTEMIS_DEBUG
 		Utils::LogInFile(ARTEMIS_LOG, "[SINGLETON] Called the second generation constructor!\n");
 #endif
+		CheckIfFileProtected = (PtrIfFileProtected)Utils::RuntimeIatResolver("Sfc.dll", "SfcIsFileProtected");
+		if (CheckIfFileProtected == nullptr)
+		{
+#ifdef ARTEMIS_DEBUG
+			Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Can`t obtain export from Sfc.dll for SfcIsFileProtected.\n");
+#endif
+			return;
+		}
 		lpGetMappedFileNameA = (LPFN_GetMappedFileNameA)Utils::RuntimeIatResolver("psapi.dll", "GetMappedFileNameA");
 		if (lpGetMappedFileNameA == nullptr)
 		{

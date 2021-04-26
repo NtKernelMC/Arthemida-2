@@ -1,7 +1,7 @@
 #pragma once
 /*
     MiniJumper - Custom Hooking Minimalistic Engine
-    by NtKernelMC a.k.a �ed�uM
+    by NtKernelMC a.k.a BedBuM
     Platform x32-x86
 */
 #include <Windows.h>
@@ -14,7 +14,8 @@ namespace MiniJumper
     public:
         static DWORD MakeJump(DWORD jmp_address, DWORD hookAddr, BYTE* prologue, size_t prologue_size)
         {
-            DWORD old_prot = 0x0; if (prologue == nullptr) return 0x0;
+            DWORD old_prot = 0x0;
+            if (prologue == nullptr) return 0x0;
             VirtualProtect((void*)jmp_address, prologue_size, PAGE_EXECUTE_READWRITE, &old_prot);
             memcpy(prologue, (void*)jmp_address, prologue_size);
             BYTE addrToBYTEs[5] = { 0xE9, 0x90, 0x90, 0x90, 0x90 };
@@ -36,19 +37,25 @@ namespace MiniJumper
             {
                 DWORD Delta = (jmp_address + prologue_size) - ((DWORD)Trampoline + 5);
                 memcpy(&TrampolineBYTEs[1], &Delta, 4);
-                memcpy((void*)Trampoline, TrampolineBYTEs, 5);
+                #pragma warning(suppress: 6386)
+                #pragma warning(suppress: 6387)
+                memcpy(Trampoline, TrampolineBYTEs, 5);
             }
             VirtualProtect((void*)jmp_address, prologue_size, old_prot, &old_prot);
             return (DWORD)Trampoline;
         }
-        static bool RestorePrologue(DWORD addr, BYTE* prologue, size_t prologue_size)
+        static bool RestorePrologue(DWORD addr, PVOID myTrampoline, BYTE* prologue, size_t prologue_size)
         {
-            if (addr == NULL || prologue == nullptr || prologue_size == NULL) return false;
-            DWORD old_prot = 0;
+            if (prologue == nullptr || myTrampoline == nullptr) return false;
+            DWORD old_prot = 0x0; Trampoline = myTrampoline;
             VirtualProtect((void*)addr, prologue_size, PAGE_EXECUTE_READWRITE, &old_prot);
             memcpy((void*)addr, prologue, prologue_size);
             VirtualProtect((void*)addr, prologue_size, old_prot, &old_prot);
-            if (Trampoline) VirtualFree(Trampoline, 0, MEM_RELEASE);
+            if (Trampoline)
+            {
+                VirtualFree(Trampoline, 0, MEM_RELEASE);
+                Trampoline = nullptr, myTrampoline = nullptr;
+            }
             return true;
         }
     };

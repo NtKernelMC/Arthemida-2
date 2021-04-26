@@ -27,7 +27,7 @@ namespace SafeLaunch
 		{
 			auto getOSver = []()
 			{
-				NTSTATUS(WINAPI * RtlGetVersion)(LPOSVERSIONINFOEXW); OSVERSIONINFOEXW osInfo;
+				NTSTATUS(__stdcall *RtlGetVersion)(LPOSVERSIONINFOEXW) = nullptr; OSVERSIONINFOEXW osInfo { 0 };
 				*(FARPROC*)&RtlGetVersion = GetProcAddress(GetModuleHandleA("ntdll"), "RtlGetVersion");
 				if (NULL != RtlGetVersion)
 				{
@@ -116,7 +116,7 @@ namespace SafeLaunch
 			lpProcessAttributes, lpThreadAttributes, bInheritHandles,
 			ulFlags, lpEnvironment, lpCurrentDirectory, lpStartupInfo, lpProcessInformation);
 			if (lpProcessInformation->hProcess == NULL || rslt == NULL) return NULL;
-			DISPLAY_DEVICE DevInfo; DevInfo.cb = sizeof(DISPLAY_DEVICE);
+			DISPLAY_DEVICE DevInfo { 0 }; DevInfo.cb = sizeof(DISPLAY_DEVICE);
 			EnumDisplayDevicesA(NULL, 0, &DevInfo, 0);
 			std::string VideoCard = DevInfo.DeviceString;
 			HANDLE hMutex = CreateMutexA(FALSE, FALSE, VideoCard.c_str());
@@ -132,16 +132,18 @@ namespace SafeLaunch
 #ifdef SAFE_LAUNCH_DEBUG
 				printf("[UNHOOKING] Hook was found, trying to remove it...\n");
 #endif
-				if (CustomHooks::RestorePrologue(ZwAddr, prologue, 5)) 
+				if (CustomHooks::RestorePrologue(ZwAddr, (PVOID)fTrampoline, prologue, 5))
 				{
 #ifdef SAFE_LAUNCH_DEBUG
 					printf("[REMOVED] Inline hook was erased, original bytes restored!\n");
 #endif
 				}
 #ifdef SAFE_LAUNCH_DEBUG
-				else printf("[Unhooking Error] Failed to restore original code.\n[REPORT] System Error Code: %d\n", GetLastError());
+				else printf("[Unhooking Error] Failed to restore original code.\n"
+				"\r\r\r[REPORT] System Error Code: %d\n", GetLastError());
 			}
-			else printf("[Unhooking Error] By some reasons, hook is not exist in to the list!\n[REPORT] System Error Code: %d\n", GetLastError());
+			else printf("[Unhooking Error] By some reasons, hook is not exist in to the list!\n"
+			"\r\r\r[REPORT] System Error Code : % d\n", GetLastError());
 #endif
 			if (syscall != nullptr)
 			{

@@ -29,7 +29,6 @@ namespace ArtemisData
 		std::string dllName = "";
 		std::string dllPath = "";
 		std::string HackName = "";
-		bool EmptyVersionInfo = false;
 	};
 	typedef void(__stdcall* ArtemisCallback)(ARTEMIS_DATA* artemis);
 	struct ArtemisConfig
