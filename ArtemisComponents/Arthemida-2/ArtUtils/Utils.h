@@ -119,11 +119,20 @@ public:
 		if (apiSha == nullptr) return UnresolvedError();
 		return apiSha;
 	}
-	static LPMODULEINFO GetModuleMemoryInfo(const HMODULE Addr)
+	static LPMODULEINFO GetModuleMemoryInfo(const HMODULE Addr) // for sure in thread-safety (async DLL stress-test needed)
 	{
 		if (Addr == nullptr) return nullptr;
 		static MODULEINFO modinfo = { 0 }; ZeroMemory(&modinfo, sizeof(MODULEINFO));
-		if (GetMdlInfo(GetCurrentProcess(), Addr, &modinfo, sizeof(MODULEINFO))) return &modinfo;
+		__try
+		{
+			if (GetMdlInfo(GetCurrentProcess(), Addr, &modinfo, sizeof(MODULEINFO))) return &modinfo;
+		}
+		__except (EXCEPTION_EXECUTE_HANDLER)
+		{
+#ifdef ARTEMIS_DEBUG
+			Utils::LogInFile(ARTEMIS_LOG, "[SEH] 0x%X from GetModuleMemoryInfo!\n", GetExceptionCode());
+#endif
+		}
 		return nullptr;
 	}
 	static bool IsInModuledAddressSpace(const PVOID addr, std::vector<std::string> &mdls) 
@@ -194,7 +203,7 @@ public:
 		}
 		return dll_path.substr(dll_path.find_last_of("/\\") + 1);
 	};
-	static void __stdcall BuildModuledMemoryMap(void) // TODO: Memory-access check to module's regions + emplace/update lists
+	static void __stdcall BuildModuledMemoryMap(void) // not updating & thread-dangerous yet.
 	{
 		HMODULE hMods[1024] { nullptr }; DWORD cbNeeded = NULL;
 		if (EnumProcModules(GetCurrentProcess(), hMods, sizeof(hMods), &cbNeeded))

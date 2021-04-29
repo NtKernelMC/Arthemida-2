@@ -31,7 +31,7 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 		Utils::BuildModuledMemoryMap(); // Refactored parser -> now faster on 70% than previous!
 		for (const auto& it : orderedMapping)
 		{
-			if (it.first == NULL) continue; // do first check on zero for sure, cuz we gonna cast that to pointer.
+			if (it.first == 0x0 || it.second == 0x0) continue; // validating every page record from memory list
 			if ((it.first != appHost && it.first != (DWORD)cfg->hSelfModule) &&
 			!Utils::IsVecContain(cfg->ExcludedModules, (PVOID)it.first))
 			{
@@ -48,7 +48,7 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 					if (!Utils::OsProtectedFile(Utils::CvAnsiToWide(szFileName).c_str())) // New advanced algorithm!
 					{
 						MEMORY_BASIC_INFORMATION mme { 0 }; ARTEMIS_DATA data;
-						VirtualQuery((PVOID)it.first, &mme, sizeof(MEMORY_BASIC_INFORMATION));
+						VirtualQuery((LPCVOID)it.first, &mme, sizeof(MEMORY_BASIC_INFORMATION));
 						data.baseAddr = (PVOID)it.first; data.MemoryRights = mme.AllocationProtect;
 						data.regionSize = it.second; data.dllName = NameOfDLL;
 						data.dllPath = szFileName; data.type = DetectionType::ART_PROXY_LIBRARY;
