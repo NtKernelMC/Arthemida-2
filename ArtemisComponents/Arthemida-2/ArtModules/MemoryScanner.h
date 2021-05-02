@@ -23,40 +23,61 @@ void __stdcall MemoryScanner(ArtemisConfig* cfg)
 		{
 			if (ptr == nullptr || info == nullptr) return;
 			const void* end = (const void*)((const char*)ptr + length);
+			//DWORD mask = (PAGE_EXECUTE_READWRITE | PAGE_EXECUTE_READ | PAGE_EXECUTE_WRITECOPY);
 			DWORD mask = (PAGE_EXECUTE_READWRITE | PAGE_EXECUTE_READ);
 			while (ptr < end && VirtualQuery(ptr, &info[0], sizeof(*info)) == sizeof(*info))
 			{
 				MEMORY_BASIC_INFORMATION* i = &info[0]; 
+				/*if ((DWORD)i->AllocationProtect == PAGE_EXECUTE_WRITECOPY)
+				//0x78BE0000 0x78BE59FF | s: 0x1000 | r: 0x80 - execute copy on write
+				{
+					VirtualLock(i->AllocationBase, i->RegionSize);
+					Utils::LogInFile(ARTEMIS_LOG, "[SHARED MEMORY] WRITE ON COPY!\n");
+					char dMappedName[256]; memset(dMappedName, 0, sizeof(dMappedName));
+					lpGetMappedFileNameA(cfg->CurrProc, i->AllocationBase, dMappedName, sizeof(dMappedName));
+					Utils::LogInFile(ARTEMIS_LOG, "B: 0x%X | S: 0x%X | R: 0x%X | P: %s\n",
+					i->AllocationBase, i->RegionSize, i->AllocationProtect, dMappedName);
+					std::string possible_name = Utils::GetDllName(dMappedName); bool cloacked = false;
+					if (!Utils::IsMemoryInModuledRange((DWORD)i->AllocationBase, possible_name, &cloacked))
+					{
+						if (cloacked) Utils::LogInFile(ARTEMIS_LOG, "[SHARED MEMORY] CLOACKED DETECTION!\n");
+						else Utils::LogInFile(ARTEMIS_LOG, "[SHARED MEMORY] UNMODULED DETECTION!\n");
+					}
+					VirtualUnlock(i->AllocationBase, i->RegionSize);
+				}*/
 				if ((i->State != MEM_FREE && i->State != MEM_RELEASE) && i->Protect & mask)
 				{
-					bool complete_sequence = false; DWORD_PTR foundIAT = 0x0;
+					BYTE complete_sequence = 0; DWORD_PTR foundIAT = 0x0;
 					for (DWORD_PTR z = (DWORD_PTR)ptr; z < ((DWORD_PTR)ptr + i->RegionSize); z++)
 					{
-						for (DWORD x = 0; x < (10 * 6); x += 0x6)
+						for (DWORD x = 0; x < (8 * 6); x += 0x6)
 						{
-							if ((x + z) < ((DWORD_PTR)ptr + i->RegionSize) && (x + z + 0x1) < ((DWORD_PTR)ptr + i->RegionSize))
+							if ((x + z) < ((DWORD_PTR)ptr + i->RegionSize) && 
+							(x + z + 0x1) < ((DWORD_PTR)ptr + i->RegionSize))
 							{
-								if (*(BYTE*)(z + x) == 0xFF && *(BYTE*)(x + z + 0x1) == 0x25)
+								if ((*(BYTE*)(z + x) == 0xFF && *(BYTE*)(x + z + 0x1) == 0x25))
 								{
 									foundIAT = (x + z);
-									complete_sequence = true;
+									complete_sequence++;
 								}
-								else complete_sequence = false;
+								else complete_sequence = 0;
 							}
-							else complete_sequence = false;
+							else complete_sequence = 0;
 						}
-						if (complete_sequence)
+						if (complete_sequence >= 8)
 						{
-							if (!Utils::IsMemoryInModuledRange(z))
+							complete_sequence = 0x0; char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
+							lpGetMappedFileNameA(cfg->CurrProc, (PVOID)z, MappedName, sizeof(MappedName));
+							std::string possible_name = Utils::GetDllName(MappedName); bool cloacked = false;
+							if (!Utils::IsMemoryInModuledRange(z, possible_name, &cloacked))
 							{
-								char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
-								lpGetMappedFileNameA(GetCurrentProcess(), (PVOID)z, MappedName, sizeof(MappedName));
-								if (strlen(MappedName) < 4 && !Utils::IsVecContain(cfg->ExcludedImages, i->BaseAddress))
+								if (!Utils::IsVecContain(cfg->ExcludedImages, i->BaseAddress))
 								{
-									ARTEMIS_DATA data; data.baseAddr = (PVOID)foundIAT;
+									ARTEMIS_DATA data; data.baseAddr = i->BaseAddress;
 									data.MemoryRights = i->Protect; data.regionSize = i->RegionSize;
-									data.dllName = "unknown"; data.dllPath = "unknown";
-									data.type = DetectionType::ART_MANUAL_MAP; 
+									data.dllName = cloacked ? possible_name : " ";
+									data.dllPath = cloacked ? MappedName : " ";
+									data.type = DetectionType::ART_MANUAL_MAP;
 									cfg->callback(&data); cfg->ExcludedImages.push_back(i->BaseAddress);
 								}
 							}
@@ -66,8 +87,9 @@ void __stdcall MemoryScanner(ArtemisConfig* cfg)
 				ptr = (const void*)((const char*)(i->BaseAddress) + i->RegionSize);
 			}
 		};
-		MEMORY_BASIC_INFORMATION mbi = { 0 };
-		WatchMemoryAllocations(START_ADDRESS, END_ADDRESS, &mbi, sizeof(MEMORY_BASIC_INFORMATION));
-		Sleep(cfg->MemoryScanDelay);
+		MEMORY_BASIC_INFORMATION mbi { 0 }; SYSTEM_INFO sysInfo { 0 }; GetNativeSystemInfo(&sysInfo); 
+		SIZE_T MaxAddr = (DWORD)sysInfo.lpMaximumApplicationAddress - (DWORD)sysInfo.lpMinimumApplicationAddress;
+		WatchMemoryAllocations(sysInfo.lpMinimumApplicationAddress, MaxAddr,
+		&mbi, sizeof(MEMORY_BASIC_INFORMATION)); Sleep(cfg->MemoryScanDelay);
 	}
 }

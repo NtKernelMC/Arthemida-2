@@ -20,13 +20,6 @@
 #ifdef ARTEMIS_DEBUG
 #define ARTEMIS_LOG "!0_ArtemisDebug.log"
 #endif
-#ifdef _WIN64
-#define START_ADDRESS (PVOID)0x00000000010000
-#define END_ADDRESS (0x00007FF8F2580000 - 0x00000000010000)
-#else
-#define START_ADDRESS (PVOID)0x10000
-#define END_ADDRESS (0x7FFF0000 - 0x10000)
-#endif
 #include <Windows.h>
 #include <stdio.h>
 #include <thread>
@@ -60,10 +53,33 @@ static PtrEnumProcessModules EnumProcModules = nullptr;
 static GetMdlInfoP GetMdlInfo = nullptr;
 static LPFN_GetMappedFileNameA lpGetMappedFileNameA = nullptr;
 static tNtQueryInformationThread pNtQueryInformationThread = nullptr;
-/////////////////////////////////////////////........................................................................
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Utils
 {
 public:
+	typedef enum _THREAD_INFORMATION_CLASS
+	{
+
+
+		ThreadBasicInformation,
+		ThreadTimes,
+		ThreadPriority,
+		ThreadBasePriority,
+		ThreadAffinityMask,
+		ThreadImpersonationToken,
+		ThreadDescriptorTableEntry,
+		ThreadEnableAlignmentFaultFixup,
+		ThreadEventPair,
+		ThreadQuerySetWin32StartAddress,
+		ThreadZeroTlsCell,
+		ThreadPerformanceCount,
+		ThreadAmILastThread,
+		ThreadIdealProcessor,
+		ThreadPriorityBoost,
+		ThreadSetTlsArrayAddress,
+		ThreadIsIoPending,
+		ThreadHideFromDebugger
+	} THREAD_INFORMATION_CLASS, *PTHREAD_INFORMATION_CLASS;
 	/*
 		auto start = std::chrono::high_resolution_clock::now();
 		Utils::BuildModuledMemoryMap(); // Refactored parser -> now faster on 70% than previous!
@@ -71,6 +87,17 @@ public:
 		auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
 		printf("BuildModuledMemoryMap done with %lld ms!\n", duration.count());
 	*/
+	static BOOL SetPrivilege(HANDLE hToken, LPCTSTR lpszPrivilege, BOOL bEnablePrivilege)
+	{
+		TOKEN_PRIVILEGES tp = { 0 }; LUID luid { 0 };
+		if (!OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &hToken)) return false;
+		if (!LookupPrivilegeValueA(0, lpszPrivilege, &luid)) return false;
+		tp.PrivilegeCount = 1; tp.Privileges[0].Luid = luid;
+		if (bEnablePrivilege) tp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
+		else tp.Privileges[0].Attributes = 0;
+		if (!AdjustTokenPrivileges(hToken, 0, &tp, sizeof(tp), 0, 0)) return false;
+		return true;
+	}
 	static decltype(auto) CvWideToAnsi(const std::wstring& var)
 	{
 		if (var.empty()) return std::string(""); static std::locale loc("");
@@ -119,7 +146,7 @@ public:
 		if (apiSha == nullptr) return UnresolvedError();
 		return apiSha;
 	}
-	static LPMODULEINFO GetModuleMemoryInfo(const HMODULE Addr) // for sure in thread-safety (async DLL stress-test needed)
+	static LPMODULEINFO GetModuleMemoryInfo(const HMODULE Addr)
 	{
 		if (Addr == nullptr) return nullptr;
 		static MODULEINFO modinfo = { 0 }; ZeroMemory(&modinfo, sizeof(MODULEINFO));
@@ -127,7 +154,7 @@ public:
 		{
 			if (GetMdlInfo(GetCurrentProcess(), Addr, &modinfo, sizeof(MODULEINFO))) return &modinfo;
 		}
-		__except (EXCEPTION_EXECUTE_HANDLER)
+		__except (EXCEPTION_EXECUTE_HANDLER) // if it helps, than i`ll do list actualizer
 		{
 #ifdef ARTEMIS_DEBUG
 			Utils::LogInFile(ARTEMIS_LOG, "[SEH] 0x%X from GetModuleMemoryInfo!\n", GetExceptionCode());
@@ -184,15 +211,6 @@ public:
 		}
 		return false;
 	}
-	static bool __stdcall IsMemoryInModuledRange(const DWORD base)
-	{
-		if (base == NULL) return false;
-		for (const auto& it : orderedMapping)
-		{
-			if (base >= it.first && base <= (it.first + it.second)) return true;
-		}
-		return false;
-	}
 	static decltype(auto) GetLibNameFromHandle(const HMODULE MDL, std::string dll_path = "")
 	{
 		if (MDL == nullptr) return std::string("");
@@ -203,10 +221,24 @@ public:
 		}
 		return dll_path.substr(dll_path.find_last_of("/\\") + 1);
 	};
-	static void __stdcall BuildModuledMemoryMap(void) // not updating & thread-dangerous yet.
+	static bool __stdcall IsMemoryInModuledRange(const DWORD base, const std::string& mapped_name, bool *cloacking = nullptr)
+	{
+		if (base == NULL) return false;
+		for (const auto& it : orderedMapping)
+		{
+			if (base >= it.first && base <= (it.first + it.second)) return true;
+		}
+		if (!mapped_name.empty() && mapped_name.length() > 4) 
+		{ 
+			if ((DWORD)GetModuleHandleA(mapped_name.c_str()) == base) return true; 
+			else { if (cloacking != nullptr) *cloacking = true; }
+		}
+		return false;
+	}
+	static void __stdcall BuildModuledMemoryMap(HANDLE hProc = GetCurrentProcess())
 	{
 		HMODULE hMods[1024] { nullptr }; DWORD cbNeeded = NULL;
-		if (EnumProcModules(GetCurrentProcess(), hMods, sizeof(hMods), &cbNeeded))
+		if (EnumProcModules(hProc, hMods, sizeof(hMods), &cbNeeded))
 		{
 			DWORD MdlCount = (cbNeeded / sizeof(HMODULE));
 			for (unsigned int i = 0; i < MdlCount; i++)
@@ -221,7 +253,8 @@ public:
 						orderedMapping.insert(std::pair<DWORD, DWORD>((DWORD)modinfo->lpBaseOfDll, modinfo->SizeOfImage));
 						CHAR szFileName[MAX_PATH + 1]; if (!GetModuleFileNameA((HMODULE)
 						modinfo->lpBaseOfDll, szFileName, MAX_PATH + 1)) return;
-						DWORD CRC32 = GenerateCRC32(szFileName, nullptr); std::string DllName = GetDllName(szFileName);
+						DWORD CRC32 = GenerateCRC32(szFileName, nullptr); 
+						std::string DllName = GetDllName(szFileName);
 						if (orderedIdentify.count(CRC32) != 0x1) orderedIdentify.insert(orderedIdentify.begin(),
 						std::pair<DWORD, std::string>(CRC32, DllName));
 					}
@@ -298,10 +331,11 @@ public:
 		if (szDllNameTmp.empty()) return szDllNameTmp;
 		return szDllNameTmp.substr(szDllNameTmp.find_last_of("/\\") + 1);
 	}
-	static bool IsVecContain(const std::vector<PVOID>& source, const PVOID element)
+	template<typename S, typename E>
+	static bool IsVecContain(const std::vector<S>& source, const E element)
 	{
-		if (element == nullptr || source.empty()) return false;
-		for (const auto &it : source)
+		if (source.empty() || element == NULL) return false;
+		for (decltype(auto) it : source)
 		{
 			if (it == element) return true;
 		}

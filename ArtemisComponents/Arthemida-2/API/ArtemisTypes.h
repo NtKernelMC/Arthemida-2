@@ -13,12 +13,13 @@ namespace ArtemisData
 		ART_UNKNOWN_DETECT = 0,
 		ART_ILLEGAL_THREAD = 1,
 		ART_PROXY_LIBRARY = 2,
-		ART_FAKE_LAUNCHER = 3,
-		ART_RETURN_ADDRESS = 4,
-		ART_MANUAL_MAP = 5,
-		ART_MEMORY_CHANGED = 6,
-		ART_SIGNATURE_DETECT = 7,
-		ART_ILLEGAL_SERVICE = 8
+		ART_DLL_CLOACKING = 3,
+		ART_FAKE_LAUNCHER = 4,
+		ART_RETURN_ADDRESS = 5,
+		ART_MANUAL_MAP = 6,
+		ART_MEMORY_CHANGED = 7,
+		ART_SIGNATURE_DETECT = 8,
+		ART_ILLEGAL_SERVICE = 9
 	};
 	struct ARTEMIS_DATA
 	{
@@ -36,6 +37,8 @@ namespace ArtemisData
 		// basic stuff
 		bool SingletonCalled = false;
 		HANDLE hSelfModule = nullptr;
+		HANDLE CurrProc = nullptr;
+		std::vector<HANDLE> OwnThreads;
 		ArtemisCallback callback = nullptr;
 		// anticheat controller options
 		bool DetectThreads = false;

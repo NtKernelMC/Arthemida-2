@@ -28,23 +28,16 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 	DWORD appHost = (DWORD)GetModuleHandleA(NULL); // Optimizated (Now is non-recursive call!)
 	while (true) // Runtime Duplicates-Module Scanner && ProxyDLL Detector
 	{
-		Utils::BuildModuledMemoryMap(); // Refactored parser -> now faster on 70% than previous!
+		Utils::BuildModuledMemoryMap(cfg->CurrProc); // Refactored parser -> now faster on 70% than previous!
 		for (const auto& it : orderedMapping)
 		{
 			if (it.first == 0x0 || it.second == 0x0) continue; // validating every page record from memory list
 			if ((it.first != appHost && it.first != (DWORD)cfg->hSelfModule) &&
 			!Utils::IsVecContain(cfg->ExcludedModules, (PVOID)it.first))
 			{
-				/*#ifdef ARTEMIS_DEBUG
-				Utils::LogInFile(ARTEMIS_LOG, "[MODULE FILLER] Base: 0x%X | Size: 0x%X\n", it.first, it.second);
-				#endif*/
 				std::string NameOfDLL = "", szFileName = ""; // Optimizated (Less-recursive calls!)
 				if (Utils::IsModuleDuplicated((HMODULE)it.first, szFileName, orderedIdentify, NameOfDLL))
 				{
-					/*#ifdef ARTEMIS_DEBUG
-					Utils::LogInFile(ARTEMIS_LOG, "[MODULE FILLER] %s\nBase: 0x%X | Size: 0x%X\n",
-					szFileName.c_str(), it.first, it.second);
-					#endif*/
 					if (!Utils::OsProtectedFile(Utils::CvAnsiToWide(szFileName).c_str())) // New advanced algorithm!
 					{
 						MEMORY_BASIC_INFORMATION mme { 0 }; ARTEMIS_DATA data;

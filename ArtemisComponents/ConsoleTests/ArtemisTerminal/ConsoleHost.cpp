@@ -26,12 +26,17 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 	switch (artemis->type)
 	{
 	case DetectionType::ART_ILLEGAL_THREAD:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Anonymous thread! Base: 0x%X | Size: 0x%X\n",
-		artemis->baseAddr, artemis->regionSize);
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Anonymous thread! %s\n%s\nStarted from: 0x%X | Size: 0x%X\n\n",
+		artemis->dllName.c_str(), artemis->dllPath.c_str(), artemis->baseAddr, artemis->regionSize);
 		break;
 	case DetectionType::ART_PROXY_LIBRARY:
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Proxy DLL! Base: 0x%X | Image Size: 0x%X | DllName: %s\n\
 		\rPath: %s\n\n", artemis->baseAddr, artemis->regionSize, artemis->dllName.c_str(), artemis->dllPath.c_str());
+		break;
+	case DetectionType::ART_DLL_CLOACKING:
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Hidden DLL! Started from: 0x%X\nSize: 0x%X | R: 0x%X | DllName: %s\n\
+		\rPath: %s\n\n", artemis->baseAddr, artemis->regionSize, artemis->MemoryRights,
+		artemis->dllName.c_str(), artemis->dllPath.c_str());
 		break;
 	case DetectionType::ART_FAKE_LAUNCHER:
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Startup from Fake Launcher!\n");
@@ -40,15 +45,15 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Return to Hack Function! Address: 0x%X\n", artemis->baseAddr);
 		break;
 	case DetectionType::ART_MANUAL_MAP:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected MMAP!\nBase: 0x%X | Size: 0x%X | Rights: 0x%X\n",
-		artemis->baseAddr, artemis->regionSize, artemis->MemoryRights);
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Mapped Image! %s\n%s\nBase: 0x%X | Size: 0x%X | Rights: 0x%X\n\n",
+		artemis->dllName.c_str(), artemis->dllPath.c_str(), artemis->baseAddr, artemis->regionSize, artemis->MemoryRights);
 		break;
 	case DetectionType::ART_MEMORY_CHANGED:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module!\nBase: 0x%X | Rights: 0x%X | Image Size: 0x%X\n",
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module!\nBase: 0x%X | Rights: 0x%X | Image Size: 0x%X\n\n",
 		artemis->baseAddr, artemis->MemoryRights, artemis->regionSize);
 		break;
 	case DetectionType::ART_SIGNATURE_DETECT:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module!\nBase: 0x%X | Rights: 0x%X | Image Size: 0x%X\n",
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module!\nBase: 0x%X | Rights: 0x%X | Image Size: 0x%X\n\n",
 		artemis->baseAddr, artemis->MemoryRights, artemis->regionSize);
 		break;
 	case DetectionType::ART_ILLEGAL_SERVICE:
@@ -57,7 +62,7 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 		break;
 	default:
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Unknown detection code! Base: 0x%X | Size: %d bytes | DllName: %s\n"
-		"\rPath: %s\n", artemis->baseAddr, artemis->regionSize, artemis->dllName.c_str(), artemis->dllPath.c_str());
+		"\rPath: %s\n\n", artemis->baseAddr, artemis->regionSize, artemis->dllName.c_str(), artemis->dllPath.c_str());
 		break;
 	}
 	Utils::LogInFile(ARTEMIS_LOG, "\n\n");
@@ -85,14 +90,14 @@ int main()
 	system("color 02"); SetConsoleTitleA("Arthemida-2 AntiCheat Lightweight Testing");
 	printf("ConsoleHost main thread started! Thread ID: %d\n", GetCurrentThreadId());
 	ArtemisConfig cfg; LoadLibraryA("version.dll");
-	//cfg.DetectThreads = true; 
-	//cfg.ThreadScanDelay = 1000;
+	cfg.DetectThreads = true; 
+	cfg.ThreadScanDelay = 1000;
 
 	cfg.DetectModules = true; 
 	cfg.ModuleScanDelay = 1000;
 	
-	//cfg.DetectManualMap = true; 
-	//cfg.MemoryScanDelay = 1000; 
+	cfg.DetectManualMap = true; 
+	cfg.MemoryScanDelay = 1000; 
 
 	//cfg.DetectMemoryPatch = true; 
 	//cfg.MemoryGuardScanDelay = 1000;
@@ -106,7 +111,7 @@ int main()
 	//cfg.IllegalPatterns.insert(std::pair<std::string, std::tuple<const char*, const char*>>
 	//(hack_name, std::make_tuple(pattern, mask))); // must be incapsulated
 
-	//cfg.DetectFakeLaunch = true;
+	cfg.DetectFakeLaunch = true;
 	cfg.callback = (ArtemisCallback)ArthemidaCallback; 
 
 	Utils::LogInFile(ARTEMIS_LOG, "[ARTEMIS-2] Configured and ready, press any key to load...\n"); 
@@ -124,7 +129,7 @@ int main()
 		// test detection of illegal calls (return addresses checking)
 		//RetTest::TestStaticMethod();
 		//testObj.TestMemberMethod(); 
-		LoadLibraryA("test.dll"); // For heuristic-scans on future & excluding false-positives in ProxyDLL detection.
+		//LoadLibraryA("test.dll"); // For heuristic-scans on future & excluding false-positives in ProxyDLL detection.
 	}
 	else Utils::LogInFile(ARTEMIS_LOG, "[ARTEMIS-2] Failure on start :( Last error code: %d\n", GetLastError());
 	while (true) 
@@ -136,7 +141,7 @@ int main()
 			TerminateThread((HANDLE)heart.native_handle(), 0x0);
 			#pragma warning(suppress: 6273)
 			printf("[HEART-BEAT] Stopped. Thread id: %d | Heart-beat thread id: %d\n", GetCurrentThreadId(), heart.get_id()); 
-			FreeLibrary(GetModuleHandleA("test.dll")); break; // Try to simulate memory surprises for async threads!
+			//FreeLibrary(GetModuleHandleA("test.dll")); break; // Try to simulate memory surprises for async threads!
 		}
 	}
 	while (true) { Sleep(1000); }
