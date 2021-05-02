@@ -22,24 +22,26 @@ void __stdcall ScanForDllThreads(ArtemisConfig* cfg)
 			{
 				if (th32.th32OwnerProcessID == GetCurrentProcessId() && th32.th32ThreadID != GetCurrentThreadId())
 				{
-					HANDLE targetThread = OpenThread(THREAD_ALL_ACCESS, FALSE, th32.th32ThreadID);
+					HANDLE targetThread = OpenThread(THREAD_QUERY_INFORMATION, FALSE, th32.th32ThreadID);
 					if (targetThread != nullptr)
 					{
-						#pragma warning(suppress: 6001)
-						SuspendThread(targetThread); DWORD_PTR tempBase = 0x0;
-						pNtQueryInformationThread(targetThread, (THREADINFOCLASS)9, &tempBase, sizeof(DWORD_PTR), NULL);  
-						ResumeThread(targetThread); CloseHandle(targetThread); 
-						if (!Utils::IsMemoryInModuledRange(tempBase) && 
-						!Utils::IsVecContain(cfg->ExcludedThreads, (LPVOID)tempBase))
+						if (Utils::IsVecContain(cfg->OwnThreads, targetThread)) continue;
+						DWORD tempBase = NULL; pNtQueryInformationThread(targetThread, (THREADINFOCLASS)
+						Utils::ThreadQuerySetWin32StartAddress, &tempBase, sizeof(DWORD), 0);
+						CloseHandle(targetThread); char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
+						lpGetMappedFileNameA(cfg->CurrProc, (PVOID)tempBase, MappedName, sizeof(MappedName));
+						std::string possible_name = Utils::GetDllName(MappedName); bool cloacked = false;
+						if (!Utils::IsMemoryInModuledRange(tempBase, possible_name, &cloacked) && 
+						!Utils::IsVecContain(cfg->ExcludedThreads, (PVOID)tempBase))
 						{
 							MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data;
-							VirtualQuery((LPCVOID)tempBase, &mme, sizeof(MEMORY_BASIC_INFORMATION)); 
-							data.baseAddr = (LPVOID)tempBase; 
+							VirtualQuery((PVOID)tempBase, &mme, sizeof(MEMORY_BASIC_INFORMATION));
+							data.baseAddr = (PVOID)tempBase; 
 							data.MemoryRights = mme.AllocationProtect; 
 							data.regionSize = mme.RegionSize;
-							data.type = DetectionType::ART_ILLEGAL_THREAD;
-							data.dllName = "unknown"; data.dllPath = "unknown";
-							cfg->callback(&data); cfg->ExcludedThreads.push_back((LPVOID)tempBase);
+							data.type = (cloacked ? DetectionType::ART_DLL_CLOACKING : DetectionType::ART_ILLEGAL_THREAD);
+							data.dllName = cloacked ? possible_name : " "; data.dllPath = cloacked ? MappedName : " ";
+							cfg->callback(&data); cfg->ExcludedThreads.push_back((PVOID)tempBase);
 							break;
 						}
 					}

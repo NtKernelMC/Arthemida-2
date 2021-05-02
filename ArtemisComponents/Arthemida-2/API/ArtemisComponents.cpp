@@ -9,9 +9,18 @@ ArtemisIncapsulator::ArtemisIncapsulator(ArtemisConfig* cfg)
 {
 	if (cfg != nullptr)
 	{
+		if (cfg->CurrProc == nullptr) cfg->CurrProc = GetCurrentProcess();
 #ifdef ARTEMIS_DEBUG
 		Utils::LogInFile(ARTEMIS_LOG, "[SINGLETON] Called the second generation constructor!\n");
 #endif
+		if (!Utils::SetPrivilege(GetCurrentProcessToken(), SE_DEBUG_NAME, TRUE))
+		{
+#ifdef ARTEMIS_DEBUG
+			Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Can`t set SE_DEBUG_NAME privilege.\n");
+#endif
+			return;
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////////
 		CheckIfFileProtected = (PtrIfFileProtected)Utils::RuntimeIatResolver("Sfc.dll", "SfcIsFileProtected");
 		if (CheckIfFileProtected == nullptr)
 		{
@@ -119,6 +128,7 @@ IArtemisInterface* __stdcall IArtemisInterface::InstallArtemisMonitor(ArtemisCon
 #endif
 		return nullptr;
 	}
+	Utils::BuildModuledMemoryMap(cfg->CurrProc); // Заполняем список изначально загруженными модулями
 	if (cfg->DetectFakeLaunch) // Детект лаунчера (должен запускаться в первую очередь)
 	{
 		ConfirmLegitLaunch(cfg);
@@ -127,42 +137,30 @@ IArtemisInterface* __stdcall IArtemisInterface::InstallArtemisMonitor(ArtemisCon
 	{
 		if (!cfg->ThreadScanDelay) cfg->ThreadScanDelay = 1000;
 		if (!cfg->ExcludedThreads.empty()) cfg->ExcludedThreads.clear(); 
-		std::thread AsyncScanner(ScanForDllThreads, cfg);
-		AsyncScanner.detach(); 
+		std::thread ThreadsScanner(ScanForDllThreads, cfg); 
+		ThreadsScanner.detach(); cfg->OwnThreads.push_back(ThreadsScanner.native_handle());
 	}
 	if (cfg->DetectModules) // Детект сторонних модулей
 	{
 		if (!cfg->ModuleScanDelay) cfg->ModuleScanDelay = 1000;
 		if (!cfg->ExcludedModules.empty()) cfg->ExcludedModules.clear(); 
-		std::thread AsyncScanner(ModuleScanner, cfg);
-		AsyncScanner.detach(); // Создание и запуск асинхронного потока сканера модулей процесса
+		std::thread ProxyScanner(ModuleScanner, cfg);
+		ProxyScanner.detach(); // Создание и запуск асинхронного потока сканера модулей процесса
+		cfg->OwnThreads.push_back(ProxyScanner.native_handle());
 	}
 	if (cfg->DetectManualMap) // Детект мануал маппинга
 	{
 		if (!cfg->MemoryScanDelay) cfg->MemoryScanDelay = 1000;
 		if (!cfg->ExcludedImages.empty()) cfg->ExcludedImages.clear();
-		std::thread MmapThread(MemoryScanner, cfg);
-		MmapThread.detach(); // Запуск асинхронного cканнера для поиска смапленных образов DLL-библиотек
+		std::thread MmapScanner(MemoryScanner, cfg);
+		MmapScanner.detach(); // Запуск асинхронного cканнера для поиска смапленных образов DLL-библиотек
+		cfg->OwnThreads.push_back(MmapScanner.native_handle());
 	}
-	if (cfg->DetectMemoryPatch) // запускаем наш сканнер детектов по адресу возврата с защитой памяти от модификаций
-	{
-		if (!cfg->HooksList.empty()) cfg->HooksList.clear();
-		if (!cfg->MemoryGuardScanDelay) cfg->MemoryGuardScanDelay = 1000;
-		std::thread MemThread(MemoryGuardScanner, cfg);
-		MemThread.detach();
-	}
-	if (cfg->DetectBySignature) // скан на сигнатуры читов
-	{
-		if (!cfg->ExcludedSigAddresses.empty()) cfg->ExcludedSigAddresses.clear();
-		if (!cfg->PatternScanDelay) cfg->PatternScanDelay = 1000;
-		std::thread SignatureThread(SigScanner, cfg);
-		SignatureThread.detach();
-	}
-	if (cfg->ServiceMon)
+	if (cfg->ServiceMon) // on dev
 	{
 		if (!cfg->ServiceMonDelay) cfg->ServiceMonDelay = 1000;
-		CServiceMon servmon { };
-		servmon.Initialize().detach();
+		CServiceMon servmon { }; servmon.Initialize().detach();
+		cfg->OwnThreads.push_back(servmon.Initialize().native_handle());
 	}
 	return ac_info;
 }

@@ -32,3 +32,6 @@
 *.log
 *.testlog
 *.manifest
+/TestDLL/TestDLL
+/SecurityTrainings
+/t1ha-2.0.4.zip

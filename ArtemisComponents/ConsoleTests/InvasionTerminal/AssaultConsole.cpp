@@ -18,6 +18,7 @@ int main()
 {
 	system("color 06"); SetConsoleTitleA("[Artemis-2] Invasion Terminal");
 	printf("Invasion Terminal started!\n\n");
+	
 	SafeLaunch::ProcessGate procGate(CreateProcessW);
 	STARTUPINFOW info = { sizeof(info) }; PROCESS_INFORMATION processInfo;
 	if (procGate.SafeProcess<const wchar_t*, LPSTARTUPINFOW>
