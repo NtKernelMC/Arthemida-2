@@ -1,7 +1,7 @@
 /*
 	Artemis-2 for MTA Province
 	Target Platform: x32-x86
-	Project by NtKernelMC & holmes0
+	Project by NtKernelMC
 */
 #include "ArtemisInterface.h"
 void __stdcall MemoryScanner(ArtemisConfig* cfg)
@@ -28,23 +28,6 @@ void __stdcall MemoryScanner(ArtemisConfig* cfg)
 			while (ptr < end && VirtualQuery(ptr, &info[0], sizeof(*info)) == sizeof(*info))
 			{
 				MEMORY_BASIC_INFORMATION* i = &info[0]; 
-				/*if ((DWORD)i->AllocationProtect == PAGE_EXECUTE_WRITECOPY)
-				//0x78BE0000 0x78BE59FF | s: 0x1000 | r: 0x80 - execute copy on write
-				{
-					VirtualLock(i->AllocationBase, i->RegionSize);
-					Utils::LogInFile(ARTEMIS_LOG, "[SHARED MEMORY] WRITE ON COPY!\n");
-					char dMappedName[256]; memset(dMappedName, 0, sizeof(dMappedName));
-					lpGetMappedFileNameA(cfg->CurrProc, i->AllocationBase, dMappedName, sizeof(dMappedName));
-					Utils::LogInFile(ARTEMIS_LOG, "B: 0x%X | S: 0x%X | R: 0x%X | P: %s\n",
-					i->AllocationBase, i->RegionSize, i->AllocationProtect, dMappedName);
-					std::string possible_name = Utils::GetDllName(dMappedName); bool cloacked = false;
-					if (!Utils::IsMemoryInModuledRange((DWORD)i->AllocationBase, possible_name, &cloacked))
-					{
-						if (cloacked) Utils::LogInFile(ARTEMIS_LOG, "[SHARED MEMORY] CLOACKED DETECTION!\n");
-						else Utils::LogInFile(ARTEMIS_LOG, "[SHARED MEMORY] UNMODULED DETECTION!\n");
-					}
-					VirtualUnlock(i->AllocationBase, i->RegionSize);
-				}*/
 				if ((i->State != MEM_FREE && i->State != MEM_RELEASE) && i->Protect & mask)
 				{
 					BYTE complete_sequence = 0; DWORD_PTR foundIAT = 0x0;

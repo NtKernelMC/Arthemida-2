@@ -1,7 +1,7 @@
 /*
 	Artemis-2 for MTA Province
 	Target Platform: x32-x86
-	Project by NtKernelMC & holmes0
+	Project by NtKernelMC
 */
 #include "ArtemisInterface.h"
 #include ".../../../../Arthemida-2/ArtUtils/MiniJumper.h"
