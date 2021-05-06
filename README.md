@@ -1,2 +1,2 @@
 # Arthemida-2
-MTA:SA Anticheat by NtKernelMC & holmes0
+MTA:SA Anticheat by NtKernelMC
