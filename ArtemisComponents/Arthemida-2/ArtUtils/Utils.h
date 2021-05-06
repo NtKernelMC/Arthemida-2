@@ -2,7 +2,7 @@
 	Artemis-2 for MTA Province
 	Target Platform: x32-x86 (VC19 IDE)
 	Minimal required standart C++17
-	Project by NtKernelMC & holmes0
+	Project by NtKernelMC
 */
 #pragma once
 #ifndef _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
@@ -38,10 +38,14 @@
 #pragma intrinsic(_ReturnAddress)
 #include "../../Arthemida-2/ArtUtils/CRC32.h"
 #include "../../Arthemida-2/ArtUtils/sigscan.h"
+#include "../../Arthemida-2/ArtUtils/MiniJumper.h"
+// Hooks Data
+static DWORD memTramplin = NULL; static BYTE Prolog[5];
 // Multi-threaded control for module parser
 static std::map<DWORD, DWORD> orderedMapping; // global module runtime list (PE Image Info)
 static std::map<DWORD, std::string> orderedIdentify; // global module runtime list (Identify Info)
 // Windows Legacy Mode Support for Win7
+typedef void(__stdcall* PtrLdrInitializeThunk)(PCONTEXT Context);
 typedef BOOL(__stdcall* PtrIfFileProtected)(HANDLE sfRPC, LPCWSTR fPath);
 typedef BOOL(__stdcall* PtrEnumProcessModules)(HANDLE hProcess, HMODULE* lphModule, DWORD cb, LPDWORD lpcbNeeded);
 typedef BOOL(__stdcall* GetMdlInfoP)(HANDLE hProcess, HMODULE hModule, LPMODULEINFO lpmodinfo, DWORD cb);
@@ -53,6 +57,7 @@ static PtrEnumProcessModules EnumProcModules = nullptr;
 static GetMdlInfoP GetMdlInfo = nullptr;
 static LPFN_GetMappedFileNameA lpGetMappedFileNameA = nullptr;
 static tNtQueryInformationThread pNtQueryInformationThread = nullptr;
+static PtrLdrInitializeThunk callLdrInitializeThunk = nullptr;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Utils
 {
@@ -80,13 +85,6 @@ public:
 		ThreadIsIoPending,
 		ThreadHideFromDebugger
 	} THREAD_INFORMATION_CLASS, *PTHREAD_INFORMATION_CLASS;
-	/*
-		auto start = std::chrono::high_resolution_clock::now();
-		Utils::BuildModuledMemoryMap(); // Refactored parser -> now faster on 70% than previous!
-		auto stop = std::chrono::high_resolution_clock::now();
-		auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
-		printf("BuildModuledMemoryMap done with %lld ms!\n", duration.count());
-	*/
 	static BOOL SetPrivilege(HANDLE hToken, LPCTSTR lpszPrivilege, BOOL bEnablePrivilege)
 	{
 		TOKEN_PRIVILEGES tp = { 0 }; LUID luid { 0 };
@@ -154,7 +152,7 @@ public:
 		{
 			if (GetMdlInfo(GetCurrentProcess(), Addr, &modinfo, sizeof(MODULEINFO))) return &modinfo;
 		}
-		__except (EXCEPTION_EXECUTE_HANDLER) // if it helps, than i`ll do list actualizer
+		__except (EXCEPTION_EXECUTE_HANDLER) 
 		{
 #ifdef ARTEMIS_DEBUG
 			Utils::LogInFile(ARTEMIS_LOG, "[SEH] 0x%X from GetModuleMemoryInfo!\n", GetExceptionCode());
@@ -247,7 +245,6 @@ public:
 				LPMODULEINFO modinfo = GetModuleMemoryInfo(hMods[i]);
 				if (modinfo != nullptr)
 				{
-					// Increasing speed perfomance by ignoring repeatable operations, if module record exist!
 					if (orderedMapping.count((DWORD)modinfo->lpBaseOfDll) != 0x1)
 					{
 						orderedMapping.insert(std::pair<DWORD, DWORD>((DWORD)modinfo->lpBaseOfDll, modinfo->SizeOfImage));

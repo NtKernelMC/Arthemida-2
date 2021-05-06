@@ -170,6 +170,7 @@
     <ClInclude Include="..\..\Arthemida-2\ArtModules\HeuristicScanner.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtModules\ThreadScanner.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtUtils\CRC32.h" />
+    <ClInclude Include="..\..\Arthemida-2\ArtUtils\MiniJumper.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtUtils\sigscan.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtUtils\Utils.h" />
   </ItemGroup>

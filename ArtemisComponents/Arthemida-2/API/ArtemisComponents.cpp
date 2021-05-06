@@ -1,7 +1,7 @@
 ﻿/*
     Artemis-2 for MTA Province
 	Target Platform: x32-x86
-	Project by NtKernelMC & holmes0
+	Project by NtKernelMC
 */
 #include ".../../../../Arthemida-2/API/ArtemisComponents.h"
 using namespace ArtComponent;
@@ -58,6 +58,14 @@ ArtemisIncapsulator::ArtemisIncapsulator(ArtemisConfig* cfg)
 		{
 #ifdef ARTEMIS_DEBUG
 			Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Can`t obtain export from ntdll.dll for NtQueryInformationThread.\n");
+#endif
+			return;
+		}
+	    callLdrInitializeThunk = (PtrLdrInitializeThunk)Utils::RuntimeIatResolver("ntdll.dll", "LdrInitializeThunk");
+		if (callLdrInitializeThunk == nullptr)
+		{
+#ifdef ARTEMIS_DEBUG
+			Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Can`t obtain export from ntdll.dll for LdrInitializeThunk.\n");
 #endif
 			return;
 		}
@@ -137,7 +145,7 @@ IArtemisInterface* __stdcall IArtemisInterface::InstallArtemisMonitor(ArtemisCon
 	{
 		if (!cfg->ThreadScanDelay) cfg->ThreadScanDelay = 1000;
 		if (!cfg->ExcludedThreads.empty()) cfg->ExcludedThreads.clear(); 
-		std::thread ThreadsScanner(ScanForDllThreads, cfg); 
+		std::thread ThreadsScanner(ScanForDllThreads, cfg);
 		ThreadsScanner.detach(); cfg->OwnThreads.push_back(ThreadsScanner.native_handle());
 	}
 	if (cfg->DetectModules) // Детект сторонних модулей
