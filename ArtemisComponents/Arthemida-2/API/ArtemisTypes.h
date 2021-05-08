@@ -1,7 +1,7 @@
 /*
 	Artemis-2 for MTA Province
 	Target Platform: x32-x86
-	Project by NtKernelMC & holmes0
+	Project by NtKernelMC
 */
 #pragma once
 #pragma warning (disable : 4477)
@@ -10,16 +10,16 @@ namespace ArtemisData
 {
 	enum class DetectionType
 	{
-		ART_UNKNOWN_DETECT = 0,
-		ART_ILLEGAL_THREAD = 1,
-		ART_PROXY_LIBRARY = 2,
-		ART_DLL_CLOACKING = 3,
-		ART_FAKE_LAUNCHER = 4,
-		ART_RETURN_ADDRESS = 5,
-		ART_MANUAL_MAP = 6,
-		ART_MEMORY_CHANGED = 7,
-		ART_SIGNATURE_DETECT = 8,
-		ART_ILLEGAL_SERVICE = 9
+		ART_UNKNOWN_DETECT,
+		ART_ILLEGAL_THREAD,
+		ART_PROXY_LIBRARY,
+		ART_DLL_CLOACKING,
+		ART_FAKE_LAUNCHER,
+		ART_RETURN_ADDRESS,
+		ART_MANUAL_MAP,
+		ART_MEMORY_CHANGED,
+		ART_SIGNATURE_DETECT,
+		ART_ILLEGAL_SERVICE
 	};
 	struct ARTEMIS_DATA
 	{

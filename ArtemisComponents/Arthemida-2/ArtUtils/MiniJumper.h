@@ -8,7 +8,7 @@
 #include <stdio.h>
 namespace MiniJumper
 {
-    PVOID Trampoline = nullptr;
+    static PVOID Trampoline = nullptr;
     class CustomHooks
     {
     public:
