@@ -57,7 +57,7 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 		artemis->baseAddr, artemis->MemoryRights, artemis->regionSize);
 		break;
 	case DetectionType::ART_ILLEGAL_SERVICE:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal service!\n");
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal service!\nName: %s | Path: %s\n\n", artemis->HackName.c_str(), artemis->filePath.c_str());
 		//"Path: %s | \nName: %s  | Description: %s | \nType: %d | BootSet: %s | Group: %s\n | Signed by: %s\n");
 		break;
 	default:
@@ -104,8 +104,10 @@ int main()
 	//cfg.HooksList.insert(std::pair<PVOID, PVOID>((PVOID)RetTest::TestStaticMethod, (PVOID)HookTestStaticMethod));
 	// __thiscall methods must be casted in a different way
 	
-	//cfg.ServiceMon = true;
-	//cfg.ServiceMonDelay = 1000;
+	cfg.ServiceMon = true;
+	cfg.ServiceMonDelay = 1000;
+	cfg.IllegalDriverPatterns.insert(std::pair<std::string, std::tuple<std::string, std::string>>("HWIDSYS spoofer", std::make_tuple("\x5B\x64\x62\x67\x5D\x20\x72\x65\x76\x65\x72\x74\x65\x64\x20\x25\x77\x5A\x20\x73\x77\x61\x70", "xxxxxxxxxxxxxxxxxxxxxxx")));
+	//todo cfg.PriorityDriverNames
 
 	//cfg.DetectBySignature = true; cfg.PatternScanDelay = 1000; 
 	//cfg.IllegalPatterns.insert(std::pair<std::string, std::tuple<const char*, const char*>>
