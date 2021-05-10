@@ -1,7 +1,7 @@
 /*
 	Artemis-2 for MTA Province
 	Target Platform: x32-x86
-	Project by NtKernelMC
+	Project by NtKernelMC & holmes0
 */
 #ifndef _CRT_SECURE_NO_WARNINGS
 #define _CRT_SECURE_NO_WARNINGS

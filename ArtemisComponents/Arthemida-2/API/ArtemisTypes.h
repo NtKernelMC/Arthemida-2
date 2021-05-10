@@ -1,7 +1,7 @@
 /*
 	Artemis-2 for MTA Province
 	Target Platform: x32-x86
-	Project by NtKernelMC
+	Project by NtKernelMC & holmes0
 */
 #pragma once
 #pragma warning (disable : 4477)
