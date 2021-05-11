@@ -2,7 +2,7 @@
 	Artemis-2 for MTA Province
 	Target Platform: x32-x86 (VC19 IDE)
 	Minimal required standart C++17
-	Project by NtKernelMC
+	Project by NtKernelMC & holmes0
 */
 #pragma once
 #ifndef _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
@@ -27,6 +27,7 @@
 #include <chrono>
 #include <string>
 #include <map>
+#include <set>
 #include <tuple>
 #include <algorithm>
 #include <winternl.h>
@@ -35,6 +36,7 @@
 #include <codecvt>
 #include <conio.h>
 #include <intrin.h>
+#include <cwctype>
 #pragma intrinsic(_ReturnAddress)
 #include "../../Arthemida-2/ArtUtils/CRC32.h"
 #include "../../Arthemida-2/ArtUtils/sigscan.h"
@@ -320,7 +322,7 @@ public:
 	{
 		auto it = std::search(strHaystack.begin(), strHaystack.end(),
 		strNeedle.begin(), strNeedle.end(),
-		[](wchar_t ch1, wchar_t ch2) { return std::toupper(ch1) == std::toupper(ch2); });
+		[](wchar_t ch1, wchar_t ch2) { return std::towupper(ch1) == std::towupper(ch2); });
 		return (it != strHaystack.end());
 	}
 	static std::string GetDllName(std::string szDllNameTmp)
