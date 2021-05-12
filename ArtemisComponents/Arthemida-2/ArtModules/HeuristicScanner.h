@@ -1,10 +1,10 @@
 /*
 	Artemis-2 for MTA Province
 	Target Platform: x32-x86
-	Project by NtKernelMC
+	Project by NtKernelMC & holmes0
 */
 #include "ArtemisInterface.h"
-void __stdcall SigScanner(ArtemisConfig* cfg) // CAUTION! Still remaining on development.
+void __stdcall SigScanner(ArtemisConfig* cfg) 
 {
 	if (cfg == nullptr)
 	{

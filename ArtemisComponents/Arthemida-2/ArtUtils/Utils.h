@@ -2,7 +2,7 @@
 	Artemis-2 for MTA Province
 	Target Platform: x32-x86 (VC19 IDE)
 	Minimal required standart C++17
-	Project by NtKernelMC
+	Project by NtKernelMC & holmes0
 */
 #pragma once
 #ifndef _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING

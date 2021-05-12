@@ -1,7 +1,7 @@
 /*
 	Artemis-2 for MTA Province
 	Target Platform: x32-x86
-	Project by NtKernelMC
+	Project by NtKernelMC & holmes0
 */
 #pragma once
 #pragma warning (disable : 4477)
@@ -18,6 +18,7 @@ namespace ArtemisData
 		ART_RETURN_ADDRESS,
 		ART_MANUAL_MAP,
 		ART_MEMORY_CHANGED,
+		ART_PROTECTOR_PACKER,
 		ART_SIGNATURE_DETECT,
 		ART_ILLEGAL_SERVICE
 	};

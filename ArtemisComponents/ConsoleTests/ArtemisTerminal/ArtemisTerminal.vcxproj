@@ -163,7 +163,6 @@
     <ClInclude Include="..\..\Arthemida-2\API\ArtemisInterface.h" />
     <ClInclude Include="..\..\Arthemida-2\API\ArtemisTypes.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtModules\AntiFakeLaunch.h" />
-    <ClInclude Include="..\..\Arthemida-2\ArtModules\CServiceMon.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtModules\MemoryGuard.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtModules\MemoryScanner.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtModules\ModuleScanner.h" />
