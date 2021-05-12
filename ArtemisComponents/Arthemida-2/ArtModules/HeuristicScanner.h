@@ -4,7 +4,7 @@
 	Project by NtKernelMC & holmes0
 */
 #include "ArtemisInterface.h"
-void __stdcall SigScanner(ArtemisConfig* cfg) // CAUTION! Still remaining on development.
+void __stdcall SigScanner(ArtemisConfig* cfg) 
 {
 	if (cfg == nullptr)
 	{
