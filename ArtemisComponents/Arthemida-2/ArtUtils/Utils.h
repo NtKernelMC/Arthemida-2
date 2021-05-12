@@ -61,6 +61,12 @@ static LPFN_GetMappedFileNameA lpGetMappedFileNameA = nullptr;
 static tNtQueryInformationThread pNtQueryInformationThread = nullptr;
 static PtrLdrInitializeThunk callLdrInitializeThunk = nullptr;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Macro utils
+
+// Check bitmask in any integer type larger than unsigned char
+#define BITMASK_CHECK(value, mask) (bool)((value & mask) == mask)
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Utils
 {
 public:
