@@ -6,6 +6,7 @@
 #pragma once
 #pragma warning (disable : 4477)
 #include "../../Arthemida-2/ArtUtils/Utils.h"
+
 namespace ArtemisData
 {
 	enum class DetectionType
@@ -31,6 +32,7 @@ namespace ArtemisData
 		std::string dllName = "";
 		std::string dllPath = "";
 		std::string HackName = "";
+		std::string filePath = "";
 	};
 	typedef void(__stdcall* ArtemisCallback)(ARTEMIS_DATA* artemis);
 	struct ArtemisConfig
@@ -71,6 +73,8 @@ namespace ArtemisData
 		std::vector<PVOID> ExcludedSigAddresses;
 		std::map<PVOID, PVOID> HooksList; // DestinyAddress, InterceptorAddress
 		//std::map<PVOID, bool> ProtectedFunctions; // DestinyAddress, Detection flag
-		std::map<std::string, std::tuple<const char*, const char*>> IllegalPatterns; // hack name, pattern, mask
+		std::map<std::string, std::tuple<const char*, const char*>> IllegalPatterns; // human-readable hack name, pattern, mask
+		std::map<std::string, std::tuple<std::string, std::string>> IllegalDriverPatterns; // human-readable driver/hack name, pattern, mask
+		std::set<std::string> PriorityDriverNames; // todo: services with servicename or files with filename matching those strings will be given priority in scanner
 	};
 }

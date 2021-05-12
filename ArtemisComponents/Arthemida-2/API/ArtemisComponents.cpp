@@ -167,8 +167,10 @@ IArtemisInterface* __stdcall IArtemisInterface::InstallArtemisMonitor(ArtemisCon
 	if (cfg->ServiceMon) // on dev
 	{
 		if (!cfg->ServiceMonDelay) cfg->ServiceMonDelay = 1000;
-		CServiceMon servmon { }; servmon.Initialize().detach();
-		cfg->OwnThreads.push_back(servmon.Initialize().native_handle());
+		CServiceMon* servmon = new CServiceMon; //! Утечка памяти, нужен контейнер для класса (статическая инициализация не подходит)
+		std::thread thServmon = servmon->Initialize(cfg);
+		cfg->OwnThreads.push_back(thServmon.native_handle());
+		thServmon.detach();
 	}
 	return ac_info;
 }

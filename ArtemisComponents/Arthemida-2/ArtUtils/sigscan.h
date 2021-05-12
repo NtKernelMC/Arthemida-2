@@ -2,6 +2,8 @@
 #include <Windows.h>
 #include <Psapi.h>
 #pragma comment (lib, "Psapi.lib")
+#include <io.h>
+#include <fstream>
 class SigScan
 {
 public:
@@ -51,5 +53,111 @@ public:
 			}
 		}
 		return NULL;
+	}
+
+private:
+	static FILE* OpenFileCHandleFromNative(HANDLE hNativeHandle, const char* szMode)
+	{
+		return _fdopen(_open_osfhandle((intptr_t)hNativeHandle, 0), szMode);
+	}
+
+public:
+
+	enum FileScanResult
+	{
+		FSCAN_STATUS_FAIL,
+		FSCAN_STATUS_NOT_FOUND,
+		FSCAN_STATUS_FOUND
+	};
+
+	static FileScanResult FindPatternFileWin(HANDLE hFile, const char* szPattern, const char* szMask)
+	{
+		LARGE_INTEGER liSize;
+		GetFileSizeEx(hFile, &liSize);
+		__int64 llSize = liSize.QuadPart;
+		if (llSize < 1)
+		{
+			return FSCAN_STATUS_FAIL;
+		}
+		
+		DWORD patternLength = (DWORD)strlen(szMask);
+		if (patternLength > llSize)
+		{
+			return FSCAN_STATUS_FAIL;
+		}
+
+		constexpr size_t chunkSize = 1024 * 1024; // 1 MB
+		unsigned char* pChunk;
+		try
+		{
+			pChunk = new unsigned char[chunkSize];
+		} catch (std::bad_alloc) {
+			return FSCAN_STATUS_FAIL;
+		}
+
+		DWORD patternIndex = 0;
+		DWORD matchedBytes = 0;
+		bool  chunkTransitionBegin = false;
+		bool  chunkTransitionBeingHandled = false;
+		DWORD bytesRead = 0;
+
+		int dbgreadcalls = 0;
+		while (ReadFile(hFile, pChunk, chunkSize, &bytesRead, 0))
+		{
+			dbgreadcalls++;
+			if (bytesRead < 1)
+			{
+				delete[] pChunk;
+				return FSCAN_STATUS_NOT_FOUND;
+			}
+
+			for (long i = 0; i < bytesRead; i++)
+			{
+				for (; patternIndex < patternLength; patternIndex++)
+				{
+					if ((i + patternIndex) >= bytesRead && matchedBytes)
+					{
+						chunkTransitionBegin = true;
+						break;
+					}
+					else if ((i + patternIndex) >= bytesRead) continue;
+					if (chunkTransitionBegin || chunkTransitionBeingHandled)
+					{
+						chunkTransitionBegin = false; chunkTransitionBeingHandled = true;
+						static DWORD j = 0;
+						if (szMask[patternIndex] != '?' && szPattern[patternIndex] == *(char*)(pChunk + i + j)) matchedBytes++;
+						else if (szMask[patternIndex] != '?' && szPattern[patternIndex] != *(char*)(pChunk + i + j)) matchedBytes = 0;
+						j++;
+					}
+					else
+					{
+						if (szMask[patternIndex] != '?' && szPattern[patternIndex] == *(char*)(pChunk + i + patternIndex)) matchedBytes++;
+						else if (szMask[patternIndex] != '?' && szPattern[patternIndex] != *(char*)(pChunk + i + patternIndex)) matchedBytes = 0;
+					}
+				}
+
+				if (chunkTransitionBegin) break;
+				else if (matchedBytes == patternLength && patternIndex == patternLength)
+				{
+					delete[] pChunk;
+					return FSCAN_STATUS_FOUND;
+				}
+				if (chunkTransitionBeingHandled)
+				{
+					i = -1;
+					chunkTransitionBeingHandled = false;
+				}
+				patternIndex = 0;
+			}
+		}
+
+		if (dbgreadcalls == 0)
+		{
+			delete[] pChunk;
+			return FSCAN_STATUS_FAIL;
+		}
+
+		delete[] pChunk;
+		return FSCAN_STATUS_NOT_FOUND;
 	}
 };
