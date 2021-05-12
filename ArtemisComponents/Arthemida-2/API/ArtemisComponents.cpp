@@ -13,7 +13,7 @@ ArtemisIncapsulator::ArtemisIncapsulator(ArtemisConfig* cfg)
 #ifdef ARTEMIS_DEBUG
 		Utils::LogInFile(ARTEMIS_LOG, "[SINGLETON] Called the second generation constructor!\n");
 #endif
-		if (!Utils::SetPrivilege(GetCurrentProcessToken(), SE_DEBUG_NAME, TRUE))
+		if (!Utils::SetPrivilege(NULL, SE_DEBUG_NAME, TRUE))
 		{
 #ifdef ARTEMIS_DEBUG
 			Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Can`t set SE_DEBUG_NAME privilege.\n");
