@@ -43,6 +43,11 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Packed DLL! Base: 0x%X | Image Size: 0x%X | DllName: %s\n\
 		\rPath: %s\n\n", artemis->baseAddr, artemis->regionSize, artemis->dllName.c_str(), artemis->dllPath.c_str());
 		break;
+	case DetectionType::ART_HACK_STRING_FOUND:
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected DLL Hack! Information: %s\nBase: 0x%X | Image Size: 0x%X | DllName: %s\n\
+		\rPath: %s\n\n", artemis->HackName.c_str(), artemis->baseAddr,
+		artemis->regionSize, artemis->dllName.c_str(), artemis->dllPath.c_str());
+		break;
 	case DetectionType::ART_FAKE_LAUNCHER:
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Startup from Fake Launcher!\n");
 		break;
@@ -115,13 +120,16 @@ int main()
 	cfg.IllegalDriverPatterns.insert(CortPair("HWIDSYS spoofer", std::make_tuple
 	("\x5B\x64\x62\x67\x5D\x20\x72\x65\x76\x65\x72\x74\x65\x64\x20\x25\x77\x5A\x20\x73\x77\x61\x70", "xxxxxxxxxxxxxxxxxxxxxxx")));
 	//todo cfg.PriorityDriverNames
-
-
-	cfg.AllowedPackedModules.push_back("netc.dll");
+	//////////////////////////////// Heuristical Scanning ///////////////////////////////////////////
+	cfg.DetectPacking = true;
+	cfg.AllowedPackedModules.push_back("netc.dll"); // white-list for your packed or protected dll`s
+	cfg.DetectByString = true;
+	cfg.IlegaleLinien.push_back("Loop"); // custom string from our test.dll 
+	//Add this strings -> (gamesnus, rdror, vsdbg, Hybris, hybris, mft, MFT, P414, Project-414) and vk public links so on!
 	//cfg.DetectBySignature = true; cfg.PatternScanDelay = 1000; 
 	//cfg.IllegalPatterns.insert(std::pair<std::string, std::tuple<const char*, const char*>>
 	//(hack_name, std::make_tuple(pattern, mask))); // must be incapsulated
-
+	/////////////////////////////////////////////////////////////////////////////////////////////////
 	cfg.DetectFakeLaunch = true;
 	cfg.callback = (ArtemisCallback)ArthemidaCallback; 
 

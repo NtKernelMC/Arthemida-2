@@ -25,13 +25,15 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 #endif
 		return 0xDEADC0D3;
 	};
-	auto ModuleThreatReport = [&](const auto& it, const std::string& path, const std::string& name, DetectionType detect)
+	auto ModuleThreatReport = [&](const auto& it, const std::string& path, 
+	const std::string& name, DetectionType detect, const std::string& hack_name = "")
 	{
 		MEMORY_BASIC_INFORMATION mme { 0 }; ARTEMIS_DATA data;
 		VirtualQuery((LPCVOID)it.first, &mme, sizeof(MEMORY_BASIC_INFORMATION));
 		data.baseAddr = (PVOID)it.first; data.MemoryRights = mme.AllocationProtect;
 		data.regionSize = it.second; data.dllName = name;
-		data.dllPath = path; data.type = detect;
+		data.dllPath = path; data.type = detect; 
+		if (detect == DetectionType::ART_HACK_STRING_FOUND) data.HackName = hack_name;
 		cfg->callback(&data); cfg->ExcludedModules.push_back((PVOID)it.first);
 	};
 	DWORD appHost = (DWORD)GetModuleHandleA(NULL); // Optimizated (Now is non-recursive call!)
@@ -55,9 +57,22 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 				else
 				{
 					if (Utils::OsProtectedFile(Utils::CvAnsiToWide(szFileName).c_str())) continue;
-					if (IsModulePacked((HMODULE)it.first, cfg->AllowedPackedModules))
+					if (cfg->DetectPacking && IsModulePacked((HMODULE)it.first, cfg->AllowedPackedModules))
 					{
 						ModuleThreatReport(it, szFileName, NameOfDLL, DetectionType::ART_PROTECTOR_PACKER);
+					}
+					if (cfg->DetectByString)
+					{
+						for (const auto& zm : cfg->IlegaleLinien)
+						{
+							size_t end_len = NULL;
+							char* ptr = SearchStringInMemory(zm, zm.length(), (PVOID)it.first, (PVOID)it.second, end_len);
+							if (ptr != nullptr)
+							{
+								std::string match = std::string(ptr, zm.length() + end_len);
+								ModuleThreatReport(it, szFileName, NameOfDLL, DetectionType::ART_HACK_STRING_FOUND, match);
+							}
+						}
 					}
 				}
 			}
