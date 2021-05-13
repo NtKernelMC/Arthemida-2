@@ -25,6 +25,15 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 #endif
 		return 0xDEADC0D3;
 	};
+	auto ModuleThreatReport = [&](const auto& it, const std::string& path, const std::string& name, DetectionType detect)
+	{
+		MEMORY_BASIC_INFORMATION mme { 0 }; ARTEMIS_DATA data;
+		VirtualQuery((LPCVOID)it.first, &mme, sizeof(MEMORY_BASIC_INFORMATION));
+		data.baseAddr = (PVOID)it.first; data.MemoryRights = mme.AllocationProtect;
+		data.regionSize = it.second; data.dllName = name;
+		data.dllPath = path; data.type = detect;
+		cfg->callback(&data); cfg->ExcludedModules.push_back((PVOID)it.first);
+	};
 	DWORD appHost = (DWORD)GetModuleHandleA(NULL); // Optimizated (Now is non-recursive call!)
 	while (true) // Runtime Duplicates-Module Scanner && ProxyDLL Detector
 	{
@@ -40,12 +49,15 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 				{
 					if (!Utils::OsProtectedFile(Utils::CvAnsiToWide(szFileName).c_str())) // New advanced algorithm!
 					{
-						MEMORY_BASIC_INFORMATION mme { 0 }; ARTEMIS_DATA data;
-						VirtualQuery((LPCVOID)it.first, &mme, sizeof(MEMORY_BASIC_INFORMATION));
-						data.baseAddr = (PVOID)it.first; data.MemoryRights = mme.AllocationProtect;
-						data.regionSize = it.second; data.dllName = NameOfDLL;
-						data.dllPath = szFileName; data.type = DetectionType::ART_PROXY_LIBRARY;
-						cfg->callback(&data); cfg->ExcludedModules.push_back((PVOID)it.first);
+						ModuleThreatReport(it, szFileName, NameOfDLL, DetectionType::ART_PROXY_LIBRARY);
+					}
+				}
+				else
+				{
+					if (Utils::OsProtectedFile(Utils::CvAnsiToWide(szFileName).c_str())) continue;
+					if (IsModulePacked((HMODULE)it.first, cfg->AllowedPackedModules))
+					{
+						ModuleThreatReport(it, szFileName, NameOfDLL, DetectionType::ART_PROTECTOR_PACKER);
 					}
 				}
 			}

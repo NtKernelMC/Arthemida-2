@@ -37,6 +37,8 @@
 #include <conio.h>
 #include <intrin.h>
 #include <cwctype>
+#include <dbghelp.h>
+#pragma comment(lib, "dbghelp.lib")
 #pragma intrinsic(_ReturnAddress)
 #include "../../Arthemida-2/ArtUtils/CRC32.h"
 #include "../../Arthemida-2/ArtUtils/sigscan.h"
