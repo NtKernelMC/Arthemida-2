@@ -39,6 +39,10 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 		\rPath: %s\n\n", artemis->baseAddr, artemis->regionSize, artemis->MemoryRights,
 		artemis->dllName.c_str(), artemis->dllPath.c_str());
 		break;
+	case DetectionType::ART_PROTECTOR_PACKER:
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Packed DLL! Base: 0x%X | Image Size: 0x%X | DllName: %s\n\
+		\rPath: %s\n\n", artemis->baseAddr, artemis->regionSize, artemis->dllName.c_str(), artemis->dllPath.c_str());
+		break;
 	case DetectionType::ART_FAKE_LAUNCHER:
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Startup from Fake Launcher!\n");
 		break;
@@ -112,6 +116,8 @@ int main()
 	("\x5B\x64\x62\x67\x5D\x20\x72\x65\x76\x65\x72\x74\x65\x64\x20\x25\x77\x5A\x20\x73\x77\x61\x70", "xxxxxxxxxxxxxxxxxxxxxxx")));
 	//todo cfg.PriorityDriverNames
 
+
+	cfg.AllowedPackedModules.push_back("netc.dll");
 	//cfg.DetectBySignature = true; cfg.PatternScanDelay = 1000; 
 	//cfg.IllegalPatterns.insert(std::pair<std::string, std::tuple<const char*, const char*>>
 	//(hack_name, std::make_tuple(pattern, mask))); // must be incapsulated
@@ -134,7 +140,7 @@ int main()
 		// test detection of illegal calls (return addresses checking)
 		//RetTest::TestStaticMethod();
 		//testObj.TestMemberMethod(); 
-		//LoadLibraryA("test.dll"); // For heuristic-scans on future & excluding false-positives in ProxyDLL detection.
+		LoadLibraryA("test.dll"); // For heuristic-scans on future & excluding false-positives in ProxyDLL detection.
 	}
 	else Utils::LogInFile(ARTEMIS_LOG, "[ARTEMIS-2] Failure on start :( Last error code: %d\n", GetLastError());
 	while (true) 

@@ -105,12 +105,12 @@ ArtemisConfig* __stdcall IArtemisInterface::GetConfig()
 	return i_art->g_cfg; 
 }
 /////////////////////////// Protection Modules //////////////////////////////////////////////////////////////
+#include "../../Arthemida-2/ArtModules/HeuristicScanner.h"
 #include "../../Arthemida-2/ArtModules/ThreadScanner.h"
 #include "../../Arthemida-2/ArtModules/AntiFakeLaunch.h"
 #include "../../Arthemida-2/ArtModules/ModuleScanner.h"
 #include "../../Arthemida-2/ArtModules/MemoryScanner.h"
 #include "../../Arthemida-2/ArtModules/MemoryGuard.h"
-#include "../../Arthemida-2/ArtModules/HeuristicScanner.h"
 #include "../../Arthemida-2/ArtModules/CServiceMon.h"
 IArtemisInterface* __stdcall IArtemisInterface::InstallArtemisMonitor(ArtemisConfig* cfg)
 {

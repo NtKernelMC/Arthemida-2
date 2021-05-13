@@ -4,6 +4,33 @@
 	Project by NtKernelMC & holmes0
 */
 #include "ArtemisInterface.h"
+bool __stdcall IsModulePacked(HMODULE hModule, const std::vector<std::string>& ExcludedModules)
+{
+	if (hModule == nullptr) return false;
+	else
+	{
+		auto fnd = std::find(ExcludedModules.begin(), ExcludedModules.end(), Utils::GetLibNameFromHandle(hModule));
+		if (fnd != ExcludedModules.end()) return false;
+		bool ContainTextSection = false; PIMAGE_NT_HEADERS NtHeader = ImageNtHeader(hModule);
+		WORD NumSections = NtHeader->FileHeader.NumberOfSections;
+		PIMAGE_SECTION_HEADER Section = IMAGE_FIRST_SECTION(NtHeader);
+		for (WORD i = 0; i < NumSections; i++)
+		{
+			if (Utils::findStringIC((const char*)Section->Name, ".vmp") || 
+			Utils::findStringIC((const char*)Section->Name, ".upx")) return true;
+			if (Utils::findStringIC((const char*)Section->Name, ".text"))
+			{
+				ContainTextSection = true;
+				if (NtHeader->OptionalHeader.AddressOfEntryPoint < Section->VirtualAddress || 
+				NtHeader->OptionalHeader.AddressOfEntryPoint >
+				(Section->VirtualAddress + Section->Misc.VirtualSize)) return true;
+			}
+			Section++;
+		}
+		if (!ContainTextSection) return true;
+	}
+	return false;
+}
 void __stdcall SigScanner(ArtemisConfig* cfg) 
 {
 	if (cfg == nullptr)

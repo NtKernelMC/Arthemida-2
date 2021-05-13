@@ -43,6 +43,7 @@ namespace ArtemisData
 		HANDLE CurrProc = nullptr;
 		std::vector<HANDLE> OwnThreads;
 		ArtemisCallback callback = nullptr;
+		std::vector<std::string> AllowedPackedModules;
 		// anticheat controller options
 		bool DetectThreads = false;
 		bool DetectModules = false;
