@@ -20,6 +20,7 @@ namespace ArtemisData
 		ART_MANUAL_MAP,
 		ART_MEMORY_CHANGED,
 		ART_PROTECTOR_PACKER,
+		ART_HACK_STRING_FOUND,
 		ART_SIGNATURE_DETECT,
 		ART_ILLEGAL_SERVICE
 	};
@@ -43,7 +44,6 @@ namespace ArtemisData
 		HANDLE CurrProc = nullptr;
 		std::vector<HANDLE> OwnThreads;
 		ArtemisCallback callback = nullptr;
-		std::vector<std::string> AllowedPackedModules;
 		// anticheat controller options
 		bool DetectThreads = false;
 		bool DetectModules = false;
@@ -51,6 +51,8 @@ namespace ArtemisData
 		bool DetectManualMap = false;
 		bool DetectMemoryPatch = false;
 		bool DetectBySignature = false;
+		bool DetectPacking = false;
+		bool DetectByString = false;
 		bool ServiceMon = false;
 		// anti-repeatable start for scanners
 		bool ThreadScanner = false;
@@ -72,10 +74,16 @@ namespace ArtemisData
 		std::vector<PVOID> ExcludedMethods;
 		std::vector<PVOID> ExcludedPatches;
 		std::vector<PVOID> ExcludedSigAddresses;
+		// heuristical detection set
+		std::vector<std::string> AllowedPackedModules; // for cfg.DetectPacking = true;
+		std::vector<std::string> IlegaleLinien; // for cfg.DetectByString
+		// service stuff set
 		std::map<PVOID, PVOID> HooksList; // DestinyAddress, InterceptorAddress
-		//std::map<PVOID, bool> ProtectedFunctions; // DestinyAddress, Detection flag
-		std::map<std::string, std::tuple<const char*, const char*>> IllegalPatterns; // human-readable hack name, pattern, mask
-		std::map<std::string, std::tuple<std::string, std::string>> IllegalDriverPatterns; // human-readable driver/hack name, pattern, mask
-		std::set<std::string> PriorityDriverNames; // todo: services with servicename or files with filename matching those strings will be given priority in scanner
+		std::map<std::string, std::tuple<const char*, const char*>> IllegalPatterns; 
+		// human-readable hack name, pattern, mask
+		std::map<std::string, std::tuple<std::string, std::string>> IllegalDriverPatterns; 
+		// human-readable driver/hack name, pattern, mask
+		std::set<std::string> PriorityDriverNames; 
+		// todo: services with servicename or files with filename matching those strings will be given priority in scanner
 	};
 }
