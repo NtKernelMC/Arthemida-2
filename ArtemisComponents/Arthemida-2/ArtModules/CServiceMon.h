@@ -205,7 +205,7 @@ std::multimap<std::wstring, CServiceMon::SServiceInfo> CServiceMon::GetAllServic
                     continue;
                 }
                 
-                SSP.wsFilePath.reserve(wcslen(lpSC->lpBinaryPathName) + 12); // +12 - резерв для часто встречаемого отсутсвующего \SystemRoot\ в начале, чтобы не тратить ресурсы на реаллокацию и перемещение в будущем
+                SSP.wsFilePath.reserve(wcslen(lpSC->lpBinaryPathName) + 12); // +12 - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ \SystemRoot\ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 SSP.wsFilePath = lpSC->lpBinaryPathName;
                 delete[] lpSC;
                 mmServicesResult.insert({ eSSP[i].lpServiceName, SSP });
