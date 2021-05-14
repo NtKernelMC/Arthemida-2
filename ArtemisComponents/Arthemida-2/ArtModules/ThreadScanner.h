@@ -10,7 +10,6 @@ const std::string& possible_name, const std::string& MappedName, bool &cloacked)
 	MEMORY_BASIC_INFORMATION mme { 0 }; ARTEMIS_DATA data;
 	VirtualQuery((PVOID)caller, &mme, sizeof(MEMORY_BASIC_INFORMATION));
 	// SHARED MEMORY can bring to us a couple of false-positives from Wow64 addreses!
-	if ((mme.Protect == 0x20 && cloacked) && !possible_name.empty()) return; 
 	data.baseAddr = (PVOID)caller; data.MemoryRights = mme.AllocationProtect;
 	data.regionSize = mme.RegionSize; data.type =
 	(cloacked ? DetectionType::ART_DLL_CLOACKING : DetectionType::ART_ILLEGAL_THREAD);
@@ -26,11 +25,13 @@ void __stdcall LdrInitializeThunk(PCONTEXT Context)
 	char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
 	lpGetMappedFileNameA(cfg->CurrProc, TEP, MappedName, sizeof(MappedName));
 	std::string possible_name = Utils::GetDllName(MappedName); bool cloacked = false;
-	if (!Utils::IsMemoryInModuledRange((DWORD)TEP, possible_name, &cloacked) && !Utils::IsVecContain(cfg->ExcludedThreads, ARG))
+	DWORD true_base = (DWORD)GetModuleHandleA(possible_name.c_str());
+	if (!Utils::IsMemoryInModuledRange(true_base, possible_name, &cloacked) && !Utils::IsVecContain(cfg->ExcludedThreads, TEP))
 	{
 #ifdef ARTEMIS_DEBUG
 		Utils::LogInFile(ARTEMIS_LOG,
-		"[LdrInitializeThunk] Intercepted Thread Initialization! EP: 0x%X | Arg: 0x%X\n", (DWORD)TEP, (DWORD)ARG);
+		"[LdrInitializeThunk] Intercepted Thread Initialization! EP: 0x%X | Arg: 0x%X | Cloacking: %d\n", 
+		(DWORD)TEP, (DWORD)ARG, (BYTE)cloacked);
 #endif
 		ThreatReport(cfg, (DWORD)TEP, possible_name, MappedName, cloacked);
 	}
