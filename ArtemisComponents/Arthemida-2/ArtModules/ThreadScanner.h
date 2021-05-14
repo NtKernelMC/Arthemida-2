@@ -7,17 +7,14 @@ void __stdcall ThreatReport(ArtemisConfig* cfg, const DWORD &caller,
 const std::string& possible_name, const std::string& MappedName, bool &cloacked)
 {
 	if (cfg == nullptr) return; if (cfg->callback == nullptr) return;
+	MEMORY_BASIC_INFORMATION mme { 0 }; ARTEMIS_DATA data;
+	VirtualQuery((PVOID)caller, &mme, sizeof(MEMORY_BASIC_INFORMATION));
 	// SHARED MEMORY can bring to us a couple of false-positives from Wow64 addreses!
-	if (MappedName.find("Windows\\SysWOW64") == std::string::npos)
-	{
-		MEMORY_BASIC_INFORMATION mme { 0 }; ARTEMIS_DATA data;
-		VirtualQuery((PVOID)caller, &mme, sizeof(MEMORY_BASIC_INFORMATION));
-		data.baseAddr = (PVOID)caller; data.MemoryRights = mme.AllocationProtect;
-		data.regionSize = mme.RegionSize; data.type =
-		(cloacked ? DetectionType::ART_DLL_CLOACKING : DetectionType::ART_ILLEGAL_THREAD);
-		data.dllName = cloacked ? possible_name : " "; data.dllPath = cloacked ? MappedName : " ";
-		cfg->callback(&data); cfg->ExcludedThreads.push_back((PVOID)caller);
-	}
+	data.baseAddr = (PVOID)caller; data.MemoryRights = mme.AllocationProtect;
+	data.regionSize = mme.RegionSize; data.type =
+	(cloacked ? DetectionType::ART_DLL_CLOACKING : DetectionType::ART_ILLEGAL_THREAD);
+	data.dllName = cloacked ? possible_name : " "; data.dllPath = cloacked ? MappedName : " ";
+	cfg->callback(&data); cfg->ExcludedThreads.push_back((PVOID)caller);
 }
 void __stdcall LdrInitializeThunk(PCONTEXT Context)
 {
@@ -28,12 +25,13 @@ void __stdcall LdrInitializeThunk(PCONTEXT Context)
 	char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
 	lpGetMappedFileNameA(cfg->CurrProc, TEP, MappedName, sizeof(MappedName));
 	std::string possible_name = Utils::GetDllName(MappedName); bool cloacked = false;
-	if (!Utils::IsMemoryInModuledRange((DWORD)TEP, possible_name, &cloacked) &&
-	!Utils::IsVecContain(cfg->ExcludedThreads, TEP))
+	DWORD true_base = (DWORD)GetModuleHandleA(possible_name.c_str());
+	if (!Utils::IsMemoryInModuledRange(true_base, possible_name, &cloacked) && !Utils::IsVecContain(cfg->ExcludedThreads, TEP))
 	{
 #ifdef ARTEMIS_DEBUG
 		Utils::LogInFile(ARTEMIS_LOG,
-		"[LdrInitializeThunk] Intercepted Thread Initialization! EP: 0x%X | Arg: 0x%X\n", (DWORD)TEP, (DWORD)ARG);
+		"[LdrInitializeThunk] Intercepted Thread Initialization! EP: 0x%X | Arg: 0x%X | Cloacking: %d\n", 
+		(DWORD)TEP, (DWORD)ARG, (BYTE)cloacked);
 #endif
 		ThreatReport(cfg, (DWORD)TEP, possible_name, MappedName, cloacked);
 	}

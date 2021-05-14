@@ -50,22 +50,19 @@ void __stdcall MemoryScanner(ArtemisConfig* cfg)
 						if (complete_sequence >= 8)
 						{
 							complete_sequence = 0x0; char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
-							lpGetMappedFileNameA(cfg->CurrProc, (PVOID)z, MappedName, sizeof(MappedName));
+							lpGetMappedFileNameA(cfg->CurrProc, i->BaseAddress, MappedName, sizeof(MappedName));
 							std::string possible_name = Utils::GetDllName(MappedName); bool cloacked = false;
-							if (!Utils::IsMemoryInModuledRange(z, possible_name, &cloacked))
+							if (!Utils::IsMemoryInModuledRange((DWORD)i->BaseAddress, possible_name, &cloacked))
 							{
 								if (!Utils::IsVecContain(cfg->ExcludedImages, i->BaseAddress))
 								{
-									// SHARED MEMORY can bring to us a couple of false-positives from Wow64 addreses!
-									if (std::string(MappedName).find("Windows\\SysWOW64") == std::string::npos)
-									{
-										ARTEMIS_DATA data; data.baseAddr = i->BaseAddress;
-										data.MemoryRights = i->Protect; data.regionSize = i->RegionSize;
-										data.dllName = cloacked ? possible_name : " ";
-										data.dllPath = cloacked ? MappedName : " ";
-										data.type = DetectionType::ART_MANUAL_MAP;
-										cfg->callback(&data); cfg->ExcludedImages.push_back(i->BaseAddress);
-									}
+									if ((i->Protect == 0x20 && cloacked) && !possible_name.empty()) continue;
+									ARTEMIS_DATA data; data.baseAddr = i->BaseAddress;
+									data.MemoryRights = i->Protect; data.regionSize = i->RegionSize;
+									data.dllName = cloacked ? possible_name : " ";
+									data.dllPath = cloacked ? MappedName : " ";
+									data.type = DetectionType::ART_MANUAL_MAP;
+									cfg->callback(&data); cfg->ExcludedImages.push_back(i->BaseAddress);
 								}
 							}
 						}
