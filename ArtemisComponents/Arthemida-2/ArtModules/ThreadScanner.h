@@ -8,7 +8,7 @@ const std::string& possible_name, const std::string& MappedName, bool &cloacked)
 {
 	if (cfg == nullptr) return; if (cfg->callback == nullptr) return;
 	// SHARED MEMORY can bring to us a couple of false-positives from Wow64 addreses!
-	if (MappedName.find("Windows\\SysWOW64") == std::string::npos && cloacked)
+	if (MappedName.find("Windows\\SysWOW64") == std::string::npos)
 	{
 		MEMORY_BASIC_INFORMATION mme { 0 }; ARTEMIS_DATA data;
 		VirtualQuery((PVOID)caller, &mme, sizeof(MEMORY_BASIC_INFORMATION));
