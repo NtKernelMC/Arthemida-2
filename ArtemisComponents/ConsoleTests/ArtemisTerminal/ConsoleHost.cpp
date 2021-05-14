@@ -123,9 +123,9 @@ int main()
 	//////////////////////////////// Heuristical Scanning ///////////////////////////////////////////
 	cfg.DetectPacking = true;
 	cfg.AllowedPackedModules.push_back("netc.dll"); // white-list for your packed or protected dll`s
-	cfg.DetectByString = true;
-	cfg.IlegaleLinien.push_back("Loop"); // custom string from our test.dll 
-	//Add this strings -> (gamesnus, rdror, vsdbg, Hybris, hybris, mft, MFT, P414, Project-414) and vk public links so on!
+	cfg.DetectByString = true; // Remove "Loop" string from list! For test dll only.
+	std::vector<std::string> Linien { "Loop", "gamesnus", "rdror", "vsdbg", "MFT", "mft", "Hybris", "hybris", "P414", "vk.com/hybrisoft" };
+	cfg.IlegaleLinien = Linien; // Add deprecated string from hacks here!
 	//cfg.DetectBySignature = true; cfg.PatternScanDelay = 1000; 
 	//cfg.IllegalPatterns.insert(std::pair<std::string, std::tuple<const char*, const char*>>
 	//(hack_name, std::make_tuple(pattern, mask))); // must be incapsulated
