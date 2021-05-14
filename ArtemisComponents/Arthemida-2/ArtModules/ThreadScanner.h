@@ -7,13 +7,17 @@ void __stdcall ThreatReport(ArtemisConfig* cfg, const DWORD &caller,
 const std::string& possible_name, const std::string& MappedName, bool &cloacked)
 {
 	if (cfg == nullptr) return; if (cfg->callback == nullptr) return;
-	MEMORY_BASIC_INFORMATION mme { 0 }; ARTEMIS_DATA data;
-	VirtualQuery((PVOID)caller, &mme, sizeof(MEMORY_BASIC_INFORMATION));
-	data.baseAddr = (PVOID)caller; data.MemoryRights = mme.AllocationProtect;
-	data.regionSize = mme.RegionSize; data.type = 
-	(cloacked ? DetectionType::ART_DLL_CLOACKING : DetectionType::ART_ILLEGAL_THREAD);
-	data.dllName = cloacked ? possible_name : " "; data.dllPath = cloacked ? MappedName : " ";
-	cfg->callback(&data); cfg->ExcludedThreads.push_back((PVOID)caller);
+	// SHARED MEMORY can bring to us a couple of false-positives from Wow64 addreses!
+	if (MappedName.find("Windows\\SysWOW64") == std::string::npos)
+	{
+		MEMORY_BASIC_INFORMATION mme { 0 }; ARTEMIS_DATA data;
+		VirtualQuery((PVOID)caller, &mme, sizeof(MEMORY_BASIC_INFORMATION));
+		data.baseAddr = (PVOID)caller; data.MemoryRights = mme.AllocationProtect;
+		data.regionSize = mme.RegionSize; data.type =
+		(cloacked ? DetectionType::ART_DLL_CLOACKING : DetectionType::ART_ILLEGAL_THREAD);
+		data.dllName = cloacked ? possible_name : " "; data.dllPath = cloacked ? MappedName : " ";
+		cfg->callback(&data); cfg->ExcludedThreads.push_back((PVOID)caller);
+	}
 }
 void __stdcall LdrInitializeThunk(PCONTEXT Context)
 {

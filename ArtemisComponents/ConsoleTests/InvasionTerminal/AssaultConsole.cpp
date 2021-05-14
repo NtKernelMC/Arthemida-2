@@ -24,9 +24,9 @@ int main()
 	if (procGate.SafeProcess<const wchar_t*, LPSTARTUPINFOW>
 	(L"ArtemisHost.exe", L"", NULL, NULL, TRUE, 0, NULL, NULL, &info, &processInfo))
 	{
-		/*char tst_dll[256]; memset(tst_dll, 0, sizeof(tst_dll));
-		char* cvr = _getcwd(tst_dll, sizeof(tst_dll)); strcat(tst_dll, "\\test.dll");
-		MmapDLL(processInfo.hProcess, tst_dll);*/
+		char tst_dll[256]; memset(tst_dll, 0, sizeof(tst_dll));
+		char* cvr = _getcwd(tst_dll, sizeof(tst_dll)); strcat(tst_dll, "\\test_2.dll");
+		MmapDLL(processInfo.hProcess, tst_dll);
 		printf("Process created. Press any key to exit.\n");
 		int anykey = getchar(); ExitProcess(0x0);
 	}

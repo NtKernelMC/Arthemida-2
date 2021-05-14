@@ -56,12 +56,16 @@ void __stdcall MemoryScanner(ArtemisConfig* cfg)
 							{
 								if (!Utils::IsVecContain(cfg->ExcludedImages, i->BaseAddress))
 								{
-									ARTEMIS_DATA data; data.baseAddr = i->BaseAddress;
-									data.MemoryRights = i->Protect; data.regionSize = i->RegionSize;
-									data.dllName = cloacked ? possible_name : " ";
-									data.dllPath = cloacked ? MappedName : " ";
-									data.type = DetectionType::ART_MANUAL_MAP;
-									cfg->callback(&data); cfg->ExcludedImages.push_back(i->BaseAddress);
+									// SHARED MEMORY can bring to us a couple of false-positives from Wow64 addreses!
+									if (std::string(MappedName).find("Windows\\SysWOW64") == std::string::npos)
+									{
+										ARTEMIS_DATA data; data.baseAddr = i->BaseAddress;
+										data.MemoryRights = i->Protect; data.regionSize = i->RegionSize;
+										data.dllName = cloacked ? possible_name : " ";
+										data.dllPath = cloacked ? MappedName : " ";
+										data.type = DetectionType::ART_MANUAL_MAP;
+										cfg->callback(&data); cfg->ExcludedImages.push_back(i->BaseAddress);
+									}
 								}
 							}
 						}
