@@ -51,7 +51,7 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 				// IsModuleDuplicated - вернет имя длл и путь в любом случае для пользования в коде ниже этого блока в том числе
 				if (Utils::IsModuleDuplicated((HMODULE)it.first, szFileName, orderedIdentify, NameOfDLL)) 
 				{
-					wideFileName = Utils::CvAnsiToWide(szFileName);
+					wideFileName = Utils::CvAnsiToWide(szFileName); // данный блок только для детектов прокси дллок либо дубликатных DLL! 
 					if (!Utils::OsProtectedFile(wideFileName.c_str())) // New advanced algorithm!
 					{
 						ModuleThreatReport(it, szFileName, NameOfDLL, DetectionType::ART_PROXY_LIBRARY);
@@ -68,7 +68,7 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 					}
 					if (cfg->DetectByString)
 					{
-						for (const auto& zm : cfg->IlegaleLinien)
+						for (const auto& zm : cfg->IlegaleLinien) // Список строк для поиска читов (вектор стринг)
 						{
 							size_t end_len = NULL;
 							char* ptr = SearchStringInMemory(zm, zm.length(), (PVOID)it.first, (PVOID)it.second, end_len);
