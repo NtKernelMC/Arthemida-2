@@ -47,16 +47,21 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 			!Utils::IsVecContain(cfg->ExcludedModules, (PVOID)it.first))
 			{
 				std::string NameOfDLL = "", szFileName = ""; // Optimizated (Less-recursive calls!)
-				if (Utils::IsModuleDuplicated((HMODULE)it.first, szFileName, orderedIdentify, NameOfDLL))
+				std::wstring wideFileName = L""; // wide-version (anti-destruction)
+				// IsModuleDuplicated - вернет имя длл и путь в любом случае для пользования в коде ниже этого блока в том числе
+				if (Utils::IsModuleDuplicated((HMODULE)it.first, szFileName, orderedIdentify, NameOfDLL)) 
 				{
-					if (!Utils::OsProtectedFile(Utils::CvAnsiToWide(szFileName).c_str())) // New advanced algorithm!
+					wideFileName = Utils::CvAnsiToWide(szFileName);
+					if (!Utils::OsProtectedFile(wideFileName.c_str())) // New advanced algorithm!
 					{
 						ModuleThreatReport(it, szFileName, NameOfDLL, DetectionType::ART_PROXY_LIBRARY);
 					}
 				}
 				else
 				{
-					if (Utils::OsProtectedFile(Utils::CvAnsiToWide(szFileName).c_str())) continue;
+					// чтобы если выше выполнилась проверка то не дублировать вызов еще раз а если нет - конвертим строку
+					if (wideFileName.empty()) wideFileName = Utils::CvAnsiToWide(szFileName); 
+					if (Utils::OsProtectedFile(wideFileName.c_str())) continue;
 					if (cfg->DetectPacking && IsModulePacked((HMODULE)it.first, cfg->AllowedPackedModules))
 					{
 						ModuleThreatReport(it, szFileName, NameOfDLL, DetectionType::ART_PROTECTOR_PACKER);
