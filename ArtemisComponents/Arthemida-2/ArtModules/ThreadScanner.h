@@ -25,7 +25,7 @@ void __stdcall LdrInitializeThunk(PCONTEXT Context)
 	char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
 	lpGetMappedFileNameA(cfg->CurrProc, TEP, MappedName, sizeof(MappedName));
 	std::string possible_name = Utils::GetDllName(MappedName); bool cloacked = false;
-	DWORD true_base = (DWORD)GetModuleHandleA(possible_name.c_str());
+	DWORD true_base = (DWORD)GetModuleHandleA(possible_name.c_str()); // figure out with peb hide (dll cloacking)
 	if (!Utils::IsMemoryInModuledRange(true_base, possible_name, &cloacked) && !Utils::IsVecContain(cfg->ExcludedThreads, TEP))
 	{
 #ifdef ARTEMIS_DEBUG
@@ -80,7 +80,8 @@ void __stdcall ScanForDllThreads(ArtemisConfig* cfg)
 						CloseHandle(targetThread); char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
 						lpGetMappedFileNameA(cfg->CurrProc, (PVOID)tempBase, MappedName, sizeof(MappedName));
 						std::string possible_name = Utils::GetDllName(MappedName); bool cloacked = false;
-						if (!Utils::IsMemoryInModuledRange(tempBase, possible_name, &cloacked) &&
+						DWORD true_base = (DWORD)GetModuleHandleA(possible_name.c_str()); // figure out with peb hide (dll cloacking)
+						if (!Utils::IsMemoryInModuledRange(true_base, possible_name, &cloacked) &&
 						!Utils::IsVecContain(cfg->ExcludedThreads, (PVOID)tempBase))
 						{
 							ThreatReport(cfg, tempBase, possible_name, MappedName, cloacked);

@@ -58,13 +58,11 @@ namespace ArtemisData
 		bool ThreadScanner = false;
 		bool ModuleScanner = false;
 		bool MemoryScanner = false;
-		bool SignatureScanner = false;
 		bool MemGuardScanner = false;
 		// iteration delays for scanners
 		DWORD ThreadScanDelay = 0x0;
 		DWORD ModuleScanDelay = 0x0;
 		DWORD MemoryScanDelay = 0x0;
-		DWORD PatternScanDelay = 0x0;
 		DWORD MemoryGuardScanDelay = 0x0;
 		DWORD ServiceMonDelay = 0x0;
 		// additional settings & stuff
@@ -78,8 +76,8 @@ namespace ArtemisData
 		std::vector<std::string> AllowedPackedModules; // for cfg.DetectPacking = true;
 		std::vector<std::string> IlegaleLinien; // for cfg.DetectByString
 		// service stuff set
-		std::map<PVOID, PVOID> HooksList; // DestinyAddress, InterceptorAddress
-		std::map<std::string, std::tuple<const char*, const char*>> IllegalPatterns; 
+		std::map<PVOID, PVOID> HooksList; // DestinyAddress, InterceptorAddress (Memory Guard part, can be removed/changed soon!)
+		std::map<std::string, std::tuple<std::string, std::string>> IllegalPatterns;
 		// human-readable hack name, pattern, mask
 		std::map<std::string, std::tuple<std::string, std::string>> IllegalDriverPatterns; 
 		// human-readable driver/hack name, pattern, mask
