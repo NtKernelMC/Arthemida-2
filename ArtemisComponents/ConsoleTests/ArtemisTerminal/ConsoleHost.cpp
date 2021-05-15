@@ -63,8 +63,9 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 		artemis->baseAddr, artemis->MemoryRights, artemis->regionSize);
 		break;
 	case DetectionType::ART_SIGNATURE_DETECT:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module!\nBase: 0x%X | Rights: 0x%X | Image Size: 0x%X\n\n",
-		artemis->baseAddr, artemis->MemoryRights, artemis->regionSize);
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Signatured Hack! Name: %s\nBase: 0x%X | Image Size: 0x%X | DllName: %s\n\
+		\rPath: %s\n\n", artemis->HackName.c_str(), artemis->baseAddr,
+		artemis->regionSize, artemis->dllName.c_str(), artemis->dllPath.c_str());
 		break;
 	case DetectionType::ART_ILLEGAL_SERVICE:
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal service!\nName: %s | Path: %s\n\n", 
@@ -126,9 +127,9 @@ int main()
 	cfg.DetectByString = true; 
 	std::vector<std::string> Linien { "imgui", "minhook", "gamesnus", "rdror", "vsdbg", "Hybris", "hybris", "[P414]", "vk.com/hybrisoft" };
 	cfg.IlegaleLinien = Linien; // Add deprecated string from hacks here!
-	//cfg.DetectBySignature = true; cfg.PatternScanDelay = 1000; 
-	//cfg.IllegalPatterns.insert(std::pair<std::string, std::tuple<const char*, const char*>>
-	//(hack_name, std::make_tuple(pattern, mask))); // must be incapsulated
+	cfg.DetectBySignature = true; 
+	cfg.IllegalPatterns.insert(CortPair("HWBP by NtKernelMC", 
+	std::make_tuple("\x8D\x45\xF4\x64\xA3\x00\x00\x00\x00\x68", "xxxxxxxxxx")));
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 	cfg.DetectFakeLaunch = true;
 	cfg.callback = (ArtemisCallback)ArthemidaCallback; 

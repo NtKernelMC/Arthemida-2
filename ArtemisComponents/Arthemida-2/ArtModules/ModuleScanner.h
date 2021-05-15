@@ -33,7 +33,7 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 		data.baseAddr = (PVOID)it.first; data.MemoryRights = mme.AllocationProtect;
 		data.regionSize = it.second; data.dllName = name;
 		data.dllPath = path; data.type = detect; 
-		if (detect == DetectionType::ART_HACK_STRING_FOUND) data.HackName = hack_name;
+		if (detect == DetectionType::ART_HACK_STRING_FOUND || detect == DetectionType::ART_SIGNATURE_DETECT) data.HackName = hack_name;
 		cfg->callback(&data); cfg->ExcludedModules.push_back((PVOID)it.first);
 	};
 	DWORD appHost = (DWORD)GetModuleHandleA(NULL); // Optimizated (Now is non-recursive call!)
@@ -55,6 +55,7 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 					if (!Utils::OsProtectedFile(wideFileName.c_str())) // New advanced algorithm!
 					{
 						ModuleThreatReport(it, szFileName, NameOfDLL, DetectionType::ART_PROXY_LIBRARY);
+						continue; // если данный модуль уже словил детект - нет смысла идти дальше по нему
 					}
 				}
 				else
@@ -62,9 +63,11 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 					// чтобы если выше выполнилась проверка то не дублировать вызов еще раз а если нет - конвертим строку
 					if (wideFileName.empty()) wideFileName = Utils::CvAnsiToWide(szFileName); 
 					if (Utils::OsProtectedFile(wideFileName.c_str())) continue;
+					if (Utils::findStringIC(NameOfDLL, "MSVCP") || Utils::findStringIC(NameOfDLL, "VCRUNTIME")) continue;
 					if (cfg->DetectPacking && IsModulePacked((HMODULE)it.first, cfg->AllowedPackedModules))
 					{
 						ModuleThreatReport(it, szFileName, NameOfDLL, DetectionType::ART_PROTECTOR_PACKER);
+						continue; // если данный модуль уже словил детект - нет смысла идти дальше по нему
 					}
 					if (cfg->DetectByString)
 					{
@@ -76,6 +79,21 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 							{
 								std::string match = std::string(ptr, zm.length() + end_len);
 								ModuleThreatReport(it, szFileName, NameOfDLL, DetectionType::ART_HACK_STRING_FOUND, match);
+								continue; // если данный модуль уже словил детект - нет смысла идти дальше по нему
+							}
+						}
+					}
+					if (cfg->DetectBySignature)
+					{
+						for (const auto& sg : cfg->IllegalPatterns) // Список сигнатур для поиска известных читов или их участков памяти
+						{
+							static SigScan scn; DWORD sgAddr = scn.FindPattern(NameOfDLL.c_str(),
+							std::get<0>(sg.second).c_str()/*"\x8D\x45\xF4\x64\xA3\x00\x00\x00\x00\x68"*/, std::get<1>(sg.second).c_str());
+							printf("[SIG WALKER] Name: %s | Pattern: %s | Mask: %s | Len: %d\n", NameOfDLL.c_str(),
+							std::get<0>(sg.second).c_str(), std::get<1>(sg.second).c_str(), std::get<0>(sg.second).length());
+							if (sgAddr != NULL)
+							{
+								ModuleThreatReport(it, szFileName, NameOfDLL, DetectionType::ART_SIGNATURE_DETECT, sg.first);
 							}
 						}
 					}
