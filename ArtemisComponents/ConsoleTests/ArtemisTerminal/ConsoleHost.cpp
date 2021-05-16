@@ -15,7 +15,7 @@
 using namespace std;
 using namespace ArtemisData;
 using namespace ARTEMIS_INTERFACE;
-using CortPair = std::pair<std::string, std::tuple<std::string, std::string>>; // Садился холмс жопой на кактус. Кололся, кололся))
+using CortPair = std::pair<std::string, std::tuple<std::string, std::string>>;
 void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 {
 	system("color 04"); Utils::LogInFile(ARTEMIS_LOG, "\n\n");
