@@ -70,7 +70,7 @@ void __stdcall MemoryGuardScanner(ArtemisConfig* cfg) // On tehnical work
 					ARTEMIS_DATA data; data.baseAddr = it.second; 
 					data.MemoryRights = PAGE_EXECUTE_READWRITE; data.regionSize = 0x5;
 					data.dllName = "client.dll"; data.dllPath = "MTA\\mods\\deadmatch\\client.dll";
-					data.type = DetectionType::ART_MEMORY_CHANGED;
+					data.type = DetectionType::ART_GUARD_MEMORY_VIOLATION;
 					cfg->callback(&data); cfg->ExcludedPatches.push_back(it.second);
 				}
 			}

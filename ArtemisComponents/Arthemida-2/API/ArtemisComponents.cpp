@@ -5,6 +5,8 @@
 */
 #include ".../../../../Arthemida-2/API/ArtemisComponents.h"
 using namespace ArtComponent;
+bool ArtemisConfig::ThreadViolationDiscovered = false;
+std::vector<DWORD> ArtemisConfig::OwnThreads;
 ArtemisIncapsulator::ArtemisIncapsulator(ArtemisConfig* cfg)
 {
 	if (cfg != nullptr)
@@ -106,6 +108,7 @@ ArtemisConfig* __stdcall IArtemisInterface::GetConfig()
 }
 /////////////////////////// Protection Modules //////////////////////////////////////////////////////////////
 #include "../../Arthemida-2/ArtModules/HeuristicScanner.h"
+#include "../../Arthemida-2/ArtModules/ThreadGuard.h"
 #include "../../Arthemida-2/ArtModules/ThreadScanner.h"
 #include "../../Arthemida-2/ArtModules/AntiFakeLaunch.h"
 #include "../../Arthemida-2/ArtModules/ModuleScanner.h"
@@ -137,6 +140,7 @@ IArtemisInterface* __stdcall IArtemisInterface::InstallArtemisMonitor(ArtemisCon
 		return nullptr;
 	}
 	Utils::BuildModuledMemoryMap(cfg->CurrProc); // Заполняем список изначально загруженными модулями
+	DWORD tmpTID = 0xFFFFFF; 
 	if (cfg->DetectFakeLaunch) // Детект лаунчера (должен запускаться в первую очередь)
 	{
 		ConfirmLegitLaunch(cfg);
@@ -145,32 +149,28 @@ IArtemisInterface* __stdcall IArtemisInterface::InstallArtemisMonitor(ArtemisCon
 	{
 		if (!cfg->ThreadScanDelay) cfg->ThreadScanDelay = 1000;
 		if (!cfg->ExcludedThreads.empty()) cfg->ExcludedThreads.clear(); 
-		std::thread ThreadsScanner(ScanForDllThreads, cfg);
-		ThreadsScanner.detach(); cfg->OwnThreads.push_back(ThreadsScanner.native_handle());
+		CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ScanForDllThreads, cfg, 0, &tmpTID);
+		cfg->OwnThreads.push_back(tmpTID);
 	}
 	if (cfg->DetectModules) // Детект сторонних модулей
 	{
 		if (!cfg->ModuleScanDelay) cfg->ModuleScanDelay = 1000;
 		if (!cfg->ExcludedModules.empty()) cfg->ExcludedModules.clear(); 
-		std::thread ProxyScanner(ModuleScanner, cfg);
-		ProxyScanner.detach(); // Создание и запуск асинхронного потока сканера модулей процесса
-		cfg->OwnThreads.push_back(ProxyScanner.native_handle());
+		CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ModuleScanner, cfg, 0, &tmpTID);
+		cfg->OwnThreads.push_back(tmpTID);
 	}
 	if (cfg->DetectManualMap) // Детект мануал маппинга
 	{
 		if (!cfg->MemoryScanDelay) cfg->MemoryScanDelay = 1000;
 		if (!cfg->ExcludedImages.empty()) cfg->ExcludedImages.clear();
-		std::thread MmapScanner(MemoryScanner, cfg);
-		MmapScanner.detach(); // Запуск асинхронного cканнера для поиска смапленных образов DLL-библиотек
-		cfg->OwnThreads.push_back(MmapScanner.native_handle());
+		HANDLE hTMP = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)MemoryScanner, cfg, 0, &tmpTID);
+		cfg->OwnThreads.push_back(tmpTID); TerminateThread(hTMP, 0x0); // TEST!!!!!!!!!!!!
 	}
 	if (cfg->ServiceMon) // on dev
 	{
 		if (!cfg->ServiceMonDelay) cfg->ServiceMonDelay = 1000;
 		CServiceMon* servmon = new CServiceMon; //! Утечка памяти, нужен контейнер для класса (статическая инициализация не подходит)
-		std::thread thServmon = servmon->Initialize(cfg);
-		cfg->OwnThreads.push_back(thServmon.native_handle());
-		thServmon.detach();
+		std::thread thServmon = servmon->Initialize(cfg); thServmon.detach();
 	}
 	return ac_info;
 }

@@ -18,11 +18,12 @@ namespace ArtemisData
 		ART_FAKE_LAUNCHER,
 		ART_RETURN_ADDRESS,
 		ART_MANUAL_MAP,
-		ART_MEMORY_CHANGED,
 		ART_PROTECTOR_PACKER,
 		ART_HACK_STRING_FOUND,
 		ART_SIGNATURE_DETECT,
-		ART_ILLEGAL_SERVICE
+		ART_ILLEGAL_SERVICE,
+		ART_GUARD_THREAD_VIOLATION,
+		ART_GUARD_MEMORY_VIOLATION
 	};
 	struct ARTEMIS_DATA
 	{
@@ -42,7 +43,7 @@ namespace ArtemisData
 		bool SingletonCalled = false;
 		HANDLE hSelfModule = nullptr;
 		HANDLE CurrProc = nullptr;
-		std::vector<HANDLE> OwnThreads;
+		static std::vector<DWORD> OwnThreads;
 		ArtemisCallback callback = nullptr;
 		// anticheat controller options
 		bool DetectThreads = false;
@@ -54,6 +55,7 @@ namespace ArtemisData
 		bool DetectPacking = false;
 		bool DetectByString = false;
 		bool ServiceMon = false;
+		bool ThreadGuard = false;
 		// anti-repeatable start for scanners
 		bool ThreadScanner = false;
 		bool ModuleScanner = false;
@@ -72,6 +74,7 @@ namespace ArtemisData
 		std::vector<PVOID> ExcludedMethods;
 		std::vector<PVOID> ExcludedPatches;
 		std::vector<PVOID> ExcludedSigAddresses;
+		static bool ThreadViolationDiscovered;
 		// heuristical detection set
 		std::vector<std::string> AllowedPackedModules; // for cfg.DetectPacking = true;
 		std::vector<std::string> IlegaleLinien; // for cfg.DetectByString

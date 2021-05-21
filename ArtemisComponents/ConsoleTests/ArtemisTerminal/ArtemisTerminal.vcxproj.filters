@@ -77,5 +77,8 @@
     <ClInclude Include="..\..\Arthemida-2\ArtModules\CServiceMon.h">
       <Filter>Arthemida-2\ArtModules</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Arthemida-2\ArtModules\ThreadGuard.h">
+      <Filter>Arthemida-2\ArtModules</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

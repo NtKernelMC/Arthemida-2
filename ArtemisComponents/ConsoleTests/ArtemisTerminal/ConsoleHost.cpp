@@ -58,10 +58,6 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Mapped Image! %s\n%s\nBase: 0x%X | Size: 0x%X | Rights: 0x%X\n\n",
 		artemis->dllName.c_str(), artemis->dllPath.c_str(), artemis->baseAddr, artemis->regionSize, artemis->MemoryRights);
 		break;
-	case DetectionType::ART_MEMORY_CHANGED:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module!\nBase: 0x%X | Rights: 0x%X | Image Size: 0x%X\n\n",
-		artemis->baseAddr, artemis->MemoryRights, artemis->regionSize);
-		break;
 	case DetectionType::ART_SIGNATURE_DETECT:
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Signatured Hack! Name: %s\nBase: 0x%X | Image Size: 0x%X | DllName: %s\n\
 		\rPath: %s\n\n", artemis->HackName.c_str(), artemis->baseAddr,
@@ -71,6 +67,14 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal service!\nName: %s | Path: %s\n\n", 
 		artemis->HackName.c_str(), artemis->filePath.c_str());
 		//"Path: %s | \nName: %s  | Description: %s | \nType: %d | BootSet: %s | Group: %s\n | Signed by: %s\n");
+		break;
+	case DetectionType::ART_GUARD_MEMORY_VIOLATION:
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Memory Guard Violation!\nBase: 0x%X | Rights: 0x%X | Image Size: 0x%X\n\n",
+		artemis->baseAddr, artemis->MemoryRights, artemis->regionSize);
+		break;
+	case DetectionType::ART_GUARD_THREAD_VIOLATION:
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] %s%s%s\n\n", 
+		artemis->dllName.c_str(), artemis->dllPath.c_str(), artemis->HackName.c_str());
 		break;
 	default:
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Unknown detection code! Base: 0x%X | Size: %d bytes | DllName: %s\n"
@@ -110,6 +114,8 @@ int main()
 	
 	cfg.DetectManualMap = true; 
 	cfg.MemoryScanDelay = 1000; 
+
+	cfg.ThreadGuard = true; // Prevent our threads from stopping or destroying
 
 	//cfg.DetectMemoryPatch = true; 
 	//cfg.MemoryGuardScanDelay = 1000;
