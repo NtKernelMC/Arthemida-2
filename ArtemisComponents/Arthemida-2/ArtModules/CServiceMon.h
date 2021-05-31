@@ -11,8 +11,7 @@
 *       Buffered file pattern scanner
 *       Failure handling
 * 
-* In progress:
-*       Optimization: prevent rescanning by keeping fast hash table of files
+* TBD:
 *       Enhancement: grant services scanning priority by known names
 *       Enhancement: analyze digital signatures of files
 */
@@ -37,10 +36,11 @@ public:
         bool                    EmptyVersionInfo = true;
         SERVICE_STATUS_PROCESS  sspStatus { 0 };
     };
-    std::thread Initialize(ArtemisConfig* cfg);
+    HANDLE Initialize(ArtemisConfig* cfg, void* stubfunc);
     std::multimap<std::wstring, SServiceInfo> GetAllServices();
-private:
     void MonitorCycle();
+
+private:
     SC_HANDLE m_hSCManager;
 
     ArtemisConfig* m_pArtConfig;
@@ -67,11 +67,9 @@ void CServiceMon::MonitorCycle()
     Utils::LogInFile(ARTEMIS_LOG, 
     "[INFO] Created async thread for CServiceMon::MonitorCycle! Thread id: %d\n", GetCurrentThreadId());
 #endif
-    static bool RUN = false; // ! DEBUG - ONE TIME RUN
     std::multimap<std::wstring, SServiceInfo> mmServices;
     while (true)
     {
-        if (RUN) break;
         try
         {
             mmServices = std::move(GetAllServices());
@@ -140,12 +138,10 @@ void CServiceMon::MonitorCycle()
 
             CloseHandle(hFile);
         }
-
-        RUN = true; // ! DEBUG - ONE TIME RUN
     }
 }
 
-std::thread CServiceMon::Initialize(ArtemisConfig* cfg)
+HANDLE CServiceMon::Initialize(ArtemisConfig* cfg, void* stubfunc)
 {
     m_hSCManager = OpenSCManagerW(NULL, SERVICES_ACTIVE_DATABASEW, SC_MANAGER_ENUMERATE_SERVICE);
     if (!m_hSCManager) throw std::exception("OpenSCManagerW failed.");
@@ -154,8 +150,8 @@ std::thread CServiceMon::Initialize(ArtemisConfig* cfg)
     if (m_pNtCreateFile == nullptr) throw std::exception("Failed to obtain NtCreateFile address.");
 
     m_pArtConfig = cfg;
-
-    return std::thread(&CServiceMon::MonitorCycle, this);
+    
+    return ArtThreading::CreateProtectedThread(stubfunc, this);
 }
 
 std::multimap<std::wstring, CServiceMon::SServiceInfo> CServiceMon::GetAllServices()

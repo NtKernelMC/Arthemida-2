@@ -68,13 +68,17 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 		artemis->HackName.c_str(), artemis->filePath.c_str());
 		//"Path: %s | \nName: %s  | Description: %s | \nType: %d | BootSet: %s | Group: %s\n | Signed by: %s\n");
 		break;
-	case DetectionType::ART_GUARD_MEMORY_VIOLATION:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Memory Guard Violation!\nBase: 0x%X | Rights: 0x%X | Image Size: 0x%X\n\n",
-		artemis->baseAddr, artemis->MemoryRights, artemis->regionSize);
+	case DetectionType::ART_MEMORY_PROTECT_VIOLATION:
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected memory protect violation!\nBase: 0x%X | Size: 0x%X\n\n",
+			(DWORD)artemis->baseAddr, (DWORD)artemis->regionSize);
 		break;
-	case DetectionType::ART_GUARD_THREAD_VIOLATION:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] %s%s%s\n\n", 
-		artemis->dllName.c_str(), artemis->dllPath.c_str(), artemis->HackName.c_str());
+	case DetectionType::ART_MEMORY_PROTECT_MAYBE_VIOLATION:
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected light memory protect violation!\nBase: 0x%X | Size: 0x%X\n\n",
+			(DWORD)artemis->baseAddr, (DWORD)artemis->regionSize);
+		break;
+	case DetectionType::ART_THREAD_FLAGS_CHANGED:
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected thread with modified flags!\nHandle: 0x%X",
+			(DWORD)artemis->baseAddr);
 		break;
 	default:
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Unknown detection code! Base: 0x%X | Size: %d bytes | DllName: %s\n"
@@ -83,7 +87,7 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 	}
 	Utils::LogInFile(ARTEMIS_LOG, "\n\n");
 }
-class RetTest
+/*class RetTest
 {
 public:
 	static bool __stdcall TestStaticMethod(void)
@@ -99,7 +103,7 @@ public:
 		if (art_interface != nullptr) art_interface->ConfirmLegitReturn(__FUNCTION__, _ReturnAddress());
 		Utils::LogInFile(ARTEMIS_LOG, "\n[ORIGINAL] Called %s!\n\n", __FUNCTION__);
 	}
-}; RetTest testObj;
+}; RetTest testObj;*/
 int main()
 {
 	SetConsoleCP(1251); SetConsoleOutputCP(1251);
@@ -115,17 +119,18 @@ int main()
 	cfg.DetectManualMap = true; 
 	cfg.MemoryScanDelay = 1000; 
 
-	cfg.ThreadGuard = true; // Prevent our threads from stopping or destroying
+	cfg.MemoryGuard = true; 
+	cfg.MemoryGuardScanDelay = 1;
 
-	//cfg.DetectMemoryPatch = true; 
-	//cfg.MemoryGuardScanDelay = 1000;
+	cfg.ThreadGuard = true;
+	cfg.ThreadGuardDelay = 500;
 	//cfg.HooksList.insert(std::pair<PVOID, PVOID>((PVOID)RetTest::TestStaticMethod, (PVOID)HookTestStaticMethod));
 	// __thiscall methods must be casted in a different way
 	
 	cfg.ServiceMon = true;
 	cfg.ServiceMonDelay = 1000;
 	cfg.IllegalDriverPatterns.insert(CortPair("HWIDSYS spoofer", std::make_tuple
-	("\x5B\x64\x62\x67\x5D\x20\x72\x65\x76\x65\x72\x74\x65\x64\x20\x25\x77\x5A\x20\x73\x77\x61\x70", "xxxxxxxxxxxxxxxxxxxxxxx")));
+	("\x5B\x64\x62\x67\x5D\x20\x72\x65\x76\x65\x72\x74\x65\x64\x20\x25\x77\x5A\x20\x73\x77\x61\x70"s, "xxxxxxxxxxxxxxxxxxxxxxx"s)));
 	//todo cfg.PriorityDriverNames
 	//////////////////////////////// Heuristical Scanning ///////////////////////////////////////////
 	cfg.DetectPacking = true;
@@ -135,7 +140,7 @@ int main()
 	cfg.IlegaleLinien = Linien; // Add deprecated string from hacks here!
 	cfg.DetectBySignature = true; 
 	cfg.IllegalPatterns.insert(CortPair("HWBP by NtKernelMC", 
-	std::make_tuple("\x8D\x45\xF4\x64\xA3\x00\x00\x00\x00\x68", "xxxxxxxxxx")));
+	std::make_tuple("\x8D\x45\xF4\x64\xA3\x00\x00\x00\x00\x68"s, "xxxxxxxxxx"s)));
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 	cfg.DetectFakeLaunch = true;
 	cfg.callback = (ArtemisCallback)ArthemidaCallback; 
@@ -145,7 +150,8 @@ int main()
 	for (;;) 
 	{
 		Sleep(3000); static bool first = false; if (!first) { first = true; printf("\n"); }
-		printf("\n[HEART-BEAT] Console is working normally! Thread ID: %d | Press any key to stop.\n\n", GetCurrentThreadId());
+		// ZAEBALO FLUDIT BLYAT
+		//printf("\n[HEART-BEAT] Console is working normally! Thread ID: %d | Press any key to stop.\n\n", GetCurrentThreadId());
 	} });
 
 	IArtemisInterface* art = IArtemisInterface::InstallArtemisMonitor(&cfg);

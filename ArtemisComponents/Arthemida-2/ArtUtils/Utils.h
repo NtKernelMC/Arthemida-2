@@ -93,7 +93,8 @@ public:
 		ThreadPriorityBoost,
 		ThreadSetTlsArrayAddress,
 		ThreadIsIoPending,
-		ThreadHideFromDebugger
+		ThreadHideFromDebugger,
+		ThreadBreakOnTermination
 	} THREAD_INFORMATION_CLASS, *PTHREAD_INFORMATION_CLASS;
 	static BOOL SetPrivilege(HANDLE hToken, LPCTSTR lpszPrivilege, BOOL bEnablePrivilege)
 	{
@@ -379,5 +380,27 @@ public:
 			}
 		}
 #endif  
+	}
+
+	/**
+	*  Example: splits 1500 into vector of 500, 500, 500 for 3 threads
+	*  Example 2: splits 1631 into vector of 407, 408, 408, 408 for 4 threads
+	*  In case if objects won't evenly split, more are given to last threads and less to first
+	*/
+	static std::vector<int> SplitObjectsForThreading(unsigned int uiObjectCount, unsigned int uiThreadCount)
+	{
+		std::vector<int> parts;
+
+		for (int i = 0; i < uiThreadCount; i++)
+		{
+			parts.push_back(uiObjectCount / uiThreadCount);
+		}
+
+		for (int i = 0; i < (uiObjectCount % uiThreadCount); i++)
+		{
+			*(parts.rbegin() + i) += 1;
+		}
+
+		return parts;
 	}
 };

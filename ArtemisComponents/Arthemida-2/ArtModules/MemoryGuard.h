@@ -3,37 +3,58 @@
 	Target Platform: x32-x86
 	Project by NtKernelMC & holmes0
 */
+/**
+* Assignee: holmes0
+* Done: 
+*		Hook NtProtectVirtualMemory and block changes to executable memory
+*		Keep constantly updated list of memory page rights in order to detect any external modifications
+*			This still allows fast external protection changing and writing, impossible to perfectly protect from usermode.
+* 
+*		(FIXED) Bug: Page containing NtProtectVirtualMemory remains with PAGE_READWRITE_EXECUTE rights for hook library to remove and place hook back (consider switching to another library).
+*
+* TBD:
+*		WIP Enhancement: Multithreaded (faster) scanning to detect and prevent patching.
+*/
 #include "ArtemisInterface.h"
-#include ".../../../../Arthemida-2/ArtUtils/MiniJumper.h"
-void __thiscall IArtemisInterface::ConfirmLegitReturn(const char* function_name, PVOID return_address)
+
+std::map<DWORD, DWORD> mpProtectionList;
+
+typedef NTSTATUS(__stdcall* pNtProtectVirtualMemory)(HANDLE ProcessHandle, PVOID* BaseAddress, PULONG NumberOfBytesToProtect, ULONG NewAccessProtection, PULONG OldAccessProtection);
+pNtProtectVirtualMemory ptrNtProtectVirtualMemory;
+pNtProtectVirtualMemory ptrOriginalNtProtectVirtualMemory;
+
+NTSTATUS __stdcall hkNtProtectVirtualMemory(HANDLE ProcessHandle, PVOID* BaseAddress, PULONG NumberOfBytesToProtect, ULONG NewAccessProtection, PULONG OldAccessProtection)
 {
-	if (function_name == nullptr || return_address == nullptr) return; ArtemisConfig* cfg = GetConfig();
-	if (cfg == nullptr) return; static std::vector<std::string> allowedModules = 
-	{ "client.dll", "multiplayer_sa.dll", "game_sa.dll", "core.dll", "gta_sa.exe", "proxy_sa.exe" };
-	if (!Utils::IsInModuledAddressSpace(return_address, allowedModules) && 
-	!Utils::IsVecContain(cfg->ExcludedMethods, return_address))
+#define CALL_ORIG(a, b, c, d, e) ptrOriginalNtProtectVirtualMemory(a, b, c, d, e);
+
+	ULONG ulOldProt;
+	NTSTATUS result = CALL_ORIG(ProcessHandle, BaseAddress, NumberOfBytesToProtect, NewAccessProtection, &ulOldProt);
+	
+	if (ulOldProt & PAGE_EXECUTE_READWRITE)
 	{
-		char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
-		lpGetMappedFileNameA(GetCurrentProcess(), (PVOID)return_address, MappedName, sizeof(MappedName));
-		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		MEMORY_BASIC_INFORMATION mme{ 0 }; ARTEMIS_DATA data; 
-		 std::string DllName = Utils::GetDllName(MappedName);
-		VirtualQuery(return_address, &mme, sizeof(MEMORY_BASIC_INFORMATION));
-		data.baseAddr = (LPVOID)return_address; 
-		data.MemoryRights = mme.AllocationProtect; 
-		data.regionSize = mme.RegionSize;
-		data.type = DetectionType::ART_RETURN_ADDRESS;
-		data.dllName = DllName; data.dllPath = MappedName; 
-		if (cfg != nullptr)
-		{
-			cfg->callback(&data); cfg->ExcludedMethods.push_back(return_address); 
-#ifdef ARTEMIS_DEBUG
-			Utils::LogInFile(ARTEMIS_LOG, "\nReturned from %s function to 0x%X\n", function_name, return_address);
-#endif
-		}
+		CALL_ORIG(ProcessHandle, BaseAddress, NumberOfBytesToProtect, PAGE_EXECUTE_READ, &ulOldProt);
+		*OldAccessProtection = PAGE_EXECUTE_READ;
+		return result;
 	}
+	
+	if (ulOldProt & (PAGE_EXECUTE | PAGE_EXECUTE_READ))
+	{
+		CALL_ORIG(ProcessHandle, BaseAddress, NumberOfBytesToProtect, ulOldProt, &ulOldProt);
+		*OldAccessProtection = ulOldProt;
+		return 0xC0000022; // STATUS_ACCESS_DENIED
+	}
+
+	if (NewAccessProtection & (PAGE_EXECUTE | PAGE_EXECUTE_READ | PAGE_EXECUTE_READWRITE | PAGE_EXECUTE_WRITECOPY))
+	{
+		CALL_ORIG(ProcessHandle, BaseAddress, NumberOfBytesToProtect, ulOldProt, &ulOldProt);
+		*OldAccessProtection = ulOldProt;
+		return 0xC0000022; // STATUS_ACCESS_DENIED
+	}
+
+	return result;
 }
-void __stdcall MemoryGuardScanner(ArtemisConfig* cfg) // On tehnical work
+
+void __stdcall MemoryGuardScanner(ArtemisConfig* cfg)
 {
 	if (cfg == nullptr)
 	{
@@ -45,36 +66,84 @@ void __stdcall MemoryGuardScanner(ArtemisConfig* cfg) // On tehnical work
 #ifdef ARTEMIS_DEBUG
 	Utils::LogInFile(ARTEMIS_LOG, "[INFO] Created async thread for MemoryGuardScanner! Thread id: %d\n", GetCurrentThreadId());
 #endif
-	auto ReverseDelta = [](DWORD_PTR CurrentAddress, DWORD Delta, size_t InstructionLength, bool bigger = false) -> DWORD_PTR
+
+	SetProcessDEPPolicy(PROCESS_DEP_ENABLE);
+
+	ptrNtProtectVirtualMemory = (pNtProtectVirtualMemory)Utils::RuntimeIatResolver("ntdll.dll", "NtProtectVirtualMemory");
+	
+	BYTE* Trampoline = (BYTE*)VirtualAlloc(NULL, 10, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE); // don't change to new/malloc!
+	memcpy(Trampoline, ptrNtProtectVirtualMemory, 5);
+	Trampoline[5] = 0xE9;
+	DWORD dwRelJmpBack = ((DWORD)ptrNtProtectVirtualMemory + 5) - (DWORD)&Trampoline[5] - 5;
+	memcpy(Trampoline + 6, &dwRelJmpBack, 4);
+	DWORD dwOldProt;
+	VirtualProtect(Trampoline, 10, PAGE_EXECUTE_READ, &dwOldProt);
+	ptrOriginalNtProtectVirtualMemory = (pNtProtectVirtualMemory)Trampoline;
+
+	DWORD dwRelAddr = (((DWORD)&hkNtProtectVirtualMemory) - (DWORD)ptrNtProtectVirtualMemory) - 5;
+	BYTE patch[5] = { 0xE9, 0x00, 0x00, 0x00, 0x00 };
+	memcpy(&patch[1], &dwRelAddr, 4);
+	VirtualProtect(ptrNtProtectVirtualMemory, 5, PAGE_EXECUTE_READWRITE, &dwOldProt);
+	memcpy(ptrNtProtectVirtualMemory, patch, 5);
+	ULONG ulBytesToProtect = 5;
+	ptrOriginalNtProtectVirtualMemory(GetCurrentProcess(), (void**)&ptrOriginalNtProtectVirtualMemory, &ulBytesToProtect, PAGE_EXECUTE_READ, &dwOldProt);
+
+	auto CallDetect = [&cfg](void* ptrBase, DWORD dwLength, bool bPossibleFalsePositive = false)
 	{
-		if (bigger) return ((CurrentAddress + (Delta + InstructionLength)) - 0xFFFFFFFE);
-		return CurrentAddress + (Delta + InstructionLength);
+		ARTEMIS_DATA data;
+		data.baseAddr = ptrBase;
+		data.regionSize = dwLength;
+		if (bPossibleFalsePositive) data.type = DetectionType::ART_MEMORY_PROTECT_MAYBE_VIOLATION;
+		else data.type = DetectionType::ART_MEMORY_PROTECT_VIOLATION;
+
+		cfg->callback(&data);
 	};
+
+	SYSTEM_INFO sysInfo{ 0 }; 
+	GetNativeSystemInfo(&sysInfo);
+	SIZE_T MaxAddr = (DWORD)sysInfo.lpMaximumApplicationAddress - (DWORD)sysInfo.lpMinimumApplicationAddress;
 	while (true)
 	{
-#ifndef _CONSOLE
-		if (!GetModuleHandleA("client.dll")) break;
-#endif
-		if (!cfg->DetectMemoryPatch) break;
-		for (const auto& it : cfg->HooksList)
+		if (!cfg->MemoryGuard) return;
+
+		auto WatchMemoryAllocations = [&, cfg]
+		(const void* ptr, size_t length, MEMORY_BASIC_INFORMATION* info, int size)
 		{
-#ifndef _CONSOLE
-			if (!GetModuleHandleA("client.dll")) break;
-#endif
-			DWORD Delta = NULL; memcpy(&Delta, (PVOID)((DWORD)it.second + 0x1), 4);
-			DWORD_PTR DestinationAddr = ReverseDelta((DWORD_PTR)it.second, Delta, 5);
-			if (*(BYTE*)it.second != 0xE9 || (*(BYTE*)it.second == 0xE9 && DestinationAddr != (DWORD)it.first))
+			if (ptr == nullptr || info == nullptr) return;
+			const void* end = (const void*)((const char*)ptr + length);
+			while (ptr < end && VirtualQuery(ptr, &info[0], sizeof(*info)) == sizeof(*info))
 			{
-				if (!Utils::IsVecContain(cfg->ExcludedPatches, it.second))
+				//printf("[Memory Guard] Working with ptr %X %X\n", (DWORD)ptr, ((MEMORY_BASIC_INFORMATION*)&info[0])->BaseAddress);
+				MEMORY_BASIC_INFORMATION* i = &info[0];
+				if ((i->State != MEM_FREE && i->State != MEM_RELEASE))
 				{
-					ARTEMIS_DATA data; data.baseAddr = it.second; 
-					data.MemoryRights = PAGE_EXECUTE_READWRITE; data.regionSize = 0x5;
-					data.dllName = "client.dll"; data.dllPath = "MTA\\mods\\deadmatch\\client.dll";
-					data.type = DetectionType::ART_GUARD_MEMORY_VIOLATION;
-					cfg->callback(&data); cfg->ExcludedPatches.push_back(it.second);
+					DWORD dwBase = (DWORD)ptr;
+					if (i->Protect & (PAGE_EXECUTE_READWRITE) && !(dwBase < (DWORD)ptrNtProtectVirtualMemory && ((DWORD)ptrNtProtectVirtualMemory - dwBase) < i->RegionSize))
+					{
+						DWORD dwOldProt;
+						VirtualProtect(i->BaseAddress, i->RegionSize, PAGE_EXECUTE_READ, &dwOldProt);
+						CallDetect((void*)ptr, i->RegionSize, true);
+					}
+
+					if (mpProtectionList.find(dwBase) == mpProtectionList.end())
+					{
+						mpProtectionList[dwBase] = i->Protect;
+					}
+					else if(i->Protect != mpProtectionList[dwBase])
+					{
+						if (i->Protect & (PAGE_EXECUTE | PAGE_EXECUTE_READ) && !(mpProtectionList[dwBase] & (PAGE_EXECUTE | PAGE_EXECUTE_READ | PAGE_EXECUTE_READWRITE)))
+							CallDetect((void*)ptr, i->RegionSize);
+
+						mpProtectionList[dwBase] = i->Protect;
+					}
 				}
+				ptr = (const void*)((const char*)(i->BaseAddress) + i->RegionSize);
 			}
-		}
+		};
+		MEMORY_BASIC_INFORMATION mbi{ 0 };
+		WatchMemoryAllocations(sysInfo.lpMinimumApplicationAddress, MaxAddr,
+			&mbi, sizeof(MEMORY_BASIC_INFORMATION));
+
 		Sleep(cfg->MemoryGuardScanDelay);
 	}
 }
