@@ -5,24 +5,16 @@
 */
 void __stdcall ThreatReport(ArtemisConfig* cfg, const DWORD &caller, 
 const std::string& possible_name, const std::string& MappedName, bool &cloacked,
-const std::string& hack_name = "", bool tg = false)
+const std::string& hack_name = "")
 {
 	if (cfg == nullptr) return; if (cfg->callback == nullptr) return;
 	MEMORY_BASIC_INFORMATION mme { 0 }; ARTEMIS_DATA data;
 	VirtualQuery((PVOID)caller, &mme, sizeof(MEMORY_BASIC_INFORMATION));
 	// SHARED MEMORY can bring to us a couple of false-positives from Wow64 addreses!
 	data.baseAddr = (PVOID)caller; data.MemoryRights = mme.AllocationProtect;
-	data.regionSize = mme.RegionSize; data.HackName = hack_name; if (!tg)
-	{
-		data.type = (cloacked ? DetectionType::ART_DLL_CLOACKING : DetectionType::ART_ILLEGAL_THREAD);
-		data.dllName = cloacked ? possible_name : " "; data.dllPath = cloacked ? MappedName : " ";
-	}
-	else
-	{
-		cfg->ThreadViolationDiscovered = true;
-		data.type = DetectionType::ART_GUARD_THREAD_VIOLATION; 
-		data.dllName = possible_name; data.dllPath = MappedName;
-	}
+	data.regionSize = mme.RegionSize; data.HackName = hack_name; 
+	data.type = (cloacked ? DetectionType::ART_DLL_CLOACKING : DetectionType::ART_ILLEGAL_THREAD);
+	data.dllName = cloacked ? possible_name : " "; data.dllPath = cloacked ? MappedName : " ";
 	cfg->callback(&data); cfg->ExcludedThreads.push_back((PVOID)caller);
 }
 void __stdcall LdrInitializeThunk(PCONTEXT Context)
@@ -31,14 +23,7 @@ void __stdcall LdrInitializeThunk(PCONTEXT Context)
 	PVOID ARG = reinterpret_cast<PVOID>(Context->Ebx);
 	ArtemisConfig* cfg = IArtemisInterface::GetConfig();
 	if (cfg == nullptr) __asm jmp memTramplin
-	bool cloacked = false; if (cfg->ThreadGuard)
-	{
-		if (!IsOurThreadsAlive(cfg))
-		{
-			ThreatReport(cfg, NULL, "ThreadGuard ", "from LdrInitializeThunk just discover ", cloacked, "THREAD TERMINATION", true);
-			__asm jmp memTramplin
-		}
-	}
+	bool cloacked = false;
 	char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
 	lpGetMappedFileNameA(cfg->CurrProc, TEP, MappedName, sizeof(MappedName));
 	std::string possible_name = Utils::GetDllName(MappedName);
@@ -93,27 +78,6 @@ void __stdcall ScanForDllThreads(ArtemisConfig* cfg)
 					HANDLE targetThread = OpenThread(THREAD_ALL_ACCESS, FALSE, th32.th32ThreadID);
 					if (targetThread != nullptr)
 					{
-						if (cfg->ThreadGuard)
-						{
-							if (Utils::Contains(cfg->OwnThreads, th32.th32ThreadID) && !cfg->ThreadViolationDiscovered)
-							{
-								if (DestroyedCount != NULL)
-								{
-									DestroyedCount--;
-									if (sec_count <= tmpSizer) sec_count++;
-								}
-							}
-							if (DestroyedCount != NULL && !cfg->ThreadViolationDiscovered && sec_count == tmpSizer)
-							{
-								ThreatReport(cfg, NULL, "ThreadGuard ", "from ThreadScanner just discover ", 
-								cloacked, "THREAD TERMINATION", true);
-								CloseHandle(targetThread); continue;
-							}
-							if (!cfg->ThreadViolationDiscovered && sec_count == tmpSizer)
-							{
-								sec_count = 0x0; DestroyedCount = tmpSizer;
-							}
-						}
 						DWORD tempBase = NULL; pNtQueryInformationThread(targetThread, (THREADINFOCLASS)
 						Utils::ThreadQuerySetWin32StartAddress, &tempBase, sizeof(DWORD), 0);
 						CloseHandle(targetThread); char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));

@@ -45,7 +45,7 @@ namespace ArtemisData
 		bool SingletonCalled = false;
 		HANDLE hSelfModule = nullptr;
 		HANDLE CurrProc = nullptr;
-		static std::vector<DWORD> OwnThreads;
+		static std::vector<HANDLE> OwnThreads;
 		ArtemisCallback callback = nullptr;
 		// anticheat controller options
 		bool DetectThreads = false;
@@ -77,7 +77,6 @@ namespace ArtemisData
 		std::vector<PVOID> ExcludedMethods;
 		std::vector<PVOID> ExcludedPatches;
 		std::vector<PVOID> ExcludedSigAddresses;
-		static bool ThreadViolationDiscovered;
 		// heuristical detection set
 		std::vector<std::string> AllowedPackedModules; // for cfg.DetectPacking = true;
 		std::vector<std::string> IlegaleLinien; // for cfg.DetectByString
