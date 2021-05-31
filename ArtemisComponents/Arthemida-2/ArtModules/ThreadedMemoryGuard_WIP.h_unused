@@ -1,0 +1,178 @@
+/*
+	Artemis-2 for MTA Province
+	Target Platform: x32-x86
+	Project by NtKernelMC & holmes0
+*/
+/**
+* Assignee: holmes0
+* Done: 
+*		Hook NtProtectVirtualMemory and block changes to executable memory
+*		Keep constantly updated list of memory page rights in order to detect any external modifications (+debugger)
+*			This still allows fast external protection changing and writing, impossible to perfectly protect from usermode.
+*
+* In progress:
+*		Try multithreaded fast scanning of executable page rights to detect and prevent/break patching attempts (+debugger).
+*/
+#include "ArtemisInterface.h"
+//#include ".../../../../Arthemida-2/ArtUtils/MiniJumper.h"
+#include "../ArtUtils/urmem.hpp"
+
+struct mpDescriptor
+{
+	DWORD dwAddress;
+	DWORD dwSize;
+	DWORD dwProtection;
+};
+std::map<DWORD, mpDescriptor> mpProtectionList;
+
+urmem::hook hook_NPVM;
+typedef NTSTATUS(__stdcall* pNtProtectVirtualMemory)(HANDLE ProcessHandle, PVOID* BaseAddress, PULONG NumberOfBytesToProtect, ULONG NewAccessProtection, PULONG OldAccessProtection);
+static pNtProtectVirtualMemory ptrNtProtectVirtualMemory;
+
+NTSTATUS __stdcall hkNtProtectVirtualMemory(HANDLE ProcessHandle, PVOID* BaseAddress, PULONG NumberOfBytesToProtect, ULONG NewAccessProtection, PULONG OldAccessProtection)
+{
+#define CALL_ORIG(a, b, c, d, e) hook_NPVM.call<urmem::calling_convention::stdcall, NTSTATUS>(a, b, c, d, e);
+
+	ULONG ulOldProt;
+	NTSTATUS result = CALL_ORIG(ProcessHandle, BaseAddress, NumberOfBytesToProtect, NewAccessProtection, &ulOldProt);
+	
+	if (ulOldProt & PAGE_EXECUTE_READWRITE)
+	{
+		CALL_ORIG(ProcessHandle, BaseAddress, NumberOfBytesToProtect, PAGE_EXECUTE_READ, &ulOldProt);
+		*OldAccessProtection = PAGE_EXECUTE_READ;
+		return result;
+	}
+	
+	if (ulOldProt & (PAGE_EXECUTE | PAGE_EXECUTE_READ))
+	{
+		CALL_ORIG(ProcessHandle, BaseAddress, NumberOfBytesToProtect, ulOldProt, &ulOldProt);
+		*OldAccessProtection = ulOldProt;
+		return 0xC0000022; // STATUS_ACCESS_DENIED
+	}
+
+	if (NewAccessProtection & (PAGE_EXECUTE | PAGE_EXECUTE_READ | PAGE_EXECUTE_READWRITE | PAGE_EXECUTE_WRITECOPY))
+	{
+		CALL_ORIG(ProcessHandle, BaseAddress, NumberOfBytesToProtect, ulOldProt, &ulOldProt);
+		*OldAccessProtection = ulOldProt;
+		return 0xC0000022; // STATUS_ACCESS_DENIED
+	}
+
+	return result;
+}
+
+namespace MemoryGuard
+{
+	void FillMpProtectionList()
+	{
+		SYSTEM_INFO sysInfo{ 0 };
+		GetNativeSystemInfo(&sysInfo);
+		SIZE_T MaxAddr = (DWORD)sysInfo.lpMaximumApplicationAddress - (DWORD)sysInfo.lpMinimumApplicationAddress;
+
+		MEMORY_BASIC_INFORMATION mbi{ 0 };
+
+		const void* ptr = sysInfo.lpMinimumApplicationAddress;
+		const void* end = (const void*)((const char*)ptr + MaxAddr);
+		while (ptr < end && VirtualQuery(ptr, &mbi, sizeof(mbi)) == sizeof(mbi))
+		{
+			MEMORY_BASIC_INFORMATION* i = &mbi;
+			if ((i->State != MEM_FREE && i->State != MEM_RELEASE))
+			{
+				DWORD dwBase = (DWORD)ptr;
+				if (mpProtectionList.find(dwBase) == mpProtectionList.end())
+				{
+					mpProtectionList[dwBase].dwProtection = i->Protect;
+					mpProtectionList[dwBase].dwAddress = dwBase;
+				}
+			}
+			ptr = (const void*)((const char*)(i->BaseAddress) + i->RegionSize);
+		}
+	}
+
+	void Worker(unsigned int uiStartIndex, unsigned int uiCount, ArtemisConfig* cfg)
+	{
+		auto CallDetect = [&cfg](void* ptrBase, DWORD dwLength, bool bPossibleFalsePositive = false)
+		{
+			ARTEMIS_DATA data;
+			data.baseAddr = ptrBase;
+			data.regionSize = dwLength;
+			if (bPossibleFalsePositive) data.type = DetectionType::ART_MEMORY_PROTECT_MAYBE_VIOLATION;
+			else data.type = DetectionType::ART_MEMORY_PROTECT_VIOLATION;
+
+			cfg->callback(&data);
+		};
+
+		while (true)
+		{
+			while ()
+			{
+				if ((i->State != MEM_FREE && i->State != MEM_RELEASE))
+				{
+					DWORD dwBase = (DWORD)ptr;
+					if (i->Protect & (PAGE_EXECUTE_READWRITE) && !(dwBase < (DWORD)ptrNtProtectVirtualMemory && ((DWORD)ptrNtProtectVirtualMemory - dwBase) < i->RegionSize))
+					{
+						DWORD dwOldProt;
+						VirtualProtect(i->BaseAddress, i->RegionSize, PAGE_EXECUTE_READ, &dwOldProt);
+						CallDetect((void*)ptr, i->RegionSize, true);
+					}
+
+					if (mpProtectionList.find(dwBase) == mpProtectionList.end())
+					{
+						mpProtectionList[dwBase] = i->Protect;
+					}
+					else if (i->Protect != mpProtectionList[dwBase])
+					{
+						if (i->Protect & (PAGE_EXECUTE | PAGE_EXECUTE_READ) && !(mpProtectionList[dwBase] & (PAGE_EXECUTE | PAGE_EXECUTE_READ | PAGE_EXECUTE_READWRITE)))
+							CallDetect((void*)ptr, i->RegionSize);
+
+						mpProtectionList[dwBase] = i->Protect;
+					}
+				}
+			}
+
+			Sleep(cfg->MemoryGuardScanDelay);
+		}
+	}
+}
+
+void __stdcall MemoryGuardScanner(ArtemisConfig* cfg)
+{
+	if (cfg == nullptr)
+	{
+#ifdef ARTEMIS_DEBUG
+		Utils::LogInFile(ARTEMIS_LOG, "[ERROR] Passed null pointer to MemoryGuardScanner\n");
+#endif
+		return;
+	}
+#ifdef ARTEMIS_DEBUG
+	Utils::LogInFile(ARTEMIS_LOG, "[INFO] Created async thread for MemoryGuardScanner! Thread id: %d\n", GetCurrentThreadId());
+#endif
+
+	SetProcessDEPPolicy(PROCESS_DEP_ENABLE);
+
+	ptrNtProtectVirtualMemory = (pNtProtectVirtualMemory)Utils::RuntimeIatResolver("ntdll.dll", "NtProtectVirtualMemory");
+	hook_NPVM.install((DWORD)ptrNtProtectVirtualMemory, urmem::get_func_addr(&hkNtProtectVirtualMemory));
+
+	//DWORD dwOld;
+	//VirtualProtect(ptrNtProtectVirtualMemory, 0x20, PAGE_EXECUTE, &dwOld);
+
+	auto CallDetect = [&cfg](void* ptrBase, DWORD dwLength, bool bPossibleFalsePositive = false)
+	{
+		ARTEMIS_DATA data;
+		data.baseAddr = ptrBase;
+		data.regionSize = dwLength;
+		if (bPossibleFalsePositive) data.type = DetectionType::ART_MEMORY_PROTECT_MAYBE_VIOLATION;
+		else data.type = DetectionType::ART_MEMORY_PROTECT_VIOLATION;
+
+		cfg->callback(&data);
+	};
+
+	MemoryGuard::FillMpProtectionList();
+	std::vector<int> vecObjectsForThread = Utils::SplitObjectsForThreading(mpProtectionList.size(), 4);
+
+	for (auto& iObjectCount : vecObjectsForThread)
+	{
+		static unsigned int uiCurrentIndex = 0;
+		std::thread(MemoryGuard::Worker, uiCurrentIndex, iObjectCount, cfg).detach();
+		uiCurrentIndex += iObjectCount;
+	}
+}

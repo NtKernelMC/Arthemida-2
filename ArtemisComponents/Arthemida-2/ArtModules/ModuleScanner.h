@@ -89,8 +89,8 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 						{
 							static SigScan scn; DWORD sgAddr = scn.FindPattern(NameOfDLL.c_str(),
 							std::get<0>(sg.second).c_str()/*"\x8D\x45\xF4\x64\xA3\x00\x00\x00\x00\x68"*/, std::get<1>(sg.second).c_str());
-							printf("[SIG WALKER] Name: %s | Pattern: %s | Mask: %s | Len: %d\n", NameOfDLL.c_str(),
-							std::get<0>(sg.second).c_str(), std::get<1>(sg.second).c_str(), std::get<0>(sg.second).length());
+							//printf("[SIG WALKER] Name: %s | Pattern: %s | Mask: %s | Len: %d\n", NameOfDLL.c_str(),
+							//std::get<0>(sg.second).c_str(), std::get<1>(sg.second).c_str(), std::get<0>(sg.second).length());
 							if (sgAddr != NULL)
 							{
 								ModuleThreatReport(it, szFileName, NameOfDLL, DetectionType::ART_SIGNATURE_DETECT, sg.first);

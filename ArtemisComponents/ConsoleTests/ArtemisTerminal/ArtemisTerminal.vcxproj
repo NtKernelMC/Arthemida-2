@@ -112,6 +112,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <EnableModules>false</EnableModules>
       <ControlFlowGuard>Guard</ControlFlowGuard>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\Arthemida-2\API;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -169,6 +170,7 @@
     <ClInclude Include="..\..\Arthemida-2\ArtModules\MemoryScanner.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtModules\ModuleScanner.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtModules\HeuristicScanner.h" />
+    <ClInclude Include="..\..\Arthemida-2\ArtModules\ArtThreading.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtModules\ThreadScanner.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtUtils\CRC32.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtUtils\MiniJumper.h" />

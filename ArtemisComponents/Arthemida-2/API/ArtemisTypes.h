@@ -22,7 +22,11 @@ namespace ArtemisData
 		ART_PROTECTOR_PACKER,
 		ART_HACK_STRING_FOUND,
 		ART_SIGNATURE_DETECT,
-		ART_ILLEGAL_SERVICE
+		ART_ILLEGAL_SERVICE,
+		ART_MEMORY_PROTECT_VIOLATION,
+		ART_MEMORY_PROTECT_MAYBE_VIOLATION, // maybe a false-positive, should be dumped without taking action
+		ART_THREAD_FLAGS_CHANGED,
+		ART_THREAD_SUSPENDED
 	};
 	struct ARTEMIS_DATA
 	{
@@ -49,11 +53,12 @@ namespace ArtemisData
 		bool DetectModules = false;
 		bool DetectFakeLaunch = false;
 		bool DetectManualMap = false;
-		bool DetectMemoryPatch = false;
+		bool MemoryGuard = false;
 		bool DetectBySignature = false;
 		bool DetectPacking = false;
 		bool DetectByString = false;
 		bool ServiceMon = false;
+		bool ThreadGuard = false;
 		// anti-repeatable start for scanners
 		bool ThreadScanner = false;
 		bool ModuleScanner = false;
@@ -65,6 +70,7 @@ namespace ArtemisData
 		DWORD MemoryScanDelay = 0x0;
 		DWORD MemoryGuardScanDelay = 0x0;
 		DWORD ServiceMonDelay = 0x0;
+		DWORD ThreadGuardDelay = 0x0;
 		// additional settings & stuff
 		std::vector<PVOID> ExcludedThreads;
 		std::vector<PVOID> ExcludedModules;
