@@ -303,11 +303,14 @@ public:
 		}
 		return false;
 	}
-	template <typename T>
-	static const bool Contains(const std::vector<T>& Vec, const T& Element)
+	template <typename T, typename T2>
+	static const bool Contains(std::vector<T>& Vec, T2& Element)
 	{
 		if (Vec.empty()) return false;
-		if (std::find(Vec.begin(), Vec.end(), Element) != Vec.end()) return true;
+		for (const auto& it : Vec)
+		{
+			if (it == Element) return true;
+		}
 		return false;
 	}
 	static std::string SearchForSingleMapMatchAndRet(const std::map<PVOID, const char*>& map, const PVOID key)

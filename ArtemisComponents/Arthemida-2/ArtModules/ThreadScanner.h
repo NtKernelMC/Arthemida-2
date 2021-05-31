@@ -4,16 +4,25 @@
 	Project by NtKernelMC & holmes0
 */
 void __stdcall ThreatReport(ArtemisConfig* cfg, const DWORD &caller, 
-const std::string& possible_name, const std::string& MappedName, bool &cloacked)
+const std::string& possible_name, const std::string& MappedName, bool &cloacked,
+const std::string& hack_name = "", bool tg = false)
 {
 	if (cfg == nullptr) return; if (cfg->callback == nullptr) return;
 	MEMORY_BASIC_INFORMATION mme { 0 }; ARTEMIS_DATA data;
 	VirtualQuery((PVOID)caller, &mme, sizeof(MEMORY_BASIC_INFORMATION));
 	// SHARED MEMORY can bring to us a couple of false-positives from Wow64 addreses!
 	data.baseAddr = (PVOID)caller; data.MemoryRights = mme.AllocationProtect;
-	data.regionSize = mme.RegionSize; data.type =
-	(cloacked ? DetectionType::ART_DLL_CLOACKING : DetectionType::ART_ILLEGAL_THREAD);
-	data.dllName = cloacked ? possible_name : " "; data.dllPath = cloacked ? MappedName : " ";
+	data.regionSize = mme.RegionSize; data.HackName = hack_name; if (!tg)
+	{
+		data.type = (cloacked ? DetectionType::ART_DLL_CLOACKING : DetectionType::ART_ILLEGAL_THREAD);
+		data.dllName = cloacked ? possible_name : " "; data.dllPath = cloacked ? MappedName : " ";
+	}
+	else
+	{
+		cfg->ThreadViolationDiscovered = true;
+		data.type = DetectionType::ART_GUARD_THREAD_VIOLATION; 
+		data.dllName = possible_name; data.dllPath = MappedName;
+	}
 	cfg->callback(&data); cfg->ExcludedThreads.push_back((PVOID)caller);
 }
 void __stdcall LdrInitializeThunk(PCONTEXT Context)
@@ -22,9 +31,17 @@ void __stdcall LdrInitializeThunk(PCONTEXT Context)
 	PVOID ARG = reinterpret_cast<PVOID>(Context->Ebx);
 	ArtemisConfig* cfg = IArtemisInterface::GetConfig();
 	if (cfg == nullptr) __asm jmp memTramplin
+	bool cloacked = false; if (cfg->ThreadGuard)
+	{
+		if (!IsOurThreadsAlive(cfg))
+		{
+			ThreatReport(cfg, NULL, "ThreadGuard ", "from LdrInitializeThunk just discover ", cloacked, "THREAD TERMINATION", true);
+			__asm jmp memTramplin
+		}
+	}
 	char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
 	lpGetMappedFileNameA(cfg->CurrProc, TEP, MappedName, sizeof(MappedName));
-	std::string possible_name = Utils::GetDllName(MappedName); bool cloacked = false;
+	std::string possible_name = Utils::GetDllName(MappedName);
 	DWORD true_base = (DWORD)GetModuleHandleA(possible_name.c_str()); // figure out with peb hide (dll cloacking)
 	if (!Utils::IsMemoryInModuledRange(true_base, possible_name, &cloacked) && !Utils::IsVecContain(cfg->ExcludedThreads, TEP))
 	{
@@ -42,11 +59,11 @@ void __stdcall ScanForDllThreads(ArtemisConfig* cfg)
 	if (cfg == nullptr) return;
 	if (cfg->callback == nullptr) return;
 	if (cfg->ThreadScanner) return;
-	cfg->ThreadScanner = true;
+	cfg->ThreadScanner = true; DWORD dwCurrentScanTID = GetCurrentThreadId();
 #ifdef ARTEMIS_DEBUG
-	Utils::LogInFile(ARTEMIS_LOG, "[INFO] Created async thread for ScanForDllThreads! Thread id: %d\n", GetCurrentThreadId());
+	Utils::LogInFile(ARTEMIS_LOG, "[INFO] Created async thread for ScanForDllThreads! Thread id: %d\n", dwCurrentScanTID);
 #endif
-	using tsmMJM = MiniJumper::CustomHooks;
+	/*using tsmMJM = MiniJumper::CustomHooks;
 	memTramplin = tsmMJM::MakeJump((DWORD)callLdrInitializeThunk, (DWORD)LdrInitializeThunk, Prolog, 5);
 	if (memTramplin != NULL) // в дальнейшем весь менеджмент потоками переходит в хук-инициализатора (Callback-Style)
 	{
@@ -60,8 +77,9 @@ void __stdcall ScanForDllThreads(ArtemisConfig* cfg)
 		Utils::LogInFile(ARTEMIS_LOG, "[TROUBLE] By some reasons, hook is not exist in to the list!\n");
 		Utils::LogInFile(ARTEMIS_LOG, "[REPORT] System Error Code: %d\n", GetLastError());
 #endif
-	}
-	while (true)
+	}*/
+	static DWORD DestroyedCount = cfg->OwnThreads.size(), sec_count = 0x0, tmpSizer = cfg->OwnThreads.size(); 
+	bool cloacked = false; while (true)
 	{
 		THREADENTRY32 th32 { 0 }; HANDLE hSnapshot = NULL; th32.dwSize = sizeof(THREADENTRY32);
 		hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0);
@@ -69,24 +87,46 @@ void __stdcall ScanForDllThreads(ArtemisConfig* cfg)
 		{
 			do
 			{
-				if (th32.th32OwnerProcessID == GetCurrentProcessId() && th32.th32ThreadID != GetCurrentThreadId())
+				static DWORD myProcID = GetProcessId(cfg->CurrProc);
+				if (th32.th32OwnerProcessID == myProcID)
 				{
-					HANDLE targetThread = OpenThread(THREAD_QUERY_INFORMATION, FALSE, th32.th32ThreadID);
+					HANDLE targetThread = OpenThread(THREAD_ALL_ACCESS, FALSE, th32.th32ThreadID);
 					if (targetThread != nullptr)
 					{
-						if (Utils::IsVecContain(cfg->OwnThreads, targetThread)) continue;
+						if (cfg->ThreadGuard)
+						{
+							if (Utils::Contains(cfg->OwnThreads, th32.th32ThreadID) && !cfg->ThreadViolationDiscovered)
+							{
+								if (DestroyedCount != NULL)
+								{
+									DestroyedCount--;
+									if (sec_count <= tmpSizer) sec_count++;
+								}
+							}
+							if (DestroyedCount != NULL && !cfg->ThreadViolationDiscovered && sec_count == tmpSizer)
+							{
+								ThreatReport(cfg, NULL, "ThreadGuard ", "from ThreadScanner just discover ", 
+								cloacked, "THREAD TERMINATION", true);
+								CloseHandle(targetThread); continue;
+							}
+							if (!cfg->ThreadViolationDiscovered && sec_count == tmpSizer)
+							{
+								sec_count = 0x0; DestroyedCount = tmpSizer;
+							}
+						}
 						DWORD tempBase = NULL; pNtQueryInformationThread(targetThread, (THREADINFOCLASS)
 						Utils::ThreadQuerySetWin32StartAddress, &tempBase, sizeof(DWORD), 0);
 						CloseHandle(targetThread); char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
 						lpGetMappedFileNameA(cfg->CurrProc, (PVOID)tempBase, MappedName, sizeof(MappedName));
-						std::string possible_name = Utils::GetDllName(MappedName); bool cloacked = false;
+						std::string possible_name = Utils::GetDllName(MappedName);
 						DWORD true_base = (DWORD)GetModuleHandleA(possible_name.c_str()); // figure out with peb hide (dll cloacking)
 						if (!Utils::IsMemoryInModuledRange(true_base, possible_name, &cloacked) &&
 						!Utils::IsVecContain(cfg->ExcludedThreads, (PVOID)tempBase))
 						{
 							ThreatReport(cfg, tempBase, possible_name, MappedName, cloacked);
-							break;
+							CloseHandle(targetThread); break;
 						}
+						if (targetThread != nullptr) CloseHandle(targetThread);
 					}
 				}
 			}

@@ -5,6 +5,8 @@
 */
 #include ".../../../../Arthemida-2/API/ArtemisComponents.h"
 using namespace ArtComponent;
+bool ArtemisConfig::ThreadViolationDiscovered = false;
+std::vector<DWORD> ArtemisConfig::OwnThreads;
 ArtemisIncapsulator::ArtemisIncapsulator(ArtemisConfig* cfg)
 {
 	if (cfg != nullptr)
@@ -107,6 +109,7 @@ ArtemisConfig* __stdcall IArtemisInterface::GetConfig()
 /////////////////////////// Protection Modules //////////////////////////////////////////////////////////////
 #include "../../Arthemida-2/ArtModules/ArtThreading.h"
 #include "../../Arthemida-2/ArtModules/HeuristicScanner.h"
+#include "../../Arthemida-2/ArtModules/ThreadGuard.h"
 #include "../../Arthemida-2/ArtModules/ThreadScanner.h"
 #include "../../Arthemida-2/ArtModules/AntiFakeLaunch.h"
 #include "../../Arthemida-2/ArtModules/ModuleScanner.h"
@@ -142,6 +145,7 @@ IArtemisInterface* __stdcall IArtemisInterface::InstallArtemisMonitor(ArtemisCon
 		return nullptr;
 	}
 	Utils::BuildModuledMemoryMap(cfg->CurrProc); // Заполняем список изначально загруженными модулями
+	DWORD tmpTID = 0xFFFFFF; 
 	if (cfg->DetectFakeLaunch) // Детект лаунчера (должен запускаться в первую очередь)
 	{
 		ConfirmLegitLaunch(cfg);

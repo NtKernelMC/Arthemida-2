@@ -58,10 +58,6 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Mapped Image! %s\n%s\nBase: 0x%X | Size: 0x%X | Rights: 0x%X\n\n",
 		artemis->dllName.c_str(), artemis->dllPath.c_str(), artemis->baseAddr, artemis->regionSize, artemis->MemoryRights);
 		break;
-	case DetectionType::ART_MEMORY_CHANGED:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal module!\nBase: 0x%X | Rights: 0x%X | Image Size: 0x%X\n\n",
-		artemis->baseAddr, artemis->MemoryRights, artemis->regionSize);
-		break;
 	case DetectionType::ART_SIGNATURE_DETECT:
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Signatured Hack! Name: %s\nBase: 0x%X | Image Size: 0x%X | DllName: %s\n\
 		\rPath: %s\n\n", artemis->HackName.c_str(), artemis->baseAddr,

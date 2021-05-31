@@ -63,7 +63,8 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 					// чтобы если выше выполнилась проверка то не дублировать вызов еще раз а если нет - конвертим строку
 					if (wideFileName.empty()) wideFileName = Utils::CvAnsiToWide(szFileName); 
 					if (Utils::OsProtectedFile(wideFileName.c_str())) continue;
-					if (Utils::findStringIC(NameOfDLL, "MSVCP") || Utils::findStringIC(NameOfDLL, "VCRUNTIME")) continue;
+					if (Utils::findStringIC(NameOfDLL, "MSVCP") || Utils::findStringIC(NameOfDLL, "api-ms-win") ||
+					Utils::findStringIC(NameOfDLL, "VCRUNTIME")) continue;
 					if (cfg->DetectPacking && IsModulePacked((HMODULE)it.first, cfg->AllowedPackedModules))
 					{
 						ModuleThreatReport(it, szFileName, NameOfDLL, DetectionType::ART_PROTECTOR_PACKER);
