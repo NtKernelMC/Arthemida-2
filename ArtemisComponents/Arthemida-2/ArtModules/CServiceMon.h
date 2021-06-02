@@ -29,6 +29,11 @@
 class CServiceMon
 {
 public:
+    ~CServiceMon()
+    {
+        if (m_hSCManager) CloseServiceHandle(m_hSCManager);
+    }
+
     static CServiceMon& GetInstance();
 
     struct SServiceInfo
