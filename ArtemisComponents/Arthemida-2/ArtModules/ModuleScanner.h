@@ -88,7 +88,7 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 					{
 						for (const auto& sg : cfg->IllegalPatterns) // Список сигнатур для поиска известных читов или их участков памяти
 						{
-							static SigScan scn; DWORD sgAddr = scn.FindPattern(NameOfDLL.c_str(),
+							DWORD sgAddr = SigScan::FindPattern((HMODULE)it.first,
 							std::get<0>(sg.second).c_str()/*"\x8D\x45\xF4\x64\xA3\x00\x00\x00\x00\x68"*/, std::get<1>(sg.second).c_str());
 							//printf("[SIG WALKER] Name: %s | Pattern: %s | Mask: %s | Len: %d\n", NameOfDLL.c_str(),
 							//std::get<0>(sg.second).c_str(), std::get<1>(sg.second).c_str(), std::get<0>(sg.second).length());
