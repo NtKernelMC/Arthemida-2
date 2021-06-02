@@ -38,6 +38,29 @@ public:
 		return NULL;
 	}
 
+	static DWORD FindPattern(HMODULE hModule, const char* pattern, const char* mask)
+	{
+		MODULEINFO mInfo = { 0 };
+		K32GetModuleInformation(GetCurrentProcess(), hModule, &mInfo, sizeof(MODULEINFO));
+		DWORD base = (DWORD)mInfo.lpBaseOfDll;
+		DWORD size = (DWORD)mInfo.SizeOfImage;
+		DWORD patternLength = (DWORD)strlen(mask);
+		for (DWORD i = 0; i < size - patternLength; i++)
+		{
+			bool found = true;
+			for (DWORD j = 0; j < patternLength; j++)
+			{
+				//if ((DWORD)(base + i + j) > (DWORD)mInfo.SizeOfImage) { found = false; break; }
+				found &= mask[j] == '?' || pattern[j] == *(char*)(base + i + j);
+			}
+			if (found)
+			{
+				return base + i;
+			}
+		}
+		return NULL;
+	}
+
 private:
 	static FILE* OpenFileCHandleFromNative(HANDLE hNativeHandle, const char* szMode)
 	{
