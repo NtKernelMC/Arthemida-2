@@ -172,9 +172,16 @@ IArtemisInterface* __stdcall IArtemisInterface::InstallArtemisMonitor(ArtemisCon
 	if (cfg->ServiceMon) // on dev
 	{
 		if (!cfg->ServiceMonDelay) cfg->ServiceMonDelay = 1000;
-		CServiceMon* servmon = new CServiceMon; //! Утечка памяти, нужен контейнер для класса (статическая инициализация не подходит)
-		HANDLE hServmon = servmon->Initialize(cfg, &tmp_servmon_stubfunc);
-		cfg->OwnThreads.push_back(hServmon);
+		try
+		{
+			HANDLE hServmon = CServiceMon::GetInstance().Initialize(cfg, &tmp_servmon_stubfunc);
+			cfg->OwnThreads.push_back(hServmon);
+		} catch (std::exception e)
+		{
+#ifdef ARTEMIS_DEBUG
+			printf("[CRITICAL] Service monitor launch failed! Message: %s\n", e.what());
+#endif
+		}
 	}
 	if (cfg->MemoryGuard)
 	{

@@ -29,6 +29,8 @@
 class CServiceMon
 {
 public:
+    static CServiceMon& GetInstance();
+
     struct SServiceInfo
     {
         std::wstring            wsFilePath = L"";
@@ -61,6 +63,12 @@ private:
     pNtCreateFile m_pNtCreateFile;
 };
 
+CServiceMon& CServiceMon::GetInstance()
+{
+    static CServiceMon instance;
+    return instance;
+};
+
 void CServiceMon::MonitorCycle()
 {
 #ifdef ARTEMIS_DEBUG
@@ -75,7 +83,9 @@ void CServiceMon::MonitorCycle()
             mmServices = std::move(GetAllServices());
         } catch (std::exception e)
         {
+#ifdef ARTEMIS_DEBUG
             printf("GetAllServices threw exception: %s\nLast error: %d\nMonitor interrupted.\n", e.what(), GetLastError());
+#endif
             break;
         }
         
@@ -106,8 +116,10 @@ void CServiceMon::MonitorCycle()
             GetFileSizeEx(hFile, &liSize);
             if (liSize.QuadPart > (1024 * 1024 * 1024)) // 1 GB
             {
+#ifdef ARTEMIS_DEBUG
                 wprintf(L"\nName: %s | Path: %s\n", sc.first.c_str(), sc.second.wsFilePath.c_str());
                 printf("File size exceeds 1GB, skipping in favor of speed\n");
+#endif
                 CloseHandle(hFile);
                 continue;
             }
@@ -166,7 +178,9 @@ std::multimap<std::wstring, CServiceMon::SServiceInfo> CServiceMon::GetAllServic
         if (EnumServicesStatusExW(m_hSCManager, SC_ENUM_PROCESS_INFO, SERVICE_KERNEL_DRIVER, SERVICE_STATE_ALL,
         reinterpret_cast<LPBYTE>(buffer.data()), dwBytesNeeded, &dwBytesNeeded, &dwServiceCount, 0, 0))
         {
+#ifdef ARTEMIS_DEBUG
             printf("Service count: %d\n", dwServiceCount);
+#endif
             LPENUM_SERVICE_STATUS_PROCESSW eSSP = reinterpret_cast<LPENUM_SERVICE_STATUS_PROCESSW>(buffer.data());
             for (DWORD i = 0; i < dwServiceCount; i++)
             {
@@ -180,7 +194,9 @@ std::multimap<std::wstring, CServiceMon::SServiceInfo> CServiceMon::GetAllServic
                 SC_HANDLE hService = OpenServiceW(m_hSCManager, eSSP[i].lpServiceName, SERVICE_QUERY_CONFIG);
                 if (!hService)
                 {
+#ifdef ARTEMIS_DEBUG
                     printf("[SKIP] OpenService FAILED! Iteration: %d | Service: %wS\n", i, eSSP[i].lpDisplayName);
+#endif
                     continue;
                 }
                 
@@ -190,13 +206,17 @@ std::multimap<std::wstring, CServiceMon::SServiceInfo> CServiceMon::GetAllServic
                 try { 
                     lpSC = (QUERY_SERVICE_CONFIGW*)new unsigned char[dwConfigBytesNeeded]; 
                 } catch (std::bad_alloc e) {
+#ifdef ARTEMIS_DEBUG
                     printf("[SKIP] Bad alloc exception! Requested size: %d | Iteration: %d | Service: %wS\nMessage: %s\n", dwConfigBytesNeeded, i, eSSP[i].lpDisplayName, e.what()); 
+#endif
                     continue;
                 }
 
                 if (!QueryServiceConfigW(hService, lpSC, dwConfigBytesNeeded, &dwConfigBytesNeeded))
                 {
+#ifdef ARTEMIS_DEBUG
                     printf("[SKIP] QueryServiceConfig FAILED 2! Iteration: %d | Service: %wS\n", i, eSSP[i].lpDisplayName);
+#endif
                     delete[] lpSC;
                     continue;
                 }
