@@ -30,13 +30,13 @@ void __stdcall MemoryScanner(ArtemisConfig* cfg)
 				MEMORY_BASIC_INFORMATION* i = &info[0]; 
 				if ((i->State != MEM_FREE && i->State != MEM_RELEASE) && i->Protect & mask)
 				{
-					BYTE complete_sequence = 0; DWORD_PTR foundIAT = 0x0;
-					for (DWORD_PTR z = (DWORD_PTR)ptr; z < ((DWORD_PTR)ptr + i->RegionSize); z++)
+					BYTE complete_sequence = 0; DWORD foundIAT = 0x0;
+                    for (DWORD z = (DWORD)ptr; z < ((DWORD)ptr + i->RegionSize); z++)
 					{
 						for (DWORD x = 0; x < (8 * 6); x += 0x6)
 						{
-							if ((x + z) < ((DWORD_PTR)ptr + i->RegionSize) && 
-							(x + z + 0x1) < ((DWORD_PTR)ptr + i->RegionSize))
+                            if ((x + z) < ((DWORD)ptr + i->RegionSize) && 
+							(x + z + 0x1) < ((DWORD)ptr + i->RegionSize))
 							{
 								if ((*(BYTE*)(z + x) == 0xFF && *(BYTE*)(x + z + 0x1) == 0x25))
 								{

@@ -93,7 +93,7 @@ namespace ArtThreading
 		if (ntThreadBreakOnTermination != 0) printf("[ERROR/ArtThreading] Failed to set ThreadBreakOnTermination! NTSTATUS: 0x%08X\n", ntThreadBreakOnTermination);
 #endif
 #ifdef ARTEMIS_DEBUG
-		printf("[ArtThreading] Created protected thread handle 0x%08X\n", (DWORD)lpStartAddress);
+		printf("[ArtThreading] Created protected thread handle 0x%08X with param 0x%08X\n", (DWORD)lpStartAddress, (DWORD)lpParameter);
 #endif
 
 		return hThread;

@@ -30,14 +30,17 @@
     <ClCompile Include="ConsoleHost.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Arthemida-2\API\ArtemisComponents.cpp">
+    <ClCompile Include="..\..\Arthemida-2\API\ArtemisInterface.cpp">
       <Filter>Arthemida-2\API</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Arthemida-2\ArtModules\MemoryGuard.cpp">
+      <Filter>Arthemida-2\ArtModules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Arthemida-2\ArtUtils\xxhash.c">
+      <Filter>Arthemida-2\ArtUtils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Arthemida-2\API\ArtemisComponents.h">
-      <Filter>Arthemida-2\API</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Arthemida-2\API\ArtemisInterface.h">
       <Filter>Arthemida-2\API</Filter>
     </ClInclude>
@@ -79,6 +82,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Arthemida-2\ArtModules\ArtThreading.h">
       <Filter>Arthemida-2\ArtModules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Arthemida-2\ArtUtils\xxh3.h">
+      <Filter>Arthemida-2\ArtUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Arthemida-2\ArtUtils\xxhash.h">
+      <Filter>Arthemida-2\ArtUtils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

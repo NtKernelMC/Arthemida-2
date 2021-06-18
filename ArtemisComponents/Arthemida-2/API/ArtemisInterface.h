@@ -4,29 +4,34 @@
 	Project by NtKernelMC & holmes0
 */
 #pragma once
-#include "../../Arthemida-2/API/ArtemisTypes.h"
-namespace ARTEMIS_INTERFACE
+#include <Windows.h>
+#include "ArtemisTypes.h"
+
+using namespace ArtemisData;
+
+class CArtemisInterface
 {
-	using namespace ArtemisData;
-	class IBaseArtemis
-	{
-	protected:
-		virtual ~IBaseArtemis() = default;
-	public:
-		IBaseArtemis& operator=(const IBaseArtemis&) = delete;
-	};
-	class IArtemisInterface : public IBaseArtemis
-	{
-	public:
-		static IArtemisInterface* __stdcall InstallArtemisMonitor(ArtemisConfig* cfg);
-		static IArtemisInterface* __stdcall GetInstance();
-		static ArtemisConfig* __stdcall GetConfig();
-		void __thiscall ConfirmLegitReturn(const char* function_name, PVOID return_address);
-	protected:
-		virtual ~IArtemisInterface() = default;
-		static IArtemisInterface* CreateInstance(ArtemisConfig* cfg); 
-	private:
-		static IArtemisInterface* i_art;
-		static ArtemisConfig* g_cfg;
-	};
+public:
+	virtual ArtemisConfig* GetConfig() = 0;
+    virtual bool MemoryGuardBeginHook(void* pTarget) = 0;
+    virtual bool MemoryGuardEndHook(void* pTarget) = 0;
+};
+
+class CArtemisReal : public CArtemisInterface
+{
+public:
+    CArtemisReal(ArtemisConfig* cfg, HMODULE hCurrentModule);
+
+    bool InstallArtemisMonitor();
+    ArtemisConfig* GetConfig() { return m_pConfig; };
+    static CArtemisReal* GetInstance() { return s_pInstance; }
+
+    // Memory guard
+    bool MemoryGuardBeginHook(void* pTarget);
+    bool MemoryGuardEndHook(void* pTarget);
+    static CRITICAL_SECTION* m_pCsExecutablePageList;
+
+private:
+    ArtemisConfig*     m_pConfig = nullptr;
+    static CArtemisReal* s_pInstance;
 };

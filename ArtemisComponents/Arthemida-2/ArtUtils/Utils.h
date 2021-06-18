@@ -40,9 +40,9 @@
 #include <dbghelp.h>
 #pragma comment(lib, "dbghelp.lib")
 #pragma intrinsic(_ReturnAddress)
-#include "../../Arthemida-2/ArtUtils/CRC32.h"
-#include "../../Arthemida-2/ArtUtils/sigscan.h"
-#include "../../Arthemida-2/ArtUtils/MiniJumper.h"
+#include "CRC32.h"
+#include "sigscan.h"
+#include "MiniJumper.h"
 // Hooks Data
 static DWORD memTramplin = NULL; static BYTE Prolog[5];
 // Multi-threaded control for module parser

@@ -21,7 +21,7 @@ void __stdcall LdrInitializeThunk(PCONTEXT Context)
 {
 	PVOID TEP = reinterpret_cast<PVOID>(Context->Eax);
 	PVOID ARG = reinterpret_cast<PVOID>(Context->Ebx);
-	ArtemisConfig* cfg = IArtemisInterface::GetConfig();
+	ArtemisConfig* cfg = CArtemisReal::GetInstance()->GetConfig();
 	if (cfg == nullptr) __asm jmp memTramplin
 	bool cloacked = false;
 	char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
@@ -88,9 +88,8 @@ void __stdcall ScanForDllThreads(ArtemisConfig* cfg)
 						!Utils::IsVecContain(cfg->ExcludedThreads, (PVOID)tempBase))
 						{
 							ThreatReport(cfg, tempBase, possible_name, MappedName, cloacked);
-							CloseHandle(targetThread); break;
+							break;
 						}
-						if (targetThread != nullptr) CloseHandle(targetThread);
 					}
 				}
 			}

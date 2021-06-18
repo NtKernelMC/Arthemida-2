@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <map>
 #include <winternl.h>
-#include "..\..\Arthemida-2\LauncherInclude\MiniJumper.h"
+#include "MiniJumper.h"
 #define SAFE_LAUNCH_DEBUG
 namespace SafeLaunch
 {

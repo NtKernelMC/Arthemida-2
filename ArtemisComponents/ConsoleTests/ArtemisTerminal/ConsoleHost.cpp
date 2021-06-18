@@ -14,7 +14,6 @@
 #include ".../../../../Arthemida-2/API/ArtemisInterface.h"
 using namespace std;
 using namespace ArtemisData;
-using namespace ARTEMIS_INTERFACE;
 using CortPair = std::pair<std::string, std::tuple<std::string, std::string>>;
 void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 {
@@ -68,17 +67,13 @@ void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 		artemis->HackName.c_str(), artemis->filePath.c_str());
 		//"Path: %s | \nName: %s  | Description: %s | \nType: %d | BootSet: %s | Group: %s\n | Signed by: %s\n");
 		break;
-	case DetectionType::ART_MEMORY_PROTECT_VIOLATION:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected memory protect violation!\nBase: 0x%X | Size: 0x%X\n\n",
-			(DWORD)artemis->baseAddr, (DWORD)artemis->regionSize);
-		break;
-	case DetectionType::ART_MEMORY_PROTECT_MAYBE_VIOLATION:
-		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected light memory protect violation!\nBase: 0x%X | Size: 0x%X\n\n",
-			(DWORD)artemis->baseAddr, (DWORD)artemis->regionSize);
-		break;
 	case DetectionType::ART_THREAD_FLAGS_CHANGED:
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected thread with modified flags!\nHandle: 0x%X",
 			(DWORD)artemis->baseAddr);
+		break;
+	case DetectionType::ART_MEMORY_INTEGRITY_VIOLATION:
+		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected memory integrity violation!\nBase: 0x%X | Size: 0x%X\n\n",
+			(DWORD)artemis->baseAddr, (DWORD)artemis->regionSize);
 		break;
 	default:
 		Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Unknown detection code! Base: 0x%X | Size: %d bytes | DllName: %s\n"
@@ -154,8 +149,9 @@ int main()
 		//printf("\n[HEART-BEAT] Console is working normally! Thread ID: %d | Press any key to stop.\n\n", GetCurrentThreadId());
 	} });
 
-	IArtemisInterface* art = IArtemisInterface::InstallArtemisMonitor(&cfg);
-	if (art)
+	CArtemisReal* pArt = new CArtemisReal(&cfg, GetModuleHandleA(NULL));
+	bool  bSuccess = pArt->InstallArtemisMonitor();
+	if (bSuccess)
 	{
 		Utils::LogInFile(ARTEMIS_LOG, "[ARTEMIS-2] Succussfully obtained pointer to AntiCheat!\n");
 		// test detection of illegal calls (return addresses checking)
