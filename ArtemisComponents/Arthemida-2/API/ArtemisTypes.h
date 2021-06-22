@@ -5,7 +5,7 @@
 */
 #pragma once
 #pragma warning (disable : 4477)
-#include "../../Arthemida-2/ArtUtils/Utils.h"
+#include "../ArtUtils/Utils.h"
 
 namespace ArtemisData
 {
@@ -22,10 +22,9 @@ namespace ArtemisData
 		ART_HACK_STRING_FOUND,
 		ART_SIGNATURE_DETECT,
 		ART_ILLEGAL_SERVICE,
-		ART_MEMORY_PROTECT_VIOLATION,
-		ART_MEMORY_PROTECT_MAYBE_VIOLATION, // maybe a false-positive, should be dumped without taking action
 		ART_THREAD_FLAGS_CHANGED,
-		ART_THREAD_SUSPENDED
+		ART_THREAD_SUSPENDED,
+        ART_MEMORY_INTEGRITY_VIOLATION
 	};
 	struct ARTEMIS_DATA
 	{

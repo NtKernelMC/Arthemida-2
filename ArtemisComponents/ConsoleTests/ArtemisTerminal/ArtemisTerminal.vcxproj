@@ -103,7 +103,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>Default</LanguageStandard_C>
@@ -157,11 +157,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Arthemida-2\API\ArtemisComponents.cpp" />
+    <ClCompile Include="..\..\Arthemida-2\API\ArtemisInterface.cpp" />
+    <ClCompile Include="..\..\Arthemida-2\ArtModules\MemoryGuard.cpp" />
+    <ClCompile Include="..\..\Arthemida-2\ArtUtils\xxhash.c" />
     <ClCompile Include="ConsoleHost.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Arthemida-2\API\ArtemisComponents.h" />
     <ClInclude Include="..\..\Arthemida-2\API\ArtemisInterface.h" />
     <ClInclude Include="..\..\Arthemida-2\API\ArtemisTypes.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtModules\AntiFakeLaunch.h" />
@@ -176,6 +177,8 @@
     <ClInclude Include="..\..\Arthemida-2\ArtUtils\MiniJumper.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtUtils\sigscan.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtUtils\Utils.h" />
+    <ClInclude Include="..\..\Arthemida-2\ArtUtils\xxh3.h" />
+    <ClInclude Include="..\..\Arthemida-2\ArtUtils\xxhash.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
