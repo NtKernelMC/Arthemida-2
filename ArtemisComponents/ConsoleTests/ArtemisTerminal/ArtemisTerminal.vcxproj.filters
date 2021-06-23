@@ -89,5 +89,8 @@
     <ClInclude Include="..\..\Arthemida-2\ArtUtils\xxhash.h">
       <Filter>Arthemida-2\ArtUtils</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Arthemida-2\ArtUtils\WinReg.hpp">
+      <Filter>Arthemida-2\ArtUtils</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

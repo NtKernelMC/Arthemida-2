@@ -4,167 +4,141 @@
 #include <map>
 #include <winternl.h>
 #include "MiniJumper.h"
+#include "../ArtUtils/sigscan.h"
+#include "../ArtUtils/WinReg.hpp"
+#include <random>
 #define SAFE_LAUNCH_DEBUG
+
+#define AFL_BUF_SIZE 22
+constexpr wchar_t AFL_SM_NAME[] = L"Global\\NT";
+constexpr unsigned char AFL_SECRET_GUID[] = {
+	0x6d, 0x7a, 0x19, 0x29, 0xfa, 0xe2, 0x4f, 0x1d, 0x96, 0x32, 0x48, 0xad, 0x02, 0x71, 0x48, 0x46
+};
+
+void AFL_XOR(void* pBuffer, size_t size, DWORD dwKey)
+{
+	BYTE* pMask = new BYTE[size];
+	for (size_t i = 0; i < size; i += 4)
+	{
+		memcpy(&pMask[i], (BYTE*)&dwKey, 4);
+	}
+
+	for (size_t i = 0; i < size; i++)
+	{
+		((BYTE*)pBuffer)[i] ^= pMask[i];
+	}
+
+	delete[] pMask;
+}
+
 namespace SafeLaunch
 {
-	using namespace MiniJumper; 
-	DWORD ZwAddr = 0x0, fTrampoline = 0x0, syscall_addr = 0x0;
-	BYTE prologue[5]; PVOID syscall = nullptr;
-	__declspec(naked) void __stdcall ZwCreateUserProcess()
+	DWORD dwNtCreateUserProcess = 0x0;
+	BYTE  bSyscallCode = 0x0;
+	__declspec(naked) NTSTATUS NTAPI NtCreateUserProcess(
+		PUNICODE_STRING      ImagePath,
+		ULONG                ObjectAttributes,
+		PRTL_USER_PROCESS_PARAMETERS ProcessParameters,
+		PSECURITY_DESCRIPTOR ProcessSecurityDescriptor,
+		PSECURITY_DESCRIPTOR ThreadSecurityDescriptor,
+		HANDLE               ParentProcess,
+		BOOLEAN              InheritHandles,
+		HANDLE               DebugPort,
+		HANDLE               ExceptionPort,
+		void*				 ProcessInformation
+	)
 	{
-		__asm jmp syscall_addr
+		__asm {
+			mov al, bSyscallCode
+			mov edx, fs:[0xC0]
+			call edx
+			ret 0x2C
+		}
 	}
 	class ProcessGate sealed
 	{
 	private:
-		PVOID ApiAddr = nullptr;
-	public:
-		explicit ProcessGate(PVOID api_address)
+		void InitializeDirectSyscall()
 		{
-			this->ApiAddr = api_address;
-		}
-		void ProtectFromHooking()
-		{
-			auto getOSver = []()
-			{
-				NTSTATUS(__stdcall *RtlGetVersion)(LPOSVERSIONINFOEXW) = nullptr; OSVERSIONINFOEXW osInfo { 0 };
-				#pragma warning(suppress: 6387)
-				*(FARPROC*)&RtlGetVersion = GetProcAddress(GetModuleHandleA("ntdll"), "RtlGetVersion");
-				if (NULL != RtlGetVersion)
-				{
-					osInfo.dwOSVersionInfoSize = sizeof(osInfo); RtlGetVersion(&osInfo);
-					return std::make_tuple(osInfo.dwMajorVersion, osInfo.dwMinorVersion);
-				}
-				return std::make_tuple((DWORD)0x0, (DWORD)0x0);
-			};
 			#pragma warning(suppress: 6387)
-			ZwAddr = (DWORD)GetProcAddress(GetModuleHandleA("ntdll.dll"), "ZwCreateUserProcess");
-			if (!ZwAddr)
+			dwNtCreateUserProcess = (DWORD)GetProcAddress(GetModuleHandleA("ntdll.dll"), "ZwCreateUserProcess");
+			if (!dwNtCreateUserProcess)
 			{
 #ifdef SAFE_LAUNCH_DEBUG
 				printf("ZwAddr == nullptr | ZwCreateUserProcess\n");
 #endif
 				return;
 			}
-#ifdef _WIN64
-			if (*(BYTE*)ZwAddr != 0x4C) memcpy((void*)0xFFFFFF, (void*)0xFFFFFF, 222222);
-			syscall = VirtualAlloc(0, 11, MEM_RESERVE | MEM_COMMIT, PAGE_EXECUTE_READWRITE);
-			memcpy(syscall, (void*)ZwAddr, 8); *(BYTE*)((DWORD_PTR)syscall + 8) = 0x0F;
-			*(BYTE*)((DWORD_PTR)syscall + 9) = 0x05; *(BYTE*)((DWORD_PTR)syscall + 10) = 0xC3;
-#else
-			if (*(BYTE*)ZwAddr != 0xB8) memcpy((void*)0xFFFFFF, (void*)0xFFFFFF, 222222);
-			SYSTEM_INFO systemInfo = { 0 }; GetNativeSystemInfo(&systemInfo);
-			std::tuple<DWORD, DWORD> OsVerInfo = getOSver();
-			DWORD codeSize = 15; if (systemInfo.wProcessorArchitecture != PROCESSOR_ARCHITECTURE_INTEL)
-			{
-				if (std::get<0>(OsVerInfo) == 6 && std::get<1>(OsVerInfo) == 0) codeSize = 21;
-				if (std::get<0>(OsVerInfo) == 6 && std::get<1>(OsVerInfo) == 1) codeSize = 24;
-			}
-			else // added win10 x32 syscall`s
-			{
-				if ((std::get<0>(OsVerInfo) == 6 && (std::get<1>(OsVerInfo) == 3 || std::get<1>(OsVerInfo) == 2))
-				|| (std::get<1>(OsVerInfo) == 10 || std::get<1>(OsVerInfo) == 0)) codeSize = 18;
-			}
-#ifdef SAFE_LAUNCH_DEBUG
-			printf("Major: %d | Minor: %d | CodeSize: %d\n", std::get<0>(OsVerInfo), std::get<1>(OsVerInfo), codeSize);
-			//return;
-#endif
-			syscall = VirtualAlloc(0, codeSize, MEM_RESERVE | MEM_COMMIT, PAGE_EXECUTE_READWRITE);
-			if (syscall == nullptr)
-			{
-#ifdef SAFE_LAUNCH_DEBUG
-				printf("[ALLOCATOR] Can`t allocate virtual memory. Last error: %d\n", GetLastError());
-#endif
-				return;
-			}
-			memcpy((void*)syscall, (void*)ZwAddr, codeSize);
-			syscall_addr = (DWORD)syscall;
-#endif      
-			fTrampoline = CustomHooks::MakeJump(ZwAddr, (DWORD)&ZwCreateUserProcess, prologue, 5);
-			if (fTrampoline != NULL)
-			{
-#ifdef SAFE_LAUNCH_DEBUG
-				printf("[INSTALLER] Hook for syscall redirection was successfully installed!\n");
-#endif
-			}
-			else
-			{
-#ifdef SAFE_LAUNCH_DEBUG
-				printf("[Hooking Error] By some reasons, hook is not exist in to the list!\n");
-				printf("[REPORT] System Error Code: %d\n", GetLastError());
-#endif
-			}
+			if (*(BYTE*)dwNtCreateUserProcess != 0xB8) memcpy((void*)0xFFFFFF, (void*)0xFFFFFF, 222222);
+			
+			// UNFINISHED
 		}
-		template<typename UnkStr, typename UnkSTARTUPINFO>
-		BOOL SafeProcess(UnkStr lpApplicationName,
-		UnkStr lpCommandLine, LPSECURITY_ATTRIBUTES lpProcessAttributes,
-		LPSECURITY_ATTRIBUTES lpThreadAttributes, BOOL bInheritHandles,
-		DWORD dwCreationFlags, LPVOID lpEnvironment, UnkStr lpCurrentDirectory,
-		UnkSTARTUPINFO lpStartupInfo, LPPROCESS_INFORMATION lpProcessInformation)
+
+		DWORD GenRandomDWORD()
 		{
-			if (ApiAddr == nullptr) return NULL;
-			ProtectFromHooking();
-			DWORD ulFlags = CREATE_SUSPENDED;
-#ifdef _CONSOLE
-			ulFlags = CREATE_SUSPENDED | CREATE_NEW_CONSOLE;
-#endif
-			using CreateSafeProc = BOOL(*)(UnkStr lpApplicationName,
-			UnkStr lpCommandLine, LPSECURITY_ATTRIBUTES lpProcessAttributes,
-			LPSECURITY_ATTRIBUTES lpThreadAttributes, BOOL bInheritHandles,
-			DWORD dwCreationFlags, LPVOID lpEnvironment, UnkStr lpCurrentDirectory,
-			UnkSTARTUPINFO lpStartupInfo, LPPROCESS_INFORMATION lpProcessInformation);
-			CreateSafeProc CreateSafeProcess = (CreateSafeProc)ApiAddr;
-			BOOL rslt = CreateSafeProcess(lpApplicationName, lpCommandLine,
-			lpProcessAttributes, lpThreadAttributes, bInheritHandles,
-			ulFlags, lpEnvironment, lpCurrentDirectory, lpStartupInfo, lpProcessInformation);
-			if (lpProcessInformation->hProcess == NULL || rslt == NULL) return NULL;
-			DISPLAY_DEVICE DevInfo { 0 }; DevInfo.cb = sizeof(DISPLAY_DEVICE);
-			EnumDisplayDevicesA(NULL, 0, &DevInfo, 0);
-			std::string VideoCard = DevInfo.DeviceString;
-			HANDLE hMutex = CreateMutexA(FALSE, FALSE, VideoCard.c_str());
-			if (hMutex)
+			std::random_device rd;
+			std::mt19937 mt(rd());
+			std::uniform_int_distribution<DWORD> dist(0x10000000, 0xFFFFFFFF);
+			return dist(mt);
+		}
+
+	public:
+		BOOL SafeProcess(LPCWSTR lpApplicationName,
+		LPWSTR lpCommandLine, LPSECURITY_ATTRIBUTES lpProcessAttributes,
+		LPSECURITY_ATTRIBUTES lpThreadAttributes, BOOL bInheritHandles,
+		DWORD dwCreationFlags, LPVOID lpEnvironment, LPCWSTR lpCurrentDirectory,
+		LPSTARTUPINFOW lpStartupInfo, LPPROCESS_INFORMATION lpProcessInformation)
+		{
+			DWORD dwHash = GenRandomDWORD();
+			using namespace winreg;
+			try
+			{
+				RegKey key{ HKEY_LOCAL_MACHINE, L"SOFTWARE\\Multi Theft Auto: Province All\\1.5\\Settings\\diagnostics", KEY_WRITE };
+				key.SetDwordValue(L"last-dump-hash", dwHash);
+			} catch (RegException& e)
 			{
 #ifdef SAFE_LAUNCH_DEBUG
-				printf("[MUTEX] Signal was created!\n");
+				printf("Registry operations failed with error [%s]\n", e.what());
 #endif
+				return FALSE;
 			}
-			ResumeThread(lpProcessInformation->hThread);
-			if (fTrampoline != NULL)
+
+			HANDLE hMapMem;
+			hMapMem = CreateFileMappingW(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, AFL_BUF_SIZE, AFL_SM_NAME);
+			if (hMapMem == NULL)
 			{
 #ifdef SAFE_LAUNCH_DEBUG
-				printf("[UNHOOKING] Hook was found, trying to remove it...\n");
+				printf("Couldn't open memory mapping [%d]\n", GetLastError());
 #endif
-				if (CustomHooks::RestorePrologue(ZwAddr, (PVOID)fTrampoline, prologue, 5))
-				{
-#ifdef SAFE_LAUNCH_DEBUG
-					printf("[REMOVED] Inline hook was erased, original bytes restored!\n");
-#endif
-				}
-#ifdef SAFE_LAUNCH_DEBUG
-				else printf("[Unhooking Error] Failed to restore original code.\n"
-				"\r\r\r[REPORT] System Error Code: %d\n", GetLastError());
+				return FALSE;
 			}
-			else printf("[Unhooking Error] By some reasons, hook is not exist in to the list!\n"
-			"\r\r\r[REPORT] System Error Code : % d\n", GetLastError());
-#endif
-			if (syscall != nullptr)
+
+			BYTE* pMappedData = (BYTE*)MapViewOfFile(hMapMem, FILE_MAP_ALL_ACCESS, 0, 0, AFL_BUF_SIZE);
+			if (pMappedData == NULL)
 			{
-				BOOL mmr = VirtualFree(syscall, 0, MEM_RELEASE);
-				if (mmr)
-				{
 #ifdef SAFE_LAUNCH_DEBUG
-					printf("Custom syscall memory released!\n");
+				printf("Couldn't map memory [%d]\n", GetLastError());
 #endif
-				}
-				else
-				{
-#ifdef SAFE_LAUNCH_DEBUG
-					printf("Custom syscall memory failed to free.\n");
-#endif
-				}
+				CloseHandle(hMapMem);
+				return FALSE;
 			}
-			if (rslt) return rslt;
-			return NULL;
+
+			DWORD dwRnd = GenRandomDWORD();
+			pMappedData[0] = ((BYTE*)&dwRnd)[0];
+			pMappedData[1] = ((BYTE*)&dwRnd)[1];
+			pMappedData[2] = ((BYTE*)&dwRnd)[2];
+			pMappedData[3] = ((BYTE*)&dwRnd)[3];
+			dwRnd = GenRandomDWORD();
+			pMappedData[4] = ((BYTE*)&dwRnd)[0];
+			pMappedData[5] = ((BYTE*)&dwRnd)[1];
+			pMappedData += 6;
+
+			memcpy(pMappedData, AFL_SECRET_GUID, sizeof(AFL_SECRET_GUID));
+			AFL_XOR(pMappedData, sizeof(AFL_SECRET_GUID), dwHash);
+
+			UnmapViewOfFile(pMappedData);
+
+			return CreateProcessW(lpApplicationName, lpCommandLine, lpProcessAttributes, lpThreadAttributes, bInheritHandles, dwCreationFlags, lpEnvironment, lpCurrentDirectory, lpStartupInfo, lpProcessInformation);
 		}
 	};
 }

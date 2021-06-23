@@ -43,6 +43,7 @@
 #include "CRC32.h"
 #include "sigscan.h"
 #include "MiniJumper.h"
+#include "WinReg.hpp"
 // Hooks Data
 static DWORD memTramplin = NULL; static BYTE Prolog[5];
 // Multi-threaded control for module parser
