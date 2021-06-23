@@ -35,8 +35,9 @@ bool __stdcall IsModulePacked(HMODULE hModule, const std::vector<std::string>& E
 	if (hModule == nullptr) return false;
 	else
 	{
-		auto fnd = std::find(ExcludedModules.begin(), ExcludedModules.end(), Utils::GetLibNameFromHandle(hModule));
-		if (fnd != ExcludedModules.end()) return false;
+		std::string strModuleName = Utils::GetLibNameFromHandle(hModule);
+		for (auto& strExcluded : ExcludedModules)
+			if (Utils::findStringIC(strModuleName, strExcluded)) return;
 		bool ContainTextSection = false; PIMAGE_NT_HEADERS NtHeader = ImageNtHeader(hModule);
 		WORD NumSections = NtHeader->FileHeader.NumberOfSections;
 		PIMAGE_SECTION_HEADER Section = IMAGE_FIRST_SECTION(NtHeader);
