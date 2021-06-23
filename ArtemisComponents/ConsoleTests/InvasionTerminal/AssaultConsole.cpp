@@ -18,10 +18,9 @@ int main()
 {
 	system("color 06"); SetConsoleTitleA("[Artemis-2] Invasion Terminal");
 	printf("Invasion Terminal started!\n\n");
-	SafeLaunch::ProcessGate procGate(CreateProcessW);
+	SafeLaunch::ProcessGate procGate;
 	STARTUPINFOW info = { sizeof(info) }; PROCESS_INFORMATION processInfo;
-	if (procGate.SafeProcess<const wchar_t*, LPSTARTUPINFOW>
-	(L"ArtemisHost.exe", L"", NULL, NULL, TRUE, 0, NULL, NULL, &info, &processInfo))
+	if (procGate.SafeProcess(L"ArtemisHost.exe", (wchar_t*)L"", NULL, NULL, TRUE, CREATE_NEW_CONSOLE, NULL, NULL, &info, &processInfo))
 	{
 		char tst_dll[256]; memset(tst_dll, 0, sizeof(tst_dll));
 		char* cvr = _getcwd(tst_dll, sizeof(tst_dll)); strcat(tst_dll, "\\test_2.dll");
