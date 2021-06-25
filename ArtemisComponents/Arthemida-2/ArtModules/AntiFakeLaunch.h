@@ -49,7 +49,7 @@ void __stdcall ConfirmLegitLaunch(ArtemisConfig* cfg)
 	RegKey key{};
 	try
 	{
-		key.Open(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Multi Theft Auto: Province All\\1.5\\Settings\\diagnostics", KEY_READ);
+		key.Open(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Multi Theft Auto: Province All\\1.5\\Settings\\diagnostics", KEY_READ | KEY_WRITE);
 		dwHash = key.GetDwordValue(L"last-dump-hash");
 	} catch (RegException& e) {
 		printf("Registry operations failed with error [%s]\n", e.what());
