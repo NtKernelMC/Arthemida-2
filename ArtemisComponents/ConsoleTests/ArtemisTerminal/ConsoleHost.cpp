@@ -105,25 +105,28 @@ int main()
 	system("color 02"); SetConsoleTitleA("Arthemida-2 AntiCheat Lightweight Testing");
 	printf("ConsoleHost main thread started! Thread ID: %d\n", GetCurrentThreadId());
 	ArtemisConfig cfg; LoadLibraryA("version.dll");
-	cfg.DetectThreads = true; 
+	cfg.DetectFakeLaunch = true; // AntiFakeLaunch.h
+
+	cfg.DetectThreads = true; // ThreadScanner.h
 	cfg.ThreadScanDelay = 1000;
 
-	cfg.DetectModules = true; 
+	cfg.DetectModules = true; // ModuleScanner.h
 	cfg.ModuleScanDelay = 1000;
 	
-	cfg.DetectManualMap = true; 
+	cfg.DetectManualMap = true; // MemoryScanner.h
 	cfg.MemoryScanDelay = 1000; 
 
-	cfg.MemoryGuard = true; 
+	cfg.ServiceMon = true; // CServiceMon.h
+	cfg.ServiceMonDelay = 1000;
+
+	cfg.MemoryGuard = true; // MemoryGuard.h
 	cfg.MemoryGuardScanDelay = 1;
 
-	cfg.ThreadGuard = true;
+	cfg.ThreadGuard = true; // ThreadGuard.h
 	cfg.ThreadGuardDelay = 500;
 	//cfg.HooksList.insert(std::pair<PVOID, PVOID>((PVOID)RetTest::TestStaticMethod, (PVOID)HookTestStaticMethod));
 	// __thiscall methods must be casted in a different way
 	
-	cfg.ServiceMon = true;
-	cfg.ServiceMonDelay = 1000;
 	cfg.IllegalDriverPatterns.insert(CortPair("HWIDSYS spoofer", std::make_tuple
 	("\x5B\x64\x62\x67\x5D\x20\x72\x65\x76\x65\x72\x74\x65\x64\x20\x25\x77\x5A\x20\x73\x77\x61\x70"s, "xxxxxxxxxxxxxxxxxxxxxxx"s)));
 	//todo cfg.PriorityDriverNames
@@ -137,7 +140,6 @@ int main()
 	cfg.IllegalPatterns.insert(CortPair("HWBP by NtKernelMC", 
 	std::make_tuple("\x8D\x45\xF4\x64\xA3\x00\x00\x00\x00\x68"s, "xxxxxxxxxx"s)));
 	/////////////////////////////////////////////////////////////////////////////////////////////////
-	cfg.DetectFakeLaunch = true;
 	cfg.callback = (ArtemisCallback)ArthemidaCallback; 
 
 	Utils::LogInFile(ARTEMIS_LOG, "[ARTEMIS-2] Configured and ready, press any key to load...\n"); 

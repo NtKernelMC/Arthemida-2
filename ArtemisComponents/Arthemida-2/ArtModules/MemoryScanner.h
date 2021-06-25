@@ -4,8 +4,15 @@
 	Project by NtKernelMC & holmes0
 */
 #include "ArtemisInterface.h"
+#include "../ArtUtils/seh.h"
+void trans_func(unsigned int u, EXCEPTION_POINTERS*)
+{
+	throw SE_Exception(u);
+}
 void __stdcall MemoryScanner(ArtemisConfig* cfg)
 {
+	Scoped_SE_Translator scoped_se_translator{ trans_func };
+
 	if (cfg == nullptr)
 	{
 #ifdef ARTEMIS_DEBUG
@@ -30,42 +37,51 @@ void __stdcall MemoryScanner(ArtemisConfig* cfg)
 				MEMORY_BASIC_INFORMATION* i = &info[0]; 
 				if ((i->State != MEM_FREE && i->State != MEM_RELEASE) && i->Protect & mask)
 				{
-					BYTE complete_sequence = 0; DWORD foundIAT = 0x0;
-                    for (DWORD z = (DWORD)ptr; z < ((DWORD)ptr + i->RegionSize); z++)
+					try
 					{
-						for (DWORD x = 0; x < (8 * 6); x += 0x6)
+						BYTE complete_sequence = 0; DWORD foundIAT = 0x0;
+						for (DWORD z = (DWORD)ptr; z < ((DWORD)ptr + i->RegionSize); z++)
 						{
-                            if ((x + z) < ((DWORD)ptr + i->RegionSize) && 
-							(x + z + 0x1) < ((DWORD)ptr + i->RegionSize))
+							for (DWORD x = 0; x < (8 * 6); x += 0x6)
 							{
-								if ((*(BYTE*)(z + x) == 0xFF && *(BYTE*)(x + z + 0x1) == 0x25))
+								if ((x + z) < ((DWORD)ptr + i->RegionSize) &&
+									(x + z + 0x1) < ((DWORD)ptr + i->RegionSize))
 								{
-									foundIAT = (x + z);
-									complete_sequence++;
+									if ((*(BYTE*)(z + x) == 0xFF && *(BYTE*)(x + z + 0x1) == 0x25))
+									{
+										foundIAT = (x + z);
+										complete_sequence++;
+									}
+									else complete_sequence = 0;
 								}
 								else complete_sequence = 0;
 							}
-							else complete_sequence = 0;
-						}
-						if (complete_sequence >= 8)
-						{
-							complete_sequence = 0x0; char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
-							lpGetMappedFileNameA(cfg->CurrProc, i->BaseAddress, MappedName, sizeof(MappedName));
-							std::string possible_name = Utils::GetDllName(MappedName); bool cloacked = false;
-							if (!Utils::IsMemoryInModuledRange((DWORD)i->BaseAddress, possible_name, &cloacked))
+							if (complete_sequence >= 8)
 							{
-								if (!Utils::IsVecContain(cfg->ExcludedImages, i->BaseAddress))
+								complete_sequence = 0x0; char MappedName[256]; memset(MappedName, 0, sizeof(MappedName));
+								lpGetMappedFileNameA(cfg->CurrProc, i->BaseAddress, MappedName, sizeof(MappedName));
+								std::string possible_name = Utils::GetDllName(MappedName); bool cloacked = false;
+								if (!Utils::IsMemoryInModuledRange((DWORD)i->BaseAddress, possible_name, &cloacked))
 								{
-									if ((i->Protect == 0x20 && cloacked) && !possible_name.empty()) continue;
-									ARTEMIS_DATA data; data.baseAddr = i->BaseAddress;
-									data.MemoryRights = i->Protect; data.regionSize = i->RegionSize;
-									data.dllName = cloacked ? possible_name : " ";
-									data.dllPath = cloacked ? MappedName : " ";
-									data.type = DetectionType::ART_MANUAL_MAP;
-									cfg->callback(&data); cfg->ExcludedImages.push_back(i->BaseAddress);
+									if (!Utils::IsVecContain(cfg->ExcludedImages, i->BaseAddress))
+									{
+										if ((i->Protect == 0x20 && cloacked) && !possible_name.empty()) continue;
+										ARTEMIS_DATA data; data.baseAddr = i->BaseAddress;
+										data.MemoryRights = i->Protect; data.regionSize = i->RegionSize;
+										data.dllName = cloacked ? possible_name : " ";
+										data.dllPath = cloacked ? MappedName : " ";
+										data.type = DetectionType::ART_MANUAL_MAP;
+										cfg->callback(&data); cfg->ExcludedImages.push_back(i->BaseAddress);
+									}
 								}
 							}
 						}
+					}
+					catch (const SE_Exception& e)
+					{
+					    printf("[SEH/CRITICAL] %8.8x\n", e.getSeNumber());
+					} catch (...) {
+						printf("[SEH/CRITICAL] Unknown\n");
 					}
 				}
 				ptr = (const void*)((const char*)(i->BaseAddress) + i->RegionSize);
