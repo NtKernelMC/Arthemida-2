@@ -113,6 +113,7 @@
       <EnableModules>false</EnableModules>
       <ControlFlowGuard>Guard</ControlFlowGuard>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\Arthemida-2\API;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExceptionHandling>Async</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -175,6 +176,7 @@
     <ClInclude Include="..\..\Arthemida-2\ArtModules\ThreadScanner.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtUtils\CRC32.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtUtils\MiniJumper.h" />
+    <ClInclude Include="..\..\Arthemida-2\ArtUtils\seh.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtUtils\sigscan.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtUtils\Utils.h" />
     <ClInclude Include="..\..\Arthemida-2\ArtUtils\WinReg.hpp" />

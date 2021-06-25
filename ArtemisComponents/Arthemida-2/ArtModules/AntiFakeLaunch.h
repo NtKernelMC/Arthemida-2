@@ -52,7 +52,9 @@ void __stdcall ConfirmLegitLaunch(ArtemisConfig* cfg)
 		key.Open(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Multi Theft Auto: Province All\\1.5\\Settings\\diagnostics", KEY_READ | KEY_WRITE);
 		dwHash = key.GetDwordValue(L"last-dump-hash");
 	} catch (RegException& e) {
+#ifdef ARTEMIS_DEBUG
 		printf("Registry operations failed with error [%s]\n", e.what());
+#endif
 		Detect();
 		return;
 	}
@@ -61,7 +63,9 @@ void __stdcall ConfirmLegitLaunch(ArtemisConfig* cfg)
 	hMapMem = OpenFileMappingW(FILE_MAP_ALL_ACCESS, FALSE, AFL_SM_NAME);
 	if (hMapMem == NULL)
 	{
+#ifdef ARTEMIS_DEBUG
 		printf("Couldn't open memory mapping [%d]\n", GetLastError());
+#endif
 		Detect();
 		return;
 	}
@@ -69,7 +73,9 @@ void __stdcall ConfirmLegitLaunch(ArtemisConfig* cfg)
 	BYTE* pMappedData = (BYTE*)MapViewOfFile(hMapMem, FILE_MAP_ALL_ACCESS, 0, 0, AFL_BUF_SIZE);
 	if (pMappedData == NULL)
 	{
+#ifdef ARTEMIS_DEBUG
 		printf("Couldn't map memory [%d]\n", GetLastError());
+#endif
 		CloseHandle(hMapMem);
 		Detect();
 		return;

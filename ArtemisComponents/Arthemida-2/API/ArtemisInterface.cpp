@@ -135,8 +135,7 @@ bool CArtemisReal::InstallArtemisMonitor()
             m_pConfig->ModuleScanDelay = 1000;
         if (!m_pConfig->ExcludedModules.empty())
             m_pConfig->ExcludedModules.clear(); 
-		HANDLE hProxyScanner =
-            ArtThreading::CreateProtectedThread(&ModuleScanner, m_pConfig);            // Создание и запуск асинхронного потока сканера модулей процесса
+		HANDLE hProxyScanner = ArtThreading::CreateProtectedThread(&ModuleScanner, m_pConfig);            // Создание и запуск асинхронного потока сканера модулей процесса
         m_pConfig->OwnThreads.push_back(hProxyScanner);
 	}
     if (m_pConfig->DetectManualMap)            // Детект мануал маппинга
@@ -145,8 +144,7 @@ bool CArtemisReal::InstallArtemisMonitor()
             m_pConfig->MemoryScanDelay = 1000;
         if (!m_pConfig->ExcludedImages.empty())
             m_pConfig->ExcludedImages.clear();
-        HANDLE hMmapScanner = ArtThreading::CreateProtectedThread(
-            &MemoryScanner, m_pConfig);            // Запуск асинхронного cканнера для поиска смапленных образов DLL-библиотек
+        HANDLE hMmapScanner = ArtThreading::CreateProtectedThread(&MemoryScanner, m_pConfig);            // Запуск асинхронного cканнера для поиска смапленных образов DLL-библиотек
         m_pConfig->OwnThreads.push_back(hMmapScanner);
 	}
     if (m_pConfig->ServiceMon)            // on dev

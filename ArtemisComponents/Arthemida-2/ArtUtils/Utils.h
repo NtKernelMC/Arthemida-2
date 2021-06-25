@@ -16,6 +16,9 @@
 #endif
 #pragma warning(disable : 4244)
 #pragma warning(disable : 4018)
+#ifndef ARTEMIS_USER_INTERACTIONS
+#define ARTEMIS_USER_INTERACTIONS
+#endif
 #define ARTEMIS_DEBUG
 #ifdef ARTEMIS_DEBUG
 #define ARTEMIS_LOG "!0_ArtemisDebug.log"
@@ -403,5 +406,59 @@ public:
 		}
 
 		return parts;
+	}
+
+private:
+	static void DispatchUserMessageEndPoint(const char* szMessage)
+	{
+		MessageBoxA(GetActiveWindow(), szMessage, "MTA Province", MB_OK | MB_ICONINFORMATION);
+	}
+
+	static void DispatchUserMessageEndPoint(const wchar_t* wszMessage)
+	{
+		MessageBoxW(GetActiveWindow(), wszMessage, L"MTA Province", MB_OK | MB_ICONINFORMATION);
+	}
+
+public:
+	static void DispatchUserMessage(const char* szFormat, ...)
+	{
+		va_list vl;
+		va_start(vl, szFormat);
+
+		va_list vlc;
+		va_copy(vlc, vl);
+		int iRequiredCapacity = _vscprintf(szFormat, vlc);
+		if (iRequiredCapacity < 1) return;
+		char* szDest = new char[iRequiredCapacity + 2];
+		va_copy(vlc, vl);
+		int iSize = vsnprintf(szDest, iRequiredCapacity + 1, szFormat, vlc);
+		if (iSize < 1) return;
+		else szDest[iSize] = '\0';
+
+		DispatchUserMessageEndPoint(szDest);
+
+		delete[] szDest;
+		va_end(vl);
+	}
+
+	static void DispatchUserMessage(const wchar_t* wszFormat, ...)
+	{
+		va_list vl;
+		va_start(vl, wszFormat);
+
+		va_list vlc;
+		va_copy(vlc, vl);
+		int iRequiredCapacity = _vscwprintf(wszFormat, vlc);
+		if (iRequiredCapacity < 1) return;
+		wchar_t* wszDest = new wchar_t[iRequiredCapacity + 2];
+		va_copy(vlc, vl);
+		int iSize = _vsnwprintf(wszDest, iRequiredCapacity + 1, wszFormat, vlc);
+		if (iSize < 1) return;
+		else wszDest[iSize] = L'\0';
+
+		DispatchUserMessageEndPoint(wszDest);
+
+		delete[] wszDest;
+		va_end(vl);
 	}
 };
