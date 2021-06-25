@@ -411,12 +411,12 @@ public:
 private:
 	static void DispatchUserMessageEndPoint(const char* szMessage)
 	{
-		MessageBoxA(GetActiveWindow(), "MTA Province", szMessage, MB_OK | MB_ICONINFORMATION);
+		MessageBoxA(GetActiveWindow(), szMessage, "MTA Province", MB_OK | MB_ICONINFORMATION);
 	}
 
 	static void DispatchUserMessageEndPoint(const wchar_t* wszMessage)
 	{
-		MessageBoxW(GetActiveWindow(), L"MTA Province", wszMessage, MB_OK | MB_ICONINFORMATION);
+		MessageBoxW(GetActiveWindow(), wszMessage, L"MTA Province", MB_OK | MB_ICONINFORMATION);
 	}
 
 public:
