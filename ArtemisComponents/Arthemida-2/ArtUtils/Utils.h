@@ -51,7 +51,7 @@
 static DWORD memTramplin = NULL; static BYTE Prolog[5];
 // Multi-threaded control for module parser
 static std::map<DWORD, DWORD> orderedMapping; // global module runtime list (PE Image Info)
-static std::map<DWORD, std::string> orderedIdentify; // global module runtime list (Identify Info)
+static std::map<DWORD, std::wstring> orderedIdentify; // global module runtime list (Identify Info)
 // Windows Legacy Mode Support for Win7
 typedef void(__stdcall* PtrLdrInitializeThunk)(PCONTEXT Context);
 typedef BOOL(__stdcall* PtrIfFileProtected)(HANDLE sfRPC, LPCWSTR fPath);
@@ -111,17 +111,20 @@ public:
 		if (!AdjustTokenPrivileges(hToken, 0, &tp, sizeof(tp), 0, 0)) return false;
 		return true;
 	}
-	static decltype(auto) CvWideToAnsi(const std::wstring& var)
+	static std::string CvWideToAnsi(const std::wstring& wstr)
 	{
-		if (var.empty()) return std::string(""); static std::locale loc("");
-		auto& facet = std::use_facet<std::codecvt<wchar_t, char, std::mbstate_t>>(loc);
-		return std::wstring_convert<std::remove_reference<decltype(facet)>::type, wchar_t>(&facet).to_bytes(var);
+		using convert_typeX = std::codecvt_utf8<wchar_t>;
+		std::wstring_convert<convert_typeX, wchar_t> converterX;
+
+		return converterX.to_bytes(wstr);
 	}
-	static decltype(auto) CvAnsiToWide(const std::string& var)
+
+	static std::wstring CvAnsiToWide(const std::string& str)
 	{
-		if (var.empty()) return std::wstring(L""); static std::locale loc("");
-		auto& facet = std::use_facet<std::codecvt<wchar_t, char, std::mbstate_t>>(loc);
-		return std::wstring_convert<std::remove_reference<decltype(facet)>::type, wchar_t>(&facet).from_bytes(var);
+		using convert_typeX = std::codecvt_utf8<wchar_t>;
+		std::wstring_convert<convert_typeX, wchar_t> converterX;
+
+		return converterX.from_bytes(str);
 	}
 	static void LogInFile(const char* log_name, const char* log, ...)
 	{
@@ -199,23 +202,23 @@ public:
 		if (fPath == nullptr) return FALSE;
 		return CheckIfFileProtected(NULL, fPath);
 	}
-	static bool IsModuleDuplicated(/*in*/const HMODULE mdl, /*out*/std::string& full_path,
-	/*in*/std::map<DWORD, std::string>& ModuleSnapshot, /*out*/std::string& nameOfDll)
+	static bool IsModuleDuplicated(/*in*/const HMODULE mdl, /*out*/std::wstring& full_path,
+	/*in*/std::map<DWORD, std::wstring>& ModuleSnapshot, /*out*/std::wstring& nameOfDll)
 	{
 		if (mdl == nullptr || ModuleSnapshot.empty()) return false;
-		CHAR szFileName[MAX_PATH + 1]; if (!GetModuleFileNameA(mdl, szFileName, MAX_PATH + 1)) return false;
-		std::string DllName = GetDllName(szFileName); nameOfDll = DllName; full_path = szFileName; 
+		WCHAR wszFileName[MAX_PATH + 1]; if (!GetModuleFileNameW(mdl, wszFileName, MAX_PATH + 1)) return false;
+		std::wstring DllName = GetDllName(wszFileName); nameOfDll = DllName; full_path = wszFileName; 
 		for (const auto& it_snap : ModuleSnapshot) // parsing the list (Primary key: CRC32, Value: Library name)
 		{
-			if (!findStringIC(it_snap.second, DllName)) continue; // We don`t need to check CRC32, it`s the unique key for map!
+			if (!w_findStringIC(it_snap.second, DllName)) continue; // We don`t need to check CRC32, it`s the unique key for map!
 			else // if any of value's will match - then we got a suspected :)
 			{
 				// reversed list with values to -> keys order, multimap doesn`t have the limit of duplicated keys.
-				std::multimap<std::string, DWORD> tmpModuleSnapshot; // here might be only two pairs of duplicated keys.
+				std::multimap<std::wstring, DWORD> tmpModuleSnapshot; // here might be only two pairs of duplicated keys.
 				for (const auto& it : ModuleSnapshot) // let`s gonna copy all in new order, cuz multimap/map can check only key!
 				{
 					// as map can accept duplicated values but our hashes always unique, so just swap the args!
-					tmpModuleSnapshot.insert(std::pair<std::string, DWORD>(it.second, it.first));
+					tmpModuleSnapshot.insert(std::pair<std::wstring, DWORD>(it.second, it.first));
 				}
 				// if we found at least one duplicated pair and more..
 				if (tmpModuleSnapshot.count(DllName) >= 0x2) return true;
@@ -263,12 +266,12 @@ public:
 					if (orderedMapping.count((DWORD)modinfo->lpBaseOfDll) != 0x1)
 					{
 						orderedMapping.insert(std::pair<DWORD, DWORD>((DWORD)modinfo->lpBaseOfDll, modinfo->SizeOfImage));
-						CHAR szFileName[MAX_PATH + 1]; if (!GetModuleFileNameA((HMODULE)
-						modinfo->lpBaseOfDll, szFileName, MAX_PATH + 1)) return;
-						DWORD CRC32 = GenerateCRC32(szFileName, nullptr); 
-						std::string DllName = GetDllName(szFileName);
+						WCHAR wszFileName[MAX_PATH + 1]; if (!GetModuleFileNameW((HMODULE)
+						modinfo->lpBaseOfDll, wszFileName, MAX_PATH + 1)) return;
+						DWORD CRC32 = GenerateCRC32(wszFileName, nullptr); 
+						std::wstring DllName = GetDllName(wszFileName);
 						if (orderedIdentify.count(CRC32) != 0x1) orderedIdentify.insert(orderedIdentify.begin(),
-						std::pair<DWORD, std::string>(CRC32, DllName));
+						std::pair<DWORD, std::wstring>(CRC32, DllName));
 					}
 				}
 			}
@@ -288,6 +291,19 @@ public:
 	{
 		if (filePath.empty()) return 0x0;
 		FILE* hFile = fopen(filePath.c_str(), "rb");
+		if (hFile == nullptr) return 0x0;
+		BYTE* fileBuf = nullptr;
+		DWORD fileSize = getFileSize(hFile);
+		if (FileSize != nullptr) *FileSize = fileSize;
+		fileBuf = new BYTE[fileSize];
+		fread(fileBuf, fileSize, 1, hFile);
+		fclose(hFile); DWORD crc = CRC::Calculate(fileBuf, fileSize, CRC::CRC_32());
+		delete[] fileBuf; return crc;
+	}
+	static DWORD GenerateCRC32(const std::wstring& wfilePath, DWORD* FileSize)
+	{
+		if (wfilePath.empty()) return 0x0;
+		FILE* hFile = _wfopen(wfilePath.c_str(), L"rb");
 		if (hFile == nullptr) return 0x0;
 		BYTE* fileBuf = nullptr;
 		DWORD fileSize = getFileSize(hFile);
@@ -345,6 +361,11 @@ public:
 	{
 		if (szDllNameTmp.empty()) return szDllNameTmp;
 		return szDllNameTmp.substr(szDllNameTmp.find_last_of("/\\") + 1);
+	}
+	static std::wstring GetDllName(std::wstring wszDllNameTmp)
+	{
+		if (wszDllNameTmp.empty()) return wszDllNameTmp;
+		return wszDllNameTmp.substr(wszDllNameTmp.find_last_of(L"/\\") + 1);
 	}
 	template<typename S, typename E>
 	static bool IsVecContain(const std::vector<S>& source, const E element)
