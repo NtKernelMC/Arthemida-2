@@ -81,13 +81,13 @@ NTSTATUS __stdcall hkLdrLoadDll(
 				}
 				if (cfg->DetectByString)
 				{
-					for (const auto& zm : cfg->IlegaleLinien) // Список строк для поиска читов (вектор стринг)
+					for (const auto& illegalString : cfg->IlegaleLinien) // Список строк для поиска читов (вектор стринг)
 					{
-						size_t end_len = NULL;
-						char* ptr = SearchStringInMemory(zm, zm.length(), (PVOID)lpBase, (PVOID)dwSize, end_len);
+						DWORD dwAddr = SigScan::FindPatternExplicit((DWORD)lpBase, dwSize, illegalString.c_str(), std::string(illegalString.length(), 'x').c_str());
+						char* ptr = (char*)dwAddr;
 						if (ptr != nullptr)
 						{
-							std::string match = std::string(ptr, zm.length() + end_len);
+							std::string match = std::string(ptr, illegalString.length());
 							ModuleThreatReport(lpBase, dwSize, wszFileName, NameOfDLL, DetectionType::ART_HACK_STRING_FOUND, match);
 							goto retnOrig; // если данный модуль уже словил детект - нет смысла идти дальше по нему
 						}

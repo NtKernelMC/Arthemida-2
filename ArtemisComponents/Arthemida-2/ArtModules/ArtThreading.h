@@ -17,8 +17,9 @@
 #pragma comment(lib, "Version.lib")
 using namespace ArtemisData;
 
-namespace ArtThreading
+class ArtThreading
 {
+private:
 	typedef NTSTATUS(NTAPI* pfnNtCreateThreadEx)
 		(
 			OUT PHANDLE hThread,
@@ -44,7 +45,7 @@ namespace ArtThreading
 #define THREAD_CREATE_FLAGS_BYPASS_PROCESS_FREEZE 0x40
 #define THREAD_CREATE_FLAGS_HIDE_FROM_DEBUGGER 0x00000004
 
-	bool Is19H1OrGreater()
+	static bool Is19H1OrGreater()
 	{
 		DWORD dwHandle;
 		DWORD cbInfo = GetFileVersionInfoSizeExW(FILE_VER_GET_NEUTRAL, L"kernel32.dll", &dwHandle);
@@ -54,19 +55,21 @@ namespace ArtThreading
 		void* p = nullptr;
 		UINT size = 0;
 		VerQueryValueW(buffer.data(), L"\\", &p, &size);
-		
+
 		VS_FIXEDFILEINFO* vsFixedFileInfo = (VS_FIXEDFILEINFO*)p;
 		if (HIWORD(vsFixedFileInfo->dwFileVersionLS) > 18362) return true;
 		return false;
 	}
 
-	HANDLE CreateProtectedThread(PVOID lpStartAddress, PVOID lpParameter)
+
+public:
+	static HANDLE CreateProtectedThread(PVOID lpStartAddress, PVOID lpParameter)
 	{
 		pfnNtCreateThreadEx fnNtCreateThreadEx = (pfnNtCreateThreadEx)Utils::RuntimeIatResolver("ntdll.dll", "NtCreateThreadEx");
 		if (fnNtCreateThreadEx == NULL) return INVALID_HANDLE_VALUE;
 
 		HANDLE hThread = NULL;
-		
+
 		if (Is19H1OrGreater())
 		{
 #ifdef ARTEMIS_DEBUG
@@ -90,15 +93,23 @@ namespace ArtThreading
 		bool Enable = true;
 #ifndef ARTEMIS_DEBUG // Dangerous protection (BSOD on manual thread termination only)
 		NTSTATUS ntThreadBreakOnTermination = NtSetInformationThread(hThread, Utils::ThreadBreakOnTermination, &Enable, sizeof(Enable));
+#ifdef ARTEMIS_DEBUG
 		if (ntThreadBreakOnTermination != 0) printf("[ERROR/ArtThreading] Failed to set ThreadBreakOnTermination! NTSTATUS: 0x%08X\n", ntThreadBreakOnTermination);
+#endif
 #endif
 #ifdef ARTEMIS_DEBUG
 		printf("[ArtThreading] Created protected thread handle 0x%08X with param 0x%08X\n", (DWORD)lpStartAddress, (DWORD)lpParameter);
 #endif
 
+		//m_protectedThreads.push_back(hThread);
 		return hThread;
 	}
-}
+
+	static void Pulse(HANDLE hCallingThread)
+	{
+
+	}
+};
 
 namespace ThreadGuard
 {
