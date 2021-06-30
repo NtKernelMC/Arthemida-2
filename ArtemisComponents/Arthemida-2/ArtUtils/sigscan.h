@@ -18,6 +18,7 @@ public:
 
 	static inline DWORD FindPatternExplicit(DWORD base, DWORD size, const char* szPattern, const char* szMask)
 	{
+		printf("FindPatternExplicit: B-%08x, S-%d, P-%s, M-%s\n", base, size, szPattern, szMask);
 		DWORD patternLength = (DWORD)strlen(szMask);
 		
 		for (DWORD i = 0; i < size - patternLength; i++)
