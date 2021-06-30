@@ -233,7 +233,8 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 					for (const auto& zm : cfg->IlegaleLinien) // Список строк для поиска читов (вектор стринг)
 					{
 						size_t end_len = NULL;
-						char* ptr = SearchStringInMemory(zm, zm.length(), (PVOID)it.first, (PVOID)it.second, end_len);
+						DWORD dwAddr = SigScan::FindPatternExplicit(it.first, it.second, zm.c_str(), std::string(zm.length(), 'x').c_str());
+						char* ptr = (char*)dwAddr;
 						if (ptr != nullptr)
 						{
 							std::string match = std::string(ptr, zm.length() + end_len);
