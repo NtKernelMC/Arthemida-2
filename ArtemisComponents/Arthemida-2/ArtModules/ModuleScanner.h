@@ -5,6 +5,7 @@
 */
 #include "ArtemisInterface.h"
 #include "../ArtUtils/Utils.h"
+#include "../ArtUtils/seh.h"
 
 typedef NTSTATUS(__stdcall* pLdrLoadDll)(
 	PWCHAR               PathToFile,
