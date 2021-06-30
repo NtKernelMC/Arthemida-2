@@ -139,13 +139,13 @@ retnOrig:
 	return result;
 }
 
-void trans_func(unsigned int u, EXCEPTION_POINTERS*)
+void modulescanner_trans_func(unsigned int u, EXCEPTION_POINTERS*)
 {
 	throw SE_Exception(u);
 }
 void __stdcall ModuleScanner(ArtemisConfig* cfg)
 {
-	Scoped_SE_Translator scoped_se_translator{ trans_func };
+	Scoped_SE_Translator scoped_se_translator{ modulescanner_trans_func };
 	if (cfg == nullptr)
 	{
 #ifdef ARTEMIS_DEBUG
