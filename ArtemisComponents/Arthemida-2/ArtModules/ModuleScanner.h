@@ -5,6 +5,7 @@
 */
 #include "ArtemisInterface.h"
 #include "../ArtUtils/Utils.h"
+#include "../ArtUtils/seh.h"
 
 typedef NTSTATUS(__stdcall* pLdrLoadDll)(
 	PWCHAR               PathToFile,
@@ -138,8 +139,13 @@ retnOrig:
 	return result;
 }
 
+void trans_func(unsigned int u, EXCEPTION_POINTERS*)
+{
+	throw SE_Exception(u);
+}
 void __stdcall ModuleScanner(ArtemisConfig* cfg)
 {
+	Scoped_SE_Translator scoped_se_translator{ trans_func };
 	if (cfg == nullptr)
 	{
 #ifdef ARTEMIS_DEBUG
@@ -207,56 +213,67 @@ void __stdcall ModuleScanner(ArtemisConfig* cfg)
 		if ((it.first != appHost && it.first != (DWORD)cfg->hSelfModule) &&
 		!Utils::IsVecContain(cfg->ExcludedModules, (PVOID)it.first))
 		{
-			std::wstring NameOfDLL = L"", wszFileName = L""; // Optimizated (Less-recursive calls!)
-			// IsModuleDuplicated - вернет имя длл и путь в любом случае для пользования в коде ниже этого блока в том числе
-			if (Utils::IsModuleDuplicated((HMODULE)it.first, wszFileName, orderedIdentify, NameOfDLL)) 
+			try
 			{
-				if (!Utils::OsProtectedFile(wszFileName.c_str())) // New advanced algorithm!
+				std::wstring NameOfDLL = L"", wszFileName = L""; // Optimizated (Less-recursive calls!)
+				// IsModuleDuplicated - вернет имя длл и путь в любом случае для пользования в коде ниже этого блока в том числе
+				if (Utils::IsModuleDuplicated((HMODULE)it.first, wszFileName, orderedIdentify, NameOfDLL))
 				{
-					ModuleThreatReport(it, wszFileName, NameOfDLL, DetectionType::ART_PROXY_LIBRARY);
-					continue; // если данный модуль уже словил детект - нет смысла идти дальше по нему
-				}
-			}
-			else
-			{
-				// чтобы если выше выполнилась проверка то не дублировать вызов еще раз а если нет - конвертим строку
-				if (Utils::OsProtectedFile(wszFileName.c_str())) continue;
-				if (Utils::w_findStringIC(NameOfDLL, L"MSVCP") || Utils::w_findStringIC(NameOfDLL, L"api-ms-win") ||
-				Utils::w_findStringIC(NameOfDLL, L"VCRUNTIME")) continue;
-				if (cfg->DetectPacking && IsModulePacked((HMODULE)it.first, cfg->AllowedPackedModules))
-				{
-					ModuleThreatReport(it, wszFileName, NameOfDLL, DetectionType::ART_PROTECTOR_PACKER);
-					continue; // если данный модуль уже словил детект - нет смысла идти дальше по нему
-				}
-				if (cfg->DetectByString)
-				{
-					for (const auto& zm : cfg->IlegaleLinien) // Список строк для поиска читов (вектор стринг)
+					if (!Utils::OsProtectedFile(wszFileName.c_str())) // New advanced algorithm!
 					{
-						size_t end_len = NULL;
-						DWORD dwAddr = SigScan::FindPatternExplicit(it.first, it.second, zm.c_str(), std::string(zm.length(), 'x').c_str());
-						char* ptr = (char*)dwAddr;
-						if (ptr != nullptr)
+						ModuleThreatReport(it, wszFileName, NameOfDLL, DetectionType::ART_PROXY_LIBRARY);
+						continue; // если данный модуль уже словил детект - нет смысла идти дальше по нему
+					}
+				}
+				else
+				{
+					// чтобы если выше выполнилась проверка то не дублировать вызов еще раз а если нет - конвертим строку
+					if (Utils::OsProtectedFile(wszFileName.c_str())) continue;
+					if (Utils::w_findStringIC(NameOfDLL, L"MSVCP") || Utils::w_findStringIC(NameOfDLL, L"api-ms-win") ||
+						Utils::w_findStringIC(NameOfDLL, L"VCRUNTIME")) continue;
+					if (cfg->DetectPacking && IsModulePacked((HMODULE)it.first, cfg->AllowedPackedModules))
+					{
+						ModuleThreatReport(it, wszFileName, NameOfDLL, DetectionType::ART_PROTECTOR_PACKER);
+						continue; // если данный модуль уже словил детект - нет смысла идти дальше по нему
+					}
+					if (cfg->DetectByString)
+					{
+						for (const auto& zm : cfg->IlegaleLinien) // Список строк для поиска читов (вектор стринг)
 						{
-							std::string match = std::string(ptr, zm.length() + end_len);
-							ModuleThreatReport(it, wszFileName, NameOfDLL, DetectionType::ART_HACK_STRING_FOUND, match);
-							goto continueMain; // если данный модуль уже словил детект - нет смысла идти дальше по нему
+							size_t end_len = NULL;
+							DWORD dwAddr = SigScan::FindPatternExplicit(it.first, it.second, zm.c_str(), std::string(zm.length(), 'x').c_str());
+							char* ptr = (char*)dwAddr;
+							if (ptr != nullptr)
+							{
+								std::string match = std::string(ptr, zm.length() + end_len);
+								ModuleThreatReport(it, wszFileName, NameOfDLL, DetectionType::ART_HACK_STRING_FOUND, match);
+								goto continueMain; // если данный модуль уже словил детект - нет смысла идти дальше по нему
+							}
+						}
+					}
+					if (cfg->DetectBySignature)
+					{
+						for (const auto& sg : cfg->IllegalPatterns) // Список сигнатур для поиска известных читов или их участков памяти
+						{
+							DWORD sgAddr = SigScan::FindPattern((HMODULE)it.first,
+								std::get<0>(sg.second).c_str()/*"\x8D\x45\xF4\x64\xA3\x00\x00\x00\x00\x68"*/, std::get<1>(sg.second).c_str());
+							//printf("[SIG WALKER] Name: %s | Pattern: %s | Mask: %s | Len: %d\n", NameOfDLL.c_str(),
+							//std::get<0>(sg.second).c_str(), std::get<1>(sg.second).c_str(), std::get<0>(sg.second).length());
+							if (sgAddr != NULL)
+							{
+								ModuleThreatReport(it, wszFileName, NameOfDLL, DetectionType::ART_SIGNATURE_DETECT, sg.first);
+							}
 						}
 					}
 				}
-				if (cfg->DetectBySignature)
-				{
-					for (const auto& sg : cfg->IllegalPatterns) // Список сигнатур для поиска известных читов или их участков памяти
-					{
-						DWORD sgAddr = SigScan::FindPattern((HMODULE)it.first,
-						std::get<0>(sg.second).c_str()/*"\x8D\x45\xF4\x64\xA3\x00\x00\x00\x00\x68"*/, std::get<1>(sg.second).c_str());
-						//printf("[SIG WALKER] Name: %s | Pattern: %s | Mask: %s | Len: %d\n", NameOfDLL.c_str(),
-						//std::get<0>(sg.second).c_str(), std::get<1>(sg.second).c_str(), std::get<0>(sg.second).length());
-						if (sgAddr != NULL)
-						{
-							ModuleThreatReport(it, wszFileName, NameOfDLL, DetectionType::ART_SIGNATURE_DETECT, sg.first);
-						}
-					}
-				}
+			} catch (const SE_Exception& e) {
+#ifdef ARTEMIS_DEBUG
+				printf("[SEH/ModuleScanner] %8.8x\n", e.getSeNumber());
+#endif
+			} catch (...) {
+#ifdef ARTEMIS_DEBUG
+				printf("[SEH/ModuleScanner] Unknown\n");
+#endif
 			}
 		}
 continueMain:;

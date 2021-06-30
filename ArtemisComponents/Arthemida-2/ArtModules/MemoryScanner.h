@@ -79,9 +79,13 @@ void __stdcall MemoryScanner(ArtemisConfig* cfg)
 					}
 					catch (const SE_Exception& e)
 					{
-					    printf("[SEH/CRITICAL] %8.8x\n", e.getSeNumber());
+#ifdef ARTEMIS_DEBUG
+					    printf("[SEH/MemoryScanner] %8.8x\n", e.getSeNumber());
+#endif
 					} catch (...) {
-						printf("[SEH/CRITICAL] Unknown\n");
+#ifdef ARTEMIS_DEBUG
+						printf("[SEH/MemoryScanner] Unknown\n");
+#endif
 					}
 				}
 				ptr = (const void*)((const char*)(i->BaseAddress) + i->RegionSize);
