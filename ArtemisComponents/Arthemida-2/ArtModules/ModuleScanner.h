@@ -47,7 +47,7 @@ NTSTATUS __stdcall hkLdrLoadDll(
 
 	std::wstring wstrModuleFileName = std::wstring(ModuleFileName->Buffer, ModuleFileName->Length);
 	NTSTATUS result = ptrOriginalLdrLoadDll(PathToFile_OPTIONAL, Flags, ModuleFileName, ModuleHandle);
-	if (ModuleHandle == 0)
+	if (ModuleHandle == 0 || *ModuleHandle == 0)
 		goto retnOrig;
 	
 	wprintf(L"DLL Loaded: %s\n", wstrModuleFileName.c_str());
