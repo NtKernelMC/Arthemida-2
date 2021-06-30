@@ -159,7 +159,7 @@ int main()
 		// test detection of illegal calls (return addresses checking)
 		//RetTest::TestStaticMethod();
 		//testObj.TestMemberMethod(); 
-		LoadLibraryA("test.dll"); // For heuristic-scans on future & excluding false-positives in ProxyDLL detection.
+		LoadLibraryA("dsound.dll"); // For heuristic-scans on future & excluding false-positives in ProxyDLL detection.
 	}
 	else Utils::LogInFile(ARTEMIS_LOG, "[ARTEMIS-2] Failure on start :( Last error code: %d\n", GetLastError());
 	while (true) 

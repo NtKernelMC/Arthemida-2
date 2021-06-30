@@ -4,6 +4,7 @@
 	Project by NtKernelMC & holmes0
 */
 #include "ArtemisInterface.h"
+#include "../ArtUtils/Utils.h"
 
 typedef NTSTATUS(__stdcall* pLdrLoadDll)(
 	PWCHAR               PathToFile,
@@ -14,7 +15,7 @@ pLdrLoadDll ptrLdrLoadDll;
 pLdrLoadDll ptrOriginalLdrLoadDll;
 
 NTSTATUS __stdcall hkLdrLoadDll(
-	PWCHAR               PathToFile,
+	PWCHAR               PathToFile_OPTIONAL,
 	ULONG                Flags,
 	PUNICODE_STRING      ModuleFileName,
 	PHANDLE             ModuleHandle)
@@ -44,17 +45,29 @@ NTSTATUS __stdcall hkLdrLoadDll(
 		delete[] szName;
 	};
 
-	NTSTATUS result = ptrOriginalLdrLoadDll(PathToFile, Flags, ModuleFileName, ModuleHandle);
+	std::wstring wstrModuleFileName = std::wstring(ModuleFileName->Buffer, ModuleFileName->Length);
+	NTSTATUS result = ptrOriginalLdrLoadDll(PathToFile_OPTIONAL, Flags, ModuleFileName, ModuleHandle);
 	if (ModuleHandle == 0)
 		goto retnOrig;
+	
+	wprintf(L"DLL Loaded: %s\n", wstrModuleFileName.c_str());
 
 	MODULEINFO modInfo;
 	if (K32GetModuleInformation(GetCurrentProcess(), (HMODULE)*ModuleHandle, &modInfo, sizeof(modInfo)))
 	{
 		PVOID  lpBase = modInfo.lpBaseOfDll;
 		DWORD  dwSize = modInfo.SizeOfImage;
-		
+
 		if (lpBase == 0x0 || dwSize == 0x0) goto retnOrig; // validating every page record from memory list
+		
+		orderedMapping.insert(std::pair<DWORD, DWORD>((DWORD)lpBase, dwSize));
+		WCHAR wszFileName[MAX_PATH + 1]; 
+		if (!GetModuleFileNameW((HMODULE)lpBase, wszFileName, MAX_PATH + 1)) goto retnOrig;
+		DWORD CRC32 = Utils::GenerateCRC32(wszFileName, nullptr);
+		std::wstring DllName = Utils::GetDllName(wstrModuleFileName);
+		orderedIdentify.insert(orderedIdentify.begin(), std::pair<DWORD, std::wstring>(CRC32, DllName));
+		
+		
 		if ((lpBase != appHost && lpBase != cfg->hSelfModule) &&
 			!Utils::IsVecContain(cfg->ExcludedModules, lpBase))
 		{
@@ -62,20 +75,27 @@ NTSTATUS __stdcall hkLdrLoadDll(
 			// IsModuleDuplicated - вернет имя длл и путь в любом случае для пользования в коде ниже этого блока в том числе
 			if (Utils::IsModuleDuplicated((HMODULE)lpBase, wszFileName, orderedIdentify, NameOfDLL))
 			{
-				if (!Utils::OsProtectedFile(wszFileName.c_str())) // New advanced algorithm!
-				{
+				printf("Module duplicated!\n");
+				//if (!Utils::OsProtectedFile(wszFileName.c_str())) // New advanced algorithm!
+				//{
+					//printf("Module not OsProtected! Detect!\n");
 					ModuleThreatReport(lpBase, dwSize, wszFileName, NameOfDLL, DetectionType::ART_PROXY_LIBRARY);
 					goto retnOrig; // если данный модуль уже словил детект - нет смысла идти дальше по нему
-				}
+				//}
 			}
 			else
 			{
 				// чтобы если выше выполнилась проверка то не дублировать вызов еще раз а если нет - конвертим строку
-				if (Utils::OsProtectedFile(wszFileName.c_str())) goto retnOrig;
+				if (Utils::OsProtectedFile(wszFileName.c_str()))
+				{
+					printf("Module OsProtected 2\n");
+					goto retnOrig;
+				}
 				if (Utils::w_findStringIC(NameOfDLL, L"MSVCP") || Utils::w_findStringIC(NameOfDLL, L"api-ms-win") ||
 					Utils::w_findStringIC(NameOfDLL, L"VCRUNTIME")) goto retnOrig;
 				if (cfg->DetectPacking && IsModulePacked((HMODULE)lpBase, cfg->AllowedPackedModules))
 				{
+					printf("Module packed!\n");
 					ModuleThreatReport(lpBase, dwSize, wszFileName, NameOfDLL, DetectionType::ART_PROTECTOR_PACKER);
 					goto retnOrig; // если данный модуль уже словил детект - нет смысла идти дальше по нему
 				}
@@ -83,6 +103,7 @@ NTSTATUS __stdcall hkLdrLoadDll(
 				{
 					for (const auto& illegalString : cfg->IlegaleLinien) // Список строк для поиска читов (вектор стринг)
 					{
+						printf("Scanning for string %s\n", illegalString.c_str());
 						DWORD dwAddr = SigScan::FindPatternExplicit((DWORD)lpBase, dwSize, illegalString.c_str(), std::string(illegalString.length(), 'x').c_str());
 						char* ptr = (char*)dwAddr;
 						if (ptr != nullptr)
@@ -97,6 +118,7 @@ NTSTATUS __stdcall hkLdrLoadDll(
 				{
 					for (const auto& sg : cfg->IllegalPatterns) // Список сигнатур для поиска известных читов или их участков памяти
 					{
+						printf("Scanning for signature...\n");
 						DWORD sgAddr = SigScan::FindPattern((HMODULE)lpBase,
 							std::get<0>(sg.second).c_str()/*"\x8D\x45\xF4\x64\xA3\x00\x00\x00\x00\x68"*/, std::get<1>(sg.second).c_str());
 						//printf("[SIG WALKER] Name: %s | Pattern: %s | Mask: %s | Len: %d\n", NameOfDLL.c_str(),
@@ -110,6 +132,7 @@ NTSTATUS __stdcall hkLdrLoadDll(
 			}
 		}
 	}
+	else printf("Error getting modinfo\n");
 
 retnOrig:
 	return result;

@@ -206,8 +206,12 @@ public:
 	/*in*/std::map<DWORD, std::wstring>& ModuleSnapshot, /*out*/std::wstring& nameOfDll)
 	{
 		if (mdl == nullptr || ModuleSnapshot.empty()) return false;
-		WCHAR wszFileName[MAX_PATH + 1]; if (!GetModuleFileNameW(mdl, wszFileName, MAX_PATH + 1)) return false;
-		std::wstring DllName = GetDllName(wszFileName); nameOfDll = DllName; full_path = wszFileName; 
+		WCHAR wszFileName[MAX_PATH + 1]; 
+		if (!GetModuleFileNameW(mdl, wszFileName, MAX_PATH + 1)) return false;
+		std::wstring DllName = GetDllName(wszFileName); 
+		wprintf(L"[%d] DllName: %s\n", GetCurrentThreadId(), DllName.c_str());
+		nameOfDll = DllName; 
+		full_path = wszFileName; 
 		for (const auto& it_snap : ModuleSnapshot) // parsing the list (Primary key: CRC32, Value: Library name)
 		{
 			if (!w_findStringIC(it_snap.second, DllName)) continue; // We don`t need to check CRC32, it`s the unique key for map!
@@ -220,8 +224,15 @@ public:
 					// as map can accept duplicated values but our hashes always unique, so just swap the args!
 					tmpModuleSnapshot.insert(std::pair<std::wstring, DWORD>(it.second, it.first));
 				}
+				size_t count = 0;
+				for (const auto& it : tmpModuleSnapshot)
+				{
+					if (w_findStringIC(it.first, DllName)) count++;
+					wprintf(L"[%d] tmpModuleSnapshot [%08x]: %s\n", GetCurrentThreadId(), it.second, it.first.c_str());
+				}
+				wprintf(L"[%d] Count of %s in tmpModuleSnapshot: %d\n", GetCurrentThreadId(), DllName.c_str(), count);
 				// if we found at least one duplicated pair and more..
-				if (tmpModuleSnapshot.count(DllName) >= 0x2) return true;
+				if (count >= 0x2) return true;
 				// searching of duplicate's, can be only by keys (there no way to do it with values)
 			}
 		}
