@@ -135,8 +135,7 @@ bool CArtemisReal::InstallArtemisMonitor()
             m_pConfig->ModuleScanDelay = 1000;
         if (!m_pConfig->ExcludedModules.empty())
             m_pConfig->ExcludedModules.clear(); 
-		HANDLE hProxyScanner = ArtThreading::CreateProtectedThread(&ModuleScanner, m_pConfig);            // Создание и запуск асинхронного потока сканера модулей процесса
-        m_pConfig->OwnThreads.push_back(hProxyScanner);
+		ModuleScanner(m_pConfig);
 	}
     if (m_pConfig->DetectManualMap)            // Детект мануал маппинга
 	{
