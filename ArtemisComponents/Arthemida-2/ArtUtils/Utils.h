@@ -209,7 +209,6 @@ public:
 		WCHAR wszFileName[MAX_PATH + 1]; 
 		if (!GetModuleFileNameW(mdl, wszFileName, MAX_PATH + 1)) return false;
 		std::wstring DllName = GetDllName(wszFileName); 
-		wprintf(L"[%d] DllName: %s\n", GetCurrentThreadId(), DllName.c_str());
 		nameOfDll = DllName; 
 		full_path = wszFileName; 
 		for (const auto& it_snap : ModuleSnapshot) // parsing the list (Primary key: CRC32, Value: Library name)
@@ -228,9 +227,7 @@ public:
 				for (const auto& it : tmpModuleSnapshot)
 				{
 					if (w_findStringIC(it.first, DllName)) count++;
-					wprintf(L"[%d] tmpModuleSnapshot [%08x]: %s\n", GetCurrentThreadId(), it.second, it.first.c_str());
 				}
-				wprintf(L"[%d] Count of %s in tmpModuleSnapshot: %d\n", GetCurrentThreadId(), DllName.c_str(), count);
 				// if we found at least one duplicated pair and more..
 				if (count >= 0x2) return true;
 				// searching of duplicate's, can be only by keys (there no way to do it with values)
