@@ -160,6 +160,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Arthemida-2\API\ArtemisInterface.cpp" />
     <ClCompile Include="..\..\Arthemida-2\ArtModules\MemoryGuard.cpp" />
+    <ClCompile Include="..\..\Arthemida-2\ArtModules\ThreadGuard.cpp" />
     <ClCompile Include="..\..\Arthemida-2\ArtUtils\xxhash.c" />
     <ClCompile Include="ConsoleHost.cpp" />
   </ItemGroup>

@@ -39,6 +39,9 @@
     <ClCompile Include="..\..\Arthemida-2\ArtUtils\xxhash.c">
       <Filter>Arthemida-2\ArtUtils</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Arthemida-2\ArtModules\ThreadGuard.cpp">
+      <Filter>Arthemida-2\ArtModules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Arthemida-2\API\ArtemisInterface.h">

@@ -7,6 +7,7 @@
 * Assignee: holmes0
 */
 #include "MemoryGuard.h"
+#include "ArtThreading.h"
 using namespace ArtemisData;
 
 struct sMemoryGuardPageDescriptor
@@ -15,7 +16,7 @@ struct sMemoryGuardPageDescriptor
     bool         bIsBeingLegallyHooked = false;
 };
 std::map<DWORD, sMemoryGuardPageDescriptor> mpExecutablePageList;
-CRITICAL_SECTION*                           CArtemisReal::m_pCsExecutablePageList = nullptr;
+ArtThreading::SpinLock* pslCsExecutablePageList;
 
 typedef NTSTATUS(__stdcall* pLdrUnloadDll)(HANDLE ModuleHandle);
 pLdrUnloadDll ptrLdrUnloadDll;
@@ -23,10 +24,9 @@ pLdrUnloadDll ptrOriginalLdrUnloadDll;
 
 void __inline CheckInitCS()
 {
-    if (CArtemisReal::m_pCsExecutablePageList == nullptr)
+    if (pslCsExecutablePageList == nullptr)
     {
-        CArtemisReal::m_pCsExecutablePageList = new CRITICAL_SECTION;
-        InitializeCriticalSection(CArtemisReal::m_pCsExecutablePageList);
+        pslCsExecutablePageList = new ArtThreading::SpinLock;
     }
 }
 
@@ -36,7 +36,7 @@ NTSTATUS __stdcall hkLdrUnloadDll(HANDLE ModuleHandle)
         goto retnOrig;
 
     CheckInitCS();
-    EnterCriticalSection(CArtemisReal::m_pCsExecutablePageList);
+    pslCsExecutablePageList->lock();
 
     MODULEINFO modInfo;
     if (K32GetModuleInformation(GetCurrentProcess(), (HMODULE)ModuleHandle, &modInfo, sizeof(modInfo)))
@@ -52,7 +52,7 @@ NTSTATUS __stdcall hkLdrUnloadDll(HANDLE ModuleHandle)
         }
     }
 
-    LeaveCriticalSection(CArtemisReal::m_pCsExecutablePageList);
+    pslCsExecutablePageList->unlock();
 
 retnOrig:
     return ptrOriginalLdrUnloadDll(ModuleHandle);
@@ -64,10 +64,10 @@ bool CArtemisReal::MemoryGuardBeginHook(void* pTarget)
     if(VirtualQuery(pTarget, &mbi, sizeof(mbi)) != sizeof(mbi))
         return false;
     CheckInitCS();
-    EnterCriticalSection(m_pCsExecutablePageList);
+    pslCsExecutablePageList->lock();
     if (mpExecutablePageList.find((DWORD)mbi.BaseAddress) != mpExecutablePageList.end())
         mpExecutablePageList[(DWORD)mbi.BaseAddress].bIsBeingLegallyHooked = true;
-    LeaveCriticalSection(m_pCsExecutablePageList);
+    pslCsExecutablePageList->unlock();
     return true;
 }
 
@@ -77,13 +77,13 @@ bool CArtemisReal::MemoryGuardEndHook(void* pTarget)
     if (VirtualQuery(pTarget, &mbi, sizeof(mbi)) != sizeof(mbi))
         return false;
     CheckInitCS();
-    EnterCriticalSection(m_pCsExecutablePageList);
+    pslCsExecutablePageList->lock();
     if (mpExecutablePageList.find((DWORD)mbi.BaseAddress) != mpExecutablePageList.end())
     {
         mpExecutablePageList[(DWORD)mbi.BaseAddress].XXH32_hash = XXH32(mbi.BaseAddress, mbi.RegionSize, 0);
         mpExecutablePageList[(DWORD)mbi.BaseAddress].bIsBeingLegallyHooked = false;
     }
-    LeaveCriticalSection(m_pCsExecutablePageList);
+    pslCsExecutablePageList->unlock();
     return true;
 }
 
@@ -146,9 +146,11 @@ void __stdcall MemoryGuardScanner(ArtemisConfig* cfg)
 			const void* end = (const void*)((const char*)ptr + length);
 			while (ptr < end)
 			{
-                EnterCriticalSection(CArtemisReal::m_pCsExecutablePageList);
                 if (VirtualQuery(ptr, &info[0], sizeof(*info)) != sizeof(*info))
                     break;
+
+                pslCsExecutablePageList->lock();
+                
 				MEMORY_BASIC_INFORMATION* i = &info[0];
                 DWORD dwBase = (DWORD)i->BaseAddress;
                 //printf("[Memory Guard] Working with REGION: %08X [%X]\n", dwBase, i->RegionSize);
@@ -175,7 +177,7 @@ void __stdcall MemoryGuardScanner(ArtemisConfig* cfg)
                     }
                 }
 
-                LeaveCriticalSection(CArtemisReal::m_pCsExecutablePageList);
+                pslCsExecutablePageList->unlock();
 
 				ptr = (const void*)((const char*)(i->BaseAddress) + i->RegionSize);
 			}
