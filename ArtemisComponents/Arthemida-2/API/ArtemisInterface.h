@@ -29,7 +29,6 @@ public:
     // Memory guard
     bool MemoryGuardBeginHook(void* pTarget);
     bool MemoryGuardEndHook(void* pTarget);
-    static CRITICAL_SECTION* m_pCsExecutablePageList;
 
 private:
     ArtemisConfig*     m_pConfig = nullptr;
