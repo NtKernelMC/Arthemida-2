@@ -132,16 +132,14 @@ void CServiceMon::MonitorCycle()
             SigScan::FileScanResult fileScanResult;
             for (auto& x : m_pArtConfig->IllegalDriverPatterns)
             {
-                //wprintf(L"Scanning %s for ", sc.first.c_str());
                 //printf("%s\n", x.first.c_str());
-
                 fileScanResult = SigScan::FindPatternFileWin(hFile, std::get<0>(x.second).c_str(), std::get<1>(x.second).c_str());
                 if (fileScanResult == SigScan::FSCAN_STATUS_FAIL)
                 {
                     //wprintf(L"\nName: %s | Path: %s\n", sc.first.c_str(), sc.second.wsFilePath.c_str());
                     //printf("File scan failed\n");
                     CloseHandle(hFile);
-                    break;
+                    continue;
                 }
                 else if (fileScanResult == SigScan::FSCAN_STATUS_FOUND)
                 {

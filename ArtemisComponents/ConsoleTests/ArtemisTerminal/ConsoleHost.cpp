@@ -126,9 +126,13 @@ int main()
 	cfg.ThreadGuardDelay = 500;
 	//cfg.HooksList.insert(std::pair<PVOID, PVOID>((PVOID)RetTest::TestStaticMethod, (PVOID)HookTestStaticMethod));
 	// __thiscall methods must be casted in a different way
-	
+
+	cfg.IllegalDriverPatterns.insert(CortPair("ILLEGAL CERT: Nanjing Zhixiao Information Technology Co.,Ltd", 
+		std::make_tuple(
+			"\x4E\x61\x6E\x6A\x69\x6E\x67\x20\x5A\x68\x69\x78\x69\x61\x6F\x20\x49\x6E\x66\x6F\x72\x6D\x61\x74\x69\x6F\x6E\x20\x54\x65\x63\x68\x6E\x6F\x6C\x6F\x67\x79\x20\x43\x6F\x2E"s,
+			"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"s)));
 	cfg.IllegalDriverPatterns.insert(CortPair("HWIDSYS spoofer", std::make_tuple
-	("\x5B\x64\x62\x67\x5D\x20\x72\x65\x76\x65\x72\x74\x65\x64\x20\x25\x77\x5A\x20\x73\x77\x61\x70"s, "xxxxxxxxxxxxxxxxxxxxxxx"s)));
+	("\x61\x70\x70\x6C\x79\x5F\x68\x6F\x6F\x6B"s, "xxxxxxxxxx"s)));
 	//todo cfg.PriorityDriverNames
 	//////////////////////////////// Heuristical Scanning ///////////////////////////////////////////
 	cfg.DetectPacking = true;
@@ -159,7 +163,7 @@ int main()
 		// test detection of illegal calls (return addresses checking)
 		//RetTest::TestStaticMethod();
 		//testObj.TestMemberMethod(); 
-		LoadLibraryA("dsound.dll"); // For heuristic-scans on future & excluding false-positives in ProxyDLL detection.
+		 // For heuristic-scans on future & excluding false-positives in ProxyDLL detection.
 	}
 	else Utils::LogInFile(ARTEMIS_LOG, "[ARTEMIS-2] Failure on start :( Last error code: %d\n", GetLastError());
 	while (true) 
