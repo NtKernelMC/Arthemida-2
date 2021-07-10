@@ -101,6 +101,7 @@ public:
 		DWORD bytesRead = 0;
 
 		int dbgreadcalls = 0;
+		SetFilePointer(hFile, 0, NULL, FILE_BEGIN);
 		while (ReadFile(hFile, pChunk, chunkSize, &bytesRead, 0))
 		{
 			dbgreadcalls++;
@@ -137,7 +138,9 @@ public:
 					}
 				}
 
-				if (chunkTransitionBegin) break;
+				if (chunkTransitionBegin) { 
+					break;
+				}
 				else if (matchedBytes == patternLength && patternIndex == patternLength)
 				{
 					delete[] pChunk;
