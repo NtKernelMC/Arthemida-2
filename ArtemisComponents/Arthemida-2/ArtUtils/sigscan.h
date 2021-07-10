@@ -104,7 +104,7 @@ public:
 		while (ReadFile(hFile, pChunk, chunkSize, &bytesRead, 0))
 		{
 			dbgreadcalls++;
-			if (bytesRead < 1)
+			if (bytesRead < 1) // EOF
 			{
 				delete[] pChunk;
 				return FSCAN_STATUS_NOT_FOUND;
@@ -114,6 +114,7 @@ public:
 			{
 				for (; patternIndex < patternLength; patternIndex++)
 				{
+					//printf("%x\n", *(char*)(pChunk + i + patternIndex));
 					if ((i + patternIndex) >= bytesRead && matchedBytes)
 					{
 						chunkTransitionBegin = true;
@@ -122,6 +123,7 @@ public:
 					else if ((i + patternIndex) >= bytesRead) continue;
 					if (chunkTransitionBegin || chunkTransitionBeingHandled)
 					{
+						//printf("CHUNK TRANSITION\n");
 						chunkTransitionBegin = false; chunkTransitionBeingHandled = true;
 						static DWORD j = 0;
 						if (szMask[patternIndex] != '?' && szPattern[patternIndex] == *(char*)(pChunk + i + j)) matchedBytes++;
