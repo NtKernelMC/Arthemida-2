@@ -3,6 +3,7 @@
 	Target Platform: x32-x86
 	Project by NtKernelMC & holmes0
 */
+#include "../ArtUtils/Utils.h"
 #include "ArtemisInterface.h"
 std::vector<HANDLE> ArtemisConfig::OwnThreads;
 CArtemisReal* CArtemisReal::s_pInstance = nullptr;
