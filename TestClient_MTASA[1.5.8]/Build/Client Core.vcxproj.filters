@@ -19,6 +19,9 @@
     <Filter Include="launch\resource">
       <UniqueIdentifier>{37590380-A3E4-7044-ACF5-F3381800CD44}</UniqueIdentifier>
     </Filter>
+    <Filter Include="arthemida">
+      <UniqueIdentifier>{5b865d34-1fcf-40e5-b75a-2a6bb6a5ee93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Client\core\CAdditionalVertexStreamManager.h">
@@ -275,6 +278,75 @@
     </ClInclude>
     <ClInclude Include="..\Client\core\resource.h">
       <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\AntiFakeLaunch.h">
+      <Filter>arthemida</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\ArtThreading.h">
+      <Filter>arthemida</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\CServiceMon.h">
+      <Filter>arthemida</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\HeuristicScanner.h">
+      <Filter>arthemida</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\MemoryGuard.h">
+      <Filter>arthemida</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\MemoryScanner.h">
+      <Filter>arthemida</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\ModuleScanner.h">
+      <Filter>arthemida</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\ThreadScanner.h">
+      <Filter>arthemida</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\CRC32.h">
+      <Filter>arthemida</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\MiniJumper.h">
+      <Filter>arthemida</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\seh.h">
+      <Filter>arthemida</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\SharedUtil.Defines.h">
+      <Filter>arthemida</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\sigscan.h">
+      <Filter>arthemida</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\SString.h">
+      <Filter>arthemida</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\SString.hpp">
+      <Filter>arthemida</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\Utils.h">
+      <Filter>arthemida</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\WinReg.hpp">
+      <Filter>arthemida</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\xxh3.h">
+      <Filter>arthemida</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\xxhash.h">
+      <Filter>arthemida</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\LauncherInclude\ArtSafeLaunch.h">
+      <Filter>arthemida</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\LauncherInclude\MiniJumper.h">
+      <Filter>arthemida</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\API\ArtemisInterface.h">
+      <Filter>arthemida</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\API\ArtemisTypes.h">
+      <Filter>arthemida</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -559,6 +631,18 @@
     </ClCompile>
     <ClCompile Include="..\Client\core\StdInc.cpp">
       <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\MemoryGuard.cpp">
+      <Filter>arthemida</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\ThreadGuard.cpp">
+      <Filter>arthemida</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\xxhash.c">
+      <Filter>arthemida</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ArtemisComponents\Arthemida-2\API\ArtemisInterface.cpp">
+      <Filter>arthemida</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

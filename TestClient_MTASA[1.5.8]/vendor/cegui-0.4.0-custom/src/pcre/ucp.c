@@ -40,7 +40,9 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "ucp.h"               /* Exported interface */
 #include "ucpinternal.h"       /* Internal table details */
 #include "ucptable.c"          /* The table itself */
-//#include "ucptypetable.c"
+
+
+
 /*************************************************
 *         Search table and return data           *
 *************************************************/
@@ -145,4 +147,5 @@ switch ((*type_ptr = ((node->f0 & f0_typemask) >> f0_typeshift)))
   break;
   }
 }
+
 /* End of ucp.c */

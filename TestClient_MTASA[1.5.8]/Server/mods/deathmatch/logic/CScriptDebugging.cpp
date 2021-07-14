@@ -13,8 +13,9 @@
 
 extern CGame* g_pGame;
 
-CScriptDebugging::CScriptDebugging()
+CScriptDebugging::CScriptDebugging(CLuaManager* pLuaManager)
 {
+    m_pLuaManager = pLuaManager;
     m_uiLogFileLevel = 0;
     m_uiHtmlLogLevel = 0;
     m_pLogFile = NULL;

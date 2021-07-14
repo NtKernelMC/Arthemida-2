@@ -11,12 +11,6 @@
 
 #pragma once
 
-#include <map>
-#include <cassert>
-#include "SString.h"
-#include "SharedUtil.IntTypes.h"
-
-
 struct SHttpRequestOptions
 {
     SHttpRequestOptions() {}

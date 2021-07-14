@@ -102,7 +102,7 @@ class CVehicleManager;
 class CZoneNames;
 class CLanBroadcast;
 class CWaterManager;
-class CTrainTrackManager;
+
 class CWeaponStatManager;
 class CBuildingRemovalManager;
 
@@ -252,8 +252,6 @@ public:
     CFunctionUseLogger*              GetFunctionUseLogger() { return m_pFunctionUseLogger; }
     CMasterServerAnnouncer*          GetMasterServerAnnouncer() { return m_pMasterServerAnnouncer; }
     SharedUtil::CAsyncTaskScheduler* GetAsyncTaskScheduler() { return m_pAsyncTaskScheduler; }
-
-    std::shared_ptr<CTrainTrackManager> GetTrainTrackManager() { return m_pTrainTrackManager; }
 
     void JoinPlayer(CPlayer& Player);
     void InitialDataStream(CPlayer& Player);
@@ -459,9 +457,6 @@ public:
     void SetDevelopmentMode(bool enabled) { m_DevelopmentModeEnabled = enabled; }
     bool GetDevelopmentMode() { return m_DevelopmentModeEnabled; }
 
-    bool IsClientTransferBoxVisible() const { return m_showClientTransferBox; }
-    void SetClientTransferBoxVisible(bool visible) { m_showClientTransferBox = visible; }
-
 private:
     void AddBuiltInEvents();
     void RelayPlayerPuresync(class CPacket& Packet);
@@ -559,8 +554,6 @@ private:
     CWeaponStatManager*      m_pWeaponStatsManager;
     CBuildingRemovalManager* m_pBuildingRemovalManager;
 
-    std::shared_ptr<CTrainTrackManager> m_pTrainTrackManager;
-
     CCustomWeaponManager* m_pCustomWeaponManager;
     CFunctionUseLogger*   m_pFunctionUseLogger;
 
@@ -653,5 +646,4 @@ private:
     SharedUtil::CAsyncTaskScheduler* m_pAsyncTaskScheduler;
 
     bool m_DevelopmentModeEnabled;
-    bool m_showClientTransferBox = true;
 };

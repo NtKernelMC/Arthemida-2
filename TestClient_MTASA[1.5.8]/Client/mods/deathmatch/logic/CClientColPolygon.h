@@ -11,7 +11,7 @@
 
 #pragma once
 
-class CClientColPolygon final : public CClientColShape
+class CClientColPolygon : public CClientColShape
 {
     DECLARE_CLASS(CClientColPolygon, CClientColShape)
 public:
@@ -35,9 +35,6 @@ public:
     std::vector<CVector2D>::const_iterator IterBegin() { return m_Points.begin(); };
     std::vector<CVector2D>::const_iterator IterEnd() { return m_Points.end(); };
 
-    bool        SetHeight(float fFloor, float fCeil);
-    inline void GetHeight(float& fFloor, float& fCeil) const { fFloor = m_fFloor; fCeil = m_fCeil; };
-
 protected:
     std::vector<CVector2D> m_Points;
 
@@ -46,6 +43,4 @@ protected:
     void CalculateRadius(const CVector2D& vecPoint);
 
     float m_fRadius;
-    float m_fFloor = std::numeric_limits<float>::min();
-    float m_fCeil = std::numeric_limits<float>::max();
 };

@@ -1292,6 +1292,7 @@ bool CStaticFunctionDefinitions::SetElementDimension(CClientEntity& Entity, unsi
         case CCLIENTWATER:
         {
             Entity.SetDimension(usDimension);
+
             return true;
         }
 
@@ -2713,6 +2714,17 @@ bool CStaticFunctionDefinitions::GetTrainSpeed(CClientVehicle& Vehicle, float& f
     return true;
 }
 
+bool CStaticFunctionDefinitions::GetTrainTrack(CClientVehicle& Vehicle, uchar& ucTrack)
+{
+    if (Vehicle.GetVehicleType() != CLIENTVEHICLE_TRAIN)
+        return false;
+    else if (Vehicle.IsDerailed())
+        return false;
+
+    ucTrack = Vehicle.GetTrainTrack();
+    return true;
+}
+
 bool CStaticFunctionDefinitions::GetTrainPosition(CClientVehicle& Vehicle, float& fPosition)
 {
     if (Vehicle.GetVehicleType() != CLIENTVEHICLE_TRAIN)
@@ -2787,6 +2799,11 @@ bool CStaticFunctionDefinitions::BlowVehicle(CClientEntity& Entity)
     }
 
     return false;
+}
+bool CStaticFunctionDefinitions::IsVehicleBlown(CClientVehicle& Vehicle, bool& bBlown)
+{
+    bBlown = Vehicle.IsVehicleBlown();
+    return true;
 }
 
 bool CStaticFunctionDefinitions::GetVehicleVariant(CClientVehicle* pVehicle, unsigned char& ucVariant, unsigned char& ucVariant2)
@@ -3347,6 +3364,17 @@ bool CStaticFunctionDefinitions::SetTrainSpeed(CClientVehicle& Vehicle, float fS
     return true;
 }
 
+bool CStaticFunctionDefinitions::SetTrainTrack(CClientVehicle& Vehicle, uchar ucTrack)
+{
+    if (Vehicle.GetVehicleType() != CLIENTVEHICLE_TRAIN)
+        return false;
+    else if (Vehicle.IsDerailed())
+        return false;
+
+    Vehicle.SetTrainTrack(ucTrack);
+    return true;
+}
+
 bool CStaticFunctionDefinitions::SetTrainPosition(CClientVehicle& Vehicle, float fPosition)
 {
     if (Vehicle.GetVehicleType() != CLIENTVEHICLE_TRAIN)
@@ -3598,17 +3626,6 @@ bool CStaticFunctionDefinitions::GetVehicleModelDummyPosition(unsigned short usM
         }
     }
     return false;
-}
-
-bool CStaticFunctionDefinitions::GetVehicleModelDummyDefaultPosition(unsigned short usModel, eVehicleDummies eDummy, CVector& vecPosition)
-{
-    CModelInfo* modelInfo = g_pGame->GetModelInfo(usModel);
-
-    if (modelInfo == nullptr || !modelInfo->IsVehicle())
-        return false;
-
-    vecPosition = modelInfo->GetVehicleDummyDefaultPosition(eDummy);
-    return true;
 }
 
 bool CStaticFunctionDefinitions::SetVehicleModelExhaustFumesPosition(unsigned short usModel, CVector& vecPosition)
@@ -3863,12 +3880,6 @@ bool CStaticFunctionDefinitions::IsObjectBreakable(CClientObject& Object, bool& 
 {
     bBreakable = Object.IsBreakable();
     return true;
-}
-
-bool CStaticFunctionDefinitions::IsObjectMoving(CClientEntity& Entity)
-{
-    CDeathmatchObject& Object = static_cast<CDeathmatchObject&>(Entity);
-    return Object.IsMoving();
 }
 
 bool CStaticFunctionDefinitions::GetObjectMass(CClientObject& Object, float& fMass)
@@ -6319,9 +6330,9 @@ bool CStaticFunctionDefinitions::GetWaterVertexPosition(CClientWater* pWater, in
     return pWater->GetVertexPosition(iVertexIndex - 1, vecPosition);
 }
 
-bool CStaticFunctionDefinitions::SetWorldWaterLevel(float fLevel, void* pChangeSource, bool bIncludeWorldNonSeaLevel, bool bIncludeWorldSeaLevel, bool bIncludeOutsideWorldLevel)
+bool CStaticFunctionDefinitions::SetWorldWaterLevel(float fLevel, void* pChangeSource, bool bIncludeWorldNonSeaLevel)
 {
-    return g_pClientGame->GetManager()->GetWaterManager()->SetWorldWaterLevel(fLevel, pChangeSource, bIncludeWorldNonSeaLevel, bIncludeWorldSeaLevel, bIncludeOutsideWorldLevel);
+    return g_pClientGame->GetManager()->GetWaterManager()->SetWorldWaterLevel(fLevel, pChangeSource, bIncludeWorldNonSeaLevel);
 }
 
 bool CStaticFunctionDefinitions::SetPositionWaterLevel(const CVector& vecPosition, float fLevel, void* pChangeSource)
@@ -7011,10 +7022,21 @@ bool CStaticFunctionDefinitions::UnbindKey(const char* szKey, const char* szHitS
 
 bool CStaticFunctionDefinitions::GetKeyState(const char* szKey, bool& bState)
 {
-    if (szKey == nullptr || !g_pCore->IsFocused())
-        return false;
+    assert(szKey);
 
-    return g_pCore->GetKeyBinds()->GetKeyStateByName(szKey, bState);
+    CKeyBindsInterface* pKeyBinds = g_pCore->GetKeyBinds();
+    const SBindableKey* pKey = pKeyBinds->GetBindableFromKey(szKey);
+    if (pKey)
+    {
+        if (g_pCore->IsFocused())
+        {
+            bState = (::GetKeyState(pKey->ulCode) & 0x8000) ? true : false;
+
+            return true;
+        }
+    }
+
+    return false;
 }
 
 bool CStaticFunctionDefinitions::GetControlState(const char* szControl, bool& bState)
@@ -7085,7 +7107,7 @@ bool CStaticFunctionDefinitions::SetControlState(const char* szControl, bool bSt
     {
         if (CClientPad::GetAnalogControlIndex(szControl, uiIndex))
         {
-            if (CClientPad::SetAnalogControlState(szControl, 1.0, false))
+            if (CClientPad::SetAnalogControlState(szControl, 1.0))
             {
                 return true;
             }
@@ -9739,10 +9761,10 @@ bool CStaticFunctionDefinitions::WarpPedIntoVehicle(CClientPed* pPed, CClientVeh
     //
     // Server or client side ped & vehicle
     //
-    if (pPed->IsLocalPlayer() || pPed->IsSyncing())
+    if (pPed->IsLocalPlayer())
     {
         // Reset the vehicle in/out checks
-        pPed->ResetVehicleInOut();
+        m_pClientGame->ResetVehicleInOut();
 
         /*
         // Make sure it can be damaged again (doesn't get changed back when we force the player in)
@@ -9762,14 +9784,11 @@ bool CStaticFunctionDefinitions::WarpPedIntoVehicle(CClientPed* pPed, CClientVeh
     CLuaArguments Arguments;
     Arguments.PushElement(pVehicle);            // vehicle
     Arguments.PushNumber(uiSeat);               // seat
-    if (IS_PLAYER(pPed))
-        pPed->CallEvent("onClientPlayerVehicleEnter", Arguments, true);
-    else
-        pPed->CallEvent("onClientPedVehicleEnter", Arguments, true);
+    pPed->CallEvent("onClientPlayerVehicleEnter", Arguments, true);
 
     // Call the onClientVehicleEnter event
     CLuaArguments Arguments2;
-    Arguments2.PushElement(pPed);             // player / ped
+    Arguments2.PushElement(pPed);             // player
     Arguments2.PushNumber(uiSeat);            // seat
     pVehicle->CallEvent("onClientVehicleEnter", Arguments2, true);
 
@@ -9805,10 +9824,10 @@ bool CStaticFunctionDefinitions::RemovePedFromVehicle(CClientPed* pPed)
         // Remove the player from his vehicle
         pPed->RemoveFromVehicle();
         pPed->SetVehicleInOutState(VEHICLE_INOUT_NONE);
-        if (pPed->m_bIsLocalPlayer || pPed->IsSyncing())
+        if (pPed->m_bIsLocalPlayer)
         {
             // Reset expectation of vehicle enter completion, in case we were removed while entering
-            pPed->ResetVehicleInOut();
+            g_pClientGame->ResetVehicleInOut();
         }
 
         // Call onClientPlayerVehicleExit
@@ -9816,14 +9835,11 @@ bool CStaticFunctionDefinitions::RemovePedFromVehicle(CClientPed* pPed)
         Arguments.PushElement(pVehicle);            // vehicle
         Arguments.PushNumber(uiSeat);               // seat
         Arguments.PushBoolean(false);               // jacker
-        if (IS_PLAYER(pPed))
-            pPed->CallEvent("onClientPlayerVehicleExit", Arguments, true);
-        else
-            pPed->CallEvent("onClientPedVehicleExit", Arguments, true);
+        pPed->CallEvent("onClientPlayerVehicleExit", Arguments, true);
 
         // Call onClientVehicleExit
         CLuaArguments Arguments2;
-        Arguments2.PushElement(pPed);             // player / ped
+        Arguments2.PushElement(pPed);             // player
         Arguments2.PushNumber(uiSeat);            // seat
         pVehicle->CallEvent("onClientVehicleExit", Arguments2, true);
         return true;

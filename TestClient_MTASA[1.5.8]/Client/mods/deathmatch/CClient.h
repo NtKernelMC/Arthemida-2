@@ -27,7 +27,8 @@ public:
 
     bool WebsiteRequestResultHandler(const std::unordered_set<SString>& newPages);
 
-    bool ProcessCommand(const char* commandName, size_t commandNameLength, const void* userdata, size_t userdataSize) override;
+    bool ProcessCommand(const char* szCommandLine);
+    // bool        ProcessInput                    ( CInputMessage* pInputMessage );
 
     bool HandleException(CExceptionInformation* pExceptionInformation);
     void GetPlayerNames(std::vector<SString>& vPlayerNames);

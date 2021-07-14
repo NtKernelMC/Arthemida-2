@@ -22,7 +22,7 @@ struct SLoadedClumpInfo
     RpClump* pClump;
 };
 
-class CClientDFF final : public CClientEntity
+class CClientDFF : public CClientEntity
 {
     DECLARE_CLASS(CClientDFF, CClientEntity)
     friend class CClientDFFManager;

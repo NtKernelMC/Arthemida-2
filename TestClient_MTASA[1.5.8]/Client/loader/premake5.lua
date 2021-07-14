@@ -8,16 +8,17 @@ project "Loader"
 		linkoptions { "/SAFESEH:NO" }
 
 	includedirs {
-		"../../Shared/sdk",
 		"../sdk",
-		"../../vendor",
-		"../../vendor/detours/4.0.1/src",
+		"../../vendor"
+	}
+
+	libdirs {
+		"../../vendor/detours/lib"
 	}
 
 	links {
 		"unrar", "d3d9",
-		"detours", "Imagehlp",
-		"../../vendor/nvapi/x86/nvapi.lib",
+		"../../vendor/nvapi/x86/nvapi.lib"
 	}
 
 	pchheader "StdInc.h"

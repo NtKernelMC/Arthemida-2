@@ -40,7 +40,7 @@ public:
     unsigned short          GetStreamReferences(bool bScript = false);
     unsigned long           GetTotalStreamReferences() { return m_usStreamReferences + m_usStreamReferencesScript; }
     void                    StreamOutForABit();
-    void                    SetDimension(unsigned short usDimension) override;
+    void                    SetDimension(unsigned short usDimension);
     float                   GetExpDistance() { return m_fExpDistance; }
     virtual CSphere         GetWorldBoundingSphere();
     float                   GetDistanceToBoundingBoxSquared(const CVector& vecPosition);

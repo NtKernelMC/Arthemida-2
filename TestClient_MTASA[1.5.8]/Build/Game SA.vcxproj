@@ -35,13 +35,13 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
@@ -139,11 +139,11 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;MTA_DEBUG;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\sdk;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Client\sdk;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/MT %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
@@ -159,11 +159,11 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;MTA_DEBUG;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\sdk;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Client\sdk;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/MT %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
@@ -179,7 +179,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\sdk;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Client\sdk;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -187,7 +187,6 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
@@ -205,7 +204,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\sdk;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Client\sdk;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -213,7 +212,6 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
@@ -231,7 +229,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\sdk;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Client\sdk;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -239,7 +237,6 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
@@ -258,7 +255,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\sdk;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Client\sdk;..\vendor\sparsehash\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -266,7 +263,6 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
@@ -280,7 +276,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\Client\game_sa\BoneNode_cSA.h" />
     <ClInclude Include="..\Client\game_sa\C3DMarkerSA.h" />
     <ClInclude Include="..\Client\game_sa\C3DMarkersSA.h" />
     <ClInclude Include="..\Client\game_sa\CAEAudioHardwareSA.h" />
@@ -300,10 +295,8 @@
     <ClInclude Include="..\Client\game_sa\CAudioEngine.h" />
     <ClInclude Include="..\Client\game_sa\CAudioEngineSA.h" />
     <ClInclude Include="..\Client\game_sa\CAutomobileSA.h" />
-    <ClInclude Include="..\Client\game_sa\CBikeHandlingEntrySA.h" />
     <ClInclude Include="..\Client\game_sa\CBikeSA.h" />
     <ClInclude Include="..\Client\game_sa\CBmxSA.h" />
-    <ClInclude Include="..\Client\game_sa\CBoatHandlingEntrySA.h" />
     <ClInclude Include="..\Client\game_sa\CBoatSA.h" />
     <ClInclude Include="..\Client\game_sa\CBuildingSA.h" />
     <ClInclude Include="..\Client\game_sa\CBuoyancySA.h" />
@@ -334,7 +327,6 @@
     <ClInclude Include="..\Client\game_sa\CFileLoaderSA.h" />
     <ClInclude Include="..\Client\game_sa\CFireManagerSA.h" />
     <ClInclude Include="..\Client\game_sa\CFireSA.h" />
-    <ClInclude Include="..\Client\game_sa\CFlyingHandlingEntrySA.h" />
     <ClInclude Include="..\Client\game_sa\CFontSA.h" />
     <ClInclude Include="..\Client\game_sa\CFxManagerSA.h" />
     <ClInclude Include="..\Client\game_sa\CFxSA.h" />
@@ -348,7 +340,6 @@
     <ClInclude Include="..\Client\game_sa\CHudSA.h" />
     <ClInclude Include="..\Client\game_sa\CKeyGenSA.h" />
     <ClInclude Include="..\Client\game_sa\CMarkerSA.h" />
-    <ClInclude Include="..\Client\game_sa\CMatrixSA.h" />
     <ClInclude Include="..\Client\game_sa\CMenuManagerSA.h" />
     <ClInclude Include="..\Client\game_sa\CModelInfoSA.h" />
     <ClInclude Include="..\Client\game_sa\CMonsterTruckSA.h" />
@@ -394,9 +385,9 @@
     <ClInclude Include="..\Client\game_sa\CTaskManagementSystemSA.h" />
     <ClInclude Include="..\Client\game_sa\CTaskManagerSA.h" />
     <ClInclude Include="..\Client\game_sa\CTasksSA.h" />
+    <ClInclude Include="..\Client\game_sa\CTextSA.h" />
     <ClInclude Include="..\Client\game_sa\CTheCarGeneratorsSA.h" />
     <ClInclude Include="..\Client\game_sa\CTrailerSA.h" />
-    <ClInclude Include="..\Client\game_sa\CTrainSA.h" />
     <ClInclude Include="..\Client\game_sa\CVehicleSA.h" />
     <ClInclude Include="..\Client\game_sa\CVehicleScannerSA.h" />
     <ClInclude Include="..\Client\game_sa\CVisibilityPluginsSA.h" />
@@ -430,7 +421,6 @@
     <ClInclude Include="..\Client\game_sa\gamesa_renderware.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Client\game_sa\BoneNode_cSA.cpp" />
     <ClCompile Include="..\Client\game_sa\C3DMarkerSA.cpp" />
     <ClCompile Include="..\Client\game_sa\C3DMarkersSA.cpp" />
     <ClCompile Include="..\Client\game_sa\CAEAudioHardwareSA.cpp" />
@@ -448,10 +438,8 @@
     <ClCompile Include="..\Client\game_sa\CAudioContainerSA.cpp" />
     <ClCompile Include="..\Client\game_sa\CAudioEngineSA.cpp" />
     <ClCompile Include="..\Client\game_sa\CAutomobileSA.cpp" />
-    <ClCompile Include="..\Client\game_sa\CBikeHandlingEntrySA.cpp" />
     <ClCompile Include="..\Client\game_sa\CBikeSA.cpp" />
     <ClCompile Include="..\Client\game_sa\CBmxSA.cpp" />
-    <ClCompile Include="..\Client\game_sa\CBoatHandlingEntrySA.cpp" />
     <ClCompile Include="..\Client\game_sa\CBoatSA.cpp" />
     <ClCompile Include="..\Client\game_sa\CBuildingSA.cpp" />
     <ClCompile Include="..\Client\game_sa\CBuoyancySA.cpp" />
@@ -480,7 +468,6 @@
     <ClCompile Include="..\Client\game_sa\CFileLoaderSA.cpp" />
     <ClCompile Include="..\Client\game_sa\CFireManagerSA.cpp" />
     <ClCompile Include="..\Client\game_sa\CFireSA.cpp" />
-    <ClCompile Include="..\Client\game_sa\CFlyingHandlingEntrySA.cpp" />
     <ClCompile Include="..\Client\game_sa\CFontSA.cpp" />
     <ClCompile Include="..\Client\game_sa\CFxManagerSA.cpp" />
     <ClCompile Include="..\Client\game_sa\CFxSA.cpp" />
@@ -493,7 +480,6 @@
     <ClCompile Include="..\Client\game_sa\CHudSA.cpp" />
     <ClCompile Include="..\Client\game_sa\CKeyGenSA.cpp" />
     <ClCompile Include="..\Client\game_sa\CMarkerSA.cpp" />
-    <ClCompile Include="..\Client\game_sa\CMatrixSA.cpp" />
     <ClCompile Include="..\Client\game_sa\CMenuManagerSA.cpp" />
     <ClCompile Include="..\Client\game_sa\CModelInfoSA.cpp" />
     <ClCompile Include="..\Client\game_sa\CMonsterTruckSA.cpp" />
@@ -542,9 +528,9 @@
     <ClCompile Include="..\Client\game_sa\CTaskManagementSystemSA.cpp" />
     <ClCompile Include="..\Client\game_sa\CTaskManagerSA.cpp" />
     <ClCompile Include="..\Client\game_sa\CTasksSA.cpp" />
+    <ClCompile Include="..\Client\game_sa\CTextSA.cpp" />
     <ClCompile Include="..\Client\game_sa\CTheCarGeneratorsSA.cpp" />
     <ClCompile Include="..\Client\game_sa\CTrailerSA.cpp" />
-    <ClCompile Include="..\Client\game_sa\CTrainSA.cpp" />
     <ClCompile Include="..\Client\game_sa\CVehicleSA.cpp" />
     <ClCompile Include="..\Client\game_sa\CVehicleScannerSA.cpp" />
     <ClCompile Include="..\Client\game_sa\CVisibilityPluginsSA.cpp" />

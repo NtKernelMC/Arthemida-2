@@ -8,11 +8,8 @@ project "CEGUI"
 
 	includedirs {
 		"include",
-		"dependencies/include",
-		"../freetype/include"
+		"dependencies/include"
 	}
-
-	links { "freetype" }
 
 	defines {
 		"CEGUIBASE_EXPORTS",

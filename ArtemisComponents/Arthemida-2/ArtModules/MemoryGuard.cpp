@@ -6,6 +6,7 @@
 /**
 * Assignee: holmes0
 */
+#include "../ArtUtils/Utils.h"
 #include "MemoryGuard.h"
 #include "ArtThreading.h"
 using namespace ArtemisData;

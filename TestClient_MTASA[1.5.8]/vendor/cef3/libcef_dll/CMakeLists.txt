@@ -30,13 +30,11 @@ source_group(libcef_dll FILES ${LIBCEF_SRCS})
 set(LIBCEF_BASE_SRCS
   base/cef_atomicops_x86_gcc.cc
   base/cef_bind_helpers.cc
-  base/cef_callback_helpers.cc
   base/cef_callback_internal.cc
   base/cef_lock.cc
   base/cef_lock_impl.cc
   base/cef_logging.cc
   base/cef_ref_counted.cc
-  base/cef_string16.cc
   base/cef_thread_checker_impl.cc
   base/cef_weak_ptr.cc
   )
@@ -480,7 +478,6 @@ set(LIBCEF_INCLUDE_BASE_SRCS
   ../include/base/cef_build.h
   ../include/base/cef_callback.h
   ../include/base/cef_callback_forward.h
-  ../include/base/cef_callback_helpers.h
   ../include/base/cef_callback_list.h
   ../include/base/cef_cancelable_callback.h
   ../include/base/cef_lock.h
@@ -490,7 +487,6 @@ set(LIBCEF_INCLUDE_BASE_SRCS
   ../include/base/cef_platform_thread.h
   ../include/base/cef_ref_counted.h
   ../include/base/cef_scoped_ptr.h
-  ../include/base/cef_string16.h
   ../include/base/cef_template_util.h
   ../include/base/cef_thread_checker.h
   ../include/base/cef_trace_event.h

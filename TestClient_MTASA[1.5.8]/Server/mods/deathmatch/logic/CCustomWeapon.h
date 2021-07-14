@@ -54,7 +54,7 @@ struct SWeaponConfiguration
     SLineOfSightFlags flags;
 };
 
-class CCustomWeapon final : public CObject
+class CCustomWeapon : public CObject
 {
 public:
     CCustomWeapon(CElement* pParent, CObjectManager* pObjectManager, CCustomWeaponManager* pWeaponManager, eWeaponType weaponType);

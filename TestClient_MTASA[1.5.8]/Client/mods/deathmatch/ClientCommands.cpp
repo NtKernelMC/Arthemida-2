@@ -177,21 +177,7 @@ void COMMAND_EnterPassenger(const char* szCmdLine)
             {
                 if (pWeapon->GetState() != WEAPONSTATE_RELOADING)
                 {
-                    // If we are already in a vehicle
-                    CClientVehicle* pVehicle = pPlayer->GetOccupiedVehicle();
-                    if (pVehicle)
-                    {
-                        // Make sure we are in a passenger seat, otherwise we must use enter_exit
-                        if (pPlayer->GetOccupiedVehicleSeat() != 0)
-                        {
-                            pPlayer->ExitVehicle();
-                        }
-                    }
-                    else
-                    {
-                        // Enter nearest vehicle as passenger
-                        pPlayer->EnterVehicle(nullptr, true);
-                    }
+                    g_pClientGame->ProcessVehicleInOutKey(true);
                 }
             }
         }

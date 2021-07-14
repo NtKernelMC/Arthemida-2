@@ -10,7 +10,6 @@ project "Core"
 
 	filter {}
 		includedirs {
-			"../../Shared/sdk",
 			"../sdk",
 			"../../vendor/google-breakpad/src",
 			"../../vendor/sparsehash/current/src/",
@@ -31,9 +30,12 @@ project "Core"
 		"*.cpp"
 	}
 
-	filter { "system:windows", "platforms:x86" }
+	filter "system:windows"
+		libdirs {
+			"../../vendor/detours/lib"
+		}
 		includedirs {
-			"../../vendor/detours/4.0.1/src"
+			"../../vendor/detours/include"
 		}
 		links { "detours", "Imagehlp" }
 

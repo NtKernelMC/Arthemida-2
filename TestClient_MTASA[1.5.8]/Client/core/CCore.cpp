@@ -19,9 +19,10 @@
 #include <clocale>
 #include "CTimingCheckpoints.hpp"
 #include "CModelCacheManager.h"
-#include <SharedUtil.Detours.h>
+#include "detours/include/detours.h"
 #include <ServerBrowser/CServerCache.h>
 #include "CDiscordManager.h"
+#include "../../ArtemisComponents/Arthemida-2/API/ArtemisInterface.h"
 
 using SharedUtil::CalcMTASAPath;
 using namespace std;
@@ -34,16 +35,83 @@ SString       g_strJingleBells;
 
 template <>
 CCore* CSingleton<CCore>::m_pSingleton = NULL;
+extern HINSTANCE g_hModule;
 
-static auto Win32LoadLibraryA = static_cast<decltype(&LoadLibraryA)>(nullptr);
-
-static HMODULE WINAPI SkipDirectPlay_LoadLibraryA(LPCSTR fileName)
+void __stdcall ArthemidaCallback(ARTEMIS_DATA* artemis)
 {
-    if (StrCmpIA("dpnhpast.dll", fileName) != 0)
-        return Win32LoadLibraryA(fileName);
-
-    // GTA:SA expects a valid module handle for DirectPlay. We return a handle for an already loaded library.
-    return Win32LoadLibraryA("d3d8.dll");
+    system("color 04");
+    Utils::LogInFile(ARTEMIS_LOG, "\n\n");
+    if (artemis == nullptr)
+    {
+        Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK ERROR] Passed null pointer!\n");
+        return;
+    }
+    switch (artemis->type)
+    {
+        case DetectionType::ART_ILLEGAL_THREAD:
+            Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Anonymous thread! %s\n%s\nStarted from: 0x%X | Size: 0x%X\n\n", artemis->dllName.c_str(),
+                             artemis->dllPath.c_str(), artemis->baseAddr, artemis->regionSize);
+            break;
+        case DetectionType::ART_PROXY_LIBRARY:
+            Utils::LogInFile(ARTEMIS_LOG,
+                             "[CALLBACK] Detected Proxy DLL! Base: 0x%X | Image Size: 0x%X | DllName: %s\n\
+		\rPath: %s\n\n",
+                             artemis->baseAddr, artemis->regionSize, artemis->dllName.c_str(), artemis->dllPath.c_str());
+            break;
+        case DetectionType::ART_DLL_CLOACKING:
+            Utils::LogInFile(ARTEMIS_LOG,
+                             "[CALLBACK] Detected Hidden DLL! Started from: 0x%X\nSize: 0x%X | R: 0x%X | DllName: %s\n\
+		\rPath: %s\n\n",
+                             artemis->baseAddr, artemis->regionSize, artemis->MemoryRights, artemis->dllName.c_str(), artemis->dllPath.c_str());
+            break;
+        case DetectionType::ART_PROTECTOR_PACKER:
+            Utils::LogInFile(ARTEMIS_LOG,
+                             "[CALLBACK] Detected Packed DLL! Base: 0x%X | Image Size: 0x%X | DllName: %s\n\
+		\rPath: %s\n\n",
+                             artemis->baseAddr, artemis->regionSize, artemis->dllName.c_str(), artemis->dllPath.c_str());
+            break;
+        case DetectionType::ART_HACK_STRING_FOUND:
+            Utils::LogInFile(ARTEMIS_LOG,
+                             "[CALLBACK] Detected DLL Hack! Information: %s\nBase: 0x%X | Image Size: 0x%X | DllName: %s\n\
+		\rPath: %s\n\n",
+                             artemis->HackName.c_str(), artemis->baseAddr, artemis->regionSize, artemis->dllName.c_str(), artemis->dllPath.c_str());
+            break;
+        case DetectionType::ART_FAKE_LAUNCHER:
+            Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Startup from Fake Launcher!\n");
+            break;
+        case DetectionType::ART_RETURN_ADDRESS:
+            Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Return to Hack Function! Address: 0x%X\n", artemis->baseAddr);
+            break;
+        case DetectionType::ART_MANUAL_MAP:
+            Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Mapped Image! %s\n%s\nBase: 0x%X | Size: 0x%X | Rights: 0x%X\n\n", artemis->dllName.c_str(),
+                             artemis->dllPath.c_str(), artemis->baseAddr, artemis->regionSize, artemis->MemoryRights);
+            break;
+        case DetectionType::ART_SIGNATURE_DETECT:
+            Utils::LogInFile(ARTEMIS_LOG,
+                             "[CALLBACK] Detected Signatured Hack! Name: %s\nBase: 0x%X | Image Size: 0x%X | DllName: %s\n\
+		\rPath: %s\n\n",
+                             artemis->HackName.c_str(), artemis->baseAddr, artemis->regionSize, artemis->dllName.c_str(), artemis->dllPath.c_str());
+            break;
+        case DetectionType::ART_ILLEGAL_SERVICE:
+            Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected Illegal service!\nName: %s | Path: %s\n\n", artemis->HackName.c_str(),
+                             artemis->filePath.c_str());
+            //"Path: %s | \nName: %s  | Description: %s | \nType: %d | BootSet: %s | Group: %s\n | Signed by: %s\n");
+            break;
+        case DetectionType::ART_THREAD_FLAGS_CHANGED:
+            Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected thread with modified flags!\nHandle: 0x%X", (DWORD)artemis->baseAddr);
+            break;
+        case DetectionType::ART_MEMORY_INTEGRITY_VIOLATION:
+            Utils::LogInFile(ARTEMIS_LOG, "[CALLBACK] Detected memory integrity violation!\nBase: 0x%X | Size: 0x%X\n\n", (DWORD)artemis->baseAddr,
+                             (DWORD)artemis->regionSize);
+            break;
+        default:
+            Utils::LogInFile(ARTEMIS_LOG,
+                             "[CALLBACK] Unknown detection code! Base: 0x%X | Size: %d bytes | DllName: %s\n"
+                             "\rPath: %s\n\n",
+                             artemis->baseAddr, artemis->regionSize, artemis->dllName.c_str(), artemis->dllPath.c_str());
+            break;
+    }
+    Utils::LogInFile(ARTEMIS_LOG, "\n\n");
 }
 
 CCore::CCore() : m_DiscordManager(new CDiscordManager())
@@ -140,6 +208,52 @@ CCore::CCore() : m_DiscordManager(new CDiscordManager())
 
     // Create tray icon
     m_pTrayIcon = new CTrayIcon();
+
+    ArtemisConfig* cfg = new ArtemisConfig;
+    cfg->DetectFakeLaunch = true;            // AntiFakeLaunch.h
+
+    cfg->DetectThreads = true;            // ThreadScanner.h
+    cfg->ThreadScanDelay = 1000;
+
+    cfg->DetectModules = true;            // ModuleScanner.h
+    cfg->ModuleScanDelay = 1000;
+
+    cfg->DetectManualMap = true;            // MemoryScanner.h
+    cfg->MemoryScanDelay = 1000;
+
+    cfg->ServiceMon = true;            // CServiceMon.h
+    cfg->ServiceMonDelay = 1000;
+
+    cfg->MemoryGuard = true;            // MemoryGuard.h
+    cfg->MemoryGuardScanDelay = 1;
+
+    cfg->ThreadGuard = true;            // ThreadGuard.h
+    cfg->ThreadGuardDelay = 500;
+    // cfg.HooksList.insert(std::pair<PVOID, PVOID>((PVOID)RetTest::TestStaticMethod, (PVOID)HookTestStaticMethod));
+    // __thiscall methods must be casted in a different way
+
+    using CortPair = std::pair<std::string, std::tuple<std::string, std::string>>;
+    cfg->IllegalDriverPatterns.insert(CortPair(
+        "ILLEGAL CERT: Nanjing Zhixiao Information Technology Co.,Ltd",
+        std::make_tuple(
+            "\x4E\x61\x6E\x6A\x69\x6E\x67\x20\x5A\x68\x69\x78\x69\x61\x6F\x20\x49\x6E\x66\x6F\x72\x6D\x61\x74\x69\x6F\x6E\x20\x54\x65\x63\x68\x6E\x6F\x6C\x6F\x67\x79\x20\x43\x6F\x2E"s,
+            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"s)));
+    cfg->IllegalDriverPatterns.insert(CortPair("HWIDSYS spoofer", std::make_tuple("\x61\x70\x70\x6C\x79\x5F\x68\x6F\x6F\x6B"s, "xxxxxxxxxx"s)));
+    // todo cfg.PriorityDriverNames
+    //////////////////////////////// Heuristical Scanning ///////////////////////////////////////////
+    cfg->DetectPacking = true;
+    cfg->AllowedPackedModules.push_back("netc.dll");            // white-list for your packed or protected dll`s
+    cfg->DetectByString = true;
+    std::vector<std::string> Linien{"imgui", "minhook", "gamesnus", "rdror", "vsdbg", "Hybris", "hybris", "[P414]", "vk.com/hybrisoft"};
+    cfg->IlegaleLinien = Linien;            // Add deprecated string from hacks here!
+    cfg->DetectBySignature = true;
+    cfg->IllegalPatterns.insert(CortPair("HWBP by NtKernelMC", std::make_tuple("\x8D\x45\xF4\x64\xA3\x00\x00\x00\x00\x68"s, "xxxxxxxxxx"s)));
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    cfg->callback = (ArtemisCallback)ArthemidaCallback; 
+    m_pArtemis = new CArtemisReal(cfg, g_hModule);
+    bool bSuccess = m_pArtemis->InstallArtemisMonitor();
+    if (!bSuccess)
+        MessageBoxA(NULL, "ERROR INITIALIZING ARTEMIS", "ARTEMIS", MB_ICONERROR | MB_OK);
 }
 
 CCore::~CCore()
@@ -752,7 +866,25 @@ void CCore::ApplyHooks()
 
     // Remove useless DirectPlay dependency (dpnhpast.dll) @ 0x745701
     // We have to patch here as multiplayer_sa and game_sa are loaded too late
-    DetourLibraryFunction("kernel32.dll", "LoadLibraryA", Win32LoadLibraryA, SkipDirectPlay_LoadLibraryA);
+    using LoadLibraryA_t = HMODULE(__stdcall*)(LPCTSTR fileName);
+    static LoadLibraryA_t oldLoadLibraryA =
+        (LoadLibraryA_t)DetourFunction(DetourFindFunction("KERNEL32.DLL", "LoadLibraryA"), (PBYTE)(LoadLibraryA_t)[](LPCSTR fileName)->HMODULE {
+            // Don't load dpnhpast.dll
+            if (StrCmpA("dpnhpast.dll", fileName) == 0)
+            {
+                // Unfortunately, Microsoft's detours library doesn't support something like 'detour chains' properly,
+                // so that we cannot remove the hook flawlessly
+                // See
+                // http://read.pudn.com/downloads71/ebook/256925/%E5%BE%AE%E8%BD%AF%E6%8F%90%E4%BE%9B%E7%9A%84%E6%88%AA%E5%8F%96Win32%20API%E5%87%BD%E6%95%B0%E7%9A%84%E5%BC%80%E5%8F%91%E5%8C%85%E5%92%8C%E4%BE%8B%E5%AD%90detours-src-1.2/src/detours.cpp__.htm
+
+                // Do something hacky: GTA requires a valid module handle, so pass a module handle of a DLL that is already loaded
+                // as FreeLibrary is later called
+                return oldLoadLibraryA("D3D8.DLL");
+            }
+
+            // Call old LoadLibraryA (this in our case SharedUtil::MyLoadLibraryA though)
+            return oldLoadLibraryA(fileName);
+        });
 }
 
 bool UsingAltD3DSetup()
@@ -961,7 +1093,7 @@ void CCore::CreateNetwork()
         ulong ulNetModuleVersion = 0;
         pfnCheckCompatibility(1, &ulNetModuleVersion);
         SString strMessage("Network module not compatible! (Expected 0x%x, got 0x%x)", MTA_DM_CLIENT_NET_MODULE_VERSION, ulNetModuleVersion);
-#if !defined(MTA_DM_PUBLIC_CONNECTIONS)
+#if !defined(MTA_DM_CONNECT_TO_PUBLIC)
         strMessage += "\n\n(Devs: Update source and run win-install-data.bat)";
 #endif
         BrowseToSolution("netc-not-compatible", ASK_GO_ONLINE | TERMINATE_PROCESS, strMessage);
@@ -1315,7 +1447,7 @@ void CCore::RegisterCommands()
     m_pCommands->Add("showframegraph", _("shows the frame timing graph"), CCommandFuncs::ShowFrameGraph);
     m_pCommands->Add("jinglebells", "", CCommandFuncs::JingleBells);
     m_pCommands->Add("fakelag", "", CCommandFuncs::FakeLag);
-
+    
     m_pCommands->Add("reloadnews", "for developers: reload news", CCommandFuncs::ReloadNews);
 }
 
@@ -2263,4 +2395,9 @@ SString CCore::GetBlueCopyrightString()
 {
     SString strCopyright = BLUE_COPYRIGHT_STRING;
     return strCopyright.Replace("%BUILD_YEAR%", std::to_string(BUILD_YEAR).c_str());
+}
+
+HANDLE CCore::SetThreadHardwareBreakPoint(HANDLE hThread, HWBRK_TYPE Type, HWBRK_SIZE Size, DWORD dwAddress)
+{
+    return CCrashDumpWriter::SetThreadHardwareBreakPoint(hThread, Type, Size, dwAddress);
 }

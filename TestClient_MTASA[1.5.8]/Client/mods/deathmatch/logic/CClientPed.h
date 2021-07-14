@@ -18,7 +18,6 @@ class CClientPed;
 
 #include <multiplayer/CMultiplayer.h>
 #include "CClientPad.h"
-#include "CClientModel.h"
 #include <memory>
 
 class CClientCamera;
@@ -169,8 +168,6 @@ public:
     const CEntity* GetGameEntity() const { return m_pPlayerPed; }
 
     bool IsLocalPlayer() { return m_bIsLocalPlayer; }
-    bool IsSyncing() { return m_bIsSyncing; }
-    void SetSyncing(bool bIsSyncing);
 
     bool            GetMatrix(CMatrix& Matrix) const;
     bool            SetMatrix(const CMatrix& Matrix);
@@ -564,11 +561,6 @@ protected:
 
 public:
     void _GetIntoVehicle(CClientVehicle* pVehicle, unsigned int uiSeat, unsigned char ucDoor);
-    // Used to control and sync entering/exiting
-    bool EnterVehicle(CClientVehicle* pVehicle, bool bPassenger);
-    bool ExitVehicle();
-    void ResetVehicleInOut();
-    void UpdateVehicleInOut();
 
     void Respawn(CVector* pvecPosition = NULL, bool bRestoreState = false, bool bCameraCut = false);
 
@@ -697,7 +689,6 @@ public:
     unsigned char                            m_ucLeavingDoor;
     bool                                     m_bPendingRebuildPlayer;
     uint                                     m_uiFrameLastRebuildPlayer;
-    bool                                     m_bIsSyncing;
 
     bool             m_bBulletImpactData;
     CClientEntityPtr m_pBulletImpactEntity;
@@ -746,18 +737,4 @@ public:
     bool              m_bTaskToBeRestoredOnAnimEnd;
     eTaskType         m_eTaskTypeToBeRestoredOnAnimEnd;
     bool              m_bWarpInToVehicleRequired = false;
-
-    // Enter/exit variables
-    unsigned long  m_ulLastVehicleInOutTime;    // Last tick where we sent an enter/exit request
-    bool           m_bIsGettingOutOfVehicle;    // Indicates we are exiting a vehicle
-    bool           m_bIsGettingIntoVehicle;     // Indicates we are entering a vehicle
-    bool           m_bIsJackingVehicle;         // Indicates we are jacking a vehicle
-    bool           m_bIsGettingJacked;          // Indicates we are getting jacked
-    ElementID      m_VehicleInOutID;            // ElementID of vehicle received from server
-    unsigned char  m_ucVehicleInOutSeat;        // Seat ID we are entering/exiting received from server
-    bool           m_bNoNewVehicleTask;         // When set, we are not allowed to initiate a new enter/exit task because we are waiting for server reply
-    ElementID      m_NoNewVehicleTaskReasonID;  // ElementID of the vehicle that we are waiting on
-    CClientPed*    m_pGettingJackedBy;          // The ped that is jacking us
-
-    std::shared_ptr<CClientModel> m_clientModel;
 };

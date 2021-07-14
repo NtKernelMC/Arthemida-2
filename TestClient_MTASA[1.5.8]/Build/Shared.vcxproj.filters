@@ -7,9 +7,6 @@
     <Filter Include="animation">
       <UniqueIdentifier>{A5BE8E31-1129-43A8-5A67-F44DC61021FD}</UniqueIdentifier>
     </Filter>
-    <Filter Include="gta">
-      <UniqueIdentifier>{6178880B-CD81-887C-56FD-9E7CC205947C}</UniqueIdentifier>
-    </Filter>
     <Filter Include="mods">
       <UniqueIdentifier>{58BA9A7C-44F1-9B0D-EDDD-8110D9F3170F}</UniqueIdentifier>
     </Filter>
@@ -87,10 +84,6 @@
     <ClInclude Include="..\Shared\animation\TInterpolation.h">
       <Filter>animation</Filter>
     </ClInclude>
-    <ClInclude Include="..\Shared\build_overrides.h" />
-    <ClInclude Include="..\Shared\gta\TrackNodes.h">
-      <Filter>gta</Filter>
-    </ClInclude>
     <ClInclude Include="..\Shared\mods\deathmatch\logic\CDebugHookManager.h">
       <Filter>mods\deathmatch\logic</Filter>
     </ClInclude>
@@ -116,9 +109,6 @@
       <Filter>mods\deathmatch\logic\lua</Filter>
     </ClInclude>
     <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaMatrix.h">
-      <Filter>mods\deathmatch\logic\lua</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaMultiReturn.h">
       <Filter>mods\deathmatch\logic\lua</Filter>
     </ClInclude>
     <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaOverloadParser.h">
@@ -152,9 +142,6 @@
       <Filter>mods\deathmatch\logic\luadefs</Filter>
     </ClInclude>
     <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaMatrixDefs.h">
-      <Filter>mods\deathmatch\logic\luadefs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaTrainTrackDefs.h">
       <Filter>mods\deathmatch\logic\luadefs</Filter>
     </ClInclude>
     <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaUTFDefs.h">
@@ -292,9 +279,6 @@
     <ClInclude Include="..\Shared\sdk\SharedUtil.Defines.h">
       <Filter>sdk</Filter>
     </ClInclude>
-    <ClInclude Include="..\Shared\sdk\SharedUtil.Detours.h">
-      <Filter>sdk</Filter>
-    </ClInclude>
     <ClInclude Include="..\Shared\sdk\SharedUtil.FastHashMap.h">
       <Filter>sdk</Filter>
     </ClInclude>
@@ -320,9 +304,6 @@
       <Filter>sdk</Filter>
     </ClInclude>
     <ClInclude Include="..\Shared\sdk\SharedUtil.HashMap.h">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Shared\sdk\SharedUtil.IntTypes.h">
       <Filter>sdk</Filter>
     </ClInclude>
     <ClInclude Include="..\Shared\sdk\SharedUtil.IntervalCounter.h">
@@ -440,9 +421,6 @@
       <Filter>sdk</Filter>
     </ClInclude>
     <ClInclude Include="..\Shared\sdk\sha2.hpp">
-      <Filter>sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Shared\sdk\version.h">
       <Filter>sdk</Filter>
     </ClInclude>
     <ClInclude Include="..\Shared\sdk\xml\CXML.h">

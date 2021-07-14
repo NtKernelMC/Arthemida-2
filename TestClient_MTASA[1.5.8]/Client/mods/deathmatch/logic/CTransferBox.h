@@ -1,72 +1,59 @@
 /*****************************************************************************
  *
- *  PROJECT:     Multi Theft Auto
+ *  PROJECT:     Multi Theft Auto v1.0
  *  LICENSE:     See LICENSE in the top level directory
  *  FILE:        mods/deathmatch/logic/CTransferBox.h
  *  PURPOSE:     Header for transfer box class
  *
- *  Multi Theft Auto is available from https://multitheftauto.com/
+ *  Multi Theft Auto is available from http://www.multitheftauto.com/
  *
  *****************************************************************************/
 
 #pragma once
 
-#include <memory>
-#include <bitset>
+#define TRANSFERBOX_FRAMES  10
+#define TRANSFERBOX_DELAY   50
 
-enum class TransferBoxType : uint8_t
-{
-    RESOURCE_DOWNLOAD,
-    MAP_DOWNLOAD,
-};
+#include "CClientCommon.h"
+#include <gui/CGUI.h>
 
 class CTransferBox
 {
 public:
-    explicit CTransferBox(TransferBoxType transferType);
+    enum Type
+    {
+        NORMAL,
+        PACKET,
+        MAX_TYPES
+    };
+
+    CTransferBox();
+    virtual ~CTransferBox();
 
     void Show();
     void Hide();
 
+    void SetInfo(double dDownloadSizeNow, CTransferBox::Type eTransferType = CTransferBox::NORMAL);
+
     void DoPulse();
 
-    bool IsVisible() const { return m_visible[TB_VISIBILITY_MTA]; }
+    bool OnCancelClick(CGUIElement* pElement);
 
-    void SetDownloadProgress(uint64_t downloadedSizeTotal);
+    bool IsVisible() { return m_pWindow->IsVisible(); };
 
-    void     AddToDownloadTotalSize(uint64 bytes) { m_downloadTotalSize += bytes; }
-    uint64_t GetDownloadTotalSize() const { return m_downloadTotalSize; }
-
-    bool SetClientVisibility(bool visible);
-    bool SetServerVisibility(bool visible);
-
-    bool SetAlwaysVisible(bool visible);
-    bool IsAlwaysVisible() const { return m_alwaysVisible; }
+    void AddToTotalSize(double dSize) { m_dTotalSize += dSize; };
 
 private:
-    void CreateTransferWindow();
+    CGUIWindow*                                       m_pWindow;
+    SFixedArray<CGUIStaticImage*, TRANSFERBOX_FRAMES> m_pIcon;
+    CGUILabel*                                        m_pInfo;
+    CGUIProgressBar*                                  m_pProgress;
 
-    void UpdateWindowVisibility() const;
+    bool m_bMultipleDownloads;
 
-    std::string m_titleProgressPrefix;
-    uint64_t    m_downloadTotalSize = 0;
+    unsigned int m_uiVisible;
+    CElapsedTime m_AnimTimer;
+    double       m_dTotalSize;
 
-    CGUI*                                            m_GUI;
-    std::unique_ptr<CGUIWindow>                      m_window;
-    std::unique_ptr<CGUIProgressBar>                 m_progressBar;
-    std::unique_ptr<CGUILabel>                       m_infoLabel;
-    std::array<std::unique_ptr<CGUIStaticImage>, 10> m_iconImages;
-    size_t                                           m_iconIndex;
-    CElapsedTime                                     m_iconTimer;
-
-    enum VisibilitySource
-    {
-        TB_VISIBILITY_MTA,
-        TB_VISIBILITY_CLIENT_SCRIPT,
-        TB_VISIBILITY_SERVER_SCRIPT,
-        TB_VISIBILITY_SOURCES_SIZE,
-    };
-
-    std::bitset<TB_VISIBILITY_SOURCES_SIZE> m_visible;
-    bool                                    m_alwaysVisible = true;
+    SString m_strTransferText[Type::MAX_TYPES];
 };

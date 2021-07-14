@@ -18,6 +18,60 @@ bool            g_bVehiclePointerInvalid = false;
 
 namespace
 {
+    void CMatrixToRwMatrix(const CMatrix& mat, RwMatrix& rwOutMatrix)
+    {
+        rwOutMatrix.right = (RwV3d&)mat.vRight;
+        rwOutMatrix.up = (RwV3d&)mat.vFront;
+        rwOutMatrix.at = (RwV3d&)mat.vUp;
+        rwOutMatrix.pos = (RwV3d&)mat.vPos;
+    }
+
+    void RwMatrixToCMatrix(const RwMatrix& rwMatrix, CMatrix& matOut)
+    {
+        matOut.vRight = (CVector&)rwMatrix.right;
+        matOut.vFront = (CVector&)rwMatrix.up;
+        matOut.vUp = (CVector&)rwMatrix.at;
+        matOut.vPos = (CVector&)rwMatrix.pos;
+    }
+
+    void RwMatrixGetRotation(const RwMatrix& rwMatrix, CVector& vecOutRotation)
+    {
+        CMatrix matTemp;
+        RwMatrixToCMatrix(rwMatrix, matTemp);
+        vecOutRotation = matTemp.GetRotation();
+    }
+
+    void RwMatrixSetRotation(RwMatrix& rwInOutMatrix, const CVector& vecRotation)
+    {
+        CMatrix matTemp;
+        RwMatrixToCMatrix(rwInOutMatrix, matTemp);
+        matTemp.SetRotation(vecRotation);
+        rwInOutMatrix.right = (RwV3d&)matTemp.vRight;
+        rwInOutMatrix.up = (RwV3d&)matTemp.vFront;
+        rwInOutMatrix.at = (RwV3d&)matTemp.vUp;
+    }
+
+    void RwMatrixGetPosition(const RwMatrix& rwMatrix, CVector& vecOutPosition) { vecOutPosition = (CVector&)rwMatrix.pos; }
+
+    void RwMatrixSetPosition(RwMatrix& rwInOutMatrix, const CVector& vecPosition) { rwInOutMatrix.pos = (RwV3d&)vecPosition; }
+
+    void RwMatrixGetScale(const RwMatrix& rwMatrix, CVector& vecOutScale)
+    {
+        CMatrix matTemp;
+        RwMatrixToCMatrix(rwMatrix, matTemp);
+        vecOutScale = matTemp.GetScale();
+    }
+
+    void RwMatrixSetScale(RwMatrix& rwInOutMatrix, const CVector& vecScale)
+    {
+        CMatrix matTemp;
+        RwMatrixToCMatrix(rwInOutMatrix, matTemp);
+        matTemp.SetScale(vecScale);
+        rwInOutMatrix.right = (RwV3d&)matTemp.vRight;
+        rwInOutMatrix.up = (RwV3d&)matTemp.vFront;
+        rwInOutMatrix.at = (RwV3d&)matTemp.vUp;
+    }
+
     bool ClumpDumpCB(RpAtomic* pAtomic, void* data)
     {
         CVehicleSA* pVehicleSA = (CVehicleSA*)data;
@@ -96,7 +150,6 @@ CVehicleSA::CVehicleSA(eVehicleTypes dwModelID, unsigned char ucVariation, unsig
     //                              ModelID, Position, IsMissionVehicle
 
     m_pHandlingData = NULL;
-    m_pFlyingHandlingData = NULL;
     m_pSuspensionLines = NULL;
 
     DWORD dwReturn = 0;
@@ -203,16 +256,6 @@ void CVehicleSA::Init()
     // important)
     GetVehicleInterface()->m_pVehicle = this;
     g_bVehiclePointerInvalid = false;
-
-    CModelInfo* modelInfo = pGame->GetModelInfo(GetModelIndex());
-
-    if (modelInfo != nullptr)
-    {
-        for (size_t i = 0; i < m_dummyPositions.size(); ++i)
-        {
-            m_dummyPositions[i] = modelInfo->GetVehicleDummyPosition((eVehicleDummies)i);
-        }
-    }
 
     // Unlock doors as they spawn randomly with locked doors
     LockDoors(false);
@@ -463,8 +506,8 @@ CVehicle* CVehicleSA::GetPreviousTrainCarriage()
 
 float CVehicleSA::GetDistanceToCarriage(CVehicle* pCarriage)
 {
-    auto pCarriageInterface = static_cast<CTrainSAInterface*>(pCarriage->GetVehicleInterface());
-    if (pCarriageInterface->trainFlags.bClockwiseDirection)
+    CVehicleSAInterface* pCarriageInterface = pCarriage->GetVehicleInterface();
+    if (pCarriageInterface->trainFlags.bDirection)
     {
         CBoundingBox* pBoundingBox = pGame->GetModelInfo(pCarriage->GetModelIndex())->GetBoundingBox();
         return -(pBoundingBox->vecBoundMax.fY - pBoundingBox->vecBoundMin.fY);
@@ -489,10 +532,11 @@ void CVehicleSA::AttachTrainCarriage(CVehicle* pCarriage)
     SetNextTrainCarriage(pCarriage);
 
     // Mark the carriage as non chain engine
-    auto pCarriageInterface = static_cast<CTrainSAInterface*>(pCarriage->GetVehicleInterface());
+    CVehicleSAInterface* pCarriageInterface = pCarriage->GetVehicleInterface();
     pCarriageInterface->trainFlags.bIsTheChainEngine = false;
+    // pNextInterface->trainFlags.bIsDrivenByBrownSteak = true;
 
-    if (pCarriageInterface->trainFlags.bClockwiseDirection)
+    if (pCarriageInterface->trainFlags.bDirection)
     {
         CBoundingBox* pBoundingBox = pGame->GetModelInfo(pCarriage->GetModelIndex())->GetBoundingBox();
         pCarriageInterface->m_fDistanceToNextCarriage = -(pBoundingBox->vecBoundMax.fY - pBoundingBox->vecBoundMin.fY);
@@ -517,19 +561,17 @@ void CVehicleSA::DetachTrainCarriage(CVehicle* pCarriage)
 
 bool CVehicleSA::IsChainEngine()
 {
-    auto pInterface = static_cast<CTrainSAInterface*>(GetVehicleInterface());
-    return pInterface->trainFlags.bIsTheChainEngine;
+    return GetVehicleInterface()->trainFlags.bIsTheChainEngine;
 }
 
 void CVehicleSA::SetIsChainEngine(bool bChainEngine)
 {
-    auto pInterface = static_cast<CTrainSAInterface*>(GetVehicleInterface());
-    pInterface->trainFlags.bIsTheChainEngine = bChainEngine;
+    GetVehicleInterface()->trainFlags.bIsTheChainEngine = bChainEngine;
 }
 
 bool CVehicleSA::IsDerailed()
 {
-    auto pInterface = static_cast<CTrainSAInterface*>(GetVehicleInterface());
+    CVehicleSAInterface* pInterface = GetVehicleInterface();
     return pInterface->trainFlags.bIsDerailed;
 }
 
@@ -538,27 +580,19 @@ void CVehicleSA::SetDerailed(bool bDerailed)
     WORD wModelID = GetModelIndex();
     if (wModelID == 537 || wModelID == 538 || wModelID == 569 || wModelID == 570 || wModelID == 590 || wModelID == 449)
     {
-        auto  pInterface = static_cast<CTrainSAInterface*>(GetVehicleInterface());
-        DWORD dwThis = (DWORD)pInterface;
+        CVehicleSAInterface* pInterface = GetVehicleInterface();
+        DWORD                dwThis = (DWORD)pInterface;
         if (bDerailed != pInterface->trainFlags.bIsDerailed)
         {
             if (bDerailed)
             {
                 pInterface->trainFlags.bIsDerailed = true;
-                // update the physical flags
                 MemAndFast<DWORD>(dwThis + 64, (DWORD)0xFFFDFFFB);
-                // what this does:
-                // physicalFlags.bDisableCollisionForce = false (3rd flag)
-                // physicalFlags.bDisableSimpleCollision = false (18th flag)
             }
             else
             {
                 pInterface->trainFlags.bIsDerailed = false;
-                // update the physical flags
                 MemOrFast<DWORD>(dwThis + 64, (DWORD)0x20004);
-                // what this does:
-                // physicalFlags.bDisableCollisionForce = true (3rd flag)
-                // physicalFlags.bDisableSimpleCollision = true (18th flag)
 
                 // Recalculate the on-rail distance from the start node (train position parameter, m_fTrainRailDistance)
                 DWORD dwFunc = FUNC_CTrain_FindPositionOnTrackFromCoors;
@@ -569,7 +603,7 @@ void CVehicleSA::SetDerailed(bool bDerailed)
                 }
 
                 // Reset the speed
-                static_cast<CTrainSAInterface*>(GetVehicleInterface())->m_fTrainSpeed = 0.0f;
+                GetVehicleInterface()->m_fTrainSpeed = 0.0f;
             }
         }
     }
@@ -577,32 +611,34 @@ void CVehicleSA::SetDerailed(bool bDerailed)
 
 float CVehicleSA::GetTrainSpeed()
 {
-    auto pInterface = static_cast<CTrainSAInterface*>(GetVehicleInterface());
-    return pInterface->m_fTrainSpeed;
+    return GetVehicleInterface()->m_fTrainSpeed;
 }
 
 void CVehicleSA::SetTrainSpeed(float fSpeed)
 {
-    auto pInterface = static_cast<CTrainSAInterface*>(GetVehicleInterface());
-    pInterface->m_fTrainSpeed = fSpeed;
+    GetVehicleInterface()->m_fTrainSpeed = fSpeed;
 }
 
 bool CVehicleSA::GetTrainDirection()
 {
-    auto pInterface = static_cast<CTrainSAInterface*>(GetInterface());
-    return pInterface->trainFlags.bClockwiseDirection;
+    return (*((BYTE*)GetInterface() + 1464) & 0x40) != 0;
 }
 
 void CVehicleSA::SetTrainDirection(bool bDirection)
 {
-    auto pInterface = static_cast<CTrainSAInterface*>(GetInterface());
-    pInterface->trainFlags.bClockwiseDirection = bDirection;
+    if (bDirection)
+    {
+        MemOrFast<BYTE>((BYTE*)GetInterface() + 1464, 0x40);
+    }
+    else
+    {
+        MemAndFast<BYTE>((BYTE*)GetInterface() + 1464, ~0x40);
+    }
 }
 
 BYTE CVehicleSA::GetRailTrack()
 {
-    auto pInterface = static_cast<CTrainSAInterface*>(GetVehicleInterface());
-    return pInterface->m_ucRailTrackID;
+    return GetVehicleInterface()->m_ucRailTrackID;
 }
 
 void CVehicleSA::SetRailTrack(BYTE ucTrackID)
@@ -610,7 +646,7 @@ void CVehicleSA::SetRailTrack(BYTE ucTrackID)
     if (ucTrackID >= NUM_RAILTRACKS)
         return;
 
-    auto pInterf = static_cast<CTrainSAInterface*>(GetVehicleInterface());
+    CVehicleSAInterface* pInterf = GetVehicleInterface();
     if (pInterf->m_ucRailTrackID != ucTrackID)
     {
         pInterf->m_ucRailTrackID = ucTrackID;
@@ -628,13 +664,12 @@ void CVehicleSA::SetRailTrack(BYTE ucTrackID)
 
 float CVehicleSA::GetTrainPosition()
 {
-    auto pInterface = static_cast<CTrainSAInterface*>(GetVehicleInterface());
-    return pInterface->m_fTrainRailDistance;
+    return GetVehicleInterface()->m_fTrainRailDistance;
 }
 
 void CVehicleSA::SetTrainPosition(float fPosition, bool bRecalcOnRailDistance)
 {
-    auto pInterface = static_cast<CTrainSAInterface*>(GetVehicleInterface());
+    CVehicleSAInterface* pInterface = GetVehicleInterface();
     // if ( pInterface->m_fTrainRailDistance <= fPosition - 0.1 || pInterface->m_fTrainRailDistance >= fPosition + 0.1 )
     {
         pInterface->m_fTrainRailDistance = fPosition;
@@ -735,8 +770,8 @@ bool CVehicleSA::AreSwingingDoorsAllowed() const
 
 bool CVehicleSA::AreDoorsLocked()
 {
-    return (GetVehicleInterface()->m_doorLock == DOOR_LOCK_LOCKED || GetVehicleInterface()->m_doorLock == DOOR_LOCK_COP_CAR ||
-            GetVehicleInterface()->m_doorLock == DOOR_LOCK_LOCKED_PLAYER_INSIDE || GetVehicleInterface()->m_doorLock == DOOR_LOCK_SKIP_SHUT_DOORS ||
+    return (GetVehicleInterface()->m_doorLock == DOOR_LOCK_LOCKED || GetVehicleInterface()->m_doorLock == DOOR_LOCK_COP_CAR || 
+            GetVehicleInterface()->m_doorLock == DOOR_LOCK_LOCKED_PLAYER_INSIDE || GetVehicleInterface()->m_doorLock == DOOR_LOCK_SKIP_SHUT_DOORS || 
             GetVehicleInterface()->m_doorLock == DOOR_LOCK_LOCKOUT_PLAYER_ONLY);
 }
 
@@ -1492,7 +1527,7 @@ FLOAT CVehicleSA::GetHealth()
 //-----------------------------------------------------------
 void CVehicleSA::SetHealth(FLOAT fHealth)
 {
-    auto vehicle = static_cast<CAutomobileSAInterface*>(GetInterface());
+    CVehicleSAInterface* vehicle = (CVehicleSAInterface*)this->GetInterface();
     vehicle->m_nHealth = fHealth;
     if (fHealth >= 250.0f)
         vehicle->m_fBurningTime = 0.0f;
@@ -1838,25 +1873,12 @@ CHandlingEntry* CVehicleSA::GetHandlingData()
     return m_pHandlingData;
 }
 
-CFlyingHandlingEntry* CVehicleSA::GetFlyingHandlingData()
-{
-    return m_pFlyingHandlingData;
-}
-
 void CVehicleSA::SetHandlingData(CHandlingEntry* pHandling)
 {
     // Store the handling and recalculate it
     m_pHandlingData = static_cast<CHandlingEntrySA*>(pHandling);
     GetVehicleInterface()->pHandlingData = m_pHandlingData->GetInterface();
     RecalculateHandling();
-}
-
-void CVehicleSA::SetFlyingHandlingData(CFlyingHandlingEntry* pFlyingHandling)
-{
-    if (!pFlyingHandling)
-        return;
-    m_pFlyingHandlingData = static_cast<CFlyingHandlingEntrySA*>(pFlyingHandling);
-    GetVehicleInterface()->pFlyingHandlingData = m_pFlyingHandlingData->GetInterface();
 }
 
 void CVehicleSA::RecalculateHandling()
@@ -1959,25 +1981,21 @@ void CVehicleSA::SetBikeWheelStatus(BYTE bWheel, BYTE bStatus)
 
 bool CVehicleSA::IsWheelCollided(BYTE eWheelPosition)
 {
-    auto vehicle = static_cast<CAutomobileSAInterface*>(GetInterface());
-    switch ((VehicleClass)vehicle->m_vehicleClass)
+    CVehicleSAInterface* vehicle = (CVehicleSAInterface*)this->GetInterface();
+
+    switch (vehicle->m_type)
     {
-        case VehicleClass::AUTOMOBILE:
+        case 0:
             if (eWheelPosition < 4)
-                return vehicle->m_wheelCollisionState[eWheelPosition] == 4.f;
+                return vehicle->wheelCollisionState[eWheelPosition] == 4.f;
             break;
-        case VehicleClass::BIKE:
+
+        case 9:
             if (eWheelPosition < 2)
                 return *(float*)((DWORD)vehicle + 0x730 + eWheelPosition * 8) == 4.f || *(float*)((DWORD)vehicle + 0x734 + eWheelPosition * 8) == 4.f;
             break;
     }
     return false;
-}
-
-int CVehicleSA::GetWheelFrictionState(BYTE eWheelPosition)
-{
-    auto vehicle = static_cast<CAutomobileSAInterface*>(GetInterface());
-    return vehicle->m_wheelFrictionState[eWheelPosition];
 }
 
 void CVehicleSA::SetTaxiLightOn(bool bLightOn)
@@ -2077,21 +2095,21 @@ CObject* CVehicleSA::SpawnFlyingComponent(int i_1, unsigned int ui_2)
 
 void CVehicleSA::SetWheelVisibility(eWheelPosition wheel, bool bVisible)
 {
-    auto     vehicle = static_cast<CAutomobileSAInterface*>(GetInterface());
+    CVehicleSAInterface* vehicle = (CVehicleSAInterface*)this->GetInterface();
     RwFrame*             pFrame = NULL;
     switch (wheel)
     {
         case FRONT_LEFT_WHEEL:
-            pFrame = vehicle->m_aCarNodes[eCarNode::WHEEL_LF];
+            pFrame = vehicle->pWheelFrontLeft;
             break;
         case REAR_LEFT_WHEEL:
-            pFrame = vehicle->m_aCarNodes[eCarNode::WHEEL_LB];
+            pFrame = vehicle->pWheelRearLeft;
             break;
         case FRONT_RIGHT_WHEEL:
-            pFrame = vehicle->m_aCarNodes[eCarNode::WHEEL_RF];
+            pFrame = vehicle->pWheelFrontRight;
             break;
         case REAR_RIGHT_WHEEL:
-            pFrame = vehicle->m_aCarNodes[eCarNode::WHEEL_RB];
+            pFrame = vehicle->pWheelRearRight;
             break;
         default:
             break;
@@ -2116,17 +2134,16 @@ void CVehicleSA::SetWheelVisibility(eWheelPosition wheel, bool bVisible)
 
 CVector CVehicleSA::GetWheelPosition(eWheelPosition wheel)
 {
-    auto pInterface = static_cast<CAutomobileSAInterface*>(GetVehicleInterface());
     switch (wheel)
     {
         case FRONT_LEFT_WHEEL:
-            return pInterface->m_wheelColPoint[FRONT_LEFT_WHEEL].Position;
+            return GetVehicleInterface()->WheelFrontLeftColPoint.Position;
         case FRONT_RIGHT_WHEEL:
-            return pInterface->m_wheelColPoint[FRONT_RIGHT_WHEEL].Position;
+            return GetVehicleInterface()->WheelFrontRightColPoint.Position;
         case REAR_LEFT_WHEEL:
-            return pInterface->m_wheelColPoint[REAR_LEFT_WHEEL].Position;
+            return GetVehicleInterface()->WheelRearLeftColPoint.Position;
         case REAR_RIGHT_WHEEL:
-            return pInterface->m_wheelColPoint[REAR_RIGHT_WHEEL].Position;
+            return GetVehicleInterface()->WheelRearRightColPoint.Position;
     }
     return CVector();
 }
@@ -2306,11 +2323,11 @@ void CVehicleSA::OnChangingPosition(const CVector& vecNewPosition)
         if (vecDelta.LengthSquared() > 10 * 10)
         {
             // Reposition colpoints for big moves to avoid random spinning
-            auto pInterface = static_cast<CAutomobileSAInterface*>(GetVehicleInterface());
-            pInterface->m_wheelColPoint[FRONT_LEFT_WHEEL].Position += vecDelta;
-            pInterface->m_wheelColPoint[REAR_LEFT_WHEEL].Position += vecDelta;
-            pInterface->m_wheelColPoint[FRONT_RIGHT_WHEEL].Position += vecDelta;
-            pInterface->m_wheelColPoint[REAR_RIGHT_WHEEL].Position += vecDelta;
+            CVehicleSAInterface* pInterface = GetVehicleInterface();
+            pInterface->WheelFrontLeftColPoint.Position += vecDelta;
+            pInterface->WheelRearLeftColPoint.Position += vecDelta;
+            pInterface->WheelFrontRightColPoint.Position += vecDelta;
+            pInterface->WheelRearRightColPoint.Position += vecDelta;
         }
     }
 }
@@ -2363,7 +2380,7 @@ bool CVehicleSA::SetComponentRotation(const SString& vehicleComponent, const CVe
     SVehicleFrame* pComponent = GetVehicleComponent(vehicleComponent);
     if (pComponent && pComponent->pFrame != NULL)
     {
-        pGame->GetRenderWareSA()->RwMatrixSetRotation(pComponent->pFrame->modelling, vecRotation);
+        RwMatrixSetRotation(pComponent->pFrame->modelling, vecRotation);
         return true;
     }
     return false;
@@ -2374,7 +2391,7 @@ bool CVehicleSA::GetComponentRotation(const SString& vehicleComponent, CVector& 
     SVehicleFrame* pComponent = GetVehicleComponent(vehicleComponent);
     if (pComponent && pComponent->pFrame != NULL)
     {
-        pGame->GetRenderWareSA()->RwMatrixGetRotation(pComponent->pFrame->modelling, vecRotation);
+        RwMatrixGetRotation(pComponent->pFrame->modelling, vecRotation);
         return true;
     }
     return false;
@@ -2385,7 +2402,7 @@ bool CVehicleSA::SetComponentPosition(const SString& vehicleComponent, const CVe
     SVehicleFrame* pComponent = GetVehicleComponent(vehicleComponent);
     if (pComponent && pComponent->pFrame != NULL)
     {
-        pGame->GetRenderWareSA()->RwMatrixSetPosition(pComponent->pFrame->modelling, vecPosition);
+        RwMatrixSetPosition(pComponent->pFrame->modelling, vecPosition);
         return true;
     }
     return false;
@@ -2396,7 +2413,7 @@ bool CVehicleSA::GetComponentPosition(const SString& vehicleComponent, CVector& 
     SVehicleFrame* pComponent = GetVehicleComponent(vehicleComponent);
     if (pComponent && pComponent->pFrame != NULL)
     {
-        pGame->GetRenderWareSA()->RwMatrixGetPosition(pComponent->pFrame->modelling, vecPositionModelling);
+        RwMatrixGetPosition(pComponent->pFrame->modelling, vecPositionModelling);
         return true;
     }
     return false;
@@ -2407,7 +2424,7 @@ bool CVehicleSA::SetComponentScale(const SString& vehicleComponent, const CVecto
     SVehicleFrame* pComponent = GetVehicleComponent(vehicleComponent);
     if (pComponent && pComponent->pFrame != NULL)
     {
-        pGame->GetRenderWareSA()->RwMatrixSetScale(pComponent->pFrame->modelling, vecScale);
+        RwMatrixSetScale(pComponent->pFrame->modelling, vecScale);
         return true;
     }
     return false;
@@ -2418,7 +2435,7 @@ bool CVehicleSA::GetComponentScale(const SString& vehicleComponent, CVector& vec
     SVehicleFrame* pComponent = GetVehicleComponent(vehicleComponent);
     if (pComponent && pComponent->pFrame != NULL)
     {
-        pGame->GetRenderWareSA()->RwMatrixGetScale(pComponent->pFrame->modelling, vecScaleModelling);
+        RwMatrixGetScale(pComponent->pFrame->modelling, vecScaleModelling);
         return true;
     }
     return false;
@@ -2435,7 +2452,7 @@ bool CVehicleSA::GetComponentMatrix(const SString& vehicleComponent, CMatrix& ma
     // Check validty
     if (pComponent && pComponent->pFrame != NULL)
     {
-        pGame->GetRenderWareSA()->RwMatrixToCMatrix(pComponent->pFrame->modelling, matOutOrientation);
+        RwMatrixToCMatrix(pComponent->pFrame->modelling, matOutOrientation);
         return true;
     }
     return false;
@@ -2447,7 +2464,7 @@ bool CVehicleSA::SetComponentMatrix(const SString& vehicleComponent, const CMatr
     // Check validty
     if (pComponent && pComponent->pFrame != NULL)
     {
-        pGame->GetRenderWareSA()->CMatrixToRwMatrix(matOrientation, pComponent->pFrame->modelling);
+        CMatrixToRwMatrix(matOrientation, pComponent->pFrame->modelling);
         return true;
     }
     return false;
@@ -2468,7 +2485,7 @@ bool CVehicleSA::GetComponentParentToRootMatrix(const SString& vehicleComponent,
             if (pFrame)
             {
                 CMatrix matFrame;
-                pGame->GetRenderWareSA()->RwMatrixToCMatrix(pFrame->modelling, matFrame);
+                RwMatrixToCMatrix(pFrame->modelling, matFrame);
                 matCombo = matFrame * matCombo;
             }
         }
@@ -2672,68 +2689,11 @@ void CVehicleSA::UpdateLandingGearPosition()
             // Update Air Resistance
             float fDragCoeff = GetHandlingData()->GetDragCoeff();
 
-            const float& fFlyingHandlingGearUpR = pVehicle->pFlyingHandlingData->fGearUpR;
+            const float& fFlyingHandlingGearUpR = pVehicle->pFlyingHandlingData->GearUpR;
             pVehicle->m_fAirResistance = fDragCoeff / 1000.0f * 0.5f * fFlyingHandlingGearUpR;
         }
     }
 }
-
-bool CVehicleSA::GetDummyPosition(eVehicleDummies dummy, CVector& position) const
-{
-    if (dummy >= 0 && dummy < VEHICLE_DUMMY_COUNT)
-    {
-        position = m_dummyPositions[dummy];
-        return true;
-    }
-
-    return false;
-}
-
-bool CVehicleSA::SetDummyPosition(eVehicleDummies dummy, const CVector& position)
-{
-    if (dummy < 0 || dummy >= VEHICLE_DUMMY_COUNT)
-        return false;
-
-    auto vehicle = reinterpret_cast<CVehicleSAInterface*>(m_pInterface);
-
-    m_dummyPositions[dummy] = position;
-
-    if (dummy == ENGINE)
-    {
-        if (vehicle->m_overheatParticle != nullptr)
-            CFxSystemSA::SetPosition(vehicle->m_overheatParticle, position);
-
-        if (vehicle->m_fireParticle != nullptr)
-            CFxSystemSA::SetPosition(vehicle->m_fireParticle, position);
-    }
-
-    bool isAutomobileClass = static_cast<VehicleClass>(vehicle->m_vehicleClass) == VehicleClass::AUTOMOBILE;
-
-    if (isAutomobileClass)
-    {
-        SetAutomobileDummyPosition(reinterpret_cast<CAutomobileSAInterface*>(m_pInterface), dummy, position);
-    }
-
-    return true;
-}
-
-//
-// NOTE(botder): Move the code to CAutomobileSA::SetDummyPosition, when we start using CAutomobileSA
-//
-void CVehicleSA::SetAutomobileDummyPosition(CAutomobileSAInterface* automobile, eVehicleDummies dummy, const CVector& position)
-{
-    if (dummy == EXHAUST)
-    {
-        if (automobile->pNitroParticle[0] != nullptr)
-            CFxSystemSA::SetPosition(automobile->pNitroParticle[0], position);
-    }
-    else if (dummy == EXHAUST_SECONDARY)
-    {
-        if (automobile->pNitroParticle[1] != nullptr)
-            CFxSystemSA::SetPosition(automobile->pNitroParticle[1], position);
-    }
-}
-
 // Change plate text of existing vehicle
 bool CVehicleSA::SetPlateText(const SString& strText)
 {

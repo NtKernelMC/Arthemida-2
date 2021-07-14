@@ -10,7 +10,6 @@
  *****************************************************************************/
 
 #include "StdInc.h"
-#include <lua/CLuaFunctionParser.h>
 
 void CLuaEngineDefs::LoadFunctions()
 {
@@ -38,8 +37,6 @@ void CLuaEngineDefs::LoadFunctions()
         {"engineGetModelIDFromName", EngineGetModelIDFromName},
         {"engineGetModelTextureNames", EngineGetModelTextureNames},
         {"engineGetVisibleTextureNames", EngineGetVisibleTextureNames},
-        {"engineSetModelVisibleTime", ArgumentParser<EngineSetModelVisibleTime>},
-        {"engineGetModelVisibleTime", ArgumentParser<EngineGetModelVisibleTime>},
         {"engineGetModelTextures", EngineGetModelTextures},
         {"engineGetSurfaceProperties", EngineGetSurfaceProperties},
         {"engineSetSurfaceProperties", EngineSetSurfaceProperties},
@@ -49,8 +46,7 @@ void CLuaEngineDefs::LoadFunctions()
         {"engineRestoreModelPhysicalPropertiesGroup", EngineRestoreModelPhysicalPropertiesGroup},
         {"engineSetObjectGroupPhysicalProperty", EngineSetObjectGroupPhysicalProperty},
         {"engineGetObjectGroupPhysicalProperty", EngineGetObjectGroupPhysicalProperty},
-        {"engineRestoreObjectGroupPhysicalProperties", EngineRestoreObjectGroupPhysicalProperties},
-        {"engineRestreamWorld", ArgumentParser<EngineRestreamWorld>},
+        {"engineRestoreObjectGroupPhysicalProperties", EngineRestoreObjectGroupPhysicalProperties}
 
         // CLuaCFunctions::AddFunction ( "engineReplaceMatchingAtomics", EngineReplaceMatchingAtomics );
         // CLuaCFunctions::AddFunction ( "engineReplaceWheelAtomics", EngineReplaceWheelAtomics );
@@ -74,7 +70,6 @@ void CLuaEngineDefs::AddClass(lua_State* luaVM)
     lua_classfunction(luaVM, "setAsynchronousLoading", "engineSetAsynchronousLoading");
     lua_classfunction(luaVM, "setModelLODDistance", "engineSetModelLODDistance");
     lua_classfunction(luaVM, "resetModelLODDistance", "engineResetModelLODDistance");
-    lua_classfunction(luaVM, "setModelVisibleTime", "engineSetModelVisibleTime");
 
     lua_classfunction(luaVM, "getVisibleTextureNames", "engineGetVisibleTextureNames");
     lua_classfunction(luaVM, "getModelLODDistance", "engineGetModelLODDistance");
@@ -82,7 +77,6 @@ void CLuaEngineDefs::AddClass(lua_State* luaVM)
     lua_classfunction(luaVM, "getModelTextures", "engineGetModelTextures");
     lua_classfunction(luaVM, "getModelIDFromName", "engineGetModelIDFromName");
     lua_classfunction(luaVM, "getModelNameFromID", "engineGetModelNameFromID");
-    lua_classfunction(luaVM, "getModelVisibleTime", "engineGetModelVisibleTime");
     lua_classfunction(luaVM, "getModelPhysicalPropertiesGroup", "engineGetModelPhysicalPropertiesGroup");
     lua_classfunction(luaVM, "setModelPhysicalPropertiesGroup", "engineSetModelPhysicalPropertiesGroup");
     lua_classfunction(luaVM, "restoreModelPhysicalPropertiesGroup", "engineRestoreModelPhysicalPropertiesGroup");
@@ -567,10 +561,10 @@ int CLuaEngineDefs::EngineRestoreModel(lua_State* luaVM)
 
 int CLuaEngineDefs::EngineRequestModel(lua_State* luaVM)
 {
-    eClientModelType eModelType;
+    SString strModelType;
 
     CScriptArgReader argStream(luaVM);
-    argStream.ReadEnumString(eModelType);
+    argStream.ReadString(strModelType);
 
     CLuaMain* pLuaMain = m_pLuaManager->GetVirtualMachine(luaVM);
     if (pLuaMain)
@@ -580,34 +574,23 @@ int CLuaEngineDefs::EngineRequestModel(lua_State* luaVM)
         {
             if (!argStream.HasErrors())
             {
+                eClientModelType eModelType;
+                if (strModelType == "ped")
+                {
+                    eModelType = CCLIENTMODELPED;
+                }
+                else
+                {
+                    lua_pushboolean(luaVM, false);
+                    return 1;
+                }
+
                 int iModelID = m_pManager->GetModelManager()->GetFirstFreeModelID();
                 if (iModelID != INVALID_MODEL_ID) {
-                    std::shared_ptr<CClientModel> pModel = m_pManager->GetModelManager()->FindModelByID(iModelID);
+                    CClientModel* pModel = m_pManager->GetModelManager()->FindModelByID(iModelID);
                     if (pModel == nullptr)
-                        pModel = std::make_shared<CClientModel>(m_pManager, iModelID, eModelType);
-                    m_pManager->GetModelManager()->Add(pModel);
-                    ushort usParentID = -1;
-
-                    if (argStream.NextIsNumber())
-                        argStream.ReadNumber(usParentID);
-                    else
-                    {
-                        switch (eModelType)
-                        {
-                            case eClientModelType::PED:
-                                usParentID = 7; // male01
-                                break;
-                            case eClientModelType::OBJECT:
-                                usParentID = 1337; // BinNt07_LA (trash can)
-                                break;
-                            case eClientModelType::VEHICLE:
-                                usParentID = VT_LANDSTAL;
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    pModel->Allocate(usParentID);
+                        pModel = new CClientModel(m_pManager, iModelID, eModelType);
+                    pModel->Allocate();
                     pModel->SetParentResource(pResource);
 
                     lua_pushinteger(luaVM, iModelID);
@@ -631,9 +614,9 @@ int CLuaEngineDefs::EngineFreeModel(lua_State* luaVM)
 
     if (!argStream.HasErrors())
     {
-        auto modelManager = m_pManager->GetModelManager();
-        std::shared_ptr<CClientModel> pModel = modelManager->FindModelByID(iModelID);
-        if (pModel && modelManager->Remove(pModel))
+        CClientModel* pModel = m_pManager->GetModelManager()->FindModelByID(iModelID);
+
+        if (pModel && pModel->Deallocate())
         {
             lua_pushboolean(luaVM, true);
             return 1;
@@ -728,7 +711,7 @@ int CLuaEngineDefs::EngineGetModelLODDistance(lua_State* luaVM)
     {
         ushort usModelID = CModelNames::ResolveModelID(strModelId);
         // Ensure we have a good model (GitHub #446)
-        if (usModelID < g_pGame->GetBaseIDforTXD())
+        if (usModelID < 20000)
         {
             CModelInfo* pModelInfo = g_pGame->GetModelInfo(usModelID);
             if (pModelInfo)
@@ -738,7 +721,7 @@ int CLuaEngineDefs::EngineGetModelLODDistance(lua_State* luaVM)
             }
         }
         else
-            argStream.SetCustomError(SString("Expected a valid model name or ID in range [0-%d] at argument 1, got \"%s\"", g_pGame->GetBaseIDforTXD(), *strModelId));
+            argStream.SetCustomError(SString("Expected a valid model name or ID in range [0-19999] at argument 1, got \"%s\"", *strModelId));
     }
     if (argStream.HasErrors())
         m_pScriptDebugging->LogCustom(luaVM, argStream.GetFullErrorMessage());
@@ -761,7 +744,7 @@ int CLuaEngineDefs::EngineSetModelLODDistance(lua_State* luaVM)
     {
         ushort usModelID = CModelNames::ResolveModelID(strModelId);
         // Ensure we have a good model (GitHub #446)
-        if (usModelID < g_pGame->GetBaseIDforTXD())
+        if (usModelID < 20000)
         {
             CModelInfo* pModelInfo = g_pGame->GetModelInfo(usModelID);
             if (pModelInfo && fDistance > 0.0f)
@@ -772,7 +755,7 @@ int CLuaEngineDefs::EngineSetModelLODDistance(lua_State* luaVM)
             }
         }
         else
-            argStream.SetCustomError(SString("Expected a valid model name or ID in range [0-%d] at argument 1, got \"%s\"", g_pGame->GetBaseIDforTXD() - 1,* strModelId));
+            argStream.SetCustomError(SString("Expected a valid model name or ID in range [0-19999] at argument 1, got \"%s\"", *strModelId));
     }
     if (argStream.HasErrors())
         m_pScriptDebugging->LogCustom(luaVM, argStream.GetFullErrorMessage());
@@ -1113,40 +1096,6 @@ int CLuaEngineDefs::EngineGetVisibleTextureNames(lua_State* luaVM)
     return 1;
 }
 
-bool CLuaEngineDefs::EngineSetModelVisibleTime(std::string strModelId, char cHourOn, char cHourOff)
-{
-    ushort      usModelID = CModelNames::ResolveModelID(strModelId);
-    CModelInfo* pModelInfo = g_pGame->GetModelInfo(usModelID);
-    if (pModelInfo)
-    {
-        if (cHourOn >= 0 && cHourOn <= 24 && cHourOff >= 0 && cHourOff <= 24)
-        {
-            return pModelInfo->SetTime(cHourOn, cHourOff);
-        }
-    }
-    return false;
-}
-
-std::variant<bool, CLuaMultiReturn<char, char>> CLuaEngineDefs::EngineGetModelVisibleTime(std::string strModelId)
-{
-    ushort      usModelID = CModelNames::ResolveModelID(strModelId);
-    CModelInfo* pModelInfo = g_pGame->GetModelInfo(usModelID);
-    if (pModelInfo)
-    {
-        char cHourOn, cHourOff;
-        if (pModelInfo->GetTime(cHourOn, cHourOff))
-        {
-            return std::tuple(cHourOn, cHourOff);
-        }
-        else // Model is incompatible, don't let confuse user.
-        {
-            return std::tuple(0, 24);
-        }
-    }
-
-    return false;
-}
-
 int CLuaEngineDefs::EngineGetModelTextures(lua_State* luaVM)
 {
     //  table engineGetModelTextures ( string/int modelName/modelID, string/table textureNames )
@@ -1183,8 +1132,8 @@ int CLuaEngineDefs::EngineGetModelTextures(lua_State* luaVM)
     lua_newtable(luaVM);
     for (const auto& pair : textureList)
     {
-        CClientTexture* pTexture = g_pClientGame->GetManager()->GetRenderElementManager()->CreateTexture("", &std::get<1>(pair));
-
+        CClientTexture* pTexture = g_pClientGame->GetManager()->GetRenderElementManager()->CreateTexture("", &std::get<1>(pair), RDEFAULT, RDEFAULT, RDEFAULT,
+                                                                                                         RFORMAT_UNKNOWN, TADDRESS_WRAP);
         if (pTexture)
         {
             pTexture->SetParent(pParentResource->GetResourceDynamicEntity());
@@ -1608,9 +1557,9 @@ int CLuaEngineDefs::EngineGetModelPhysicalPropertiesGroup(lua_State* luaVM)
 
     if (!argStream.HasErrors())
     {
-        if (iModelID < 0 || iModelID >= g_pGame->GetBaseIDforTXD())
+        if (iModelID < 0 || iModelID >= 20000)
         {
-            argStream.SetCustomError(SString("Expected model ID in range [0-%d] at argument 1", g_pGame->GetBaseIDforTXD() - 1));
+            argStream.SetCustomError("Expected model ID in range [0-19999] at argument 1");
             return luaL_error(luaVM, argStream.GetFullErrorMessage());
         }
 
@@ -1638,9 +1587,9 @@ int CLuaEngineDefs::EngineSetModelPhysicalPropertiesGroup(lua_State* luaVM)
 
     if (!argStream.HasErrors())
     {
-        if (iModelID < 0 || iModelID > g_pGame->GetBaseIDforTXD() - 1)
+        if (iModelID < 0 || iModelID > 19999)
         {
-            argStream.SetCustomError(SString("Expected model ID in range [0-%d] at argument 1", g_pGame->GetBaseIDforTXD() - 1));
+            argStream.SetCustomError("Expected model ID in range [0-19999] at argument 1");
             return luaL_error(luaVM, argStream.GetFullErrorMessage());
         }
 
@@ -1673,9 +1622,9 @@ int CLuaEngineDefs::EngineRestoreModelPhysicalPropertiesGroup(lua_State* luaVM)
 
     if (!argStream.HasErrors())
     {
-        if (iModelID < 0 || iModelID > g_pGame->GetBaseIDforTXD() - 1)
+        if (iModelID < 0 || iModelID > 19999)
         {
-            argStream.SetCustomError(SString("Expected model ID in range [0-%d] at argument 1", g_pGame->GetBaseIDforTXD() - 1));
+            argStream.SetCustomError("Expected model ID in range [0-19999] at argument 1");
             return luaL_error(luaVM, argStream.GetFullErrorMessage());
         }
 
@@ -2026,10 +1975,4 @@ int CLuaEngineDefs::EngineRestoreObjectGroupPhysicalProperties(lua_State* luaVM)
     pGroup->RestoreDefault();
     lua_pushboolean(luaVM, true);
     return 1;
-}
-
-bool CLuaEngineDefs::EngineRestreamWorld(lua_State* const luaVM)
-{
-    g_pClientGame->RestreamWorld();
-    return true;
 }

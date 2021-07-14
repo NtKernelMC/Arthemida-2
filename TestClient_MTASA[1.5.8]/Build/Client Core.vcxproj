@@ -35,13 +35,13 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
@@ -139,22 +139,22 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;MTA_DEBUG;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);DEBUG;INITGUID;PNG_SETJMP_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9d;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\detours\4.0.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9b;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\hwbrk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus -Zm130 %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/MT -Zm130 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;MTA_DEBUG;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);DEBUG;INITGUID;PNG_SETJMP_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9d;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\detours\4.0.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9b;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\hwbrk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ws2_32.lib;d3dx9.lib;Userenv.lib;DbgHelp.lib;xinput.lib;Imagehlp.lib;dxguid.lib;dinput8.lib;strmiids.lib;odbc32.lib;odbccp32.lib;shlwapi.lib;winmm.lib;gdi32.lib;Imm32.lib;Psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ws2_32.lib;d3dx9.lib;Userenv.lib;DbgHelp.lib;xinput.lib;Imagehlp.lib;dxguid.lib;dinput8.lib;strmiids.lib;odbc32.lib;odbccp32.lib;shlwapi.lib;winmm.lib;gdi32.lib;Imm32.lib;Psapi.lib;detours.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;..\vendor\detours\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\Bin\mta\core_d.lib</ImportLibrary>
       <AdditionalOptions>/SAFESEH:NO %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -165,22 +165,22 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;MTA_DEBUG;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);DEBUG;INITGUID;PNG_SETJMP_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9d;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\detours\4.0.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9b;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\hwbrk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus -Zm130 %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/MT -Zm130 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;MTA_DEBUG;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);DEBUG;INITGUID;PNG_SETJMP_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9d;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\detours\4.0.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9b;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\hwbrk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ws2_32.lib;d3dx9.lib;Userenv.lib;DbgHelp.lib;xinput.lib;Imagehlp.lib;dxguid.lib;dinput8.lib;strmiids.lib;odbc32.lib;odbccp32.lib;shlwapi.lib;winmm.lib;gdi32.lib;Imm32.lib;Psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ws2_32.lib;d3dx9.lib;Userenv.lib;DbgHelp.lib;xinput.lib;Imagehlp.lib;dxguid.lib;dinput8.lib;strmiids.lib;odbc32.lib;odbccp32.lib;shlwapi.lib;winmm.lib;gdi32.lib;Imm32.lib;Psapi.lib;detours.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;..\vendor\detours\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\Bin\mta\core_d.lib</ImportLibrary>
       <AdditionalOptions>/SAFESEH:NO %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -191,7 +191,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);INITGUID;PNG_SETJMP_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9d;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\detours\4.0.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9b;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\hwbrk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -199,20 +199,20 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus -Zm130 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-Zm130 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);INITGUID;PNG_SETJMP_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9d;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\detours\4.0.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9b;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\hwbrk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>ws2_32.lib;d3dx9.lib;Userenv.lib;DbgHelp.lib;xinput.lib;Imagehlp.lib;dxguid.lib;dinput8.lib;strmiids.lib;odbc32.lib;odbccp32.lib;shlwapi.lib;winmm.lib;gdi32.lib;Imm32.lib;Psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ws2_32.lib;d3dx9.lib;Userenv.lib;DbgHelp.lib;xinput.lib;Imagehlp.lib;dxguid.lib;dinput8.lib;strmiids.lib;odbc32.lib;odbccp32.lib;shlwapi.lib;winmm.lib;gdi32.lib;Imm32.lib;Psapi.lib;detours.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;..\vendor\detours\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\Bin\mta\core.lib</ImportLibrary>
       <AdditionalOptions>/SAFESEH:NO %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -223,7 +223,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);INITGUID;PNG_SETJMP_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9d;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\detours\4.0.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9b;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\hwbrk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -231,20 +231,20 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus -Zm130 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-Zm130 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);INITGUID;PNG_SETJMP_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9d;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\detours\4.0.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9b;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\hwbrk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>ws2_32.lib;d3dx9.lib;Userenv.lib;DbgHelp.lib;xinput.lib;Imagehlp.lib;dxguid.lib;dinput8.lib;strmiids.lib;odbc32.lib;odbccp32.lib;shlwapi.lib;winmm.lib;gdi32.lib;Imm32.lib;Psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ws2_32.lib;d3dx9.lib;Userenv.lib;DbgHelp.lib;xinput.lib;Imagehlp.lib;dxguid.lib;dinput8.lib;strmiids.lib;odbc32.lib;odbccp32.lib;shlwapi.lib;winmm.lib;gdi32.lib;Imm32.lib;Psapi.lib;detours.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;..\vendor\detours\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\Bin\mta\core.lib</ImportLibrary>
       <AdditionalOptions>/SAFESEH:NO %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -255,7 +255,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);INITGUID;PNG_SETJMP_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9d;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\detours\4.0.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9b;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\hwbrk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -263,20 +263,20 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus -Zm130 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-Zm130 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);INITGUID;PNG_SETJMP_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9d;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\detours\4.0.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9b;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\hwbrk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>ws2_32.lib;d3dx9.lib;Userenv.lib;DbgHelp.lib;xinput.lib;Imagehlp.lib;dxguid.lib;dinput8.lib;strmiids.lib;odbc32.lib;odbccp32.lib;shlwapi.lib;winmm.lib;gdi32.lib;Imm32.lib;Psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ws2_32.lib;d3dx9.lib;Userenv.lib;DbgHelp.lib;xinput.lib;Imagehlp.lib;dxguid.lib;dinput8.lib;strmiids.lib;odbc32.lib;odbccp32.lib;shlwapi.lib;winmm.lib;gdi32.lib;Imm32.lib;Psapi.lib;detours.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;..\vendor\detours\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\Bin\mta\core.lib</ImportLibrary>
       <AdditionalOptions>/PDB:"Symbols\$(ProjectName).pdb" /SAFESEH:NO %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -287,7 +287,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);INITGUID;PNG_SETJMP_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9d;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\detours\4.0.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9b;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\hwbrk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -295,25 +295,48 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus -Zm130 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-Zm130 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);INITGUID;PNG_SETJMP_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9d;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\detours\4.0.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Client\core;..\Client\sdk;..\vendor\tinygettext;..\vendor\zlib;..\vendor\jpeg-9b;..\vendor\pthreads\include;..\vendor\sparsehash\src;..\vendor\hwbrk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>ws2_32.lib;d3dx9.lib;Userenv.lib;DbgHelp.lib;xinput.lib;Imagehlp.lib;dxguid.lib;dinput8.lib;strmiids.lib;odbc32.lib;odbccp32.lib;shlwapi.lib;winmm.lib;gdi32.lib;Imm32.lib;Psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ws2_32.lib;d3dx9.lib;Userenv.lib;DbgHelp.lib;xinput.lib;Imagehlp.lib;dxguid.lib;dinput8.lib;strmiids.lib;odbc32.lib;odbccp32.lib;shlwapi.lib;winmm.lib;gdi32.lib;Imm32.lib;Psapi.lib;detours.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86;..\vendor\detours\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\Bin\mta\core.lib</ImportLibrary>
       <AdditionalOptions>/PDB:"Symbols\$(ProjectName).pdb" /SAFESEH:NO %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\API\ArtemisInterface.h" />
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\API\ArtemisTypes.h" />
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\AntiFakeLaunch.h" />
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\ArtThreading.h" />
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\CServiceMon.h" />
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\HeuristicScanner.h" />
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\MemoryGuard.h" />
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\MemoryScanner.h" />
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\ModuleScanner.h" />
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\ThreadScanner.h" />
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\CRC32.h" />
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\MiniJumper.h" />
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\seh.h" />
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\SharedUtil.Defines.h" />
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\sigscan.h" />
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\SString.h" />
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\SString.hpp" />
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\Utils.h" />
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\WinReg.hpp" />
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\xxh3.h" />
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\xxhash.h" />
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\LauncherInclude\ArtSafeLaunch.h" />
+    <ClInclude Include="..\..\ArtemisComponents\Arthemida-2\LauncherInclude\MiniJumper.h" />
     <ClInclude Include="..\Client\core\CAdditionalVertexStreamManager.h" />
     <ClInclude Include="..\Client\core\CChat.h" />
     <ClInclude Include="..\Client\core\CClientVariables.h" />
@@ -401,6 +424,10 @@
     <ClInclude Include="..\Client\core\resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\ArtemisComponents\Arthemida-2\API\ArtemisInterface.cpp" />
+    <ClCompile Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\MemoryGuard.cpp" />
+    <ClCompile Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\ThreadGuard.cpp" />
+    <ClCompile Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\xxhash.c" />
     <ClCompile Include="..\Client\core\CAdditionalVertexStreamManager.cpp" />
     <ClCompile Include="..\Client\core\CChat.cpp" />
     <ClCompile Include="..\Client\core\CClientVariables.cpp" />
@@ -506,8 +533,8 @@
     <ResourceCompile Include="..\Client\core\core.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="detours.vcxproj">
-      <Project>{AB598A09-1739-09A5-2051-947B8CAF6F06}</Project>
+    <ProjectReference Include="hwbrk.vcxproj">
+      <Project>{A3E59B0F-0FFA-C3C0-D87B-6720444FC0F1}</Project>
     </ProjectReference>
     <ProjectReference Include="pthread.vcxproj">
       <Project>{EDCC6AC7-59AC-E962-62C4-7439CE2250C4}</Project>

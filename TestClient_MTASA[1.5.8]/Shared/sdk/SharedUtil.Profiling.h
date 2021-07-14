@@ -8,12 +8,6 @@
  *  Multi Theft Auto is available from http://www.multitheftauto.com/
  *
  *****************************************************************************/
-#pragma once
-
-#include <string>
-#include <map>
-#include <vector>
-#include "SharedUtil.Time.h"
 
 namespace SharedUtil
 {

@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <string>
 
-class CScriptFile final : public CElement
+class CScriptFile : public CElement
 {
 public:
     enum eMode

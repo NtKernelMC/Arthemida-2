@@ -11,7 +11,6 @@
  *****************************************************************************/
 
 #include "StdInc.h"
-#include <lua/CLuaFunctionParser.h>
 using std::list;
 
 void CLuaElementDefs::LoadFunctions()
@@ -39,7 +38,7 @@ void CLuaElementDefs::LoadFunctions()
         {"isElementWithinColShape", IsElementWithinColShape},
         {"isElementWithinMarker", IsElementWithinMarker},
         {"getElementsWithinColShape", GetElementsWithinColShape},
-        {"getElementsWithinRange", ArgumentParserWarn<false, GetElementsWithinRange>},
+        {"getElementsWithinRange", GetElementsWithinRange},
         {"getElementDimension", GetElementDimension},
         {"getElementBoundingBox", GetElementBoundingBox},
         {"getElementRadius", GetElementRadius},
@@ -954,33 +953,43 @@ int CLuaElementDefs::GetElementsWithinColShape(lua_State* luaVM)
     return 1;
 }
 
-CClientEntityResult CLuaElementDefs::GetElementsWithinRange(CVector pos, float radius, std::optional<std::string> type,
-    std::optional<unsigned short> interior, std::optional<unsigned short> dimension)
+int CLuaElementDefs::GetElementsWithinRange(lua_State* luaVM)
 {
-    const auto typeHash = (type.has_value() && !type.value().empty()) ?
-        CClientEntity::GetTypeHashFromString(type.value()) : 0;
+    CVector position;
+    float   radius;
+    SString elementType;
 
-    CClientEntityResult result;
-    GetClientSpatialDatabase()->SphereQuery(result, CSphere{ pos, radius });
+    CScriptArgReader argStream(luaVM);
+    argStream.ReadVector3D(position);
+    argStream.ReadNumber(radius);
+    argStream.ReadString(elementType, "");
 
-    // Remove elements that do not match the criterias
-    if (interior || dimension || typeHash) {
-        result.erase(std::remove_if(result.begin(), result.end(), [&](CElement* pElement) {
-            if (typeHash && typeHash != pElement->GetTypeHash())
-                return true;
+    if (!argStream.HasErrors())
+    {
+        // Query the spatial database
+        CClientEntityResult result;
+        GetClientSpatialDatabase()->SphereQuery(result, CSphere{position, radius});
 
-            if (interior.has_value() && interior != pElement->GetInterior())
-                return true;
+        lua_newtable(luaVM);
+        unsigned int index = 0;
 
-            if (dimension.has_value() && dimension != pElement->GetDimension())
-                return true;
+        for (CClientEntity* entity : result)
+        {
+            if ((elementType.empty() || elementType == entity->GetTypeName()) && !entity->IsBeingDeleted())
+            {
+                lua_pushnumber(luaVM, ++index);
+                lua_pushelement(luaVM, entity);
+                lua_settable(luaVM, -3);
+            }
+        }
 
-            return pElement->IsBeingDeleted();
-            }), result.end()
-        );
+        return 1;
     }
+    else
+        m_pScriptDebugging->LogCustom(luaVM, argStream.GetFullErrorMessage());
 
-    return result;
+    lua_pushboolean(luaVM, false);
+    return 1;
 }
 
 int CLuaElementDefs::GetElementDimension(lua_State* luaVM)

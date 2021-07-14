@@ -259,7 +259,7 @@ void CPedRPCs::SetPedAnimation(CClientEntity* pSource, NetBitStreamInterface& bi
                 if (bitStream.ReadString<unsigned char>(animName) && bitStream.Read(iTime) && bitStream.ReadBit(bLoop) && bitStream.ReadBit(bUpdatePosition) &&
                     bitStream.ReadBit(bInterruptable) && bitStream.ReadBit(bFreezeLastFrame))
                 {
-                    if (bitStream.Can(eBitStreamVersion::SetPedAnimation_Blend))
+                    if (bitStream.Version() >= 0x065)
                     {
                         bitStream.Read(iBlend);
                         bitStream.ReadBit(bTaskToBeRestoredOnAnimEnd);

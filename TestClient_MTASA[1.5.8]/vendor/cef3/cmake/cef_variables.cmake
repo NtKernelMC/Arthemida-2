@@ -26,7 +26,9 @@ endif()
 
 # Determine the project architecture.
 if(NOT DEFINED PROJECT_ARCH)
-  if(CMAKE_SIZEOF_VOID_P MATCHES 8)
+  if(OS_WINDOWS AND "${CMAKE_GENERATOR_PLATFORM}" STREQUAL "arm64")
+    set(PROJECT_ARCH "arm64")
+  elseif(CMAKE_SIZEOF_VOID_P MATCHES 8)
     set(PROJECT_ARCH "x86_64")
   else()
     set(PROJECT_ARCH "x86")
@@ -93,6 +95,7 @@ if(OS_LINUX)
     -Wno-unused-parameter           # Don't warn about unused parameters
     -Wno-error=comment              # Don't warn about code in comments
     -Wno-comment                    # Don't warn about code in comments
+    -Wno-deprecated-declarations    # Don't warn about using deprecated methods
     )
   list(APPEND CEF_C_COMPILER_FLAGS
     -std=c99                        # Use the C99 language standard
@@ -226,11 +229,9 @@ if(OS_LINUX)
 
   # List of CEF resource files.
   set(CEF_RESOURCE_FILES
-    cef.pak
-    cef_100_percent.pak
-    cef_200_percent.pak
-    cef_extensions.pak
-    devtools_resources.pak
+    chrome_100_percent.pak
+    chrome_200_percent.pak
+    resources.pak
     icudtl.dat
     locales
     )
@@ -311,7 +312,7 @@ if(OS_MAC)
 
   # Find the newest available base SDK.
   execute_process(COMMAND xcode-select --print-path OUTPUT_VARIABLE XCODE_PATH OUTPUT_STRIP_TRAILING_WHITESPACE)
-  foreach(OS_VERSION 10.15 10.14 10.13 10.12 10.11 10.10)
+  foreach(OS_VERSION 10.15 10.14 10.13 10.12 10.11)
     set(SDK "${XCODE_PATH}/Platforms/MacOSX.platform/Developer/SDKs/MacOSX${OS_VERSION}.sdk")
     if(NOT "${CMAKE_OSX_SYSROOT}" AND EXISTS "${SDK}" AND IS_DIRECTORY "${SDK}")
       set(CMAKE_OSX_SYSROOT ${SDK})
@@ -319,7 +320,7 @@ if(OS_MAC)
   endforeach()
 
   # Target SDK.
-  set(CEF_TARGET_SDK               "10.10")
+  set(CEF_TARGET_SDK               "10.11")
   list(APPEND CEF_COMPILER_FLAGS
     -mmacosx-version-min=${CEF_TARGET_SDK}
   )
@@ -462,7 +463,6 @@ if(OS_WINDOWS)
   # List of CEF binary files.
   set(CEF_BINARY_FILES
     chrome_elf.dll
-    d3dcompiler_47.dll
     libcef.dll
     libEGL.dll
     libGLESv2.dll
@@ -471,13 +471,17 @@ if(OS_WINDOWS)
     swiftshader
     )
 
+  if(NOT PROJECT_ARCH STREQUAL "arm64")
+    list(APPEND CEF_BINARY_FILES
+      d3dcompiler_47.dll
+      )
+  endif()
+
   # List of CEF resource files.
   set(CEF_RESOURCE_FILES
-    cef.pak
-    cef_100_percent.pak
-    cef_200_percent.pak
-    cef_extensions.pak
-    devtools_resources.pak
+    chrome_100_percent.pak
+    chrome_200_percent.pak
+    resources.pak
     icudtl.dat
     locales
     )
@@ -487,15 +491,21 @@ if(OS_WINDOWS)
       PSAPI_VERSION=1   # Required by cef_sandbox.lib
       CEF_USE_SANDBOX   # Used by apps to test if the sandbox is enabled
       )
+    list(APPEND CEF_COMPILER_DEFINES_DEBUG
+      _HAS_ITERATOR_DEBUGGING=0   # Disable iterator debugging
+      )
 
     # Libraries required by cef_sandbox.lib.
     set(CEF_SANDBOX_STANDARD_LIBS
+      Advapi32.lib
       dbghelp.lib
       Delayimp.lib
+      OleAut32.lib
       PowrProf.lib
       Propsys.lib
       psapi.lib
       SetupAPI.lib
+      Shell32.lib
       version.lib
       wbemuuid.lib
       winmm.lib

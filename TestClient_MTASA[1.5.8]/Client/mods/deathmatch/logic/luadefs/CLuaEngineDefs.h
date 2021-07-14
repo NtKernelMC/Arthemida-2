@@ -11,7 +11,6 @@
 
 #pragma once
 #include "CLuaDefs.h"
-#include <lua/CLuaMultiReturn.h>
 
 class CLuaEngineDefs : public CLuaDefs
 {
@@ -58,9 +57,6 @@ public:
     LUA_DECLARE(EngineSetObjectGroupPhysicalProperty)
     LUA_DECLARE(EngineGetObjectGroupPhysicalProperty)
     LUA_DECLARE(EngineRestoreObjectGroupPhysicalProperties)
-    static bool EngineRestreamWorld(lua_State* const luaVM);
-    static bool EngineSetModelVisibleTime(std::string strModelId, char cHourOn, char cHourOff);
-    static std::variant<bool, CLuaMultiReturn<char, char>> EngineGetModelVisibleTime(std::string strModelId);
 
 private:
     static void AddEngineColClass(lua_State* luaVM);

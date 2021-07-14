@@ -19,7 +19,7 @@ class CClientCivilian;
 #include "CClientCommon.h"
 #include "CClientEntity.h"
 
-class CClientCivilian final : public CClientEntity
+class CClientCivilian : public CClientEntity
 {
     DECLARE_CLASS(CClientCivilian, CClientEntity)
     friend class CClientCivilianManager;

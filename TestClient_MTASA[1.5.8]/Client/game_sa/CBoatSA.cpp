@@ -38,16 +38,3 @@ CBoatSA::CBoatSA(eVehicleTypes dwModelID, unsigned char ucVariation, unsigned ch
         pGame->GetWorld()->Add((CEntitySA *)this);
     }   */
 }
-
-CBoatHandlingEntry* CBoatSA::GetBoatHandlingData()
-{
-    return m_pBoatHandlingData;
-}
-
-void CBoatSA::SetBoatHandlingData(CBoatHandlingEntry* pBoatHandling)
-{
-    if (!pBoatHandling)
-        return;
-    m_pBoatHandlingData = static_cast<CBoatHandlingEntrySA*>(pBoatHandling);
-    GetBoatInterface()->pBoatHandlingData = m_pBoatHandlingData->GetInterface();
-}

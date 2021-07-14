@@ -58,21 +58,6 @@
     <Filter Include="libcef_dll\wrapper">
       <UniqueIdentifier>{F5467231-E12A-3387-4A8B-2DDA368E1D09}</UniqueIdentifier>
     </Filter>
-    <Filter Include="out">
-      <UniqueIdentifier>{9D9A880B-09A4-887C-921F-9F7CFE27947C}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="out\build">
-      <UniqueIdentifier>{9C285DC4-0893-113B-51D1-C2E0BD7AEF8F}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="out\build\x64-Debug">
-      <UniqueIdentifier>{01316A9C-6D92-47AA-F6FF-8D5C62607E69}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="out\build\x64-Debug\CMakeFiles">
-      <UniqueIdentifier>{A46384C2-9089-4E29-79CF-D3F4659473F5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="out\build\x64-Debug\CMakeFiles\ShowIncludes">
-      <UniqueIdentifier>{6B05026B-D76A-95F1-6043-37CACCA78A60}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\vendor\cef3\include\base\cef_atomic_ref_count.h">
@@ -97,9 +82,6 @@
       <Filter>include\base</Filter>
     </ClInclude>
     <ClInclude Include="..\vendor\cef3\include\base\cef_callback_forward.h">
-      <Filter>include\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\vendor\cef3\include\base\cef_callback_helpers.h">
       <Filter>include\base</Filter>
     </ClInclude>
     <ClInclude Include="..\vendor\cef3\include\base\cef_callback_list.h">
@@ -127,9 +109,6 @@
       <Filter>include\base</Filter>
     </ClInclude>
     <ClInclude Include="..\vendor\cef3\include\base\cef_scoped_ptr.h">
-      <Filter>include\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\vendor\cef3\include\base\cef_string16.h">
       <Filter>include\base</Filter>
     </ClInclude>
     <ClInclude Include="..\vendor\cef3\include\base\cef_template_util.h">
@@ -1338,18 +1317,12 @@
     <ClInclude Include="..\vendor\cef3\libcef_dll\wrapper_types.h">
       <Filter>libcef_dll</Filter>
     </ClInclude>
-    <ClInclude Include="..\vendor\cef3\out\build\x64-Debug\CMakeFiles\ShowIncludes\foo.h">
-      <Filter>out\build\x64-Debug\CMakeFiles\ShowIncludes</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\vendor\cef3\libcef_dll\base\cef_atomicops_x86_gcc.cc">
       <Filter>libcef_dll\base</Filter>
     </ClCompile>
     <ClCompile Include="..\vendor\cef3\libcef_dll\base\cef_bind_helpers.cc">
-      <Filter>libcef_dll\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\vendor\cef3\libcef_dll\base\cef_callback_helpers.cc">
       <Filter>libcef_dll\base</Filter>
     </ClCompile>
     <ClCompile Include="..\vendor\cef3\libcef_dll\base\cef_callback_internal.cc">
@@ -1365,9 +1338,6 @@
       <Filter>libcef_dll\base</Filter>
     </ClCompile>
     <ClCompile Include="..\vendor\cef3\libcef_dll\base\cef_ref_counted.cc">
-      <Filter>libcef_dll\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\vendor\cef3\libcef_dll\base\cef_string16.cc">
       <Filter>libcef_dll\base</Filter>
     </ClCompile>
     <ClCompile Include="..\vendor\cef3\libcef_dll\base\cef_thread_checker_impl.cc">

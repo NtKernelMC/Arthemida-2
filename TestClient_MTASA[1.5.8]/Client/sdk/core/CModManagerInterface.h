@@ -11,10 +11,6 @@
 
 #pragma once
 
-#if (__cplusplus >= 201703L)
-    #include <string_view>
-#endif
-
 class CClientBase;
 
 class CModManagerInterface
@@ -26,19 +22,4 @@ public:
 
     virtual bool         IsLoaded() = 0;
     virtual CClientBase* GetCurrentMod() = 0;
-
-    virtual bool TriggerCommand(const char* commandName, size_t commandNameLength, const void* userdata, size_t userdataSize) const = 0;
-
-#if (__cplusplus >= 201703L)
-    bool TriggerCommand(std::string_view command, const void* userdata, size_t userdataSize) const
-    {
-        return TriggerCommand(command.data(), command.length(), userdata, userdataSize);
-    }
-
-    template <typename T>
-    bool TriggerCommand(std::string_view command, const T& userdata) const
-    {
-        return TriggerCommand(command, &userdata, sizeof(T));
-    }
-#endif
 };

@@ -17,7 +17,4 @@ class CBoat : public virtual CVehicle
 {
 public:
     virtual ~CBoat(){};
-
-    virtual CBoatHandlingEntry* GetBoatHandlingData() = 0;
-    virtual void                SetBoatHandlingData(CBoatHandlingEntry* pHandling) = 0;
 };

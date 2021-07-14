@@ -15,7 +15,6 @@
 void COutputRPCs::LoadFunctions()
 {
     AddHandler(TOGGLE_DEBUGGER, ToggleDebugger, "ToggleDebugger");
-    AddHandler(SET_TRANSFER_BOX_VISIBILITY, SetTransferBoxVisibility, "SetTransferBoxVisibility");
 }
 
 void COutputRPCs::ToggleDebugger(NetBitStreamInterface& bitStream)
@@ -24,9 +23,4 @@ void COutputRPCs::ToggleDebugger(NetBitStreamInterface& bitStream)
     bitStream.Read(ucEnable);
 
     g_pCore->SetDebugVisible((ucEnable == 1));
-}
-
-void COutputRPCs::SetTransferBoxVisibility(NetBitStreamInterface& bitStream)
-{
-    g_pClientGame->GetTransferBox()->SetServerVisibility(bitStream.ReadBit());
 }

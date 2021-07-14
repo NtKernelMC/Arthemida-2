@@ -102,10 +102,6 @@ void CLocalGUI::ChangeLocale(const char* szName)
 {
     bool guiWasLoaded = m_pMainMenu != NULL;
     assert(guiWasLoaded);
-
-    CVector2D vPos = m_pConsole->GetPosition();
-    CVector2D vSize = m_pConsole->GetSize();
-
     if (guiWasLoaded)
         DestroyWindows();
 
@@ -116,15 +112,7 @@ void CLocalGUI::ChangeLocale(const char* szName)
     m_LastLocaleName = szName;
 
     if (guiWasLoaded)
-    {
         CreateWindows(guiWasLoaded);
-
-        if (m_pConsole != nullptr)
-        {
-            m_pConsole->SetPosition(vPos);
-            m_pConsole->SetSize(vSize);
-        }
-    }
 }
 
 void CLocalGUI::CreateWindows(bool bGameIsAlreadyLoaded)
@@ -249,7 +237,7 @@ void CLocalGUI::DoPulse()
                 m_LastSettingsRevision = cvars->GetRevision() - 1;
 
                 if (m_LocaleChangeCounter == 2)
-                    CCore::GetSingleton().ShowMessageBox(_E("CC99"), ("Changing language, please wait..."), MB_ICON_INFO);
+                    CCore::GetSingleton().ShowMessageBox(_E("CC99"), ("PLEASE WAIT...................."), MB_ICON_INFO);
             }
             else
             {

@@ -35,13 +35,13 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
@@ -132,11 +132,11 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_TIMESPEC_DEFINED;MTA_DEBUG;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);DEBUG;__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;_FILE_OFFSET_BITS=64;_WINDOWS;UNICODE;_UNICODE;WINVER=0x0602;_WIN32_WINNT=0x602;NOMINMAX;WIN32_LEAN_AND_MEAN;_HAS_EXCEPTIONS=0;PSAPI_VERSION=1;WRAPPING_CEF_SHARED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\cef3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\cef3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/MT %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -158,11 +158,11 @@ IF EXIST "$(SolutionDir)\..\Vendor\cef3\Resources\locales\*"\ (xcopy /Q /E /Y /I
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_TIMESPEC_DEFINED;MTA_DEBUG;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);DEBUG;__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;_FILE_OFFSET_BITS=64;_WINDOWS;UNICODE;_UNICODE;WINVER=0x0602;_WIN32_WINNT=0x602;NOMINMAX;WIN32_LEAN_AND_MEAN;_HAS_EXCEPTIONS=0;PSAPI_VERSION=1;WRAPPING_CEF_SHARED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\cef3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\cef3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/MT %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -184,7 +184,7 @@ IF EXIST "$(SolutionDir)\..\Vendor\cef3\Resources\locales\*"\ (xcopy /Q /E /Y /I
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;_FILE_OFFSET_BITS=64;_WINDOWS;UNICODE;_UNICODE;WINVER=0x0602;_WIN32_WINNT=0x602;NOMINMAX;WIN32_LEAN_AND_MEAN;_HAS_EXCEPTIONS=0;PSAPI_VERSION=1;WRAPPING_CEF_SHARED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\cef3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\cef3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -192,7 +192,6 @@ IF EXIST "$(SolutionDir)\..\Vendor\cef3\Resources\locales\*"\ (xcopy /Q /E /Y /I
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -216,7 +215,7 @@ IF EXIST "$(SolutionDir)\..\Vendor\cef3\Resources\locales\*"\ (xcopy /Q /E /Y /I
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;_FILE_OFFSET_BITS=64;_WINDOWS;UNICODE;_UNICODE;WINVER=0x0602;_WIN32_WINNT=0x602;NOMINMAX;WIN32_LEAN_AND_MEAN;_HAS_EXCEPTIONS=0;PSAPI_VERSION=1;WRAPPING_CEF_SHARED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\cef3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\cef3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -224,7 +223,6 @@ IF EXIST "$(SolutionDir)\..\Vendor\cef3\Resources\locales\*"\ (xcopy /Q /E /Y /I
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -248,7 +246,7 @@ IF EXIST "$(SolutionDir)\..\Vendor\cef3\Resources\locales\*"\ (xcopy /Q /E /Y /I
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;_FILE_OFFSET_BITS=64;_WINDOWS;UNICODE;_UNICODE;WINVER=0x0602;_WIN32_WINNT=0x602;NOMINMAX;WIN32_LEAN_AND_MEAN;_HAS_EXCEPTIONS=0;PSAPI_VERSION=1;WRAPPING_CEF_SHARED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\cef3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\cef3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -256,7 +254,6 @@ IF EXIST "$(SolutionDir)\..\Vendor\cef3\Resources\locales\*"\ (xcopy /Q /E /Y /I
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -280,7 +277,7 @@ IF EXIST "$(SolutionDir)\..\Vendor\cef3\Resources\locales\*"\ (xcopy /Q /E /Y /I
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;_FILE_OFFSET_BITS=64;_WINDOWS;UNICODE;_UNICODE;WINVER=0x0602;_WIN32_WINNT=0x602;NOMINMAX;WIN32_LEAN_AND_MEAN;_HAS_EXCEPTIONS=0;PSAPI_VERSION=1;WRAPPING_CEF_SHARED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\cef3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\cef3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -288,7 +285,6 @@ IF EXIST "$(SolutionDir)\..\Vendor\cef3\Resources\locales\*"\ (xcopy /Q /E /Y /I
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -316,7 +312,6 @@ IF EXIST "$(SolutionDir)\..\Vendor\cef3\Resources\locales\*"\ (xcopy /Q /E /Y /I
     <ClInclude Include="..\vendor\cef3\include\base\cef_build.h" />
     <ClInclude Include="..\vendor\cef3\include\base\cef_callback.h" />
     <ClInclude Include="..\vendor\cef3\include\base\cef_callback_forward.h" />
-    <ClInclude Include="..\vendor\cef3\include\base\cef_callback_helpers.h" />
     <ClInclude Include="..\vendor\cef3\include\base\cef_callback_list.h" />
     <ClInclude Include="..\vendor\cef3\include\base\cef_cancelable_callback.h" />
     <ClInclude Include="..\vendor\cef3\include\base\cef_lock.h" />
@@ -326,7 +321,6 @@ IF EXIST "$(SolutionDir)\..\Vendor\cef3\Resources\locales\*"\ (xcopy /Q /E /Y /I
     <ClInclude Include="..\vendor\cef3\include\base\cef_platform_thread.h" />
     <ClInclude Include="..\vendor\cef3\include\base\cef_ref_counted.h" />
     <ClInclude Include="..\vendor\cef3\include\base\cef_scoped_ptr.h" />
-    <ClInclude Include="..\vendor\cef3\include\base\cef_string16.h" />
     <ClInclude Include="..\vendor\cef3\include\base\cef_template_util.h" />
     <ClInclude Include="..\vendor\cef3\include\base\cef_thread_checker.h" />
     <ClInclude Include="..\vendor\cef3\include\base\cef_trace_event.h" />
@@ -729,18 +723,15 @@ IF EXIST "$(SolutionDir)\..\Vendor\cef3\Resources\locales\*"\ (xcopy /Q /E /Y /I
     <ClInclude Include="..\vendor\cef3\libcef_dll\transfer_util.h" />
     <ClInclude Include="..\vendor\cef3\libcef_dll\wrapper\cef_browser_info_map.h" />
     <ClInclude Include="..\vendor\cef3\libcef_dll\wrapper_types.h" />
-    <ClInclude Include="..\vendor\cef3\out\build\x64-Debug\CMakeFiles\ShowIncludes\foo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\vendor\cef3\libcef_dll\base\cef_atomicops_x86_gcc.cc" />
     <ClCompile Include="..\vendor\cef3\libcef_dll\base\cef_bind_helpers.cc" />
-    <ClCompile Include="..\vendor\cef3\libcef_dll\base\cef_callback_helpers.cc" />
     <ClCompile Include="..\vendor\cef3\libcef_dll\base\cef_callback_internal.cc" />
     <ClCompile Include="..\vendor\cef3\libcef_dll\base\cef_lock.cc" />
     <ClCompile Include="..\vendor\cef3\libcef_dll\base\cef_lock_impl.cc" />
     <ClCompile Include="..\vendor\cef3\libcef_dll\base\cef_logging.cc" />
     <ClCompile Include="..\vendor\cef3\libcef_dll\base\cef_ref_counted.cc" />
-    <ClCompile Include="..\vendor\cef3\libcef_dll\base\cef_string16.cc" />
     <ClCompile Include="..\vendor\cef3\libcef_dll\base\cef_thread_checker_impl.cc" />
     <ClCompile Include="..\vendor\cef3\libcef_dll\base\cef_weak_ptr.cc" />
     <ClCompile Include="..\vendor\cef3\libcef_dll\cpptoc\accessibility_handler_cpptoc.cc" />

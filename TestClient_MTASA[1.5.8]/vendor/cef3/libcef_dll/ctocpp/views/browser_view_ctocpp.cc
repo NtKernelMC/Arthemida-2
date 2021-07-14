@@ -1,4 +1,4 @@
-// Copyright (c) 2020 The Chromium Embedded Framework Authors. All rights
+// Copyright (c) 2021 The Chromium Embedded Framework Authors. All rights
 // reserved. Use of this source code is governed by a BSD-style license that
 // can be found in the LICENSE file.
 //
@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=cefedca66680117ea721d46e4fbbaa47fac607aa$
+// $hash=912a0807db8bc1405188d61961545cc8e540aacf$
 //
 
 #include "libcef_dll/ctocpp/views/browser_view_ctocpp.h"
@@ -91,6 +91,23 @@ CefRefPtr<CefBrowser> CefBrowserViewCToCpp::GetBrowser() {
 
   // Return type: refptr_same
   return CefBrowserCToCpp::Wrap(_retval);
+}
+
+NO_SANITIZE("cfi-icall")
+CefRefPtr<CefView> CefBrowserViewCToCpp::GetChromeToolbar() {
+  shutdown_checker::AssertNotShutdown();
+
+  cef_browser_view_t* _struct = GetStruct();
+  if (CEF_MEMBER_MISSING(_struct, get_chrome_toolbar))
+    return nullptr;
+
+  // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
+
+  // Execute
+  cef_view_t* _retval = _struct->get_chrome_toolbar(_struct);
+
+  // Return type: refptr_same
+  return CefViewCToCpp::Wrap(_retval);
 }
 
 NO_SANITIZE("cfi-icall")

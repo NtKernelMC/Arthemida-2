@@ -281,8 +281,7 @@ public:
     CPedFlags                        pedFlags;            // 1132 (16 bytes long including alignment probably)
     CPedIntelligenceSAInterface*     pPedIntelligence;
     CPlayerPedDataSAInterface*       pPlayerData;            // 1152
-    BYTE                             bPad4a[4];
-    void*                            pedNodes[19];
+    BYTE                             bPad4a[80];
     int                              iMoveAnimGroup;            // 1236
     BYTE                             bPad4b[52];
     CPedIKSAInterface                pedIK;            // 1292 (length 32 bytes)
@@ -442,7 +441,6 @@ public:
     void SetVoice(short sVoiceType, short sVoiceID);
     void SetVoice(const char* szVoiceType, const char* szVoice);
     void SetLanding(bool bIsLanding) { GetPedInterface()->pedFlags.bIsLanding = bIsLanding; }
-    void SetUpdateMetricsRequired(bool required) { GetPedInterface()->pedFlags.bUpdateMatricesRequired = required; }
 
     CWeaponStat* GetCurrentWeaponStat();
     float        GetCurrentWeaponRange();
@@ -451,8 +449,5 @@ public:
     virtual int GetCustomMoveAnim();
     bool        IsDoingGangDriveby();
 
-    CPedIKSAInterface* GetPedIKInterface() { return &reinterpret_cast<CPedSAInterface*>(m_pInterface)->pedIK;}
-    void*              GetPedNodeInterface(std::int32_t nodeId) { return reinterpret_cast<CPedSAInterface*>(m_pInterface)->pedNodes[nodeId]; }
-    std::unique_ptr<CPedIK> GetPedIK() {return std::make_unique<CPedIKSA>(GetPedIKInterface()); }
     static void StaticSetHooks();
 };

@@ -12,7 +12,6 @@ project "Dbconmy"
 
 	filter {}
 		includedirs {
-			"../../Shared/sdk",
 			"../sdk",
 			"../../vendor/google-breakpad/src",
 			"../../vendor/sparsehash/src/"

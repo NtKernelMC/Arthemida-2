@@ -178,7 +178,7 @@ bool CClientPlayerManager::IsPlayerLimitReached()
 
 bool CClientPlayerManager::IsValidModel(unsigned long ulModel)
 {
-    if (ulModel < g_pGame->GetBaseIDforTXD())
+    if (ulModel < MAX_MODEL_ID)
     {
         CModelInfo* pModelInfo = g_pGame->GetModelInfo(ulModel);
         return pModelInfo && pModelInfo->IsPlayerModel();

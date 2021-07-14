@@ -1,4 +1,4 @@
-// Copyright (c) 2020 Marshall A. Greenblatt. All rights reserved.
+// Copyright (c) 2021 Marshall A. Greenblatt. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -33,7 +33,7 @@
 // by hand. See the translator.README.txt file in the tools directory for
 // more information.
 //
-// $hash=8d4cb3e0bbf230804c93898daa4a8b2866a2c1ce$
+// $hash=14eca959988209ba8f95037a47192fd50d64f2f1$
 //
 
 #ifndef CEF_INCLUDE_CAPI_CEF_CLIENT_CAPI_H_
@@ -53,6 +53,7 @@
 #include "include/capi/cef_keyboard_handler_capi.h"
 #include "include/capi/cef_life_span_handler_capi.h"
 #include "include/capi/cef_load_handler_capi.h"
+#include "include/capi/cef_print_handler_capi.h"
 #include "include/capi/cef_process_message_capi.h"
 #include "include/capi/cef_render_handler_capi.h"
 #include "include/capi/cef_request_handler_capi.h"
@@ -144,6 +145,13 @@ typedef struct _cef_client_t {
   // Return the handler for browser load status events.
   ///
   struct _cef_load_handler_t*(CEF_CALLBACK* get_load_handler)(
+      struct _cef_client_t* self);
+
+  ///
+  // Return the handler for printing on Linux. If a print handler is not
+  // provided then printing will not be supported on the Linux platform.
+  ///
+  struct _cef_print_handler_t*(CEF_CALLBACK* get_print_handler)(
       struct _cef_client_t* self);
 
   ///

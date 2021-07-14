@@ -7,11 +7,7 @@
  *  Multi Theft Auto is available from http://www.multitheftauto.com/
  *
  *****************************************************************************/
-#pragma once
 
-#include <map>
-#include <string>
-#include "SString.h"
 //
 // String map with parsing helpers like CScriptArgReader
 //
@@ -26,7 +22,7 @@ public:
         if (pstrValue)
             strOutValue = *pstrValue;
         else
-            strOutValue = szDefaultValue;
+            strOutValue = szDefaultValue; 
     }
 
     template <typename T, typename U>

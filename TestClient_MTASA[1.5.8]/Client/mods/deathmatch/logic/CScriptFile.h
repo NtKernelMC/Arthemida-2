@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <string>
 
-class CScriptFile final : public CClientEntity
+class CScriptFile : public CClientEntity
 {
     DECLARE_CLASS(CScriptFile, CClientEntity)
 public:

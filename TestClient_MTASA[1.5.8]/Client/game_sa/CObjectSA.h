@@ -126,11 +126,8 @@ private:
     unsigned char m_ucAlpha;
     bool          m_bIsAGangTag;
     CVector       m_vecScale;
-    bool          m_preRenderRequired = false;
 
 public:
-    static void StaticSetHooks();
-
     CObjectSA(CObjectSAInterface* objectInterface);
     CObjectSA(DWORD dwModel, bool bBreakingDisabled);
     ~CObjectSA();
@@ -143,8 +140,6 @@ public:
     float GetHealth();
     void  SetModelIndex(unsigned long ulModel);
 
-    void          SetPreRenderRequired(bool required) { m_preRenderRequired = required; }
-    bool          GetPreRenderRequired() { return m_preRenderRequired; }
     void          SetAlpha(unsigned char ucAlpha) { m_ucAlpha = ucAlpha; }
     unsigned char GetAlpha() { return m_ucAlpha; }
 

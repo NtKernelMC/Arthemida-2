@@ -40,7 +40,6 @@ public:
     FLOAT m_fPrevAngle;
     FLOAT m_fAngVel;
 };
-static_assert(sizeof(CDoorSAInterface) == 0x18, "Invalid size for CDoorSAInterface");
 
 /**
  * \todo Why are some of these Get and some Ret, is there a difference?

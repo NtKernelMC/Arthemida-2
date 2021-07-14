@@ -570,13 +570,7 @@
     <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaClassDefs.h">
       <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
     </ClInclude>
-    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaClientDefs.h">
-      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
-    </ClInclude>
     <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaColShapeDefs.h">
-      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaCompatibilityDefs.h">
       <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
     </ClInclude>
     <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaDefs.h">
@@ -601,9 +595,6 @@
       <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
     </ClInclude>
     <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaMarkerDefs.h">
-      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaNetworkDefs.h">
       <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
     </ClInclude>
     <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaObjectDefs.h">
@@ -649,9 +640,6 @@
       <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
     </ClInclude>
     <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaWeaponDefs.h">
-      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Client\mods\deathmatch\logic\luadefs\CLuaWorldDefs.h">
       <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
     </ClInclude>
     <ClInclude Include="..\Client\mods\deathmatch\logic\rpc\CAudioRPCs.h">
@@ -714,6 +702,9 @@
     <ClInclude Include="..\Client\mods\deathmatch\logic\rpc\CWorldRPCs.h">
       <Filter>Client\mods\deathmatch\logic\rpc</Filter>
     </ClInclude>
+    <ClInclude Include="..\Client\version.h">
+      <Filter>Client</Filter>
+    </ClInclude>
     <ClInclude Include="..\Shared\mods\deathmatch\logic\CDebugHookManager.h">
       <Filter>Shared\mods\deathmatch\logic</Filter>
     </ClInclude>
@@ -739,9 +730,6 @@
       <Filter>Shared\mods\deathmatch\logic\lua</Filter>
     </ClInclude>
     <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaMatrix.h">
-      <Filter>Shared\mods\deathmatch\logic\lua</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaMultiReturn.h">
       <Filter>Shared\mods\deathmatch\logic\lua</Filter>
     </ClInclude>
     <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaOverloadParser.h">
@@ -775,9 +763,6 @@
       <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
     </ClInclude>
     <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaMatrixDefs.h">
-      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaTrainTrackDefs.h">
       <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
     </ClInclude>
     <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaUTFDefs.h">
@@ -1295,6 +1280,9 @@
     <ClCompile Include="..\Client\mods\deathmatch\logic\lua\CLuaFunctionDefs.Voice.cpp">
       <Filter>Client\mods\deathmatch\logic\lua</Filter>
     </ClCompile>
+    <ClCompile Include="..\Client\mods\deathmatch\logic\lua\CLuaFunctionDefs.World.cpp">
+      <Filter>Client\mods\deathmatch\logic\lua</Filter>
+    </ClCompile>
     <ClCompile Include="..\Client\mods\deathmatch\logic\lua\CLuaFunctionDefs.cpp">
       <Filter>Client\mods\deathmatch\logic\lua</Filter>
     </ClCompile>
@@ -1334,13 +1322,7 @@
     <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaClassDefs.cpp">
       <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
     </ClCompile>
-    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaClientDefs.cpp">
-      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
-    </ClCompile>
     <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaColShapeDefs.cpp">
-      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaCompatibilityDefs.cpp">
       <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
     </ClCompile>
     <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaDefs.cpp">
@@ -1365,9 +1347,6 @@
       <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
     </ClCompile>
     <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaMarkerDefs.cpp">
-      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaNetworkDefs.cpp">
       <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
     </ClCompile>
     <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaObjectDefs.cpp">
@@ -1413,9 +1392,6 @@
       <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
     </ClCompile>
     <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaWeaponDefs.cpp">
-      <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Client\mods\deathmatch\logic\luadefs\CLuaWorldDefs.cpp">
       <Filter>Client\mods\deathmatch\logic\luadefs</Filter>
     </ClCompile>
     <ClCompile Include="..\Client\mods\deathmatch\logic\rpc\CAudioRPCs.cpp">
@@ -1544,9 +1520,6 @@
     <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaMatrixDefs.cpp">
       <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
     </ClCompile>
-    <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaTrainTrackDefs.cpp">
-      <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
-    </ClCompile>
     <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaUTFDefs.cpp">
       <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
     </ClCompile>
@@ -1565,7 +1538,7 @@
     <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaXMLDefs.cpp">
       <Filter>Shared\mods\deathmatch\logic\luadefs</Filter>
     </ClCompile>
-    <ClCompile Include="..\vendor\bochs\bochs_internal\bochs_crc32.cpp">
+    <ClCompile Include="..\vendor\bochs\bochs_internal\crc32.cpp">
       <Filter>vendor\bochs\bochs_internal</Filter>
     </ClCompile>
   </ItemGroup>

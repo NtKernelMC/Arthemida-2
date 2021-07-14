@@ -19,10 +19,10 @@
 #ifndef ARTEMIS_USER_INTERACTIONS
 #define ARTEMIS_USER_INTERACTIONS
 #endif
-#define ARTEMIS_DEBUG
-#ifdef ARTEMIS_DEBUG
+//#define ARTEMIS_DEBUG
+//#ifdef ARTEMIS_DEBUG
 #define ARTEMIS_LOG "!0_ArtemisDebug.log"
-#endif
+//#endif
 #include <Windows.h>
 #include <stdio.h>
 #include <thread>
@@ -131,7 +131,7 @@ public:
 		static bool per_once = false;
 		if (!per_once)
 		{
-			DeleteFileA(ARTEMIS_LOG);
+			DeleteFileA(log_name);
 			per_once = true;
 		}
 		FILE* hFile = fopen(log_name, "a+");

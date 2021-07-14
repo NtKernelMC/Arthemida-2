@@ -8,11 +8,6 @@
  *  Multi Theft Auto is available from http://www.multitheftauto.com/
  *
  *****************************************************************************/
-#include "SString.h"
-#include <cassert>
-#include <algorithm>
-#include "SharedUtil.Defines.h"
-#include "SharedUtil.Misc.h"
 
 //
 // Format a string
@@ -30,7 +25,7 @@ SString& SString::vFormat(const char* szFormat, va_list vl)
     {
         iRequiredCapacity = _vscprintf(szFormat, vlLocal);
     }
-    __except (1 /* EXCEPTION_EXECUTE_HANDLER */ )
+    __except (EXCEPTION_EXECUTE_HANDLER)
     {
         // Clean up and indicate problem
         OnFormatException(szFormat);
@@ -56,7 +51,7 @@ SString& SString::vFormat(const char* szFormat, va_list vl)
     {
         iSize = vsnprintf(szDest, iRequiredCapacity + 1, szFormat, vlLocal);
     }
-    __except (1 /* EXCEPTION_EXECUTE_HANDLER */)
+    __except (EXCEPTION_EXECUTE_HANDLER)
     {
         // Clean up and indicate problem
         free(szDest);

@@ -14,7 +14,6 @@
 #include "CXMLCommon.h"
 #include "CXMLErrorCodes.h"
 
-#include <vector>
 #include <string>
 
 class CXMLNode;

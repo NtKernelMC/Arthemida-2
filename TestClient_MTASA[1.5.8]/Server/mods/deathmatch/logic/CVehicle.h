@@ -136,9 +136,7 @@ struct SSirenInfo
     SFixedArray<SSirenBeaconInfo, 8> m_tSirenInfo;
 };
 
-class CTrainTrack;
-
-class CVehicle final : public CElement
+class CVehicle : public CElement
 {
     friend class CPlayer;
 
@@ -270,8 +268,8 @@ public:
 
     void GetInitialDoorStates(SFixedArray<unsigned char, MAX_DOORS>& ucOutDoorStates);
 
-    CPed* GetJackingPed() { return m_pJackingPed; }
-    void  SetJackingPed(CPed* pPed);
+    CPlayer* GetJackingPlayer() { return m_pJackingPlayer; }
+    void     SetJackingPlayer(CPlayer* pPlayer);
 
     bool IsInWater() { return m_bInWater; }
     void SetInWater(bool bInWater) { m_bInWater = bInWater; }
@@ -292,8 +290,8 @@ public:
     float GetTrainPosition() { return m_fTrainPosition; }
     void  SetTrainPosition(float fPosition) { m_fTrainPosition = fPosition; }
 
-    CTrainTrack* GetTrainTrack() { return m_pTrainTrack; }
-    void         SetTrainTrack(CTrainTrack* pTrainTrack) { m_pTrainTrack = pTrainTrack; }
+    uchar GetTrainTrack() { return m_ucTrackID; }
+    void  SetTrainTrack(uchar ucTrack) { m_ucTrackID = ucTrack; }
 
     SColor GetHeadLightColor() { return m_HeadLightColor; }
     void   SetHeadLightColor(const SColor color) { m_HeadLightColor = color; }
@@ -322,8 +320,8 @@ public:
     void SpawnAt(const CVector& vecPosition, const CVector& vecRotation);
     void Respawn();
 
-    void                  GenerateHandlingData();
-    CHandlingEntry*       GetHandlingData() { return m_pHandlingEntry; };
+    void            GenerateHandlingData();
+    CHandlingEntry* GetHandlingData() { return m_pHandlingEntry; }
 
     uint GetTimeSinceLastPush() { return (uint)(CTickCount::Now(true) - m_LastPushedTime).ToLongLong(); }
     void ResetLastPushTime() { m_LastPushedTime = CTickCount::Now(true); }
@@ -338,7 +336,7 @@ public:
     void ResetDoors();
     void ResetDoorsWheelsPanelsLights();
     void SetIsBlown(bool bBlown);
-    bool GetIsBlown() const noexcept { return m_llBlowTime.ToLongLong() != 0; }
+    bool GetIsBlown();
     bool IsBlowTimerFinished();
     void StopIdleTimer();
     void RestartIdleTimer();
@@ -396,7 +394,7 @@ private:
     bool                  m_bSmokeTrail;
     unsigned char         m_ucAlpha;
     bool                  m_bInWater;
-    CPed*                 m_pJackingPed;
+    CPlayer*              m_pJackingPlayer;
     SColor                m_HeadLightColor;
     bool                  m_bHeliSearchLightVisible;
 
@@ -406,8 +404,7 @@ private:
     bool  m_bTrainDirection;
     float m_fTrainSpeed;
     float m_fTrainPosition;
-
-    CTrainTrack* m_pTrainTrack = nullptr;
+    uchar m_ucTrackID;
 
     // Used to remember where this vehicle spawns
     CVector       m_vecRespawnPosition;

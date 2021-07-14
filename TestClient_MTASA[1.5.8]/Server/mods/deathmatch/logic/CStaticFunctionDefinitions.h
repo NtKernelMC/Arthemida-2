@@ -268,7 +268,9 @@ public:
     static bool  IsTrainDerailable(CVehicle* pVehicle, bool& bDerailable);
     static bool  GetTrainDirection(CVehicle* pVehicle, bool& bDirection);
     static bool  GetTrainSpeed(CVehicle* pVehicle, float& fSpeed);
+    static bool  GetTrainTrack(CVehicle* pVehicle, uchar& ucTrack);
     static bool  GetTrainPosition(CVehicle* pVehicle, float& fPosition);
+    static bool  IsVehicleBlown(CVehicle* pVehicle);
     static bool  GetVehicleHeadLightColor(CVehicle* pVehicle, SColor& outColor);
     static bool  GetVehicleDoorOpenRatio(CVehicle* pVehicle, unsigned char ucDoor, float& fRatio);
 
@@ -289,7 +291,7 @@ public:
 
     // Vehicle set functions
     static bool FixVehicle(CElement* pElement);
-    static bool BlowVehicle(CElement* pElement);
+    static bool BlowVehicle(CElement* pElement, bool bExplode);
     static bool SetVehicleColor(CElement* pElement, const CVehicleColor& color);
     static bool SetVehicleLandingGearDown(CElement* pElement, bool bLandingGearDown);
     static bool SetVehicleLocked(CElement* pElement, bool bLocked);
@@ -329,6 +331,7 @@ public:
     static bool SetTrainDerailable(CVehicle* pVehicle, bool bDerailable);
     static bool SetTrainDirection(CVehicle* pVehicle, bool bDirection);
     static bool SetTrainSpeed(CVehicle* pVehicle, float fSpeed);
+    static bool SetTrainTrack(CVehicle* pVehicle, uchar ucTrack);
     static bool SetTrainPosition(CVehicle* pVehicle, float fPosition);
     static bool SetVehicleHeadLightColor(CVehicle* pVehicle, const SColor color);
     static bool SetVehicleTurretPosition(CVehicle* pVehicle, float fHorizontal, float fVertical);
@@ -457,7 +460,7 @@ public:
     // Shape get functions
     static bool GetColShapeRadius(CColShape* pColShape, float& fRadius);
     static bool GetColPolygonPointPosition(CColPolygon* pColPolygon, uint uiPointIndex, CVector2D& vecPoint);
-
+    
     // Shape set functions
     static bool SetColShapeRadius(CColShape* pColShape, float fRadius);
     static bool SetColShapeSize(CColShape* pColShape, CVector& vecSize);
@@ -466,7 +469,6 @@ public:
     static bool AddColPolygonPoint(CColPolygon* pColPolygon, const CVector2D& vecPoint);
     static bool AddColPolygonPoint(CColPolygon* pColPolygon, uint uiPointIndex, const CVector2D& vecPoint);
     static bool RemoveColPolygonPoint(CColPolygon* pColPolygon, uint uiPointIndex);
-    static bool SetColPolygonHeight(CColPolygon* pColPolygon, float fFloor, float fCeil);
 
     // Weapon funcs
     static CCustomWeapon* CreateWeapon(CResource* pResource, eWeaponType weaponType, CVector vecPosition);
@@ -547,7 +549,7 @@ public:
     static CWater* CreateWater(CResource* pResource, CVector* pV1, CVector* pV2, CVector* pV3, CVector* pV4, bool bShallow);
     static bool    SetElementWaterLevel(CWater* pWater, float fLevel);
     static bool    SetAllElementWaterLevel(float fLevel);
-    static bool    SetWorldWaterLevel(float fLevel, bool bIncludeWorldNonSeaLevel, bool bIncludeWorldSeaLevel, bool bIncludeOutsideWorldLevel);
+    static bool    SetWorldWaterLevel(float fLevel, bool bIncludeWorldNonSeaLevel);
     static bool    ResetWorldWaterLevel();
     static bool    GetWaterVertexPosition(CWater* pWater, int iVertexIndex, CVector& vecPosition);
     static bool    SetWaterVertexPosition(CWater* pWater, int iVertexIndex, CVector& vecPosition);
@@ -733,8 +735,6 @@ public:
 
     // Misc funcs
     static bool ResetMapInfo(CElement* pElement);
-    static void SendClientTransferBoxVisibility(CPlayer* player = nullptr);
-    static bool SetClientTransferBoxVisible(bool visible);
 
     // Resource funcs
     static CElement* GetResourceMapRootElement(CResource* pResource, const char* szMap);

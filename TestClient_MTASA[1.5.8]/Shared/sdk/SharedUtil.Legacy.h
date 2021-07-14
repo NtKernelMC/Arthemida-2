@@ -7,7 +7,6 @@
  *               To prevent breaking other projects which depend on SharedUtil.
  *
  *****************************************************************************/
-#pragma once
 
 // NOMINMAX after windows.h has been included
 #undef min

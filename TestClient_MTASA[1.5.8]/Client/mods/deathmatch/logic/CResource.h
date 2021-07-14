@@ -21,6 +21,17 @@
 #define MAX_RESOURCE_NAME_LENGTH    255
 #define MAX_FUNCTION_NAME_LENGTH    50
 
+class CExportedFunction
+{
+private:
+    SString m_strFunctionName;
+
+public:
+    CExportedFunction(const char* szFunctionName) { m_strFunctionName.AssignLeft(szFunctionName, MAX_FUNCTION_NAME_LENGTH); };
+
+    const char* GetFunctionName() { return m_strFunctionName; }
+};
+
 struct SNoClientCacheScript
 {
     CBuffer buffer;
@@ -62,8 +73,8 @@ public:
     CElementGroup* GetElementGroup() { return m_pDefaultElementGroup; }
     void           AddToElementGroup(CClientEntity* pElement);
 
-    void AddExportedFunction(const SString& name) { m_exportedFunctions.insert(name); }
-    bool CallExportedFunction(const SString& name, CLuaArguments& args, CLuaArguments& returns, CResource& caller);
+    void AddExportedFunction(const char* szFunctionName);
+    bool CallExportedFunction(const char* szFunctionName, CLuaArguments& args, CLuaArguments& returns, CResource& caller);
 
     class CClientEntity* GetResourceEntity() { return m_pResourceEntity; }
     void                 SetResourceEntity(CClientEntity* pEntity) { m_pResourceEntity = pEntity; }
@@ -83,7 +94,8 @@ public:
     // Use this for cursor showing/hiding
     void ShowCursor(bool bShow, bool bToggleControls = true);
 
-    const auto& GetExportedFunctions() const noexcept { return m_exportedFunctions; }
+    std::list<CExportedFunction*>::iterator IterBeginExportedFunctions() { return m_exportedFunctions.begin(); }
+    std::list<CExportedFunction*>::iterator IterEndExportedFunctions() { return m_exportedFunctions.end(); }
 
     std::list<CResourceFile*>::iterator IterBeginResourceFiles() { return m_ResourceFiles.begin(); }
     std::list<CResourceFile*>::iterator IterEndResourceFiles() { return m_ResourceFiles.end(); }
@@ -132,7 +144,7 @@ private:
 
     std::list<class CResourceFile*>       m_ResourceFiles;
     std::list<class CResourceConfigItem*> m_ConfigFiles;
-    CFastHashSet<SString>                 m_exportedFunctions;
+    std::list<CExportedFunction*>         m_exportedFunctions;
     CElementGroup*                        m_pDefaultElementGroup;            // stores elements created by scripts in this resource
     std::list<SNoClientCacheScript>       m_NoClientCacheScriptList;
 };

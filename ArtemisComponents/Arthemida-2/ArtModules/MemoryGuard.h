@@ -16,6 +16,6 @@
 *		WIP Enhancement: Multithreaded (faster) scanning to detect and prevent patching.
 */
 #include "../API/ArtemisInterface.h"
-#include "xxh3.h"
+#include "../ArtUtils/xxh3.h"
 
 void __stdcall MemoryGuardScanner(ArtemisConfig* cfg);

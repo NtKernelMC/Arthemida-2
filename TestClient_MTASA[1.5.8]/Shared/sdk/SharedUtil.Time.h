@@ -8,11 +8,6 @@
  *  Multi Theft Auto is available from http://www.multitheftauto.com/
  *
  *****************************************************************************/
-#pragma once
-#include <chrono>
-#include "SharedUtil.IntTypes.h"
-#include "SharedUtil.Misc.h"
-#include "SString.h"
 
 namespace SharedUtil
 {
@@ -182,6 +177,7 @@ namespace SharedUtil
 
         void Reset()
         {
+            dassert(m_bInitialized);
             m_ucUpdateCount = DoGetCount();
             m_uiElapsedTime = 0;
         }
@@ -189,6 +185,7 @@ namespace SharedUtil
         // This will wrap if gap between calls is over 25.5 seconds
         uint Get()
         {
+            dassert(m_bInitialized);
             uchar ucCount = DoGetCount();
             uint  uiTimeDelta = (ucCount - m_ucUpdateCount) * 100U;
             m_ucUpdateCount = ucCount;

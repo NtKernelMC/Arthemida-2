@@ -12,7 +12,7 @@
 # distribution include:
 #
 # Linux:      Ninja, Unix Makefiles
-# MacOS:      Ninja, Xcode 8+ (x64) or Xcode 12.2+ (ARM64)
+# MacOS:      Ninja, Xcode 8+ (x86_64) or Xcode 12.2+ (ARM64)
 # Windows:    Ninja, Visual Studio 2015+
 #
 # Ninja is a cross-platform open-source tool for running fast builds using
@@ -44,13 +44,13 @@
 #   work but may not have been tested.
 #   Required packages include:
 #     build-essential
-#     libgtk2.0-dev     (required by the cefclient target only)
-#     libgtkglext1-dev  (required by the cefclient target only)
+#     libgtk3.0-dev     (required by the cefclient target only)
 #
 # - MacOS requirements:
-#   Xcode 8 or newer building on MacOS 10.10 (Yosemite) or newer. Xcode 11.2
-#   and MacOS 10.14 are recommended. The Xcode command-line tools must also be
-#   installed. Only 64-bit builds are supported.
+#   Xcode 8 or newer building on MacOS 10.11 (El Capitan) or newer for x86_64.
+#   Xcode 12.2 or newer building on MacOS 10.15.4 (Catalina) or newer for ARM64.
+#   Only 64-bit builds are supported. The Xcode command-line tools must also be
+#   installed.
 #
 # - Windows requirements:
 #   Visual Studio 2015 Update 2 or newer building on Windows 7 or newer. Visual
@@ -114,6 +114,17 @@
 #     > "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvars64.bat"
 #     > cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Debug ..
 #     > ninja cefclient cefsimple
+#
+# To perform a Windows build using an ARM64 CEF binary distribution:
+#   Using the Visual Studio 2019 IDE:
+#     > cmake -G "Visual Studio 16" -A arm64 ..
+#     Open build\cef.sln in Visual Studio and select Build > Build Solution.
+#
+#   Using Ninja with Visual Studio 2019 command-line tools:
+#     (this path may be different depending on your Visual Studio installation)
+#     > "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsamd64_arm64.bat"
+#     > cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Debug ..
+#     > ninja cefsimple
 
 #
 # Global setup.

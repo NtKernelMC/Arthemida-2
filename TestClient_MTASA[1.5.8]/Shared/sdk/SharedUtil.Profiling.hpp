@@ -8,7 +8,6 @@
  *  Multi Theft Auto is available from http://www.multitheftauto.com/
  *
  *****************************************************************************/
-#include "SharedUtil.Profiling.h"
 
 namespace SharedUtil
 {

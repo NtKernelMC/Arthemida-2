@@ -34,14 +34,14 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Makefile</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <OutDir>bin\x86\Debug\</OutDir>
     <IntDir>obj\x86\Debug\Shared\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Makefile</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <OutDir>bin\x64\Debug\</OutDir>
     <IntDir>obj\x64\Debug\Shared\</IntDir>
@@ -129,8 +129,6 @@
     <ClInclude Include="..\Shared\animation\EasingDeclarations.hpp" />
     <ClInclude Include="..\Shared\animation\EasingEquations.hpp" />
     <ClInclude Include="..\Shared\animation\TInterpolation.h" />
-    <ClInclude Include="..\Shared\build_overrides.h" />
-    <ClInclude Include="..\Shared\gta\TrackNodes.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\CDebugHookManager.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\CIdArray.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\CLatentTransferManager.h" />
@@ -140,7 +138,6 @@
     <ClInclude Include="..\Shared\mods\deathmatch\logic\Utils.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaFunctionParser.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaMatrix.h" />
-    <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaMultiReturn.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaOverloadParser.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaShared.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaStackChecker.h" />
@@ -152,7 +149,6 @@
     <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaCryptDefs.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaFileDefs.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaMatrixDefs.h" />
-    <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaTrainTrackDefs.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaUTFDefs.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaUtilDefs.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaVector2Defs.h" />
@@ -198,7 +194,6 @@
     <ClInclude Include="..\Shared\sdk\SharedUtil.ClassIdent.h" />
     <ClInclude Include="..\Shared\sdk\SharedUtil.Crypto.h" />
     <ClInclude Include="..\Shared\sdk\SharedUtil.Defines.h" />
-    <ClInclude Include="..\Shared\sdk\SharedUtil.Detours.h" />
     <ClInclude Include="..\Shared\sdk\SharedUtil.FastHashMap.h" />
     <ClInclude Include="..\Shared\sdk\SharedUtil.FastHashSet.h" />
     <ClInclude Include="..\Shared\sdk\SharedUtil.File.h" />
@@ -208,7 +203,6 @@
     <ClInclude Include="..\Shared\sdk\SharedUtil.Hash.h" />
     <ClInclude Include="..\Shared\sdk\SharedUtil.Hash.hpp" />
     <ClInclude Include="..\Shared\sdk\SharedUtil.HashMap.h" />
-    <ClInclude Include="..\Shared\sdk\SharedUtil.IntTypes.h" />
     <ClInclude Include="..\Shared\sdk\SharedUtil.IntervalCounter.h" />
     <ClInclude Include="..\Shared\sdk\SharedUtil.IntervalCounter.hpp" />
     <ClInclude Include="..\Shared\sdk\SharedUtil.Legacy.h" />
@@ -248,7 +242,6 @@
     <ClInclude Include="..\Shared\sdk\sha1.hpp" />
     <ClInclude Include="..\Shared\sdk\sha2.h" />
     <ClInclude Include="..\Shared\sdk\sha2.hpp" />
-    <ClInclude Include="..\Shared\sdk\version.h" />
     <ClInclude Include="..\Shared\sdk\xml\CXML.h" />
     <ClInclude Include="..\Shared\sdk\xml\CXMLAttribute.h" />
     <ClInclude Include="..\Shared\sdk\xml\CXMLAttributes.h" />
