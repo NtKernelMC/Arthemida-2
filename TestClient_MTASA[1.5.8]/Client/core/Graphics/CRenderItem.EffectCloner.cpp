@@ -31,23 +31,17 @@ CEffectCloner::CEffectCloner(CRenderItemManager* pManager)
 //
 //
 ////////////////////////////////////////////////////////////////
-CEffectWrap* CEffectCloner::CreateD3DEffect(const SString& strFile, const SString& strRootPath, bool bIsRawData, SString& strOutStatus,
-    bool bDebug, const EffectMacroList& macros)
+CEffectWrap* CEffectCloner::CreateD3DEffect(const SString& strFile, const SString& strRootPath, bool bIsRawData, SString& strOutStatus, bool bDebug)
 {
-    SEffectInvariant invariant{
-        ConformPathForSorting(strFile),
-        macros
-    };
-
     // Do we have a match with the initial path
-    CEffectTemplate* pEffectTemplate = MapFindRef(m_ValidMap, invariant);
+    CEffectTemplate* pEffectTemplate = MapFindRef(m_ValidMap, ConformPathForSorting(strFile));
     if (pEffectTemplate)
     {
         // Have files changed since create?
         if (pEffectTemplate->HaveFilesChanged())
         {
             // EffectTemplate is no good for cloning now, so move it to the old list
-            MapRemove(m_ValidMap, invariant);
+            MapRemove(m_ValidMap, ConformPathForSorting(strFile));
             m_OldList.push_back(pEffectTemplate);
             pEffectTemplate = NULL;
         }
@@ -63,7 +57,7 @@ CEffectWrap* CEffectCloner::CreateD3DEffect(const SString& strFile, const SStrin
         HRESULT hr;
         for (uint i = 0; i < 2; i++)
         {
-            pEffectTemplate = NewEffectTemplate(m_pManager, strFile, strRootPath, bIsRawData, strOutStatus, bDebug, macros, hr);
+            pEffectTemplate = NewEffectTemplate(m_pManager, strFile, strRootPath, bIsRawData, strOutStatus, bDebug, hr);
             if (pEffectTemplate || hr != E_OUTOFMEMORY || i > 0)
             {
                 if (pEffectTemplate && i > 0)
@@ -81,7 +75,7 @@ CEffectWrap* CEffectCloner::CreateD3DEffect(const SString& strFile, const SStrin
         else
         {
             // Add to active map
-            m_ValidMap[std::move(invariant)] = pEffectTemplate;
+            MapSet(m_ValidMap, ConformPathForSorting(strFile), pEffectTemplate);
         }
 
         if (!strReport.empty())
@@ -163,7 +157,7 @@ void CEffectCloner::MaybeTidyUp(bool bForceDrasticMeasures)
 #endif
 
     // Valid Effect not used for a little while can go
-    for (auto iter = m_ValidMap.begin(); iter != m_ValidMap.end();)
+    for (std::map<SString, CEffectTemplate*>::iterator iter = m_ValidMap.begin(); iter != m_ValidMap.end();)
     {
         CEffectTemplate* pEffectTemplate = iter->second;
         if (pEffectTemplate->GetTicksSinceLastUsed() > (bForceDrasticMeasures ? 0 : iTicks))

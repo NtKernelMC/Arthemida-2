@@ -23,7 +23,7 @@
 #include "CXMLNodeImpl.h"
 #include "CXMLImpl.h"
 #include "CXMLArray.h"
-#include "version.h"
+#include "../../Server/version.h"
 
 // XML includes
 #include <xml/CXMLCommon.h>

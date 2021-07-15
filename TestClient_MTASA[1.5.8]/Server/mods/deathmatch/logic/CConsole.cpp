@@ -12,7 +12,7 @@
 #include "StdInc.h"
 
 CConsole::CConsole(CBlipManager* pBlipManager, CMapManager* pMapManager, CPlayerManager* pPlayerManager, CRegisteredCommands* pRegisteredCommands,
-                   CVehicleManager* pVehicleManager, CBanManager* pBanManager, CAccessControlListManager* pACLManager)
+                   CVehicleManager* pVehicleManager, CLuaManager* pLuaManager, CBanManager* pBanManager, CAccessControlListManager* pACLManager)
 {
     // Init
     m_pBlipManager = pBlipManager;
@@ -20,6 +20,7 @@ CConsole::CConsole(CBlipManager* pBlipManager, CMapManager* pMapManager, CPlayer
     m_pPlayerManager = pPlayerManager;
     m_pRegisteredCommands = pRegisteredCommands;
     m_pVehicleManager = pVehicleManager;
+    m_pLuaManager = pLuaManager;
     m_pBanManager = pBanManager;
     m_pACLManager = pACLManager;
 }
@@ -118,10 +119,10 @@ bool CConsole::HandleInput(const char* szCommand, CClient* pClient, CClient* pEc
     return false;
 }
 
-void CConsole::AddCommand(FCommandHandler* pHandler, const char* szCommand, bool bRestricted, const char* szConsoleHelpText)
+void CConsole::AddCommand(FCommandHandler* pHandler, const char* szCommand, bool bRestricted)
 {
     // Make a command class and add it to the list
-    CConsoleCommand* pCommand = new CConsoleCommand(pHandler, szCommand, bRestricted, szConsoleHelpText);
+    CConsoleCommand* pCommand = new CConsoleCommand(pHandler, szCommand, bRestricted);
     m_Commands.push_back(pCommand);
 }
 

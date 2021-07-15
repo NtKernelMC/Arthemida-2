@@ -13,7 +13,7 @@
 *		Thread intercommunication, one thread get suspended/terminated - every other thread knows about it.
 *		Thread communication with main MTA thread (if someone kills/suspends all threads, main thread will take care of it)
 */
-#include "ArtemisInterface.h"
+#include "../API/ArtemisInterface.h"
 #pragma comment(lib, "Version.lib")
 using namespace ArtemisData;
 
@@ -121,14 +121,11 @@ public:
 		Utils::SetPrivilege(NULL, SE_DEBUG_NAME, TRUE);
 
 		pfnNtSetInformationThread NtSetInformationThread = (pfnNtSetInformationThread)Utils::RuntimeIatResolver("ntdll.dll", "NtSetInformationThread");
-		bool Enable = true;
 #ifndef ARTEMIS_DEBUG // Dangerous protection (BSOD on manual thread termination only)
+		ULONG Enable = true;
 		NTSTATUS ntThreadBreakOnTermination = NtSetInformationThread(hThread, Utils::ThreadBreakOnTermination, &Enable, sizeof(Enable));
-#ifdef ARTEMIS_DEBUG
-		if (ntThreadBreakOnTermination != 0) printf("[ERROR/ArtThreading] Failed to set ThreadBreakOnTermination! NTSTATUS: 0x%08X\n", ntThreadBreakOnTermination);
-#endif
-#endif
-#ifdef ARTEMIS_DEBUG
+#else
+		if (ntThreadBreakOnTermination != 0) Utils::LogInFile(ARTEMIS_LOG, "[ERROR/ArtThreading] Failed to set ThreadBreakOnTermination! NTSTATUS: 0x%08X\n", ntThreadBreakOnTermination);
 		printf("[ArtThreading] Created protected thread handle 0x%08X with param 0x%08X\n", (DWORD)lpStartAddress, (DWORD)lpParameter);
 #endif
 

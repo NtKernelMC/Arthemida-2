@@ -1,15 +1,15 @@
 Chromium Embedded Framework (CEF) Minimal Binary Distribution for Windows
 -------------------------------------------------------------------------------
 
-Date:             January 08, 2021
+Date:             June 11, 2021
 
-CEF Version:      87.1.13+g481a82a+chromium-87.0.4280.141
+CEF Version:      91.1.12+gcf0c26a+chromium-91.0.4472.101
 CEF URL:          https://bitbucket.org/chromiumembedded/cef.git
-                  @481a82af37bd1b0330abe60040bcf261374023e6
+                  @cf0c26af87ae558112e4332f417edb14a9ede984
 
-Chromium Version: 87.0.4280.141
+Chromium Version: 91.0.4472.101
 Chromium URL:     https://chromium.googlesource.com/chromium/src.git
-                  @c0dfcf99c0bbc9c4763c70e5034eb1a970a9ff3b
+                  @91e65752e5a1b163d47969d2c71a419fa12ac295
 
 This distribution contains the minimial components necessary to build and
 distribute an application using CEF on the Windows platform. Please see
@@ -91,21 +91,11 @@ run but any related functionality may become broken or disabled.
   CefSettings.pack_loading_disabled. The resources directory path can be
   customized using CefSettings.resources_dir_path.
 
-  * cef.pak
-  * cef_100_percent.pak
-  * cef_200_percent.pak
+  * chrome_100_percent.pak
+  * chrome_200_percent.pak
+  * resources.pak
     These files contain non-localized resources used by CEF, Chromium and Blink.
     Without these files arbitrary Web components may display incorrectly.
-
-  * cef_extensions.pak
-    This file contains non-localized resources required for extension loading.
-    Pass the `--disable-extensions` command-line flag to disable use of this
-    file. Without this file components that depend on the extension system,
-    such as the PDF viewer, will not function.
-
-  * devtools_resources.pak
-    This file contains non-localized resources required for Chrome Developer
-    Tools. Without this file Chrome Developer Tools will not function.
 
 * Angle and Direct3D support.
   * d3dcompiler_47.dll (required for Windows Vista and newer)

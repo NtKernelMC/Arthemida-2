@@ -49,7 +49,7 @@ public:
     unsigned short usModel;
 };
 
-class CClientProjectile final : public CClientEntity
+class CClientProjectile : public CClientEntity
 {
     DECLARE_CLASS(CClientProjectile, CClientEntity)
     friend class CClientProjectileManager;

@@ -13,7 +13,7 @@
 
 #include "CClientEntity.h"
 
-class CClientTXD final : public CClientEntity
+class CClientTXD : public CClientEntity
 {
     DECLARE_CLASS(CClientTXD, CClientEntity)
 public:

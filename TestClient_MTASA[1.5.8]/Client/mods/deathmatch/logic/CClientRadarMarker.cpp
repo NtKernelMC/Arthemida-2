@@ -242,7 +242,7 @@ void CClientRadarMarker::DestroyMarker()
 
 void CClientRadarMarker::SetDimension(unsigned short usDimension)
 {
-    CClientEntity::SetDimension(usDimension);
+    m_usDimension = usDimension;
     RelateDimension(m_pManager->GetRadarMarkerManager()->GetDimension());
 }
 

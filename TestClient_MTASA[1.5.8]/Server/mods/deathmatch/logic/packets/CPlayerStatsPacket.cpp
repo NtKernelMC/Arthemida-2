@@ -11,33 +11,70 @@
 
 #include "StdInc.h"
 
+CPlayerStatsPacket::~CPlayerStatsPacket()
+{
+    Clear();
+}
+
 bool CPlayerStatsPacket::Write(NetBitStreamInterface& BitStream) const
 {
-    if (!m_pSourceElement)
-        return false;
-
-    // Write the source elements's ID
-    BitStream.Write(m_pSourceElement->GetID());
-
-    BitStream.WriteCompressed(static_cast<unsigned short>(m_map.size()));            // Write stat count
-    for (auto&& [statID, value] : m_map)
+    // Write the source player.
+    if (m_pSourceElement)
     {
-        BitStream.Write(statID);
-        BitStream.Write(value);
+        ElementID ID = m_pSourceElement->GetID();
+        BitStream.Write(ID);
+
+        // Write the stats
+        unsigned short usNumStats = static_cast<unsigned short>(m_List.size());
+        BitStream.WriteCompressed(usNumStats);
+
+        map<unsigned short, sPlayerStat>::const_iterator iter = m_List.begin();
+        for (; iter != m_List.end(); ++iter)
+        {
+            const sPlayerStat& playerStat = (*iter).second;
+            BitStream.Write(playerStat.id);
+            BitStream.Write(playerStat.value);
+        }
+
+        return true;
     }
 
-    return true;
+    return false;
 }
 
 void CPlayerStatsPacket::Add(unsigned short usID, float fValue)
 {
-    if (auto iter = m_map.find(usID); iter != m_map.end())
+    map<unsigned short, sPlayerStat>::iterator iter = m_List.find(usID);
+    if (iter != m_List.end())
     {
         if (fValue == 0.0f)
-            m_map.erase(iter);            // Erase stat
+        {
+            m_List.erase(iter);
+        }
         else
-            iter->second = fValue;            // Update value
+        {
+            sPlayerStat& stat = (*iter).second;
+            stat.value = fValue;
+        }
     }
-    else            // Not in map
-        m_map.emplace(usID, fValue);
+    else
+    {
+        sPlayerStat stat;
+        stat.id = usID;
+        stat.value = fValue;
+        m_List[usID] = stat;
+    }
+}
+
+void CPlayerStatsPacket::Remove(unsigned short usID, float fValue)
+{
+    map<unsigned short, sPlayerStat>::iterator iter = m_List.find(usID);
+    if (iter != m_List.end())
+    {
+        m_List.erase(iter);
+    }
+}
+void CPlayerStatsPacket::Clear()
+{
+    m_List.clear();
 }

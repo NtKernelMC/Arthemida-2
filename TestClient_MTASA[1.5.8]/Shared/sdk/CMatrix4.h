@@ -13,9 +13,9 @@
 
 #include "CVector.h"
 
-#include <cmath>
-#include <cstdio>
-#include <cstring>
+#include <math.h>
+#include <stdio.h>
+#include <string.h>
 
 class CMatrix4
 {

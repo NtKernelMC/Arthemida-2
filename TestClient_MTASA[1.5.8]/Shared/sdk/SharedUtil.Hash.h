@@ -8,10 +8,6 @@
  *  Multi Theft Auto is available from http://www.multitheftauto.com/
  *
  *****************************************************************************/
-#pragma once
-
-#include "SharedUtil.IntTypes.h"
-#include "SString.h"
 
 namespace EHashFunction
 {

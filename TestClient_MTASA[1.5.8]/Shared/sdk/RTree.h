@@ -52,7 +52,6 @@ o Minor updates for MSVC 2005/08 compilers
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#include <vector>
 
 #ifndef _WIN32
 #define __cdecl

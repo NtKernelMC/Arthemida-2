@@ -69,18 +69,13 @@ void CFxSystemSA::GetPosition(CVector& vecPos)
 
 void CFxSystemSA::SetPosition(const CVector& vecPos)
 {
-    SetPosition(m_pInterface, vecPos);
-}
-
-void CFxSystemSA::SetPosition(CFxSystemSAInterface* fxSystem, const CVector& position)
-{
-    fxSystem->matPosition.pos.x = position.fX;
-    fxSystem->matPosition.pos.y = position.fY;
-    fxSystem->matPosition.pos.z = position.fZ;
+    m_pInterface->matPosition.pos.x = vecPos.fX;
+    m_pInterface->matPosition.pos.y = vecPos.fY;
+    m_pInterface->matPosition.pos.z = vecPos.fZ;
 
     // Set the update flag(s)
     // this is what RwMatrixUpdate (@0x7F18E0) does
-    fxSystem->matPosition.flags &= 0xFFFDFFFC;
+    m_pInterface->matPosition.flags &= 0xFFFDFFFC;
 }
 
 float CFxSystemSA::GetEffectDensity()
@@ -263,7 +258,13 @@ void CFxSystemSA::StaticSetHooks()
     EZHookInstall(FxSystem_c_Update_MidB);
 
     // Redirect these constants so we can change them
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)VAR_FxSystemUpdateCullDistMultiplier);
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)VAR_FxCreateParticleCullDistMultiplierA);
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)VAR_FxCreateParticleCullDistMultiplierB);
     MemPut<float*>(VAR_FxSystemUpdateCullDistMultiplier, &ms_fFxSystemUpdateCullDistMultiplier);
     MemPut<float*>(VAR_FxCreateParticleCullDistMultiplierA, &ms_fFxCreateParticleCullDistMultiplier);
     MemPut<float*>(VAR_FxCreateParticleCullDistMultiplierB, &ms_fFxCreateParticleCullDistMultiplier);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)VAR_FxSystemUpdateCullDistMultiplier);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)VAR_FxCreateParticleCullDistMultiplierA);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)VAR_FxCreateParticleCullDistMultiplierB);
 }

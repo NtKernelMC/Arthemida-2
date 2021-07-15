@@ -154,7 +154,7 @@ void CClientStreamElement::SetDimension(unsigned short usDimension)
     if (m_usDimension != usDimension)
     {
         // Set the new dimension
-        CClientEntity::SetDimension(usDimension);
+        m_usDimension = usDimension;
 
         m_pStreamer->OnElementDimension(this);
     }

@@ -14,7 +14,7 @@
 #include "CFileReader.h"
 #include "CIFPAnimations.h"
 
-class CClientIFP final : public CClientEntity, CFileReader
+class CClientIFP : public CClientEntity, CFileReader
 {
 public:
     typedef CIFPAnimations::SAnimation                           SAnimation;

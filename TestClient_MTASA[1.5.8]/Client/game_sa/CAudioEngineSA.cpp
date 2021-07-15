@@ -37,6 +37,7 @@ CAudioEngineSA::CAudioEngineSA(CAudioEngineSAInterface* pInterface)
     HookInstall(HOOKPOS_CAEAmbienceTrackManager_CheckForPause, (DWORD)HOOK_CAEAmbienceTrackManager_CheckForPause, 6);
 
     // Make room for hook
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x43FB15);
     MemPut<BYTE>(0x4EFB15 + 0, 0x0F);            // movsx   eax, si
     MemPut<BYTE>(0x4EFB15 + 1, 0xBF);
     MemPut<BYTE>(0x4EFB15 + 2, 0xC6);
@@ -44,6 +45,8 @@ CAudioEngineSA::CAudioEngineSA(CAudioEngineSAInterface* pInterface)
     MemPut<BYTE>(0x4EFB15 + 4, 0xC0);
     MemPut<BYTE>(0x4EFB15 + 5, 0x74);
     MemPut<BYTE>(0x4EFB29, 0xEB);            // Move jump forward one byte
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x43FB15);
+
     HookInstall(HOOKPOS_CAESoundManager_RequestNewSound, (DWORD)HOOK_CAESoundManager_RequestNewSound, 5);
 }
 
@@ -485,7 +488,7 @@ bool CAudioEngineSA::OnWorldSound(CAESound* pAESound)
 
         if (!pGameEntity && pAESound->pAudioEntity)
             pGameEntity = pAESound->pAudioEntity->pEntity;
-
+        
         SWorldSoundEvent event = {
             pAESound->usGroup,
             pAESound->usIndex,

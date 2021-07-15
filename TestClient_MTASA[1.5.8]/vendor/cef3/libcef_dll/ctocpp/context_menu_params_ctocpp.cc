@@ -1,4 +1,4 @@
-// Copyright (c) 2020 The Chromium Embedded Framework Authors. All rights
+// Copyright (c) 2021 The Chromium Embedded Framework Authors. All rights
 // reserved. Use of this source code is governed by a BSD-style license that
 // can be found in the LICENSE file.
 //
@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=7a5343c03a9b84f8831be8b9c7e5d2f35c62983c$
+// $hash=dad7a3eb64c0bc6c4eddd2935513af61f7e8b510$
 //
 
 #include "libcef_dll/ctocpp/context_menu_params_ctocpp.h"
@@ -379,22 +379,6 @@ NO_SANITIZE("cfi-icall") bool CefContextMenuParamsCToCpp::IsCustomMenu() {
 
   // Execute
   int _retval = _struct->is_custom_menu(_struct);
-
-  // Return type: bool
-  return _retval ? true : false;
-}
-
-NO_SANITIZE("cfi-icall") bool CefContextMenuParamsCToCpp::IsPepperMenu() {
-  shutdown_checker::AssertNotShutdown();
-
-  cef_context_menu_params_t* _struct = GetStruct();
-  if (CEF_MEMBER_MISSING(_struct, is_pepper_menu))
-    return false;
-
-  // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
-
-  // Execute
-  int _retval = _struct->is_pepper_menu(_struct);
 
   // Return type: bool
   return _retval ? true : false;

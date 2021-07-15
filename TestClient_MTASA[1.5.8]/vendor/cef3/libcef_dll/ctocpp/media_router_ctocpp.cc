@@ -1,4 +1,4 @@
-// Copyright (c) 2020 The Chromium Embedded Framework Authors. All rights
+// Copyright (c) 2021 The Chromium Embedded Framework Authors. All rights
 // reserved. Use of this source code is governed by a BSD-style license that
 // can be found in the LICENSE file.
 //
@@ -9,10 +9,11 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=4b8ab6373fcb0a84a818c2c5ef8982600346f34b$
+// $hash=8e7b2e3e8124ede620b8a04116656550949f89f1$
 //
 
 #include "libcef_dll/ctocpp/media_router_ctocpp.h"
+#include "libcef_dll/cpptoc/completion_callback_cpptoc.h"
 #include "libcef_dll/cpptoc/media_observer_cpptoc.h"
 #include "libcef_dll/cpptoc/media_route_create_callback_cpptoc.h"
 #include "libcef_dll/ctocpp/media_sink_ctocpp.h"
@@ -23,13 +24,17 @@
 // STATIC METHODS - Body may be edited by hand.
 
 NO_SANITIZE("cfi-icall")
-CefRefPtr<CefMediaRouter> CefMediaRouter::GetGlobalMediaRouter() {
+CefRefPtr<CefMediaRouter> CefMediaRouter::GetGlobalMediaRouter(
+    CefRefPtr<CefCompletionCallback> callback) {
   shutdown_checker::AssertNotShutdown();
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
+  // Unverified params: callback
+
   // Execute
-  cef_media_router_t* _retval = cef_media_router_get_global();
+  cef_media_router_t* _retval =
+      cef_media_router_get_global(CefCompletionCallbackCppToC::Wrap(callback));
 
   // Return type: refptr_same
   return CefMediaRouterCToCpp::Wrap(_retval);

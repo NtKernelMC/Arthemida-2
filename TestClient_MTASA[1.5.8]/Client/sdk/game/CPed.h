@@ -18,7 +18,7 @@ class CTaskManager;
 #include "CWeapon.h"
 #include "CPedIntelligence.h"
 #include "CPedSound.h"
-#include "CPedIK.h"
+
 #include <CVector2D.h>
 
 #include <windows.h>
@@ -27,8 +27,6 @@ class CTaskManager;
 class CVehicle;
 class CObject;
 class CWeaponStat;
-
-class CPedIKSAInterface;
 
 enum ePedPieceTypes
 {
@@ -45,8 +43,7 @@ enum ePedPieceTypes
 
 enum eBone
 {
-    BONE_ROOT = 0,
-    BONE_PELVIS1,
+    BONE_PELVIS1 = 1,
     BONE_PELVIS,
     BONE_SPINE1,
     BONE_UPPERTORSO,
@@ -73,10 +70,7 @@ enum eBone
     BONE_RIGHTHIP = 51,
     BONE_RIGHTKNEE,
     BONE_RIGHTANKLE,
-    BONE_RIGHTFOOT,
-    BONE_BELLY = 201,
-    BONE_RIGHTBREAST = 301,
-    BONE_LEFTBREAST = 302,
+    BONE_RIGHTFOOT
 };
 
 enum
@@ -269,7 +263,6 @@ public:
     virtual void SetVoice(short sVoiceType, short sVoiceID) = 0;
     virtual void SetVoice(const char* szVoiceType, const char* szVoice) = 0;
     virtual void SetLanding(bool bIsLanding) = 0;
-    virtual void SetUpdateMetricsRequired(bool required) = 0;
 
     virtual CWeaponStat* GetCurrentWeaponStat() = 0;
     virtual float        GetCurrentWeaponRange() = 0;
@@ -277,8 +270,4 @@ public:
 
     virtual int GetCustomMoveAnim() = 0;
     virtual bool IsDoingGangDriveby() = 0;
-
-    virtual CPedIKSAInterface* GetPedIKInterface() = 0;
-    virtual void*              GetPedNodeInterface(std::int32_t nodeId) = 0;
-    virtual std::unique_ptr<CPedIK> GetPedIK() = 0;
 };

@@ -54,7 +54,7 @@ CModelTexturesInfo* CRenderWareSA::GetModelTexturesInfo(ushort usModelId)
         else
         {
             CTxdStore_AddRef(usTxdId);
-            if (pModelInfo->GetModelType() == eModelInfoType::PED)
+            if (pModelInfo->GetModelType() == MODEL_INFO_TYPE_PED)
             {
                 // Mystery fix for #9336: (MTA sometimes fails at loading custom textures)
                 // Possibly forces the ped model to be reloaded in some way

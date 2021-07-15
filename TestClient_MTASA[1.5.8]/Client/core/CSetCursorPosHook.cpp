@@ -10,7 +10,7 @@
  *****************************************************************************/
 
 #include "StdInc.h"
-#include <SharedUtil.Detours.h>
+#include "detours/include/detours.h"
 
 template <>
 CSetCursorPosHook* CSingleton<CSetCursorPosHook>::m_pSingleton = NULL;
@@ -35,7 +35,12 @@ CSetCursorPosHook::~CSetCursorPosHook()
 
 void CSetCursorPosHook::ApplyHook()
 {
-    DetourLibraryFunction("user32.dll", "SetCursorPos", m_pfnSetCursorPos, API_SetCursorPos);
+    // Hook SetCursorPos
+    PBYTE func = DetourFindFunction("User32.dll", "SetCursorPos");
+    g_pCore->GetArtemis()->MemoryGuardBeginHook(func);
+    m_pfnSetCursorPos =
+        reinterpret_cast<pSetCursorPos>(DetourFunction(func, reinterpret_cast<PBYTE>(API_SetCursorPos)));
+    g_pCore->GetArtemis()->MemoryGuardEndHook(func);
 }
 
 void CSetCursorPosHook::RemoveHook()
@@ -43,11 +48,13 @@ void CSetCursorPosHook::RemoveHook()
     // Remove hook
     if (m_pfnSetCursorPos)
     {
-        UndoFunctionDetour(m_pfnSetCursorPos, API_SetCursorPos);
+        g_pCore->GetArtemis()->MemoryGuardBeginHook(m_pfnSetCursorPos);
+        DetourRemove(reinterpret_cast<PBYTE>(m_pfnSetCursorPos), reinterpret_cast<PBYTE>(API_SetCursorPos));
+        g_pCore->GetArtemis()->MemoryGuardEndHook(m_pfnSetCursorPos);
     }
 
     // Reset variables
-    m_pfnSetCursorPos = nullptr;
+    m_pfnSetCursorPos = NULL;
     m_bCanCall = true;
 }
 

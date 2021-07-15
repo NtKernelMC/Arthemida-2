@@ -3,10 +3,7 @@ project "tinygettext"
 	kind "StaticLib"
 	targetname "tinygettext"
 
-	includedirs {
-		"../../Shared/sdk",
-		".",
-	}
+	includedirs { "." }
 
 	vpaths {
 		["Headers/*"] = "**.hpp",

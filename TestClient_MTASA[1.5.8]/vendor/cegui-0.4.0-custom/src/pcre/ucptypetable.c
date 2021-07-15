@@ -44,7 +44,9 @@ POSSIBILITY OF SUCH DAMAGE.
 code values for the ucp_findchar function. It is in a separate module so that
 it can be included both in the main pcre library, and into pcretest (for
 printing out internals). */
-/*
+
+#include "ucp.h"
+
 typedef struct {
   const char *name;
   int value;
@@ -89,5 +91,5 @@ static ucp_type_table utt[] = {
   { "Zp", ucp_Zp },
   { "Zs", ucp_Zs }
 };
-*/
+
 /* End of ucptypetable.c */

@@ -3,6 +3,7 @@
 	Target Platform: x32-x86
 	Project by NtKernelMC & holmes0
 */
+#include "../ArtUtils/Utils.h"
 #include "ArtemisInterface.h"
 std::vector<HANDLE> ArtemisConfig::OwnThreads;
 CArtemisReal* CArtemisReal::s_pInstance = nullptr;
@@ -115,7 +116,7 @@ bool CArtemisReal::InstallArtemisMonitor()
 		return false;
 	}
     Utils::BuildModuledMemoryMap(m_pConfig->CurrProc);            // Заполняем список изначально загруженными модулями
-	DWORD tmpTID = 0xFFFFFF; 
+	DWORD tmpTID = 0xFFFFFF;
 	if (m_pConfig->DetectFakeLaunch)            // Детект лаунчера (должен запускаться в первую очередь)
 	{
         ConfirmLegitLaunch(m_pConfig);

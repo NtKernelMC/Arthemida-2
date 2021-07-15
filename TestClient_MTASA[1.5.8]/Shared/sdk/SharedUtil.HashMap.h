@@ -16,7 +16,6 @@
 
 #include <unordered_map>
 #include <functional>
-#include "SString.h"
 
 namespace SharedUtil
 {

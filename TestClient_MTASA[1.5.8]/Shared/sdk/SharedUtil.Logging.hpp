@@ -9,16 +9,6 @@
  *
  *****************************************************************************/
 
-#include "SharedUtil.Logging.h"
-#include <set>
-#include "SharedUtil.Misc.h"
-#include "SharedUtil.File.h"
-#include "SharedUtil.Time.h"
-
-#ifdef _WIN32
-    #include <windows.h>
-#endif
-
 #ifdef MTA_DEBUG
 
 namespace SharedUtil

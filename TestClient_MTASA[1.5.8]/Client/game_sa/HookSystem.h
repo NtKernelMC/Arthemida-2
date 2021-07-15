@@ -30,15 +30,18 @@ void* FunctionPointerToVoidP(T func)
 template <typename T>
 BOOL HookInstall(DWORD dwInstallAddress, T dwHookHandler, int iJmpCodeSize = 5)
 {
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)dwInstallAddress);
     BYTE JumpBytes[MAX_JUMPCODE_SIZE];
     MemSetFast(JumpBytes, 0x90, MAX_JUMPCODE_SIZE);
     if (CreateJump(dwInstallAddress, (DWORD)FunctionPointerToVoidP(dwHookHandler), JumpBytes))
     {
         MemCpy((PVOID)dwInstallAddress, JumpBytes, iJmpCodeSize);
+        g_pCore->GetArtemis()->MemoryGuardEndHook((void*)dwInstallAddress);
         return TRUE;
     }
     else
     {
+        g_pCore->GetArtemis()->MemoryGuardEndHook((void*)dwInstallAddress);
         return FALSE;
     }
 }

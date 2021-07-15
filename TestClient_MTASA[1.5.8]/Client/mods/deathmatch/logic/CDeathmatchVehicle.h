@@ -13,7 +13,7 @@
 
 #include "CClientVehicle.h"
 
-class CDeathmatchVehicle final : public CClientVehicle
+class CDeathmatchVehicle : public CClientVehicle
 {
     DECLARE_CLASS(CDeathmatchVehicle, CClientVehicle)
 public:

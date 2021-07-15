@@ -10,7 +10,6 @@
  *****************************************************************************/
 
 #include "StdInc.h"
-#include <lua/CLuaFunctionParser.h>
 
 void CLuaAudioDefs::LoadFunctions()
 {
@@ -35,8 +34,6 @@ void CLuaAudioDefs::LoadFunctions()
         {"getSoundPosition", GetSoundPosition},
         {"getSoundLength", GetSoundLength},
         {"getSoundBufferLength", GetSoundBufferLength},
-        {"setSoundLooped", ArgumentParser<SetSoundLooped>},
-        {"isSoundLooped", ArgumentParser<IsSoundLooped>},
         {"setSoundPaused", SetSoundPaused},
         {"isSoundPaused", IsSoundPaused},
         {"setSoundVolume", SetSoundVolume},
@@ -87,14 +84,12 @@ void CLuaAudioDefs::AddClass(lua_State* luaVM)
     lua_classfunction(luaVM, "setSpeed", "setSoundSpeed");
     lua_classfunction(luaVM, "setVolume", "setSoundVolume");
     lua_classfunction(luaVM, "setPaused", "setSoundPaused");
-    lua_classfunction(luaVM, "setLooped", "setSoundLooped");
     lua_classfunction(luaVM, "setPan", "setSoundPan");
-    lua_classfunction(luaVM, "setPanningEnabled", "setSoundPanningEnabled");
+    lua_classfunction(luaVM, "setPannningEnabled", "setSoundPanningEnabled");
     lua_classfunction(luaVM, "setProperties", "setSoundProperties");
 
     lua_classfunction(luaVM, "getLength", "getSoundLength");
     lua_classfunction(luaVM, "getBufferLength", "getSoundBufferLength");
-    lua_classfunction(luaVM, "isLooped", "isSoundLooped");
     lua_classfunction(luaVM, "getMetaTags", "getSoundMetaTags");
     lua_classfunction(luaVM, "getBPM", "getSoundBPM");
     lua_classfunction(luaVM, "getFFTData", "getSoundFFTData");
@@ -111,7 +106,6 @@ void CLuaAudioDefs::AddClass(lua_State* luaVM)
     lua_classvariable(luaVM, "playbackPosition", "setSoundPosition", "getSoundPosition");
     lua_classvariable(luaVM, "speed", "setSoundSpeed", "getSoundSpeed");
     lua_classvariable(luaVM, "volume", "setSoundVolume", "getSoundVolume");
-    lua_classvariable(luaVM, "looped", "setSoundLooped", "isSoundLooped");
     lua_classvariable(luaVM, "paused", "setSoundPaused", "isSoundPaused");
     lua_classvariable(luaVM, "pan", "setSoundPan", "getSoundPan");
     lua_classvariable(luaVM, "panningEnabled", "setSoundPanningEnabled", "isSoundPanningEnabled");
@@ -452,16 +446,6 @@ int CLuaAudioDefs::GetSoundBufferLength(lua_State* luaVM)
 
     lua_pushnil(luaVM);
     return 1;
-}
-
-bool CLuaAudioDefs::SetSoundLooped(CClientSound* pSound, bool bLoop)
-{
-    return pSound->SetLooped(bLoop);
-}
-
-bool CLuaAudioDefs::IsSoundLooped(CClientSound* pSound)
-{
-    return pSound->IsLooped();
 }
 
 int CLuaAudioDefs::SetSoundPaused(lua_State* luaVM)

@@ -88,7 +88,7 @@ public:
 
     CDbJobData();
     ~CDbJobData();
-    SDbJobId           GetId() const { return id; }
+    SDbJobId           GetId() { return id; }
     bool               SetCallback(PFN_DBRESULT pfnDbResult, void* pContext);
     bool               HasCallback();
     void               ProcessCallback();
@@ -177,7 +177,7 @@ CDatabaseManager* NewDatabaseManager();
 // TODO - Check it does not get synced to the client
 //
 ///////////////////////////////////////////////////////////////
-class CDatabaseConnectionElement final : public CElement
+class CDatabaseConnectionElement : public CElement
 {
 public:
     CDatabaseConnectionElement(CElement* pParent, SConnectionHandle connection) : CElement(pParent), m_Connection(connection)

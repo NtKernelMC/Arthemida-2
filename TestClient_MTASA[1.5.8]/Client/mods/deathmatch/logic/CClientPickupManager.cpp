@@ -131,15 +131,3 @@ void CClientPickupManager::RestreamPickups(unsigned short usModel)
         }
     }
 }
-
-void CClientPickupManager::RestreamAllPickups()
-{
-    for (auto& pPickup: m_List)
-    {
-
-        if (pPickup->IsStreamedIn())
-        {
-            pPickup->StreamOutForABit();
-        }
-    }
-}

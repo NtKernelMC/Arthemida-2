@@ -17,10 +17,10 @@
 //
 ///////////////////////////////////////////////////////////////
 CEffectTemplate* NewEffectTemplate(CRenderItemManager* pManager, const SString& strFile, const SString& strRootPath, bool bIsRawData, SString& strOutStatus, bool bDebug,
-        const EffectMacroList& macros, HRESULT& outHResult)
+                                   HRESULT& outHResult)
 {
     CEffectTemplate* pEffectTemplate = new CEffectTemplate();
-    pEffectTemplate->PostConstruct(pManager, strFile, strRootPath, bIsRawData, strOutStatus, bDebug, macros);
+    pEffectTemplate->PostConstruct(pManager, strFile, strRootPath, bIsRawData, strOutStatus, bDebug);
 
     outHResult = pEffectTemplate->m_CreateHResult;
     if (!pEffectTemplate->IsValid())
@@ -121,13 +121,12 @@ namespace
 //
 //
 ////////////////////////////////////////////////////////////////
-void CEffectTemplate::PostConstruct(CRenderItemManager* pManager, const SString& strFile, const SString& strRootPath, bool bIsRawData, SString& strOutStatus,
-    bool bDebug, const EffectMacroList& macros)
+void CEffectTemplate::PostConstruct(CRenderItemManager* pManager, const SString& strFile, const SString& strRootPath, bool bIsRawData, SString& strOutStatus, bool bDebug)
 {
     Super::PostConstruct(pManager);
 
     // Initial creation of d3d data
-    CreateUnderlyingData(strFile, strRootPath, bIsRawData, strOutStatus, bDebug, macros);
+    CreateUnderlyingData(strFile, strRootPath, bIsRawData, strOutStatus, bDebug);
 }
 
 ////////////////////////////////////////////////////////////////
@@ -202,8 +201,7 @@ void CEffectTemplate::OnResetDevice()
 //
 //
 ////////////////////////////////////////////////////////////////
-void CEffectTemplate::CreateUnderlyingData(const SString& strFile, const SString& strRootPath, bool bIsRawData, SString& strOutStatus,
-    bool bDebug, const EffectMacroList& macros)
+void CEffectTemplate::CreateUnderlyingData(const SString& strFile, const SString& strRootPath, bool bIsRawData, SString& strOutStatus, bool bDebug)
 {
     assert(!m_pD3DEffect);
 
@@ -215,9 +213,6 @@ void CEffectTemplate::CreateUnderlyingData(const SString& strFile, const SString
     macroList.push_back(D3DXMACRO());
     macroList.back().Name = "IS_DEPTHBUFFER_RAWZ";
     macroList.back().Definition = bUsesRAWZ ? "1" : "0";
-
-    for (const auto& [name, definition] : macros)
-        macroList.push_back(std::move(D3DXMACRO{ name.c_str(), definition.c_str() }));
 
     macroList.push_back(D3DXMACRO());
     macroList.back().Name = NULL;

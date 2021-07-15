@@ -9,7 +9,6 @@ project "GUI"
 
 	filter {}
 		includedirs {
-			"../../Shared/sdk",
 			"../sdk",
 			"../../vendor/cegui-0.4.0-custom/include",
 			"../../vendor/sparsehash/src/"
@@ -24,6 +23,7 @@ project "GUI"
 
 	links {
 		"CEGUI", "DirectX9GUIRenderer", "Falagard",
+		"../../vendor/cegui-0.4.0-custom/lib/freetype2412ST.lib", -- Todo: Select Debug variant, also move freetype to vendor
 		"d3dx9.lib",
 		"dxerr.lib"
 	}

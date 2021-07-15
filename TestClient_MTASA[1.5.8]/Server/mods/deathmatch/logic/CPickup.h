@@ -19,7 +19,7 @@ class CPickup;
 #include "CElement.h"
 #include "CEvents.h"
 
-class CPickup final : public CElement, private CColCallback
+class CPickup : public CElement, private CColCallback
 {
     friend class CPickupManager;
 

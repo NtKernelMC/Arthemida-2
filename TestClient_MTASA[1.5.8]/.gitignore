@@ -20,7 +20,6 @@
 *.so
 *.dylib
 *.dll
-!libmysql.dll
 
 # Fortran module files
 *.mod
@@ -31,13 +30,6 @@
 *.la
 *.a
 *.lib
-!nvapi.lib
-!nvapi64.lib
-!bass.lib
-!bass_fx.lib
-!bassmix.lib
-!tags.lib
-!libmysql.lib
 
 # Executables
 *.exe
@@ -139,6 +131,8 @@ $RECYCLE.BIN/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
+x64/
+x86/
 bld/
 [Bb]in/
 [Oo]bj/
@@ -148,7 +142,6 @@ bld/
 .vs/
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/
-VSWorkspaceState.json
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
@@ -415,6 +408,7 @@ __pycache__/
 
 
 Bin/
+Build/
 InstallFiles/
 utils/DXFiles.zip
 utils/DXFiles/

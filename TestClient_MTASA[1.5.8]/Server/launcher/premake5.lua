@@ -3,10 +3,7 @@ project "Launcher"
 	kind "ConsoleApp"
 	targetdir(buildpath("server"))
 
-	includedirs {
-		"../../Shared/sdk",
-		"../sdk",
-	}
+	includedirs { "../sdk" }
 
 	vpaths {
 		["Headers/*"] = "**.h",

@@ -34,9 +34,6 @@ bool CColPolygon::DoHitDetection(const CVector& vecNowPosition)
     if (!IsInBounds(vecNowPosition))
         return false;
 
-    if (vecNowPosition.fZ > m_fCeil || vecNowPosition.fZ < m_fFloor)
-        return false;
-
     bool collides = false;
 
     int j = m_Points.size() - 1;
@@ -173,15 +170,4 @@ CSphere CColPolygon::GetWorldBoundingSphere()
     sphere.vecPosition.fZ = SPATIAL_2D_Z;
     sphere.fRadius = m_fRadius;
     return sphere;
-}
-
-bool CColPolygon::SetHeight(float fFloor, float fCeil)
-{
-    if (m_fFloor == fFloor && m_fCeil == fCeil)
-        return false;
-
-    m_fFloor = fFloor;
-    m_fCeil = fCeil;
-
-    return true;
 }

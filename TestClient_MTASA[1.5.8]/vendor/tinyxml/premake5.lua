@@ -3,10 +3,6 @@ project "tinyxml"
 	kind "StaticLib"
 	targetname "tinyxml"
 
-	includedirs {
-		"../../Shared/sdk",
-	}
-
 	defines { "TIXML_USE_STL" }
 
 	vpaths {

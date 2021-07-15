@@ -1,4 +1,4 @@
-// Copyright (c) 2020 Marshall A. Greenblatt. All rights reserved.
+// Copyright (c) 2021 Marshall A. Greenblatt. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -33,7 +33,7 @@
 // by hand. See the translator.README.txt file in the tools directory for
 // more information.
 //
-// $hash=7ce0953f069204a4dd2037c4a05ac9454c5e66a6$
+// $hash=2e42334fc22050e207e5a0af6fe290a592e4105f$
 //
 
 #ifndef CEF_INCLUDE_CAPI_CEF_REQUEST_CONTEXT_CAPI_H_
@@ -132,7 +132,7 @@ typedef struct _cef_request_context_t {
 
   ///
   // Returns the cookie manager for this object. If |callback| is non-NULL it
-  // will be executed asnychronously on the IO thread after the manager's
+  // will be executed asnychronously on the UI thread after the manager's
   // storage has been initialized.
   ///
   struct _cef_cookie_manager_t*(CEF_CALLBACK* get_cookie_manager)(
@@ -356,10 +356,13 @@ typedef struct _cef_request_context_t {
       const cef_string_t* extension_id);
 
   ///
-  // Returns the MediaRouter object associated with this context.
+  // Returns the MediaRouter object associated with this context.  If |callback|
+  // is non-NULL it will be executed asnychronously on the UI thread after the
+  // manager's context has been initialized.
   ///
   struct _cef_media_router_t*(CEF_CALLBACK* get_media_router)(
-      struct _cef_request_context_t* self);
+      struct _cef_request_context_t* self,
+      struct _cef_completion_callback_t* callback);
 } cef_request_context_t;
 
 ///

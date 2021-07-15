@@ -393,16 +393,16 @@ int CLuaResourceDefs::GetResourceExportedFunctions(lua_State* luaVM)
         }
     }
 
-
-    // Push all functions into a key-value pair tableif (pResource)
+    if (pResource)
     {
-        lua_createtable(luaVM, 0, pResource->GetExportedFunctions().size());
-
-        unsigned int index = 1;
-        for (const auto& strName : pResource->GetExportedFunctions())
+        lua_newtable(luaVM);
+        unsigned int                       uiIndex = 0;
+        list<CExportedFunction*>::iterator iterd = pResource->IterBeginExportedFunctions();
+        for (; iterd != pResource->IterEndExportedFunctions(); iterd++)
         {
-            lua_pushstring(luaVM, strName.c_str());
-            lua_rawseti(luaVM, -2, index++);
+            lua_pushnumber(luaVM, ++uiIndex);
+            lua_pushstring(luaVM, (*iterd)->GetFunctionName());
+            lua_settable(luaVM, -3);
         }
         return 1;
     }

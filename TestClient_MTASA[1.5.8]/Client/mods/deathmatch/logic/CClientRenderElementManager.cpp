@@ -136,11 +136,11 @@ CClientTexture* CClientRenderElementManager::CreateTexture(const SString& strFul
 //
 ////////////////////////////////////////////////////////////////
 CClientShader* CClientRenderElementManager::CreateShader(const SString& strFile, const SString& strRootPath, bool bIsRawData, SString& strOutStatus, float fPriority,
-                                                         float fMaxDistance, bool bLayered, bool bDebug, int iTypeMask, const EffectMacroList& macros)
+                                                         float fMaxDistance, bool bLayered, bool bDebug, int iTypeMask)
 {
     // Create the item
     CShaderItem* pShaderItem =
-        m_pRenderItemManager->CreateShader(strFile, strRootPath, bIsRawData, strOutStatus, fPriority, fMaxDistance, bLayered, bDebug, iTypeMask, macros);
+        m_pRenderItemManager->CreateShader(strFile, strRootPath, bIsRawData, strOutStatus, fPriority, fMaxDistance, bLayered, bDebug, iTypeMask);
 
     // Check create worked
     if (!pShaderItem)

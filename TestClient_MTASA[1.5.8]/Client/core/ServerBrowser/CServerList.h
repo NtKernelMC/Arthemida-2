@@ -141,8 +141,6 @@ public:
         bSerials = false;
         bPassworded = false;
         bKeepFlag = false;
-        iRowIndex = -1;
-
         nPlayers = 0;
         nMaxPlayers = 0;
         nPing = 9999;
@@ -194,7 +192,6 @@ public:
     uint           uiQueryRetryCount;
     uint           uiRevision;
     bool           bKeepFlag;
-    int            iRowIndex;
 
     SString strGameName;                  // Game name. Always 'mta'
     SString strVersion;                   // Game version

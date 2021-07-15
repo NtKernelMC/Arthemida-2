@@ -34,9 +34,6 @@
     <ClInclude Include="..\Client\sdk\core\CClientBase.h">
       <Filter>core</Filter>
     </ClInclude>
-    <ClInclude Include="..\Client\sdk\core\CClientCommands.h">
-      <Filter>core</Filter>
-    </ClInclude>
     <ClInclude Include="..\Client\sdk\core\CClientEntityBase.h">
       <Filter>core</Filter>
     </ClInclude>
@@ -142,16 +139,10 @@
     <ClInclude Include="..\Client\sdk\game\CBike.h">
       <Filter>game</Filter>
     </ClInclude>
-    <ClInclude Include="..\Client\sdk\game\CBikeHandlingEntry.h">
-      <Filter>game</Filter>
-    </ClInclude>
     <ClInclude Include="..\Client\sdk\game\CBmx.h">
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="..\Client\sdk\game\CBoat.h">
-      <Filter>game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Client\sdk\game\CBoatHandlingEntry.h">
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="..\Client\sdk\game\CBuilding.h">
@@ -227,9 +218,6 @@
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="..\Client\sdk\game\CFireManager.h">
-      <Filter>game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Client\sdk\game\CFlyingHandlingEntry.h">
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="..\Client\sdk\game\CFont.h">
@@ -389,6 +377,9 @@
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="..\Client\sdk\game\CTasks.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Client\sdk\game\CText.h">
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="..\Client\sdk\game\CTheCarGenerators.h">

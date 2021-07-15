@@ -40,7 +40,7 @@ class CMainConfig : public CXMLConfig
 {
 public:
     ZERO_ON_NEW
-    CMainConfig(CConsole* pConsole);
+    CMainConfig(CConsole* pConsole, class CLuaManager* pLuaMain);
 
     bool Load();
     bool LoadExtended();
@@ -141,11 +141,12 @@ public:
     void                            OnAseSettingChange();
 
 private:
-    void RegisterCommand(const char* szName, FCommandHandler* pFunction, bool bRestricted, const char* szConsoleHelpText);
+    void RegisterCommand(const char* szName, FCommandHandler* pFunction, bool bRestricted);
     bool GetSettingTable(const SString& strName, const char** szAttribNames, uint uiNumAttribNames, CLuaArguments* outTable);
     bool AddMissingSettings();
 
     CConsole*           m_pConsole;
+    CLuaManager*        m_pLuaManager;
     CXMLNode*           m_pRootNode;
     CCommandLineParser* m_pCommandLineParser;
 

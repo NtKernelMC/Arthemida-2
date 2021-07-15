@@ -35,13 +35,13 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
@@ -133,17 +133,20 @@
     <TargetName>deathmatch</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnabled>false</VcpkgEnabled>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;MTA_DEBUG;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);DEBUG;SDK_WITH_BCRYPT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Server\sdk;..\vendor\bochs;..\vendor\pme;..\vendor\zip;..\vendor\zlib;..\vendor\pcre;..\vendor\json-c;..\vendor\bob_withers;..\vendor\lua\src;..\Shared\gta;..\Shared\mods\deathmatch\logic;..\Shared\animation;..\Shared\publicsdk\include;..\vendor\sparsehash\src;..\Server\mods\deathmatch\logic;..\Server\mods\deathmatch\utils;..\Server\mods\deathmatch;..\vendor\pthreads\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Server\sdk;..\vendor\bochs;..\vendor\pme;..\vendor\zip;..\vendor\zlib;..\vendor\pcre;..\vendor\json-c;..\vendor\bob_withers;..\vendor\lua\src;..\Shared\mods\deathmatch\logic;..\Shared\animation;..\Shared\publicsdk\include;..\vendor\sparsehash\src;..\Server\mods\deathmatch\logic;..\Server\mods\deathmatch\utils;..\Server\mods\deathmatch;..\vendor\pthreads\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus -Zm130 %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/MT -Zm130 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -160,11 +163,11 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;MTA_DEBUG;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);DEBUG;SDK_WITH_BCRYPT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Server\sdk;..\vendor\bochs;..\vendor\pme;..\vendor\zip;..\vendor\zlib;..\vendor\pcre;..\vendor\json-c;..\vendor\bob_withers;..\vendor\lua\src;..\Shared\gta;..\Shared\mods\deathmatch\logic;..\Shared\animation;..\Shared\publicsdk\include;..\vendor\sparsehash\src;..\Server\mods\deathmatch\logic;..\Server\mods\deathmatch\utils;..\Server\mods\deathmatch;..\vendor\pthreads\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Server\sdk;..\vendor\bochs;..\vendor\pme;..\vendor\zip;..\vendor\zlib;..\vendor\pcre;..\vendor\json-c;..\vendor\bob_withers;..\vendor\lua\src;..\Shared\mods\deathmatch\logic;..\Shared\animation;..\Shared\publicsdk\include;..\vendor\sparsehash\src;..\Server\mods\deathmatch\logic;..\Server\mods\deathmatch\utils;..\Server\mods\deathmatch;..\vendor\pthreads\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus -Zm130 %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/MT -Zm130 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -181,7 +184,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);SDK_WITH_BCRYPT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Server\sdk;..\vendor\bochs;..\vendor\pme;..\vendor\zip;..\vendor\zlib;..\vendor\pcre;..\vendor\json-c;..\vendor\bob_withers;..\vendor\lua\src;..\Shared\gta;..\Shared\mods\deathmatch\logic;..\Shared\animation;..\Shared\publicsdk\include;..\vendor\sparsehash\src;..\Server\mods\deathmatch\logic;..\Server\mods\deathmatch\utils;..\Server\mods\deathmatch;..\vendor\pthreads\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Server\sdk;..\vendor\bochs;..\vendor\pme;..\vendor\zip;..\vendor\zlib;..\vendor\pcre;..\vendor\json-c;..\vendor\bob_withers;..\vendor\lua\src;..\Shared\mods\deathmatch\logic;..\Shared\animation;..\Shared\publicsdk\include;..\vendor\sparsehash\src;..\Server\mods\deathmatch\logic;..\Server\mods\deathmatch\utils;..\Server\mods\deathmatch;..\vendor\pthreads\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -189,7 +192,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus -Zm130 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-Zm130 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -208,7 +211,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);SDK_WITH_BCRYPT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Server\sdk;..\vendor\bochs;..\vendor\pme;..\vendor\zip;..\vendor\zlib;..\vendor\pcre;..\vendor\json-c;..\vendor\bob_withers;..\vendor\lua\src;..\Shared\gta;..\Shared\mods\deathmatch\logic;..\Shared\animation;..\Shared\publicsdk\include;..\vendor\sparsehash\src;..\Server\mods\deathmatch\logic;..\Server\mods\deathmatch\utils;..\Server\mods\deathmatch;..\vendor\pthreads\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Server\sdk;..\vendor\bochs;..\vendor\pme;..\vendor\zip;..\vendor\zlib;..\vendor\pcre;..\vendor\json-c;..\vendor\bob_withers;..\vendor\lua\src;..\Shared\mods\deathmatch\logic;..\Shared\animation;..\Shared\publicsdk\include;..\vendor\sparsehash\src;..\Server\mods\deathmatch\logic;..\Server\mods\deathmatch\utils;..\Server\mods\deathmatch;..\vendor\pthreads\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -216,7 +219,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus -Zm130 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-Zm130 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -235,7 +238,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);SDK_WITH_BCRYPT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Server\sdk;..\vendor\bochs;..\vendor\pme;..\vendor\zip;..\vendor\zlib;..\vendor\pcre;..\vendor\json-c;..\vendor\bob_withers;..\vendor\lua\src;..\Shared\gta;..\Shared\mods\deathmatch\logic;..\Shared\animation;..\Shared\publicsdk\include;..\vendor\sparsehash\src;..\Server\mods\deathmatch\logic;..\Server\mods\deathmatch\utils;..\Server\mods\deathmatch;..\vendor\pthreads\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Server\sdk;..\vendor\bochs;..\vendor\pme;..\vendor\zip;..\vendor\zlib;..\vendor\pcre;..\vendor\json-c;..\vendor\bob_withers;..\vendor\lua\src;..\Shared\mods\deathmatch\logic;..\Shared\animation;..\Shared\publicsdk\include;..\vendor\sparsehash\src;..\Server\mods\deathmatch\logic;..\Server\mods\deathmatch\utils;..\Server\mods\deathmatch;..\vendor\pthreads\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -243,7 +246,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus -Zm130 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-Zm130 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -263,7 +266,7 @@
       <PrecompiledHeaderFile>StdInc.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);SDK_WITH_BCRYPT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\vendor;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Shared\sdk;..\Server\sdk;..\vendor\bochs;..\vendor\pme;..\vendor\zip;..\vendor\zlib;..\vendor\pcre;..\vendor\json-c;..\vendor\bob_withers;..\vendor\lua\src;..\Shared\gta;..\Shared\mods\deathmatch\logic;..\Shared\animation;..\Shared\publicsdk\include;..\vendor\sparsehash\src;..\Server\mods\deathmatch\logic;..\Server\mods\deathmatch\utils;..\Server\mods\deathmatch;..\vendor\pthreads\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor;..\Shared\sdk;C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Include;..\vendor\sparsehash\src\windows;..\Server\sdk;..\vendor\bochs;..\vendor\pme;..\vendor\zip;..\vendor\zlib;..\vendor\pcre;..\vendor\json-c;..\vendor\bob_withers;..\vendor\lua\src;..\Shared\mods\deathmatch\logic;..\Shared\animation;..\Shared\publicsdk\include;..\vendor\sparsehash\src;..\Server\mods\deathmatch\logic;..\Server\mods\deathmatch\utils;..\Server\mods\deathmatch;..\vendor\pthreads\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -271,7 +274,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/Zc:__cplusplus -Zm130 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-Zm130 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -373,6 +376,7 @@
     <ClInclude Include="..\Server\mods\deathmatch\logic\CPlayerCamera.h" />
     <ClInclude Include="..\Server\mods\deathmatch\logic\CPlayerClothes.h" />
     <ClInclude Include="..\Server\mods\deathmatch\logic\CPlayerManager.h" />
+    <ClInclude Include="..\Server\mods\deathmatch\logic\CPlayerStats.h" />
     <ClInclude Include="..\Server\mods\deathmatch\logic\CPlayerTasks.h" />
     <ClInclude Include="..\Server\mods\deathmatch\logic\CPlayerTextManager.h" />
     <ClInclude Include="..\Server\mods\deathmatch\logic\CRPCFunctions.h" />
@@ -403,8 +407,6 @@
     <ClInclude Include="..\Server\mods\deathmatch\logic\CTeamManager.h" />
     <ClInclude Include="..\Server\mods\deathmatch\logic\CTextDisplay.h" />
     <ClInclude Include="..\Server\mods\deathmatch\logic\CTextItem.h" />
-    <ClInclude Include="..\Server\mods\deathmatch\logic\CTrainTrack.h" />
-    <ClInclude Include="..\Server\mods\deathmatch\logic\CTrainTrackManager.h" />
     <ClInclude Include="..\Server\mods\deathmatch\logic\CUnoccupiedVehicleSync.h" />
     <ClInclude Include="..\Server\mods\deathmatch\logic\CVehicle.h" />
     <ClInclude Include="..\Server\mods\deathmatch\logic\CVehicleColorManager.h" />
@@ -442,15 +444,12 @@
     <ClInclude Include="..\Server\mods\deathmatch\logic\luadefs\CLuaCameraDefs.h" />
     <ClInclude Include="..\Server\mods\deathmatch\logic\luadefs\CLuaClassDefs.h" />
     <ClInclude Include="..\Server\mods\deathmatch\logic\luadefs\CLuaColShapeDefs.h" />
-    <ClInclude Include="..\Server\mods\deathmatch\logic\luadefs\CLuaCompatibilityDefs.h" />
     <ClInclude Include="..\Server\mods\deathmatch\logic\luadefs\CLuaDatabaseDefs.h" />
     <ClInclude Include="..\Server\mods\deathmatch\logic\luadefs\CLuaDefs.h" />
     <ClInclude Include="..\Server\mods\deathmatch\logic\luadefs\CLuaElementDefs.h" />
-    <ClInclude Include="..\Server\mods\deathmatch\logic\luadefs\CLuaGenericDefs.h" />
     <ClInclude Include="..\Server\mods\deathmatch\logic\luadefs\CLuaHTTPDefs.h" />
     <ClInclude Include="..\Server\mods\deathmatch\logic\luadefs\CLuaHandlingDefs.h" />
     <ClInclude Include="..\Server\mods\deathmatch\logic\luadefs\CLuaMarkerDefs.h" />
-    <ClInclude Include="..\Server\mods\deathmatch\logic\luadefs\CLuaNetworkDefs.h" />
     <ClInclude Include="..\Server\mods\deathmatch\logic\luadefs\CLuaObjectDefs.h" />
     <ClInclude Include="..\Server\mods\deathmatch\logic\luadefs\CLuaPedDefs.h" />
     <ClInclude Include="..\Server\mods\deathmatch\logic\luadefs\CLuaPickupDefs.h" />
@@ -555,6 +554,7 @@
     <ClInclude Include="..\Server\mods\deathmatch\utils\CMasterServerAnnouncer.h" />
     <ClInclude Include="..\Server\mods\deathmatch\utils\COpenPortsTester.h" />
     <ClInclude Include="..\Server\mods\deathmatch\utils\CZipMaker.h" />
+    <ClInclude Include="..\Server\version.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\CDebugHookManager.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\CIdArray.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\CLatentTransferManager.h" />
@@ -564,7 +564,6 @@
     <ClInclude Include="..\Shared\mods\deathmatch\logic\Utils.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaFunctionParser.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaMatrix.h" />
-    <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaMultiReturn.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaOverloadParser.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaShared.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\lua\CLuaStackChecker.h" />
@@ -576,7 +575,6 @@
     <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaCryptDefs.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaFileDefs.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaMatrixDefs.h" />
-    <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaTrainTrackDefs.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaUTFDefs.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaUtilDefs.h" />
     <ClInclude Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaVector2Defs.h" />
@@ -689,6 +687,7 @@
     <ClCompile Include="..\Server\mods\deathmatch\logic\CPlayerCamera.cpp" />
     <ClCompile Include="..\Server\mods\deathmatch\logic\CPlayerClothes.cpp" />
     <ClCompile Include="..\Server\mods\deathmatch\logic\CPlayerManager.cpp" />
+    <ClCompile Include="..\Server\mods\deathmatch\logic\CPlayerStats.cpp" />
     <ClCompile Include="..\Server\mods\deathmatch\logic\CPlayerTasks.cpp" />
     <ClCompile Include="..\Server\mods\deathmatch\logic\CPlayerTextManager.cpp" />
     <ClCompile Include="..\Server\mods\deathmatch\logic\CRPCFunctions.cpp" />
@@ -719,8 +718,6 @@
     <ClCompile Include="..\Server\mods\deathmatch\logic\CTeamManager.cpp" />
     <ClCompile Include="..\Server\mods\deathmatch\logic\CTextDisplay.cpp" />
     <ClCompile Include="..\Server\mods\deathmatch\logic\CTextItem.cpp" />
-    <ClCompile Include="..\Server\mods\deathmatch\logic\CTrainTrack.cpp" />
-    <ClCompile Include="..\Server\mods\deathmatch\logic\CTrainTrackManager.cpp" />
     <ClCompile Include="..\Server\mods\deathmatch\logic\CUnoccupiedVehicleSync.cpp" />
     <ClCompile Include="..\Server\mods\deathmatch\logic\CVehicle.cpp" />
     <ClCompile Include="..\Server\mods\deathmatch\logic\CVehicleColorManager.cpp" />
@@ -761,15 +758,12 @@
     <ClCompile Include="..\Server\mods\deathmatch\logic\luadefs\CLuaCameraDefs.cpp" />
     <ClCompile Include="..\Server\mods\deathmatch\logic\luadefs\CLuaClassDefs.cpp" />
     <ClCompile Include="..\Server\mods\deathmatch\logic\luadefs\CLuaColShapeDefs.cpp" />
-    <ClCompile Include="..\Server\mods\deathmatch\logic\luadefs\CLuaCompatibilityDefs.cpp" />
     <ClCompile Include="..\Server\mods\deathmatch\logic\luadefs\CLuaDatabaseDefs.cpp" />
     <ClCompile Include="..\Server\mods\deathmatch\logic\luadefs\CLuaDefs.cpp" />
     <ClCompile Include="..\Server\mods\deathmatch\logic\luadefs\CLuaElementDefs.cpp" />
-    <ClCompile Include="..\Server\mods\deathmatch\logic\luadefs\CLuaGenericDefs.cpp" />
     <ClCompile Include="..\Server\mods\deathmatch\logic\luadefs\CLuaHTTPDefs.cpp" />
     <ClCompile Include="..\Server\mods\deathmatch\logic\luadefs\CLuaHandlingDefs.cpp" />
     <ClCompile Include="..\Server\mods\deathmatch\logic\luadefs\CLuaMarkerDefs.cpp" />
-    <ClCompile Include="..\Server\mods\deathmatch\logic\luadefs\CLuaNetworkDefs.cpp" />
     <ClCompile Include="..\Server\mods\deathmatch\logic\luadefs\CLuaObjectDefs.cpp" />
     <ClCompile Include="..\Server\mods\deathmatch\logic\luadefs\CLuaPedDefs.cpp" />
     <ClCompile Include="..\Server\mods\deathmatch\logic\luadefs\CLuaPickupDefs.cpp" />
@@ -889,14 +883,13 @@
     <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaElementDefsShared.cpp" />
     <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaFileDefs.cpp" />
     <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaMatrixDefs.cpp" />
-    <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaTrainTrackDefs.cpp" />
     <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaUTFDefs.cpp" />
     <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaUtilDefs.cpp" />
     <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaVector2Defs.cpp" />
     <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaVector3Defs.cpp" />
     <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaVector4Defs.cpp" />
     <ClCompile Include="..\Shared\mods\deathmatch\logic\luadefs\CLuaXMLDefs.cpp" />
-    <ClCompile Include="..\vendor\bochs\bochs_internal\bochs_crc32.cpp" />
+    <ClCompile Include="..\vendor\bochs\bochs_internal\crc32.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Server\mods\deathmatch\premake5.lua" />

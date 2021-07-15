@@ -15,7 +15,7 @@
 
 class CClientManager;
 
-class CClientEffect final : public CClientEntity
+class CClientEffect : public CClientEntity
 {
     DECLARE_CLASS(CClientEffect, CClientEntity)
 public:

@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Translators: sbx320; Jusonex; Werni; Krischkros; Napoleon  Hill; mickdermack; ccw; V0ID; mave; qaisjp; -ffs-Sniper; dodo225\n"
+"Translators: sbx320; Jusonex; Werni; Krischkros; Napoleon  Hill; mickdermack; V0ID; mave; -ffs-Sniper; dodo225\n"
 "X-Generator: Pootle 2.5.0-rc1\n"
 "X-POOTLE-MTIME: 1569760975.0\n"
 

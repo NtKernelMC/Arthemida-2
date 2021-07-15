@@ -1283,51 +1283,32 @@ bool CConsoleCommands::DebugScript(CConsole* pConsole, const char* szArguments, 
 bool CConsoleCommands::Help(CConsole* pConsole, const char* szArguments, CClient* pClient, CClient* pEchoClient)
 {
     // Help string
-    if (!szArguments)
+    std::string strHelpText = "Available commands:\n\n";
+
+    // Loop through all added commands
+    int                                    iCount = 0;
+    list<CConsoleCommand*>::const_iterator iter = pConsole->CommandsBegin();
+    for (; iter != pConsole->CommandsEnd(); iter++)
     {
-        std::string strHelpText = "Available commands:\n\n";
-        pEchoClient->SendConsole("help [command]");
-
-        // Loop through all added commands
-        int                                    iCount = 0;
-        for (CConsoleCommand* command : pConsole->CommandsList())
+        // Add a new line every third command
+        if (iCount == 3)
         {
-            // Add a new line every third command
-            if (iCount == 3)
-            {
-                iCount = 0;
-                strHelpText.append("\n");
-            }
-
-            // Add the commandname and pad it to 20 letters with spaces
-            const char* szCommand = (command)->GetCommand();
-            strHelpText.append(szCommand);
-            strHelpText.append(25 - strlen(szCommand), ' ');
-
-            // Increment count so we can keep track of how many we've put at one line
-            ++iCount;
+            iCount = 0;
+            strHelpText.append("\n");
         }
 
-        // Show it
-        pEchoClient->SendConsole(strHelpText.c_str());
-        return true;
+        // Add the commandname and pad it to 20 letters with spaces
+        const char* szCommand = (*iter)->GetCommand();
+        strHelpText.append(szCommand);
+        strHelpText.append(25 - strlen(szCommand), ' ');
+
+        // Increment count so we can keep track of how many we've put at one line
+        ++iCount;
     }
-    else
-    {
-        // help [command]
-        if (szArguments && !strcmp(szArguments, "help") == 0)
-        {
-            CConsoleCommand* pConsoleCommand = pConsole->GetCommand(szArguments);
-            if (pConsoleCommand)
-            {
-                pEchoClient->SendConsole(pConsoleCommand->GetHelp());
-                return true;
-            }
-            else
-                pEchoClient->SendConsole("Couldn't find the command.");
-        }
-    }
-    return false;
+
+    // Show it
+    pEchoClient->SendConsole(strHelpText.c_str());
+    return true;
 }
 
 bool CConsoleCommands::ReloadBans(CConsole* pConsole, const char* szArguments, CClient* pClient, CClient* pEchoClient)

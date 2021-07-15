@@ -31,7 +31,7 @@ bool CPlayerJoinDataPacket::Read(NetBitStreamInterface& BitStream)
         m_strNick = *m_strNick;
         m_strSerialUser = *m_strSerialUser;
 
-        if (static_cast<eBitStreamVersion>(m_usBitStreamVersion) >= eBitStreamVersion::Discord_InitialImplementation)
+        if (m_usBitStreamVersion >= 0x06E)
         {
             if (!BitStream.ReadString<uchar>(m_strDiscordSecret))
                 return false;

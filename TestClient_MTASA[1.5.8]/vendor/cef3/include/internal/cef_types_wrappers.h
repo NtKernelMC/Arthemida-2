@@ -151,10 +151,9 @@ class CefPoint : public CefStructBase<CefPointTraits> {
  public:
   typedef CefStructBase<CefPointTraits> parent;
 
-  CefPoint() : parent() {}
+  CefPoint() {}
   CefPoint(const cef_point_t& r) : parent(r) {}
-  CefPoint(const CefPoint& r) : parent(r) {}
-  CefPoint(int x, int y) : parent() { Set(x, y); }
+  CefPoint(int x, int y) { Set(x, y); }
 
   bool IsEmpty() const { return x <= 0 && y <= 0; }
   void Set(int x_val, int y_val) { x = x_val, y = y_val; }
@@ -188,12 +187,9 @@ class CefRect : public CefStructBase<CefRectTraits> {
  public:
   typedef CefStructBase<CefRectTraits> parent;
 
-  CefRect() : parent() {}
+  CefRect() {}
   CefRect(const cef_rect_t& r) : parent(r) {}
-  CefRect(const CefRect& r) : parent(r) {}
-  CefRect(int x, int y, int width, int height) : parent() {
-    Set(x, y, width, height);
-  }
+  CefRect(int x, int y, int width, int height) { Set(x, y, width, height); }
 
   bool IsEmpty() const { return width <= 0 || height <= 0; }
   void Set(int x_val, int y_val, int width_val, int height_val) {
@@ -240,10 +236,9 @@ class CefSize : public CefStructBase<CefSizeTraits> {
  public:
   typedef CefStructBase<CefSizeTraits> parent;
 
-  CefSize() : parent() {}
+  CefSize() {}
   CefSize(const cef_size_t& r) : parent(r) {}
-  CefSize(const CefSize& r) : parent(r) {}
-  CefSize(int width, int height) : parent() { Set(width, height); }
+  CefSize(int width, int height) { Set(width, height); }
 
   bool IsEmpty() const { return width <= 0 || height <= 0; }
   void Set(int width_val, int height_val) {
@@ -279,10 +274,9 @@ class CefRange : public CefStructBase<CefRangeTraits> {
  public:
   typedef CefStructBase<CefRangeTraits> parent;
 
-  CefRange() : parent() {}
+  CefRange() {}
   CefRange(const cef_range_t& r) : parent(r) {}
-  CefRange(const CefRange& r) : parent(r) {}
-  CefRange(int from, int to) : parent() { Set(from, to); }
+  CefRange(int from, int to) { Set(from, to); }
 
   void Set(int from_val, int to_val) { from = from_val, to = to_val; }
 };
@@ -315,10 +309,9 @@ class CefInsets : public CefStructBase<CefInsetsTraits> {
  public:
   typedef CefStructBase<CefInsetsTraits> parent;
 
-  CefInsets() : parent() {}
+  CefInsets() {}
   CefInsets(const cef_insets_t& r) : parent(r) {}
-  CefInsets(const CefInsets& r) : parent(r) {}
-  CefInsets(int top, int left, int bottom, int right) : parent() {
+  CefInsets(int top, int left, int bottom, int right) {
     Set(top, left, bottom, right);
   }
 
@@ -356,10 +349,9 @@ class CefDraggableRegion : public CefStructBase<CefDraggableRegionTraits> {
  public:
   typedef CefStructBase<CefDraggableRegionTraits> parent;
 
-  CefDraggableRegion() : parent() {}
+  CefDraggableRegion() {}
   CefDraggableRegion(const cef_draggable_region_t& r) : parent(r) {}
-  CefDraggableRegion(const CefDraggableRegion& r) : parent(r) {}
-  CefDraggableRegion(const CefRect& bounds, bool draggable) : parent() {
+  CefDraggableRegion(const CefRect& bounds, bool draggable) {
     Set(bounds, draggable);
   }
 
@@ -405,16 +397,14 @@ class CefScreenInfo : public CefStructBase<CefScreenInfoTraits> {
  public:
   typedef CefStructBase<CefScreenInfoTraits> parent;
 
-  CefScreenInfo() : parent() {}
+  CefScreenInfo() {}
   CefScreenInfo(const cef_screen_info_t& r) : parent(r) {}
-  CefScreenInfo(const CefScreenInfo& r) : parent(r) {}
   CefScreenInfo(float device_scale_factor,
                 int depth,
                 int depth_per_component,
                 bool is_monochrome,
                 const CefRect& rect,
-                const CefRect& available_rect)
-      : parent() {
+                const CefRect& available_rect) {
     Set(device_scale_factor, depth, depth_per_component, is_monochrome, rect,
         available_rect);
   }
@@ -548,13 +538,14 @@ struct CefSettingsTraits {
     cef_string_clear(&s->root_cache_path);
     cef_string_clear(&s->user_data_path);
     cef_string_clear(&s->user_agent);
-    cef_string_clear(&s->product_version);
+    cef_string_clear(&s->user_agent_product);
     cef_string_clear(&s->locale);
     cef_string_clear(&s->log_file);
     cef_string_clear(&s->javascript_flags);
     cef_string_clear(&s->resources_dir_path);
     cef_string_clear(&s->locales_dir_path);
     cef_string_clear(&s->accept_language_list);
+    cef_string_clear(&s->cookieable_schemes_list);
     cef_string_clear(&s->application_client_id_for_file_scanning);
   }
 
@@ -586,8 +577,8 @@ struct CefSettingsTraits {
 
     cef_string_set(src->user_agent.str, src->user_agent.length,
                    &target->user_agent, copy);
-    cef_string_set(src->product_version.str, src->product_version.length,
-                   &target->product_version, copy);
+    cef_string_set(src->user_agent_product.str, src->user_agent_product.length,
+                   &target->user_agent_product, copy);
     cef_string_set(src->locale.str, src->locale.length, &target->locale, copy);
 
     cef_string_set(src->log_file.str, src->log_file.length, &target->log_file,
@@ -609,6 +600,13 @@ struct CefSettingsTraits {
     cef_string_set(src->accept_language_list.str,
                    src->accept_language_list.length,
                    &target->accept_language_list, copy);
+
+    cef_string_set(src->cookieable_schemes_list.str,
+                   src->cookieable_schemes_list.length,
+                   &target->cookieable_schemes_list, copy);
+    target->cookieable_schemes_exclude_defaults =
+        src->cookieable_schemes_exclude_defaults;
+
     cef_string_set(src->application_client_id_for_file_scanning.str,
                    src->application_client_id_for_file_scanning.length,
                    &target->application_client_id_for_file_scanning, copy);
@@ -628,6 +626,7 @@ struct CefRequestContextSettingsTraits {
   static inline void clear(struct_type* s) {
     cef_string_clear(&s->cache_path);
     cef_string_clear(&s->accept_language_list);
+    cef_string_clear(&s->cookieable_schemes_list);
   }
 
   static inline void set(const struct_type* src,
@@ -641,6 +640,12 @@ struct CefRequestContextSettingsTraits {
     cef_string_set(src->accept_language_list.str,
                    src->accept_language_list.length,
                    &target->accept_language_list, copy);
+
+    cef_string_set(src->cookieable_schemes_list.str,
+                   src->cookieable_schemes_list.length,
+                   &target->cookieable_schemes_list, copy);
+    target->cookieable_schemes_exclude_defaults =
+        src->cookieable_schemes_exclude_defaults;
   }
 };
 
@@ -705,7 +710,6 @@ struct CefBrowserSettingsTraits {
     target->universal_access_from_file_urls =
         src->universal_access_from_file_urls;
     target->file_access_from_file_urls = src->file_access_from_file_urls;
-    target->web_security = src->web_security;
     target->image_loading = src->image_loading;
     target->image_shrink_standalone_to_fit =
         src->image_shrink_standalone_to_fit;
@@ -792,11 +796,10 @@ class CefTime : public CefStructBase<CefTimeTraits> {
  public:
   typedef CefStructBase<CefTimeTraits> parent;
 
-  CefTime() : parent() {}
+  CefTime() {}
   CefTime(const cef_time_t& r) : parent(r) {}
-  CefTime(const CefTime& r) : parent(r) {}
-  explicit CefTime(time_t r) : parent() { SetTimeT(r); }
-  explicit CefTime(double r) : parent() { SetDoubleT(r); }
+  explicit CefTime(time_t r) { SetTimeT(r); }
+  explicit CefTime(double r) { SetDoubleT(r); }
 
   // Converts to/from time_t.
   void SetTimeT(time_t r) { cef_time_from_timet(r, this); }

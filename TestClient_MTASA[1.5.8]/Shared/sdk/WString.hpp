@@ -7,12 +7,6 @@
  *  Multi Theft Auto is available from http://www.multitheftauto.com/
  *
  *****************************************************************************/
-#include "SString.h"
-#include <cassert>
-#include <algorithm>
-#include "SharedUtil.Defines.h"
-#include "SharedUtil.Misc.h"
-#include "SharedUtil.File.h"
 
 //
 // Format a string
@@ -352,7 +346,7 @@ bool WString::ContainsI(const WString& strOther) const
 }
 
 //
-// Case insensitive compare.
+// Case insensitive compate.
 //
 bool WString::CompareI(const WString& strOther) const
 {

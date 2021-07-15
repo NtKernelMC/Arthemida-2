@@ -13,7 +13,6 @@ class CClientObject;
 #pragma once
 
 #include "CClientStreamElement.h"
-#include "CClientModel.h"
 
 struct SLastSyncedObjectData
 {
@@ -157,11 +156,10 @@ protected:
     CVector m_vecMoveSpeed;
     CVector m_vecTurnSpeed;
 
-    const bool                    m_bIsLowLod;                    // true if this object is low LOD
-    CClientObject*                m_pLowLodObject;                // Pointer to low LOD version of this object
-    std::vector<CClientObject*>   m_HighLodObjectList;            // List of objects that use this object as a low LOD version
-    bool                          m_IsHiddenLowLod;               // true if this object is low LOD and should not be drawn
-    std::shared_ptr<CClientModel> m_clientModel;
+    const bool                  m_bIsLowLod;                    // true if this object is low LOD
+    CClientObject*              m_pLowLodObject;                // Pointer to low LOD version of this object
+    std::vector<CClientObject*> m_HighLodObjectList;            // List of objects that use this object as a low LOD version
+    bool                        m_IsHiddenLowLod;               // true if this object is low LOD and should not be drawn
 
 public:
     CObject*              m_pObject;

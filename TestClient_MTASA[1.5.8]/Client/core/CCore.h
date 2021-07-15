@@ -13,7 +13,7 @@ class CCore;
 
 #pragma once
 
-#include "version.h"
+#include "../version.h"
 
 #include "CClientVariables.h"
 #include "CCommands.h"
@@ -28,6 +28,7 @@ class CCore;
 #include "CMessageLoopHook.h"
 #include "CConsoleLogger.h"
 #include "CModManager.h"
+#include <core/CClientBase.h>
 #include <core/CClientEntityBase.h>
 #include <core/CCoreInterface.h>
 #include <DXHook/CDirect3DData.h>
@@ -39,6 +40,7 @@ class CCore;
 #include <ijsify.h>
 #include <core/CWebCoreInterface.h>
 #include "CTrayIcon.h"
+#include "../../ArtemisComponents/Arthemida-2/API/ArtemisInterface.h"
 
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
@@ -102,6 +104,7 @@ public:
     CWebCoreInterface*        GetWebCore();
     CTrayIconInterface*       GetTrayIcon() { return m_pTrayIcon; };
     CDiscordManagerInterface* GetDiscordManager() { return reinterpret_cast<CDiscordManagerInterface*>(m_DiscordManager.get()); }
+    CArtemisInterface*        GetArtemis() { return m_pArtemis; };
 
     void SaveConfig(bool bWaitUntilFinished = false);
 
@@ -276,12 +279,16 @@ public:
     void        SetFakeLagCommandEnabled(bool bEnabled) { m_bFakeLagCommandEnabled = bEnabled; }
     bool        IsFakeLagCommandEnabled() { return m_bFakeLagCommandEnabled; }
     SString     GetBlueCopyrightString();
+    HANDLE      SetThreadHardwareBreakPoint(HANDLE hThread, HWBRK_TYPE Type, HWBRK_SIZE Size, DWORD dwAddress);
     bool        IsFirstFrame() const noexcept { return m_bFirstFrame; }
 
 private:
     void ApplyCoreInitSettings();
 
 private:
+    // Anticheat
+    CArtemisReal*       m_pArtemis;
+
     // Core devices.
     CXML*               m_pXML;
     CLocalGUI*          m_pLocalGUI;

@@ -36,6 +36,8 @@ protected:
     bool                   BeginResourceFileDownload(CDownloadableResource* pDownloadableResource, uint uiHttpServerIndex);
     static void            StaticDownloadFinished(const SHttpDownloadResult& result);
     void                   DownloadFinished(const SHttpDownloadResult& result);
+    SString*               MakeDownloadContextString(CDownloadableResource* pDownloadableResource);
+    CDownloadableResource* ResolveDownloadContextString(SString* pString);
 
     std::vector<CDownloadableResource*> m_PendingFileDownloadList;
     std::vector<CDownloadableResource*> m_ActiveFileDownloadList;

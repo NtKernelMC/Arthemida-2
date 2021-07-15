@@ -10,7 +10,7 @@
  *****************************************************************************/
 
 #include <shlobj.h>
-#include <detours.h>
+#include "detours/include/detours.h"
 
 /*
 The hooks in this file modify the following functions to work correctly with utf8 strings:
@@ -253,13 +253,8 @@ namespace SharedUtil
     void AddUtf8FileHooks()
     {
         #define ADDHOOK(module,name) \
-                static_assert(std::is_same_v<decltype(pfn##name), decltype(&name)>, "invalid type of " MTA_STR(pfn##name)); \
-                pfn##name = reinterpret_cast<decltype(pfn##name)>(DetourFindFunction(module, #name)); \
-                DetourAttach(&reinterpret_cast<PVOID&>(pfn##name), My##name); \
-                assert(pfn##name);
-
-        DetourTransactionBegin();
-        DetourUpdateThread(GetCurrentThread());
+                pfn##name = reinterpret_cast < FUNC_##name > ( DetourFunction ( DetourFindFunction ( module, #name ), reinterpret_cast < PBYTE > ( My##name ) ) ); \
+                assert( pfn##name );
 
         ADDHOOK("Kernel32.dll", CreateFileA)
         ADDHOOK("Kernel32.dll", LoadLibraryA)
@@ -278,8 +273,6 @@ namespace SharedUtil
         ADDHOOK("Kernel32.dll", MoveFileA)
         ADDHOOK("Kernel32.dll", DeleteFileA)
         ADDHOOK("Kernel32.dll", GetModuleHandleA)
-
-        DetourTransactionCommit();
     }
 
     /////////////////////////////////////////////////////////////
@@ -290,14 +283,12 @@ namespace SharedUtil
     void RemoveUtf8FileHooks()
     {
         #define DELHOOK(name) \
-            if (pfn##name != nullptr) \
+            if ( pfn##name ) \
             { \
-                DetourDetach(&reinterpret_cast<PVOID&>(pfn##name), My##name); \
-                pfn##name = nullptr; \
+                DetourRemove ( reinterpret_cast < PBYTE > ( pfn##name ),  \
+                               reinterpret_cast < PBYTE > ( My##name  ) ); \
+                pfn##name = NULL; \
             }
-
-        DetourTransactionBegin();
-        DetourUpdateThread(GetCurrentThread());
 
         DELHOOK(CreateFileA)
         DELHOOK(LoadLibraryA)
@@ -316,7 +307,5 @@ namespace SharedUtil
         DELHOOK(MoveFileA)
         DELHOOK(DeleteFileA)
         DELHOOK(GetModuleHandleA)
-
-        DetourTransactionCommit();
     }
 }            // namespace SharedUtil

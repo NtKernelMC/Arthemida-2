@@ -27,12 +27,29 @@ CHudSA::CHudSA()
     MemPut<float>(m_pfAspectRatioMultiplicator, 0.002232143f);
 
     // Patch xrefs to 0x863B34, because this variable seems to be shared (2 other functions without any context access to it; probably a compiler optimization)
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)(0x58E7D4 + 2));
     MemPut<DWORD>(0x58E7D4 + 2, (DWORD)&m_fSniperCrosshairScale);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)(0x58E7D4 + 2));
+
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)(0x58E7EA + 2));
     MemPut<DWORD>(0x58E7EA + 2, (DWORD)&m_fSniperCrosshairScale);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)(0x58E7EA + 2));
+
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)(0x53E3ED + 2));
     MemPut<DWORD>(0x53E3ED + 2, (DWORD)&m_fSniperCrosshairScale);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)(0x53E3ED + 2));
+
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)(0x53E41A + 2));
     MemPut<DWORD>(0x53E41A + 2, (DWORD)&m_fSniperCrosshairScale);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)(0x53E41A + 2));
+
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)(0x53E488 + 2));
     MemPut<DWORD>(0x53E488 + 2, (DWORD)&m_fSniperCrosshairScale);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)(0x53E488 + 2));
+
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)(0x53E4BF + 2));
     MemPut<DWORD>(0x53E4BF + 2, (DWORD)&m_fSniperCrosshairScale);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)(0x53E4BF + 2));
 }
 
 VOID CHudSA::SetHelpMessage(char* szMessage)

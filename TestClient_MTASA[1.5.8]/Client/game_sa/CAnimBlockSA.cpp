@@ -21,7 +21,7 @@ void CAnimBlockSA::Request(EModelRequestType requestType, bool bAllowBlockingFai
     if (IsLoaded())
         return;
 
-    DWORD dwModelID = GetIndex() + pGame->GetBaseIDforIFP();
+    DWORD dwModelID = GetIndex() + 25575;
 
     if (requestType == BLOCKING)
     {

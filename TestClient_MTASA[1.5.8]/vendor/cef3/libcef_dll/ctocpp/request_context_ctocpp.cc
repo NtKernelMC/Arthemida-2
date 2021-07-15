@@ -1,4 +1,4 @@
-// Copyright (c) 2020 The Chromium Embedded Framework Authors. All rights
+// Copyright (c) 2021 The Chromium Embedded Framework Authors. All rights
 // reserved. Use of this source code is governed by a BSD-style license that
 // can be found in the LICENSE file.
 //
@@ -9,7 +9,7 @@
 // implementations. See the translator.README.txt file in the tools directory
 // for more information.
 //
-// $hash=a29d8f9e49143e42a0ae0204c7d439c76b3c371c$
+// $hash=67bc021917c8f7d1e386859bbfae6e007b292f45$
 //
 
 #include "libcef_dll/ctocpp/request_context_ctocpp.h"
@@ -527,15 +527,19 @@ CefRefPtr<CefExtension> CefRequestContextCToCpp::GetExtension(
 }
 
 NO_SANITIZE("cfi-icall")
-CefRefPtr<CefMediaRouter> CefRequestContextCToCpp::GetMediaRouter() {
+CefRefPtr<CefMediaRouter> CefRequestContextCToCpp::GetMediaRouter(
+    CefRefPtr<CefCompletionCallback> callback) {
   cef_request_context_t* _struct = GetStruct();
   if (CEF_MEMBER_MISSING(_struct, get_media_router))
     return nullptr;
 
   // AUTO-GENERATED CONTENT - DELETE THIS COMMENT BEFORE MODIFYING
 
+  // Unverified params: callback
+
   // Execute
-  cef_media_router_t* _retval = _struct->get_media_router(_struct);
+  cef_media_router_t* _retval = _struct->get_media_router(
+      _struct, CefCompletionCallbackCppToC::Wrap(callback));
 
   // Return type: refptr_same
   return CefMediaRouterCToCpp::Wrap(_retval);

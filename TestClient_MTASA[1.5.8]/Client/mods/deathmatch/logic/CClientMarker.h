@@ -20,7 +20,7 @@
 
 class CClientMarkerManager;
 
-class CClientMarker final : public CClientStreamElement, private CClientColCallback
+class CClientMarker : public CClientStreamElement, private CClientColCallback
 {
     DECLARE_CLASS(CClientMarker, CClientStreamElement)
     friend class CClientMarkerManager;

@@ -16,7 +16,7 @@ class CClientTeam;
 #include "CClientPlayer.h"
 #include "CClientTeamManager.h"
 
-class CClientTeam final : public CClientEntity
+class CClientTeam : public CClientEntity
 {
     DECLARE_CLASS(CClientTeam, CClientEntity)
     friend class CClientTeamManager;

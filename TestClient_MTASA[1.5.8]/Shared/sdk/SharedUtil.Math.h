@@ -8,10 +8,6 @@
  *  Multi Theft Auto is available from http://www.multitheftauto.com/
  *
  *****************************************************************************/
-#pragma once
-
-#include <cmath>
-#include "SharedUtil.Misc.h"
 
 namespace SharedUtil
 {

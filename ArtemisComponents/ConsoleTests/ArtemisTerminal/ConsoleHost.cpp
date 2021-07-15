@@ -11,6 +11,7 @@
 #endif
 #include <Windows.h>
 #include <stdio.h>
+#include "../ArtUtils/Utils.h"
 #include ".../../../../Arthemida-2/API/ArtemisInterface.h"
 using namespace std;
 using namespace ArtemisData;

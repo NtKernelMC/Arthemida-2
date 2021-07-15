@@ -109,8 +109,6 @@ public:
 
     static void StaticSetHooks();
 
-    static void SetPosition(CFxSystemSAInterface* fxSystem, const CVector& position);
-
 protected:
     CFxSystemSAInterface* m_pInterface;
     float                 m_fDrawDistance;

@@ -15,7 +15,7 @@
 
 class CClientRadarAreaManager;
 
-class CClientRadarArea final : public CClientEntity
+class CClientRadarArea : public CClientEntity
 {
     DECLARE_CLASS(CClientRadarArea, CClientEntity)
     friend class CClientRadarAreaManager;
@@ -46,7 +46,7 @@ public:
 
     float GetAlphaFactor() const { return m_fAlphaFactor; };
 
-    void SetDimension(unsigned short usDimension) override;
+    void SetDimension(unsigned short usDimension);
     void RelateDimension(unsigned short usDimension);
 
 protected:
