@@ -26,6 +26,7 @@
 #include "CDiscordManagerInterface.h"
 #include "xml/CXML.h"
 #include <gui/CGUI.h>
+#include "../../ArtemisComponents/Arthemida-2/API/ArtemisInterface.h"
 
 typedef bool (*pfnProcessMessage)(HWND, UINT, WPARAM, LPARAM);
 

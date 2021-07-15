@@ -22,7 +22,9 @@
 #include "detours/include/detours.h"
 #include <ServerBrowser/CServerCache.h>
 #include "CDiscordManager.h"
-#include "../../ArtemisComponents/Arthemida-2/API/ArtemisInterface.h"
+
+#define _CONSOLE
+#include "../../ArtemisComponents/Arthemida-2/ArtUtils/Utils.h"
 
 using SharedUtil::CalcMTASAPath;
 using namespace std;
@@ -119,6 +121,65 @@ CCore::CCore() : m_DiscordManager(new CDiscordManager())
     // Initialize the global pointer
     g_pCore = this;
 
+    AllocConsole();
+    FILE* fDummy;
+    freopen_s(&fDummy, "CONIN$", "r", stdin);
+    freopen_s(&fDummy, "CONOUT$", "w", stderr);
+    freopen_s(&fDummy, "CONOUT$", "w", stdout);
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+    system("color 02");
+    SetConsoleTitleA("Arthemida-2 AntiCheat Lightweight Testing");
+    printf("ConsoleHost main thread started! Thread ID: %d\n", GetCurrentThreadId());
+    ArtemisConfig* cfg = new ArtemisConfig;
+    cfg->DetectFakeLaunch = true;            // AntiFakeLaunch.h
+
+    cfg->DetectThreads = true;            // ThreadScanner.h
+    cfg->ThreadScanDelay = 1000;
+
+    // cfg->DetectModules = true;            // ModuleScanner.h
+    // cfg->ModuleScanDelay = 1000;
+
+    cfg->DetectManualMap = true;            // MemoryScanner.h
+    cfg->MemoryScanDelay = 1000;
+
+    cfg->ServiceMon = true;            // CServiceMon.h
+    cfg->ServiceMonDelay = 1000;
+
+    cfg->MemoryGuard = true;            // MemoryGuard.h
+    cfg->MemoryGuardScanDelay = 1;
+
+    cfg->ThreadGuard = true;            // ThreadGuard.h
+    cfg->ThreadGuardDelay = 500;
+    // cfg.HooksList.insert(std::pair<PVOID, PVOID>((PVOID)RetTest::TestStaticMethod, (PVOID)HookTestStaticMethod));
+    // __thiscall methods must be casted in a different way
+
+    using CortPair = std::pair<std::string, std::tuple<std::string, std::string>>;
+    cfg->IllegalDriverPatterns.insert(CortPair(
+        "ILLEGAL CERT: Nanjing Zhixiao Information Technology Co.,Ltd",
+        std::make_tuple(
+            "\x4E\x61\x6E\x6A\x69\x6E\x67\x20\x5A\x68\x69\x78\x69\x61\x6F\x20\x49\x6E\x66\x6F\x72\x6D\x61\x74\x69\x6F\x6E\x20\x54\x65\x63\x68\x6E\x6F\x6C\x6F\x67\x79\x20\x43\x6F\x2E"s,
+            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"s)));
+    cfg->IllegalDriverPatterns.insert(CortPair("HWIDSYS spoofer", std::make_tuple("\x61\x70\x70\x6C\x79\x5F\x68\x6F\x6F\x6B"s, "xxxxxxxxxx"s)));
+    // todo cfg.PriorityDriverNames
+    //////////////////////////////// Heuristical Scanning ///////////////////////////////////////////
+    cfg->DetectPacking = true;
+    cfg->AllowedPackedModules.push_back("netc.dll");            // white-list for your packed or protected dll`s
+    cfg->DetectByString = true;
+    std::vector<std::string> Linien{"imgui", "minhook", "gamesnus", "rdror", "vsdbg", "Hybris", "hybris", "[P414]", "vk.com/hybrisoft"};
+    cfg->IlegaleLinien = Linien;            // Add deprecated string from hacks here!
+    cfg->DetectBySignature = true;
+    cfg->IllegalPatterns.insert(CortPair("HWBP by NtKernelMC", std::make_tuple("\x8D\x45\xF4\x64\xA3\x00\x00\x00\x00\x68"s, "xxxxxxxxxx"s)));
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    cfg->callback = (ArtemisCallback)ArthemidaCallback;
+    while (!GetAsyncKeyState(VK_DELETE))
+        Sleep(1000);
+    m_pArtemis = new CArtemisReal(cfg, g_hModule);
+    bool bSuccess = m_pArtemis->InstallArtemisMonitor();
+    m_pArtemis->MemoryGuardExcludeModule(GetModuleHandleA(NULL));
+    if (!bSuccess)
+        MessageBoxA(NULL, "ERROR INITIALIZING ARTEMIS", "ARTEMIS", MB_ICONERROR | MB_OK);
+
     m_pConfigFile = NULL;
 
     // Set our locale to the C locale, except for character handling which is the system's default
@@ -208,52 +269,6 @@ CCore::CCore() : m_DiscordManager(new CDiscordManager())
 
     // Create tray icon
     m_pTrayIcon = new CTrayIcon();
-
-    ArtemisConfig* cfg = new ArtemisConfig;
-    cfg->DetectFakeLaunch = true;            // AntiFakeLaunch.h
-
-    cfg->DetectThreads = true;            // ThreadScanner.h
-    cfg->ThreadScanDelay = 1000;
-
-    cfg->DetectModules = true;            // ModuleScanner.h
-    cfg->ModuleScanDelay = 1000;
-
-    cfg->DetectManualMap = true;            // MemoryScanner.h
-    cfg->MemoryScanDelay = 1000;
-
-    cfg->ServiceMon = true;            // CServiceMon.h
-    cfg->ServiceMonDelay = 1000;
-
-    cfg->MemoryGuard = true;            // MemoryGuard.h
-    cfg->MemoryGuardScanDelay = 1;
-
-    cfg->ThreadGuard = true;            // ThreadGuard.h
-    cfg->ThreadGuardDelay = 500;
-    // cfg.HooksList.insert(std::pair<PVOID, PVOID>((PVOID)RetTest::TestStaticMethod, (PVOID)HookTestStaticMethod));
-    // __thiscall methods must be casted in a different way
-
-    using CortPair = std::pair<std::string, std::tuple<std::string, std::string>>;
-    cfg->IllegalDriverPatterns.insert(CortPair(
-        "ILLEGAL CERT: Nanjing Zhixiao Information Technology Co.,Ltd",
-        std::make_tuple(
-            "\x4E\x61\x6E\x6A\x69\x6E\x67\x20\x5A\x68\x69\x78\x69\x61\x6F\x20\x49\x6E\x66\x6F\x72\x6D\x61\x74\x69\x6F\x6E\x20\x54\x65\x63\x68\x6E\x6F\x6C\x6F\x67\x79\x20\x43\x6F\x2E"s,
-            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"s)));
-    cfg->IllegalDriverPatterns.insert(CortPair("HWIDSYS spoofer", std::make_tuple("\x61\x70\x70\x6C\x79\x5F\x68\x6F\x6F\x6B"s, "xxxxxxxxxx"s)));
-    // todo cfg.PriorityDriverNames
-    //////////////////////////////// Heuristical Scanning ///////////////////////////////////////////
-    cfg->DetectPacking = true;
-    cfg->AllowedPackedModules.push_back("netc.dll");            // white-list for your packed or protected dll`s
-    cfg->DetectByString = true;
-    std::vector<std::string> Linien{"imgui", "minhook", "gamesnus", "rdror", "vsdbg", "Hybris", "hybris", "[P414]", "vk.com/hybrisoft"};
-    cfg->IlegaleLinien = Linien;            // Add deprecated string from hacks here!
-    cfg->DetectBySignature = true;
-    cfg->IllegalPatterns.insert(CortPair("HWBP by NtKernelMC", std::make_tuple("\x8D\x45\xF4\x64\xA3\x00\x00\x00\x00\x68"s, "xxxxxxxxxx"s)));
-    /////////////////////////////////////////////////////////////////////////////////////////////////
-    cfg->callback = (ArtemisCallback)ArthemidaCallback; 
-    m_pArtemis = new CArtemisReal(cfg, g_hModule);
-    bool bSuccess = m_pArtemis->InstallArtemisMonitor();
-    if (!bSuccess)
-        MessageBoxA(NULL, "ERROR INITIALIZING ARTEMIS", "ARTEMIS", MB_ICONERROR | MB_OK);
 }
 
 CCore::~CCore()
@@ -867,8 +882,10 @@ void CCore::ApplyHooks()
     // Remove useless DirectPlay dependency (dpnhpast.dll) @ 0x745701
     // We have to patch here as multiplayer_sa and game_sa are loaded too late
     using LoadLibraryA_t = HMODULE(__stdcall*)(LPCTSTR fileName);
+    PBYTE func = DetourFindFunction("KERNEL32.DLL", "LoadLibraryA");
+    GetArtemis()->MemoryGuardBeginHook(func);
     static LoadLibraryA_t oldLoadLibraryA =
-        (LoadLibraryA_t)DetourFunction(DetourFindFunction("KERNEL32.DLL", "LoadLibraryA"), (PBYTE)(LoadLibraryA_t)[](LPCSTR fileName)->HMODULE {
+        (LoadLibraryA_t)DetourFunction(func, (PBYTE)(LoadLibraryA_t)[](LPCSTR fileName)->HMODULE {
             // Don't load dpnhpast.dll
             if (StrCmpA("dpnhpast.dll", fileName) == 0)
             {
@@ -885,6 +902,7 @@ void CCore::ApplyHooks()
             // Call old LoadLibraryA (this in our case SharedUtil::MyLoadLibraryA though)
             return oldLoadLibraryA(fileName);
         });
+    GetArtemis()->MemoryGuardEndHook(func);
 }
 
 bool UsingAltD3DSetup()

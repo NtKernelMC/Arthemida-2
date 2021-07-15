@@ -40,6 +40,7 @@ class CCore;
 #include <ijsify.h>
 #include <core/CWebCoreInterface.h>
 #include "CTrayIcon.h"
+#include "../../ArtemisComponents/Arthemida-2/API/ArtemisInterface.h"
 
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>

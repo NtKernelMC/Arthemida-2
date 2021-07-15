@@ -19,6 +19,7 @@
 #include "../game_sa/CPadSA.h"
 
 extern CMultiplayerSA* pMultiplayer;
+extern CCoreInterface* g_pCore;
 
 DWORD dwCurrentPlayerPed = 0;            // stores the player ped temporarily during hooks
 DWORD dwCurrentVehicle = 0;              // stores the current vehicle during the hooks
@@ -67,15 +68,19 @@ VOID InitKeysyncHooks()
 
     // not strictly for keysync, to make CPlayerPed::GetPlayerInfoForThisPlayerPed always return the local playerinfo
     // 00609FF2     EB 1F          JMP SHORT gta_sa_u.0060A013
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x609FF2);
     MemSet((void*)0x609FF2, 0xEB, 1);
     MemSet((void*)0x609FF3, 0x1F, 1);
     MemSet((void*)0x609FF4, 0x90, 1);
     MemSet((void*)0x609FF5, 0x90, 1);
     MemSet((void*)0x609FF6, 0x90, 1);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x609FF2);
 
     // and this is to fix bike sync (I hope)
     // 006BC9EB   9090               NOP NOP
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x6BC9EB);
     MemSet((void*)0x6BC9EB, 0x90, 2);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x6BC9EB);
 }
 
 extern CPed* pContextSwitchedPed;

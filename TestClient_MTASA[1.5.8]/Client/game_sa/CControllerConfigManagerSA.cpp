@@ -27,7 +27,10 @@ CControllerConfigManagerSA::CControllerConfigManagerSA()
     // Get initial settings
     m_bSteerWithMouse = *VAR_FlyWithMouse != 0;
     m_bFlyWithMouse = *VAR_SteerWithMouse != 0;
+
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x5BC7B4);
     MemSet((void*)0x5BC7B4, 0x90, 10);            // Stop vertical aim sensitivity value reset
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x5BC7B4);
 }
 
 void CControllerConfigManagerSA::SetControllerKeyAssociatedWithAction(eControllerAction action, int iKey, eControllerType controllerType)

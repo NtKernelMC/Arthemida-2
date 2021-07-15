@@ -10,25 +10,30 @@
  *****************************************************************************/
 
 #include "StdInc.h"
-
+extern CCoreInterface* g_pCore;
 #define MAX_JUMPCODE_SIZE 50
 
 VOID HookInstallMethod(DWORD dwInstallAddress, DWORD dwHookFunction)
 {
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)dwInstallAddress);
     MemPut<DWORD>(dwInstallAddress, dwHookFunction);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)dwInstallAddress);
 }
 
 VOID HookInstallCall(DWORD dwInstallAddress, DWORD dwHookFunction)
 {
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)dwInstallAddress);
     DWORD dwOffset = dwHookFunction - (dwInstallAddress + 5);
     MemPut<BYTE>(dwInstallAddress, 0xE8);
     MemPut<DWORD>(dwInstallAddress + 1, dwOffset);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)dwInstallAddress);
 }
 
 ////////////////////////////////////////////////////////////////////
 
 BOOL HookInstall(DWORD dwInstallAddress, DWORD dwHookHandler, int iJmpCodeSize)
 {
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)dwInstallAddress);
     BYTE JumpBytes[MAX_JUMPCODE_SIZE];
     MemSetFast(JumpBytes, 0x90, MAX_JUMPCODE_SIZE);
     if (CreateJump(dwInstallAddress, dwHookHandler, JumpBytes))
@@ -37,10 +42,12 @@ BOOL HookInstall(DWORD dwInstallAddress, DWORD dwHookHandler, int iJmpCodeSize)
             MemCpy((PVOID)dwInstallAddress, JumpBytes, iJmpCodeSize);
         else
             MemCpyFast((PVOID)dwInstallAddress, JumpBytes, iJmpCodeSize);
+        g_pCore->GetArtemis()->MemoryGuardEndHook((void*)dwInstallAddress);
         return TRUE;
     }
     else
     {
+        g_pCore->GetArtemis()->MemoryGuardEndHook((void*)dwInstallAddress);
         return FALSE;
     }
 }

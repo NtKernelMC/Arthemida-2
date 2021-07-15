@@ -75,8 +75,11 @@ HRESULT CDirectInputHook8::API_DirectInput8Create(HINSTANCE hinst, DWORD dwVersi
 bool CDirectInputHook8::ApplyHook()
 {
     // Hook DirectInput8Create.
+    PBYTE func = DetourFindFunction("DINPUT8.DLL", "DirectInput8Create");
+    g_pCore->GetArtemis()->MemoryGuardBeginHook(func);
     m_pfnDirectInputCreate = reinterpret_cast<pDirectInputCreate>(
-        DetourFunction(DetourFindFunction("DINPUT8.DLL", "DirectInput8Create"), reinterpret_cast<PBYTE>(API_DirectInput8Create)));
+        DetourFunction(func, reinterpret_cast<PBYTE>(API_DirectInput8Create)));
+    g_pCore->GetArtemis()->MemoryGuardEndHook(func);
 
     return true;
 }

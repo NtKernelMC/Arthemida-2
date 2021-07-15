@@ -201,6 +201,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>-Zm130 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExceptionHandling>Async</ExceptionHandling>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NOMINMAX;_TIMESPEC_DEFINED;WIN32;_WIN32;_WIN32_WINNT=0x601;_MSC_PLATFORM_TOOLSET=$(PlatformToolsetVersion);INITGUID;PNG_SETJMP_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -424,10 +425,18 @@
     <ClInclude Include="..\Client\core\resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\ArtemisComponents\Arthemida-2\API\ArtemisInterface.cpp" />
-    <ClCompile Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\MemoryGuard.cpp" />
-    <ClCompile Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\ThreadGuard.cpp" />
-    <ClCompile Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\xxhash.c" />
+    <ClCompile Include="..\..\ArtemisComponents\Arthemida-2\API\ArtemisInterface.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\MemoryGuard.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\ArtemisComponents\Arthemida-2\ArtModules\ThreadGuard.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\ArtemisComponents\Arthemida-2\ArtUtils\xxhash.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\Client\core\CAdditionalVertexStreamManager.cpp" />
     <ClCompile Include="..\Client\core\CChat.cpp" />
     <ClCompile Include="..\Client\core\CClientVariables.cpp" />

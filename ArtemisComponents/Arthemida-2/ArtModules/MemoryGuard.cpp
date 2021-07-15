@@ -18,6 +18,8 @@ struct sMemoryGuardPageDescriptor
 };
 std::map<DWORD, sMemoryGuardPageDescriptor> mpExecutablePageList;
 ArtThreading::SpinLock* pslCsExecutablePageList;
+DWORD ExcludedRangeStart = 0;
+DWORD ExcludedRangeEnd = 0;
 
 typedef NTSTATUS(__stdcall* pLdrUnloadDll)(HANDLE ModuleHandle);
 pLdrUnloadDll ptrLdrUnloadDll;
@@ -88,6 +90,21 @@ bool CArtemisReal::MemoryGuardEndHook(void* pTarget)
     return true;
 }
 
+bool CArtemisReal::MemoryGuardExcludeModule(HMODULE hModule)
+{
+    if (hModule == NULL) return false;
+    MODULEINFO moduleInfo = {};
+    if (!K32GetModuleInformation(GetCurrentProcess(), hModule, &moduleInfo, sizeof(moduleInfo))) return false;
+    CheckInitCS();
+    pslCsExecutablePageList->lock();
+
+    ExcludedRangeStart = (DWORD)moduleInfo.lpBaseOfDll;
+    ExcludedRangeEnd = (DWORD)moduleInfo.lpBaseOfDll + moduleInfo.SizeOfImage;
+
+    pslCsExecutablePageList->unlock();
+    return true;
+}
+
 void __stdcall MemoryGuardScanner(ArtemisConfig* cfg)
 {
 	if (cfg == nullptr)
@@ -141,7 +158,7 @@ void __stdcall MemoryGuardScanner(ArtemisConfig* cfg)
 		if (!cfg->MemoryGuard) return;
 
 		auto WatchMemoryAllocations = [&, cfg]
-		(const void* ptr, size_t length, MEMORY_BASIC_INFORMATION* info, int size)
+		(void* ptr, size_t length, MEMORY_BASIC_INFORMATION* info, int size)
 		{
 			if (ptr == nullptr || info == nullptr) return;
 			const void* end = (const void*)((const char*)ptr + length);
@@ -167,20 +184,23 @@ void __stdcall MemoryGuardScanner(ArtemisConfig* cfg)
                     if (GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, (wchar_t*)dwBase, &hModule) &&
                         hModule != NULL)
                     {
-                        if (mpExecutablePageList.find(dwBase) == mpExecutablePageList.end())
-                            mpExecutablePageList[dwBase].XXH32_hash = XXH32(i->BaseAddress, i->RegionSize, 0);
-
-                        else if (!mpExecutablePageList[dwBase].bIsBeingLegallyHooked)
+                        if (!(dwBase >= ExcludedRangeStart && dwBase <= ExcludedRangeEnd))
                         {
-                            if (mpExecutablePageList[dwBase].XXH32_hash != XXH32(i->BaseAddress, i->RegionSize, 0))
-                                CallDetect((void*)ptr, i->RegionSize);
+                            if (mpExecutablePageList.find(dwBase) == mpExecutablePageList.end())
+                                mpExecutablePageList[dwBase].XXH32_hash = XXH32(i->BaseAddress, i->RegionSize, 0);
+
+                            else if (!mpExecutablePageList[dwBase].bIsBeingLegallyHooked)
+                            {
+                                if (mpExecutablePageList[dwBase].XXH32_hash != XXH32(i->BaseAddress, i->RegionSize, 0))
+                                    CallDetect((void*)ptr, i->RegionSize);
+                            }
                         }
                     }
                 }
 
                 pslCsExecutablePageList->unlock();
 
-				ptr = (const void*)((const char*)(i->BaseAddress) + i->RegionSize);
+				ptr = (void*)((const char*)(i->BaseAddress) + i->RegionSize);
 			}
 		};
 

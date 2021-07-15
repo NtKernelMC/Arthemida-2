@@ -41,7 +41,9 @@ bool CDirect3DHook9::ApplyHook()
         PBYTE pFunc = DetourFindFunction("D3D9.DLL", "Direct3DCreate9");
         if (pFunc)
         {
+            g_pCore->GetArtemis()->MemoryGuardBeginHook(pFunc);
             m_pfnDirect3DCreate9 = reinterpret_cast<pDirect3DCreate>(DetourFunction(pFunc, reinterpret_cast<PBYTE>(API_Direct3DCreate9)));
+            g_pCore->GetArtemis()->MemoryGuardEndHook(pFunc);
         }
         WriteDebugEvent(SString("Direct3D9 hook applied %08x", m_pfnDirect3DCreate9));
         if (!m_pfnDirect3DCreate9)

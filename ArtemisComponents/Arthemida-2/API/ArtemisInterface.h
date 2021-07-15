@@ -15,6 +15,7 @@ public:
 	virtual ArtemisConfig* GetConfig() = 0;
     virtual bool MemoryGuardBeginHook(void* pTarget) = 0;
     virtual bool MemoryGuardEndHook(void* pTarget) = 0;
+    virtual bool MemoryGuardExcludeModule(HMODULE hModule) = 0;
 };
 
 class CArtemisReal : public CArtemisInterface
@@ -29,6 +30,7 @@ public:
     // Memory guard
     bool MemoryGuardBeginHook(void* pTarget);
     bool MemoryGuardEndHook(void* pTarget);
+    bool MemoryGuardExcludeModule(HMODULE hModule);
 
 private:
     ArtemisConfig*     m_pConfig = nullptr;

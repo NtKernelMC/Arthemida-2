@@ -116,7 +116,7 @@ bool CArtemisReal::InstallArtemisMonitor()
 		return false;
 	}
     Utils::BuildModuledMemoryMap(m_pConfig->CurrProc);            // Заполняем список изначально загруженными модулями
-	DWORD tmpTID = 0xFFFFFF; 
+	DWORD tmpTID = 0xFFFFFF;
 	if (m_pConfig->DetectFakeLaunch)            // Детект лаунчера (должен запускаться в первую очередь)
 	{
         ConfirmLegitLaunch(m_pConfig);

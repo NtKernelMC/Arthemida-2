@@ -258,7 +258,13 @@ void CFxSystemSA::StaticSetHooks()
     EZHookInstall(FxSystem_c_Update_MidB);
 
     // Redirect these constants so we can change them
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)VAR_FxSystemUpdateCullDistMultiplier);
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)VAR_FxCreateParticleCullDistMultiplierA);
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)VAR_FxCreateParticleCullDistMultiplierB);
     MemPut<float*>(VAR_FxSystemUpdateCullDistMultiplier, &ms_fFxSystemUpdateCullDistMultiplier);
     MemPut<float*>(VAR_FxCreateParticleCullDistMultiplierA, &ms_fFxCreateParticleCullDistMultiplier);
     MemPut<float*>(VAR_FxCreateParticleCullDistMultiplierB, &ms_fFxCreateParticleCullDistMultiplier);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)VAR_FxSystemUpdateCullDistMultiplier);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)VAR_FxCreateParticleCullDistMultiplierA);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)VAR_FxCreateParticleCullDistMultiplierB);
 }

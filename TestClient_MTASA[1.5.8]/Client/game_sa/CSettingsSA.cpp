@@ -48,11 +48,19 @@ CSettingsSA::CSettingsSA()
     HookInstall(HOOKPOS_StoreShadowForVehicle, (DWORD)HOOK_StoreShadowForVehicle, 9);
     m_iDesktopWidth = 0;
     m_iDesktopHeight = 0;
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x6FF420);
     MemPut<BYTE>(0x6FF420, 0xC3);            // Truncate CalculateAspectRatio
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x6FF420);
 
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x732926);
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x732940);
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x73295E);
     MemPut(0x732926, &ms_fVehicleLODDistance);
     MemPut(0x732940, &ms_fTrainPlaneLODDistance);
     MemPut(0x73295E, &ms_fPedsLODDistance);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x732926);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x732940);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x73295E);
 
     // Set "radar map and radar" as default radar mode
     SetRadarMode(RADAR_MODE_ALL);

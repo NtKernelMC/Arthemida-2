@@ -558,6 +558,8 @@ CMultiplayerSA::CMultiplayerSA()
 
 void CMultiplayerSA::InitHooks()
 {
+#define MGSTART(target) g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)target);
+#define MGEND(target) g_pCore->GetArtemis()->MemoryGuardEndHook((void*)target);
     InitKeysyncHooks();
     InitShotsyncHooks();
     vehicle_lights_init();
@@ -573,14 +575,21 @@ void CMultiplayerSA::InitHooks()
     // 00442DC6     E9 32090000    JMP gta_sa_u.004436FD
 
     // increase the number of vehicles types (not actual vehicles) that can be loaded at once
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x8a5a84);
     MemPutFast<int>(0x8a5a84, 127);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x8a5a84);
 
     // DISABLE CGameLogic::Update
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x442AD0);
     MemSet((void*)0x442AD0, 0xC3, 1);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x442AD0);
 
     // STOP IT TRYING TO LOAD THE SCM
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x468EB5);
     MemPut<BYTE>(0x468EB5, 0xEB);
     MemPut<BYTE>(0x468EB6, 0x32);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x468EB5);
+
 
     HookInstall(HOOKPOS_FindPlayerCoors, (DWORD)HOOK_FindPlayerCoors, 6);
     HookInstall(HOOKPOS_FindPlayerCentreOfWorld, (DWORD)HOOK_FindPlayerCentreOfWorld, 6);
@@ -733,43 +742,64 @@ void CMultiplayerSA::InitHooks()
     HookInstall(HOOKPOS_CAnimManager_BlendAnimation_Hierarchy, (DWORD)HOOK_CAnimManager_BlendAnimation_Hierarchy, 5);
 
     // Disable GTA setting g_bGotFocus to false when we minimize
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)ADDR_GotFocus);
     MemSet((void*)ADDR_GotFocus, 0x90, pGameInterface->GetGameVersion() == VERSION_EU_10 ? 6 : 10);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)ADDR_GotFocus);
 
     // Disable GTA being able to call CAudio::StopRadio ()
     // Well this isn't really CAudio::StopRadio, it's some global class
     // func that StopRadio just jumps to.
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x4E9820);
     MemPut<BYTE>(0x4E9820, 0xC2);
     MemPut<BYTE>(0x4E9821, 0x08);
     MemPut<BYTE>(0x4E9822, 0x00);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x4E9820);
+
 
     // Disable GTA being able to call CAudio::StartRadio ()
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x4DBEC0);
     MemPut<BYTE>(0x4DBEC0, 0xC2);
     MemPut<BYTE>(0x4DBEC1, 0x00);
     MemPut<BYTE>(0x4DBEC2, 0x00);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x4DBEC0);
 
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x4EB3C0);
     MemPut<BYTE>(0x4EB3C0, 0xC2);
     MemPut<BYTE>(0x4EB3C1, 0x10);
     MemPut<BYTE>(0x4EB3C2, 0x00);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x4EB3C0);
 
     // Disable automatic switching cinematic camera for trains
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x52A50B);
     MemPut<WORD>(0x52A50B, 0x29EB);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x52A50B);
 
     // Enable camera view mode switching in trains
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x528152);
     MemPut<BYTE>(0x528152, 0x12);
     MemPut<WORD>(0x52815B, 0x03EB);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x528152);
 
     // DISABLE wanted levels for military zones
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x72DF0D);
     MemPut<BYTE>(0x72DF0D, 0xEB);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x72DF0D);
 
     // THROWN projectiles throw more accurately
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x742685);
     MemPut<BYTE>(0x742685, 0x90);
     MemPut<BYTE>(0x742686, 0xE9);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x742685);
 
     // DISABLE CProjectileInfo::RemoveAllProjectiles
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x7399B0);
     MemPut<BYTE>(0x7399B0, 0xC3);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x7399B0);
 
     // DISABLE CRoadBlocks::GenerateRoadblocks
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x4629E0);
     MemPut<BYTE>(0x4629E0, 0xC3);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x4629E0);
 
     // Temporary hack for disabling hand up
     /*
@@ -782,12 +812,16 @@ void CMultiplayerSA::InitHooks()
     */
 
     // DISABLE CAERadioTrackManager::CheckForMissionStatsChanges() (special DJ banter)
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x4E8410);
     MemPut<BYTE>(0x4E8410, 0xC3);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x4E8410);
 
     // DISABLE CPopulation__AddToPopulation
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x614720);
     MemPut<BYTE>(0x614720, 0x32);
     MemPut<BYTE>(0x614721, 0xC0);
     MemPut<BYTE>(0x614722, 0xC3);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x614720);
 
     // Disables deletion of RenderWare objects during unloading of ModelInfo
     // This is used so we can circumvent the limit of ~21 different vehicles by managing the RwObject ourselves
@@ -797,6 +831,7 @@ void CMultiplayerSA::InitHooks()
 
     // Hack to make the choke task use 0 time left remaining when he starts t
     // just stand there looking. So he won't do that.
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x620607);
     MemPut<unsigned char>(0x620607, 0x33);
     MemPut<unsigned char>(0x620608, 0xC0);
 
@@ -805,16 +840,23 @@ void CMultiplayerSA::InitHooks()
     MemPut<unsigned char>(0x62061A, 0x90);
     MemPut<unsigned char>(0x62061B, 0x90);
     MemPut<unsigned char>(0x62061C, 0x90);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x620607);
 
     // Hack to make non-local players always update their aim on akimbo weapons using camera
     // so they don't freeze when local player doesn't aim.
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x61EFFE);
     MemPut<BYTE>(0x61EFFE, 0xEB);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x61EFFE);
 
     // DISABLE CGameLogic__SetPlayerWantedLevelForForbiddenTerritories
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x441770);
     MemPut<BYTE>(0x441770, 0xC3);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x441770);
 
     // DISABLE CCrime__ReportCrime
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x532010);
     MemPut<BYTE>(0x532010, 0xC3);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x532010);
 
     // Disables deletion of RenderWare objects during unloading of ModelInfo
     // This is used so we can circumvent the limit of ~21 different vehicles by managing the RwObject ourselves
@@ -826,16 +868,20 @@ void CMultiplayerSA::InitHooks()
     004C0220   90               NOP
     004C0221   90               NOP
     */
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x4C01F0);
     MemPut<BYTE>(0x4C01F0, 0xB0);
     MemPut<BYTE>(0x4C01F1, 0x00);
     MemPut<BYTE>(0x4C01F2, 0x90);
     MemPut<BYTE>(0x4C01F3, 0x90);
     MemPut<BYTE>(0x4C01F4, 0x90);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x4C01F0);
 
     // Disable MakePlayerSafe
+    MGSTART(0x56E870);
     MemPut<BYTE>(0x56E870, 0xC2);
     MemPut<BYTE>(0x56E871, 0x08);
     MemPut<BYTE>(0x56E872, 0x00);
+    MGEND(0x56E870);
 
     // Disable call to FxSystem_c__GetCompositeMatrix in CAEFireAudioEntity::UpdateParameters
     // that was causing a crash - spent ages debugging, the crash happens if you create 40 or
@@ -852,9 +898,10 @@ void CMultiplayerSA::InitHooks()
     */
 
     // ALLOW picking up of all vehicles (GTA doesn't allow picking up of 'locked' script created vehicles)
+    MGSTART(0x6A436C);
     MemPut<BYTE>(0x6A436C, 0x90);
     MemPut<BYTE>(0x6A436D, 0x90);
-
+    MGEND(0x6A436C);
     // MAKE CEntity::GetIsOnScreen always return true, experimental
     /*
      MemPut < BYTE > ( 0x534540, 0xB0 );
@@ -904,30 +951,42 @@ void CMultiplayerSA::InitHooks()
 
     // Players always lean out whatever the camera mode
     // 00621983     EB 13          JMP SHORT hacked_g.00621998
+    MGSTART(0x621983);
     MemPut<BYTE>(0x621983, 0xEB);
+    MGEND(0x621983);
 
     // Players can fire drivebys whatever camera mode
     // 627E01 - 6 bytes
+    MGSTART(0x627E01);
     MemSet((LPVOID)0x627E01, 0x90, 6);
+    MGEND(0x627E01);
 
+    MGSTART(0x62840D);
     MemSet((LPVOID)0x62840D, 0x90, 6);
+    MGEND(0x62840D);
 
     // Satchel crash fix
     // C89110: satchel (bomb) positions pointer?
     // C891A8+4: satchel (model) positions pointer? gets set to NULL on player death, causing an access violation
     // C891A8+12: satchel (model) disappear time (in SystemTime format). 738F99 clears the satchel when VAR_SystemTime is larger.
+    MGSTART(0x738F3A);
     MemSet((LPVOID)0x738F3A, 0x90, 83);
+    MGEND(0x738F3A);
 
     // Prevent gta stopping driveby players from falling off
+    MGSTART(0x6B5B17);
     MemSet((LPVOID)0x6B5B17, 0x90, 6);
+    MGEND(0x6B5B17);
 
     // Increase VehicleStruct pool size
+    MGSTART(0x5B8342);
     MemPut<BYTE>(0x5B8342 + 0, 0x33);            // xor eax, eax
     MemPut<BYTE>(0x5B8342 + 1, 0xC0);
     MemPut<BYTE>(0x5B8342 + 2, 0xB0);            // mov al, 0xFF
     MemPut<BYTE>(0x5B8342 + 3, 0xFF);
     MemPut<BYTE>(0x5B8342 + 4, 0x8B);            // mov edi, eax
     MemPut<BYTE>(0x5B8342 + 5, 0xF8);
+    MGEND(0x5B8342);
 
     /*
     // CTaskSimpleCarDrive: Swaps driveby for gang-driveby for drivers
@@ -938,25 +997,38 @@ void CMultiplayerSA::InitHooks()
     */
 
     // DISABLE PLAYING REPLAYS
+    MGSTART(0x460390);
     MemSet((void*)0x460390, 0xC3, 1);
+    MGEND(0x460390);
 
+    MGSTART(0x4600F0);
     MemSet((void*)0x4600F0, 0xC3, 1);
+    MGEND(0x4600F0);
 
+    MGSTART(0x45F050);
     MemSet((void*)0x45F050, 0xC3, 1);
+    MGEND(0x45F050);
 
     // DISABLE CHEATS
+    MGSTART(0x439AF0);
     MemSet((void*)0x439AF0, 0xC3, 1);
+    MGEND(0x439AF0);
 
+    MGSTART(0x438370);
     MemSet((void*)0x438370, 0xC3, 1);
+    MGEND(0x438370);
 
     // DISABLE GARAGES
+    MGSTART(0x44AA89);
     MemPut<BYTE>(0x44AA89 + 0, 0xE9);
     MemPut<BYTE>(0x44AA89 + 1, 0x28);
     MemPut<BYTE>(0x44AA89 + 2, 0x01);
     MemPut<BYTE>(0x44AA89 + 3, 0x00);
     MemPut<BYTE>(0x44AA89 + 4, 0x00);
     MemPut<BYTE>(0x44AA89 + 5, 0x90);
+    MGEND(0x44AA89);
 
+    MGSTART(0x44C7E0);
     MemPut<DWORD>(0x44C7E0, 0x44C7C4);
     MemPut<DWORD>(0x44C7E4, 0x44C7C4);
     MemPut<DWORD>(0x44C7F8, 0x44C7C4);
@@ -977,38 +1049,53 @@ void CMultiplayerSA::InitHooks()
     MemPut<DWORD>(0x44C8A0, 0x44C7C4);
     MemPut<DWORD>(0x44C8AC, 0x44C7C4);
     MemPut<DWORD>(0x44C8B0, 0x44C7C4);
+    MGEND(0x44C7E0);
 
+    MGSTART(0x44C39A);
     MemPut<BYTE>(0x44C39A + 0, 0x0F);
     MemPut<BYTE>(0x44C39A + 1, 0x84);
     MemPut<BYTE>(0x44C39A + 2, 0x24);
     MemPut<BYTE>(0x44C39A + 3, 0x04);
     MemPut<BYTE>(0x44C39A + 4, 0x00);
     MemPut<BYTE>(0x44C39A + 5, 0x00);
+    MGEND(0x44C39A);
 
     // Avoid garage doors closing when you change your model
+    MGSTART(0x4486F7);
     MemSet((LPVOID)0x4486F7, 0x90, 4);
+    MGEND(0x4486F7);
 
     // Disable CStats::IncrementStat (returns at start of function)
+    MGSTART(0x55C180);
     MemPut<BYTE>(0x55C180, 0xC3);
+    MGEND(0x55C180);
     /*
     MemSet ((void *)0x55C1A9, 0x90, 14 );
     MemSet ((void *)0x55C1DD, 0x90, 7 );
     */
 
     // DISABLE STATS DECREMENTING
+    MGSTART(0x559FD5);
     MemSet((void*)0x559FD5, 0x90, 7);
     MemSet((void*)0x559FEB, 0x90, 7);
+    MGEND(0x559FD5);
 
     // DISABLE STATS MESSAGES
+    MGSTART(0x55B980);
     MemSet((void*)0x55B980, 0xC3, 1);
+    MGEND(0x55B980);
 
+    MGSTART(0x559760);
     MemSet((void*)0x559760, 0xC3, 1);
+    MGEND(0x559760);
 
     // ALLOW more than 8 players (crash with more if this isn't done)
     // 0060D64D   90               NOP
     // 0060D64E   E9 9C000000      JMP gta_sa.0060D6EF
+    MGSTART(0x60D64D);
     MemPut<BYTE>(0x60D64D, 0x90);
     MemPut<BYTE>(0x60D64E, 0xE9);
+    MGEND(0x60D64D);
 
     // PREVENT CJ smoking and drinking like an addict
     // 005FBA26   EB 29            JMP SHORT gta_sa.005FBA51
@@ -4821,10 +4908,14 @@ void vehicle_lights_init()
     HookInstall(HOOKPOS_CVehicle_DoHeadLightReflectionSingle, (DWORD)HOOK_CVehicle_DoHeadLightReflectionSingle, 8);
 
     // Allow turning on vehicle lights even if the engine is off
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x6E1DBC);
     MemSet((void*)0x6E1DBC, 0x90, 8);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x6E1DBC);
 
     // Fix vehicle back lights both using light state 3 (SA bug)
+    g_pCore->GetArtemis()->MemoryGuardBeginHook((void*)0x6E1D4F);
     MemPut<BYTE>(0x6E1D4F, 2);
+    g_pCore->GetArtemis()->MemoryGuardEndHook((void*)0x6E1D4F);
 }
 
 CVehicleSAInterface* pLightsVehicleInterface = NULL;
